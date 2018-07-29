@@ -15,7 +15,7 @@ namespace CSPlang
      * @param alt the Alternative class that is controlling the selection
      * @return true if and only if the event is ready
      */
-        protected abstract Boolean enable(Alternative alt);
+        /*protected*/ public abstract Boolean enable(Alternative alt);
 
         /**
          * Disables the guard for selection. Returns true if the event was ready.
@@ -24,7 +24,7 @@ namespace CSPlang
          *
          * @return true if and only if the event was ready
          */
-        protected abstract Boolean disable();
+        /*protected*/ public abstract Boolean disable();
 
         /**
          * Schedules the process performing the given Alternative to run again.
@@ -33,7 +33,7 @@ namespace CSPlang
          * 
          * @param alt The Alternative to schedule
          */
-        protected void schedule(Alternative alt)
+        /*protected*/ public void schedule(Alternative alt)
         {
             alt.schedule();
         }
