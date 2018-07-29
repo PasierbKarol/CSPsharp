@@ -6,6 +6,19 @@ namespace CSPlang
 	
 	public class Alternative
 	{
+
+		private static readonly DateTime Jan1st1970 = new DateTime
+			(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+
+		public static long CurrentTimeMillis()
+		{
+			return (long)(DateTime.UtcNow - Jan1st1970).TotalMilliseconds;
+		}
+
+
+		//======================================================= Karol's Code above ============================
+
+
 		/** The monitor synchronising the writers and alting reader */
 		protected Object altMonitor = new Object();
 
@@ -109,7 +122,7 @@ namespace CSPlang
 		state = enabling;
 		favourite = 0;
 		enableGuards();
-		synchronized (altMonitor) {
+		/*synchronized*/ lock   (altMonitor) {
 			if (state == enabling)
 			{
 				state = waiting;
@@ -117,7 +130,7 @@ namespace CSPlang
 				{
 					if (timeout)
 					{
-						long delay = msecs - System.currentTimeMillis();
+						long delay = msecs - /*System.currentTimeMillis()*/ CurrentTimeMillis();
 						if (delay > Spurious.earlyTimeout)
 						{
 							altMonitor.wait(delay);
@@ -138,7 +151,7 @@ namespace CSPlang
 							*/
 							while (state == waiting)
 							{
-								delay = msecs - System.currentTimeMillis();
+								delay = msecs - /*System.currentTimeMillis()*/ CurrentTimeMillis();
 								if (delay > Spurious.earlyTimeout)
 								{
 									if (Spurious.logging)
@@ -198,7 +211,7 @@ namespace CSPlang
 	{
 		state = enabling;
 		enableGuards();
-		synchronized(altMonitor) {
+		/*synchronized*/ lock  (altMonitor) {
 			if (state == enabling)
 			{
 				state = waiting;
@@ -206,7 +219,7 @@ namespace CSPlang
 				{
 					if (timeout)
 					{
-						long delay = msecs - System.currentTimeMillis();
+						long delay = msecs - /*System.currentTimeMillis()*/ CurrentTimeMillis();
 						// NOTE: below is code that demonstrates whether wait (delay)
 						// sometimes returns early!  Because this happens in some JVMs,
 						// we are forced into a workaround - see disableGuards ().
@@ -232,7 +245,7 @@ namespace CSPlang
 							*/
 							while (state == waiting)
 							{
-								delay = msecs - System.currentTimeMillis();
+								delay = msecs - /*System.currentTimeMillis()*/ CurrentTimeMillis();
 								if (delay > Spurious.earlyTimeout)
 								{
 									if (Spurious.logging)
@@ -473,7 +486,7 @@ namespace CSPlang
 	 */
 	public void schedule()
 	{
-		synchronized(altMonitor) {
+		/*synchronized*/ lock  (altMonitor) {
 			switch (state)
 			{
 				case enabling:
@@ -537,7 +550,7 @@ namespace CSPlang
 		state = enabling;
 		favourite = 0;
 		enableGuards(preCondition);
-		synchronized(altMonitor) {
+		/*synchronized*/ lock  (altMonitor) {
 			if (state == enabling)
 			{
 				state = waiting;
@@ -545,13 +558,13 @@ namespace CSPlang
 				{
 					if (timeout)
 					{
-						long delay = msecs - System.currentTimeMillis();
+						long delay = msecs - /*System.currentTimeMillis()*/ CurrentTimeMillis();
 						if (delay > Spurious.earlyTimeout)
 						{
 							altMonitor.wait(delay);
 							while (state == waiting)
 							{
-								delay = msecs - System.currentTimeMillis();
+								delay = msecs - /*System.currentTimeMillis()*/ CurrentTimeMillis();
 								if (delay > Spurious.earlyTimeout)
 								{
 									if (Spurious.logging)
@@ -623,7 +636,7 @@ namespace CSPlang
 		}
 		state = enabling;
 		enableGuards(preCondition);
-		synchronized(altMonitor) {
+		/*/*synchronized*/ lock */ lock (altMonitor) {
 			if (state == enabling)
 			{
 				state = waiting;
@@ -631,13 +644,13 @@ namespace CSPlang
 				{
 					if (timeout)
 					{
-						long delay = msecs - System.currentTimeMillis();
+						long delay = msecs - /*System.currentTimeMillis()*/ CurrentTimeMillis();
 						if (delay > Spurious.earlyTimeout)
 						{
 							altMonitor.wait(delay);
 							while (state == waiting)
 							{
-								delay = msecs - System.currentTimeMillis();
+								delay = msecs - /*System.currentTimeMillis()*/ CurrentTimeMillis();
 								if (delay > Spurious.earlyTimeout)
 								{
 									if (Spurious.logging)
@@ -682,7 +695,7 @@ namespace CSPlang
 		disableGuards(preCondition);
 		state = inactive;
 		favourite = selected + 1;
-		if (favourite == guard.length)
+		if (favourite == guard.Length)
 			favourite = 0;
 		timeout = false;
 		return selected;
