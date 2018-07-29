@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using CSPlang.Any2;
+using CSPlang.Shared;
+using CSPutil;
 
 namespace CSPlang
 {
@@ -294,7 +297,7 @@ namespace CSPlang
         /**
          * <p>Constructs and returns an array of input channel ends, each of which can be shared by multiple
          * concurrent readers. The returned array, <code>r</code>, is constructed such that
-         * <code>r[i] = c[i].in ()</code> for <code>0 <= i < c.length</code>.
+         * <code>r[i] = c[i].in ()</code> for <code>0 <= i < c.Length</code>.
          * </p>
          *
          * @param c the array of channel to obtain input ends from.
@@ -302,122 +305,122 @@ namespace CSPlang
          */
         public static SharedChannelInput[] getInputArray(Any2AnyChannel[] c)
         {
-            SharedChannelInput[] in = new SharedChannelInput[c.length];
-            for (int i = 0; i < c.length; i++)
-            in[i] = c[i].in();
-        return in;
+            SharedChannelInput[] _in = new SharedChannelInput[c.Length];
+            for (int i = 0; i < c.Length; i++)
+                _in[i] = c[i]._in();
+            return _in;
         }
 
+        /**
+         * Constructs and returns an array of input channel ends, each of which can be used as guards
+         * in an <code>Alternative</code>. The returned array, <code>r</code>, is constructed such that
+         * <code>r[i] = c[i].in ()</code> for <code>0 <= i < c.Length</code>.
+         *
+         * @param c the array of channel to obtain input ends from.
+         * @return the array of channel input ends.
+         */
+        public static AltingChannelInput[] getInputArray(Any2OneChannel[] c)
+        {
+            AltingChannelInput[] _in = new AltingChannelInput[c.Length];
+            for (int i = 0; i < c.Length; i++)
+                _in[i] = c[i]._in();
+            return _in;
+        }
+
+        /**
+         * Constructs and returns an array of input channel ends, each of which can be shared by multiple
+         * concurrent readers. The returned array, <code>r</code>, is constructed such that
+         * <code>r[i] = c[i].in ()</code> for <code>0 <= i < c.Length</code>.
+         *
+         * @param c the array of channel to obtain input ends from.
+         * @return the array of channel input ends.
+         */
+        public static SharedChannelInput[] getInputArray(One2AnyChannel[] c)
+        {
+            SharedChannelInput[] _in = new SharedChannelInput[c.Length];
+            for (int i = 0; i < c.Length; i++)
+                _in[i] = c[i]._in();
+            return _in;
+        }
+
+        /**
+         * Constructs and returns an array of input channel ends, each of which can be used as guards
+         * in an <code>Alternative</code>. The returned array, <code>r</code>, is constructed such that
+         * <code>r[i] = c[i].in ()</code> for <code>0 <= i < c.Length</code>.
+         *
+         * @param c the array of channel to obtain input ends from.
+         * @return the array of channel input ends.
+         */
+        public static AltingChannelInput[] getInputArray(One2OneChannel[] c)
+        {
+            AltingChannelInput[] _in = new AltingChannelInput[c.Length];
+            for (int i = 0; i < c.Length; i++)
+           _in[i] = c[i]._in();
+        return _in;
+    }
+
     /**
-     * Constructs and returns an array of input channel ends, each of which can be used as guards
-     * in an <code>Alternative</code>. The returned array, <code>r</code>, is constructed such that
-     * <code>r[i] = c[i].in ()</code> for <code>0 <= i < c.length</code>.
+     * Constructs and returns an array of output channel ends, each of which can be shared by multiple
+     * concurrent writers. The returned array, <code>r</code>, is constructed such that
+     * <code>r[i] = c[i].out ()</code> for <code>0 <= i < c.Length</code>.
      *
-     * @param c the array of channel to obtain input ends from.
-     * @return the array of channel input ends.
+     * @param c the array of channel to obta_in output ends from.
+     * @return the array of output _input ends.
      */
-    public static AltingChannelInput[] getInputArray(Any2OneChannel[] c)
+    public static SharedChannelOutput[] getOutputArray(Any2AnyChannel[] c)
     {
-        AltingChannelInput[] in = new AltingChannelInput[c.length];
-        for (int i = 0; i < c.length; i++)
-            in[i] = c[i].in();
-        return in;
+        SharedChannelOutput[] _in = new SharedChannelOutput[c.Length];
+        for (int i = 0; i < c.Length; i++)
+            _in[i] = c[i]._out();
+        return _in;
     }
 
 /**
- * Constructs and returns an array of input channel ends, each of which can be shared by multiple
- * concurrent readers. The returned array, <code>r</code>, is constructed such that
- * <code>r[i] = c[i].in ()</code> for <code>0 <= i < c.length</code>.
+ * Constructs and returns an array of output channel ends, each of which can be shared by multiple
+ * concurrent writers. The returned array, <code>r</code>, is constructed such that
+ * <code>r[i] = c[i].out ()</code> for <code>0 <= i < c.Length</code>.
  *
- * @param c the array of channel to obtain input ends from.
- * @return the array of channel input ends.
+ * @param c the array of channel to obta_in output ends from.
+ * @return the array of output _input ends.
  */
-public static SharedChannelInput[] getInputArray(One2AnyChannel[] c)
+public static SharedChannelOutput[] getOutputArray(Any2OneChannel[] c)
 {
-    SharedChannelInput[] in = new SharedChannelInput[c.length];
-    for (int i = 0; i < c.length; i++)
-            in[i] = c[i].in();
-        return in;
-    }
-
-    /**
-     * Constructs and returns an array of input channel ends, each of which can be used as guards
-     * in an <code>Alternative</code>. The returned array, <code>r</code>, is constructed such that
-     * <code>r[i] = c[i].in ()</code> for <code>0 <= i < c.length</code>.
-     *
-     * @param c the array of channel to obtain input ends from.
-     * @return the array of channel input ends.
-     */
-    public static AltingChannelInput[] getInputArray(One2OneChannel[] c)
-{
-    AltingChannelInput[] in = new AltingChannelInput[c.length];
-    for (int i = 0; i < c.length; i++)
-           in[i] = c[i].in();
-        return in;
-    }
-
-    /**
-     * Constructs and returns an array of output channel ends, each of which can be shared by multiple
-     * concurrent writers. The returned array, <code>r</code>, is constructed such that
-     * <code>r[i] = c[i].out ()</code> for <code>0 <= i < c.length</code>.
-     *
-     * @param c the array of channel to obtain output ends from.
-     * @return the array of output input ends.
-     */
-    public static SharedChannelOutput[] getOutputArray(Any2AnyChannel[] c)
-{
-    SharedChannelOutput[] in = new SharedChannelOutput[c.length];
-    for (int i = 0; i < c.length; i++)
-            in[i] = c[i].out();
-        return in;
-    }
-
-    /**
-     * Constructs and returns an array of output channel ends, each of which can be shared by multiple
-     * concurrent writers. The returned array, <code>r</code>, is constructed such that
-     * <code>r[i] = c[i].out ()</code> for <code>0 <= i < c.length</code>.
-     *
-     * @param c the array of channel to obtain output ends from.
-     * @return the array of output input ends.
-     */
-    public static SharedChannelOutput[] getOutputArray(Any2OneChannel[] c)
-{
-    SharedChannelOutput[] in = new SharedChannelOutput[c.length];
-    for (int i = 0; i < c.length; i++)
-            in[i] = c[i].out();
-        return in;
+    SharedChannelOutput[] _in = new SharedChannelOutput[c.Length];
+    for (int i = 0; i < c.Length; i++)
+            _in[i] = c[i]._out();
+        return _in;
     }
 
     /**
      * Constructs and returns an array of output channel ends, each of which can only be used by a
-     * single writer. The returned array, <code>r</code>, is constructed such that
-     * <code>r[i] = c[i].out ()</code> for <code>0 <= i < c.length</code>.
+     * s_ingle writer. The returned array, <code>r</code>, is constructed such that
+     * <code>r[i] = c[i].out ()</code> for <code>0 <= i < c.Length</code>.
      *
-     * @param c the array of channel to obtain output ends from.
-     * @return the array of output input ends.
+     * @param c the array of channel to obta_in output ends from.
+     * @return the array of output _input ends.
      */
     public static ChannelOutput[] getOutputArray(One2AnyChannel[] c)
 {
-    ChannelOutput[] in = new ChannelOutput[c.length];
-    for (int i = 0; i < c.length; i++)
-            in[i] = c[i].out();
-        return in;
+    ChannelOutput[] _in = new ChannelOutput[c.Length];
+    for (int i = 0; i < c.Length; i++)
+            _in[i] = c[i]._out();
+        return _in;
     }
 
     /**
      * Constructs and returns an array of output channel ends, each of which can only be used by a
-     * single writer. The returned array, <code>r</code>, is constructed such that
-     * <code>r[i] = c[i].out ()</code> for <code>0 <= i < c.length</code>.
+     * s_ingle writer. The returned array, <code>r</code>, is constructed such that
+     * <code>r[i] = c[i].out ()</code> for <code>0 <= i < c.Length</code>.
      *
-     * @param c the array of channel to obtain output ends from.
-     * @return the array of output input ends.
+     * @param c the array of channel to obta_in output ends from.
+     * @return the array of output _input ends.
      */
     public static ChannelOutput[] getOutputArray(One2OneChannel[] c)
 {
-    ChannelOutput[] in = new ChannelOutput[c.length];
-    for (int i = 0; i < c.length; i++)
-            in[i] = c[i].out();
-        return in;
+    ChannelOutput[] _in = new ChannelOutput[c.Length];
+    for (int i = 0; i < c.Length; i++)
+            _in[i] = c[i]._out();
+        return _in;
     }
     
     
