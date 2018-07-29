@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 
 namespace CSPlang
 {
@@ -22,9 +23,9 @@ namespace CSPlang
 		/** The monitor synchronising the writers and alting reader */
 		protected Object altMonitor = new Object();
 
-		private static readonly  int enabling = 0;
-		private static readonly  int waiting = 1;
-		private static readonly  int ready = 2;
+		private static readonly int enabling = 0;
+		private static readonly int waiting = 1;
+		private static readonly int ready = 2;
 		private static readonly  int inactive = 3;
 
 		/** The state of the ALTing process. */
@@ -34,11 +35,11 @@ namespace CSPlang
 		private readonly Guard[] guard;
 
 		/** The index of the guard with highest priority for the next select. */
-		private int favourite = 0;  // invariant: 0 <= favourite < guard.length
+		private int favourite = 0;  // invariant: 0 <= favourite < guard.Length
 
 		/** The index of the selected guard. */
 		private int selected;       // after the enable/disable sequence :
-									//    0 <= selected < guard.length
+									//    0 <= selected < guard.Length
 
 		private readonly  int NONE_SELECTED = -1;
 
@@ -185,10 +186,10 @@ namespace CSPlang
 						}
 					}
 				}
-				catch (InterruptedException e)
+				catch (/*InterruptedException*/  ThreadInterruptedException e)
 				{
 					throw new ProcessInterruptedException(
-				  "*** Thrown from Alternative.priSelect ()\n" + e.toString()
+				  "*** Thrown from Alternative.priSelect ()\n" + e.ToString()
 				);
 				}
 				state = ready;
@@ -282,10 +283,10 @@ namespace CSPlang
 						}
 					}
 				}
-				catch (InterruptedException e)
+				catch (/*InterruptedException*/  ThreadInterruptedException e)
 				{
 					throw new ProcessInterruptedException(
-				  "*** Thrown from Alternative.fairSelect/select ()\n" + e.toString()
+				  "*** Thrown from Alternative.fairSelect/select ()\n" + e.ToString()
 				);
 				}
 				state = ready;
@@ -294,7 +295,7 @@ namespace CSPlang
 		disableGuards();
 		state = inactive;
 		favourite = selected + 1;
-		if (favourite == guard.length)
+		if (favourite == guard.Length)
 			favourite = 0;
 		timeout = false;
 		return selected;
@@ -511,7 +512,7 @@ namespace CSPlang
 	 * index is true. The method will block until one of these guards becomes
 	 * ready.  If more than one is ready, an <I>arbitrary</I> choice is made.
 	 * <P>
-	 * <I>Note: the length of the </I><code>preCondition</code><I> array must be the
+	 * <I>Note: the Length of the </I><code>preCondition</code><I> array must be the
 	 * same as that of the array of guards with which this object was constructed.</I>
 	 * <P>
 	 *
@@ -527,7 +528,7 @@ namespace CSPlang
 	 * index is true. The method will block until one of these guards becomes
 	 * ready.  If more than one is ready, the one with the lowest index is selected.
 	 * <P>
-	 * <I>Note: the length of the </I><code>preCondition</code><I> array must be the
+	 * <I>Note: the Length of the </I><code>preCondition</code><I> array must be the
 	 * same as that of the array of guards with which this object was constructed.</I>
 	 * <P>
 	 *
@@ -542,9 +543,9 @@ namespace CSPlang
 		// }
 		if (preCondition.Length != guard.Length)
 		{
-			throw new IllegalArgumentException(
+			throw new /*IllegalArgumentException*/ ArgumentException(
 			  "*** jcsp.lang.Alternative.select called with a preCondition array\n" +
-			  "*** whose length does not match its guard array"
+			  "*** whose Length does not match its guard array"
 			);
 		}
 		state = enabling;
@@ -597,10 +598,10 @@ namespace CSPlang
 						}
 					}
 				}
-				catch (InterruptedException e)
+				catch (/*InterruptedException*/  ThreadInterruptedException e)
 				{
 					throw new ProcessInterruptedException(
-				  "*** Thrown from Alternative.priSelect (Boolean[])\n" + e.toString()
+				  "*** Thrown from Alternative.priSelect (Boolean[])\n" + e.ToString()
 				);
 				}
 				state = ready;
@@ -619,7 +620,7 @@ namespace CSPlang
 	 * when many guards are always ready.  <I>Implementation note: the last
 	 * guard serviced has the lowest priority next time around.</I>
 	 * <P>
-	 * <I>Note: the length of the </I><code>preCondition</code><I> array must be the
+	 * <I>Note: the Length of the </I><code>preCondition</code><I> array must be the
 	 * same as that of the array of guards with which this object was constructed.</I>
 	 * <P>
 	 *
@@ -629,14 +630,14 @@ namespace CSPlang
 	{
 		if (preCondition.Length != guard.Length)
 		{
-			throw new IllegalArgumentException(
+			throw new /*IllegalArgumentException*/ ArgumentException(
 			  "*** jcsp.lang.Alternative.select called with a preCondition array\n" +
-			  "*** whose length does not match its guard array"
+			  "*** whose Length does not match its guard array"
 			);
 		}
 		state = enabling;
 		enableGuards(preCondition);
-		/*/*synchronized*/ lock */ lock (altMonitor) {
+		/*/*synchronized*/  lock (altMonitor) {
 			if (state == enabling)
 			{
 				state = waiting;
@@ -683,10 +684,10 @@ namespace CSPlang
 						}
 					}
 				}
-				catch (InterruptedException e)
+				catch (/*InterruptedException*/  ThreadInterruptedException e)
 				{
 					throw new ProcessInterruptedException(
-				  "*** Thrown from Alternative.fairSelect/select (Boolean[])\n" + e.toString()
+				  "*** Thrown from Alternative.fairSelect/select (Boolean[])\n" + e.ToString()
 					);
 				}
 				state = ready;

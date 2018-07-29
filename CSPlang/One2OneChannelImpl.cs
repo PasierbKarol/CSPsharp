@@ -60,7 +60,7 @@ namespace CSPlang
  */
 public void write(Object value)
 {
-    synchronized(rwMonitor) {
+    /*synchronized*/  lock(rwMonitor) {
         hold = value;
         if (empty)
         {
@@ -105,7 +105,7 @@ public void write(Object value)
 */
 public Object read()
 {
-    synchronized(rwMonitor) {
+    /*synchronized*/  lock(rwMonitor) {
         if (empty)
         {
             empty = false;
@@ -139,7 +139,7 @@ public Object read()
 
 public Object startRead()
 {
-    synchronized(rwMonitor) {
+    /*synchronized*/  lock (rwMonitor) {
         if (empty)
         {
             empty = false;
@@ -172,7 +172,7 @@ public Object startRead()
 
 public void endRead()
 {
-    synchronized(rwMonitor) {
+    /*synchronized*/  lock(rwMonitor) {
         spuriousWakeUp = false;
         rwMonitor.notify();
     }
@@ -191,7 +191,7 @@ public void endRead()
 
 public Boolean readerEnable(Alternative alt)
 {
-    synchronized(rwMonitor) {
+    /*synchronized*/  lock(rwMonitor) {
         if (empty)
         {
             this.alt = alt;
@@ -214,7 +214,7 @@ public Boolean readerEnable(Alternative alt)
  */
 public Boolean readerDisable()
 {
-    synchronized(rwMonitor) {
+    /*synchronized*/  lock(rwMonitor) {
         alt = null;
         return !empty;
     }
@@ -257,7 +257,7 @@ public Boolean readerDisable()
  */
 public Boolean readerPending()
 {
-    synchronized(rwMonitor) {
+    /*synchronized*/  lock(rwMonitor) {
         return !empty;
     }
 }
