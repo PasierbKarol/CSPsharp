@@ -4,7 +4,7 @@ using System.Text;
 
 namespace CSPlang
 {
-    class AltingBarrierBase
+    public class AltingBarrierBase
     {
         /**
    * All front-ends are chained off here.  Each process enrolled must have one,
@@ -38,7 +38,7 @@ namespace CSPlang
             AltingBarrier[] ab = new AltingBarrier[n];
             for (int i = 0; i < n; i++)
             {
-                frontEnds = new AltingBarrier(this, frontEnds);
+                frontEnds = new AltingBarrier( this, frontEnds);
                 ab[i] = frontEnds;
             }
             enrolled += n;
@@ -58,7 +58,7 @@ namespace CSPlang
          * @return the new front-ends.
          * 
          */
-        AltingBarrier expand()
+        public AltingBarrier expand()
         {
             enrolled++;
             countdown++;
@@ -81,7 +81,7 @@ namespace CSPlang
         void contract(AltingBarrier[] ab)
         {
 
-            // assume: (ab != null) && (ab.length > 0)
+            // assume: (ab != null) && (ab.Length > 0)
             AltingBarrier first = ab[0];
 
             // counts the number of front-ends whose (hopefully terminated) processes
@@ -117,7 +117,7 @@ namespace CSPlang
             // deduce: (fa == null) <==> (frontEnds == ab[0])
             // deduce: (fa != null) <==> (fa.next == ab[0])
 
-            for (int i = 1; i < ab.length; i++)
+            for (int i = 1; i < ab.Length; i++)
             {
                 // invariant: (fb == ab[i-1]) && (fb != null)
                 if (fb.enrolled)
@@ -140,7 +140,7 @@ namespace CSPlang
                 ab[i] = null;
             }
 
-            // deduce: (fb == ab[(ab.length) - 1]) && (fb != null)
+            // deduce: (fb == ab[(ab.Length) - 1]) && (fb != null)
 
             if (fb.enrolled)
                 discard++;

@@ -7,7 +7,7 @@ namespace CSPlang
     {
         /** This references the barrier on which this is enrolled.
            */
-        //AltingBarrierBase base;
+        AltingBarrierBase baseClass;
 
         /** Link to the next <i>front-end</i> (used by {@link AltingBarrierBase}). */
         AltingBarrier next = null;
@@ -33,9 +33,9 @@ namespace CSPlang
         private CSTimer pollTime = null;
 
         /** Package-only constructor (used by {@link AltingBarrierBase}). */
-        AltingBarrier(AltingBarrierBase baseClass, AltingBarrier next)
+        public AltingBarrier (AltingBarrierBase baseClass, AltingBarrier next) : base()
         {
-            this.base = baseClass;
+            this.baseClass= baseClass;
             this.next = next;
         }
 
@@ -64,7 +64,7 @@ namespace CSPlang
         {
             if (n <= 0)
             {
-                throw new IllegalArgumentException(
+                throw new /*IllegalArgumentException*/ ArgumentException(
                   "\n*** An AltingBarrier must have at least one process enrolled, not " + n
                 );
             }
@@ -136,7 +136,7 @@ namespace CSPlang
          * @return an array of new <i>front-end</i>s for this barrier.
          * <p>
          * 
-         * @throws IllegalArgumentException if <code>n</code> <= <code>0</code>.
+         * @throws IllegalArgumentException  if <code>n</code> <= <code>0</code>.
          * <p>
          * 
          * @throws AltingBarrierError if currently resigned or not owner of this
@@ -146,11 +146,11 @@ namespace CSPlang
         {
             if (n <= 0)
             {
-                throw new IllegalArgumentException(
+                throw new /*IllegalArgumentException*/ ArgumentException(
                   "\n*** Expanding an AltingBarrier must be by at least one, not " + n
                 );
             }
-            synchronized(base) {
+            /*synchronized*/ lock (baseClass) {
                 if (myThread == null)
                 {
                     myThread = Thread.CurrentThread();
@@ -167,7 +167,7 @@ namespace CSPlang
                       "\n*** AltingBarrier expand attempted whilst resigned."
                     );
                 }
-                return base.expand(n);
+                return baseClass.expand(n);
             }
         }
 
@@ -197,12 +197,12 @@ namespace CSPlang
          */
         public AltingBarrier expand()
         {
-            synchronized(base) {
+            /*synchronized*/ lock (baseClass) {
                 if (myThread == null)
                 {
-                    myThread = Thread.currentThread();
+                    myThread = Thread.CurrentThread();
                 }
-                else if (myThread != Thread.currentThread())
+                else if (myThread != Thread.CurrentThread())
                 {
                     throw new AltingBarrierError(
                       "\n*** AltingBarrier expand attempted by non-owner."
@@ -214,7 +214,7 @@ namespace CSPlang
                       "\n*** AltingBarrier expand attempted whilst resigned."
                     );
                 }
-                return base.expand();
+                return baseClass.expand();
             }
         }
 
@@ -246,7 +246,7 @@ namespace CSPlang
          *   an {@link #expand(int) expand}.
          * <p>
          * 
-         * @throws IllegalArgumentException if <code>ab</code> is <code>null</code> or zero length.
+         * @throws IllegalArgumentException if <code>ab</code> is <code>null</code> or zero Length.
          * <p>
          * 
          * @throws AltingBarrierError if the given array is <i>not</i> one previously
@@ -257,22 +257,22 @@ namespace CSPlang
         {
             if (ab == null)
             {
-                throw new IllegalArgumentException(
+                throw new /*IllegalArgumentException*/ ArgumentException(
                   "\n*** AltingBarrier contract given a null array."
                 );
             }
-            if (ab.length == 0)
+            if (ab.Length == 0)
             {
-                throw new IllegalArgumentException(
+                throw new /*IllegalArgumentException*/ ArgumentException(
                   "\n*** AltingBarrier contract given an empty array."
                 );
             }
-            synchronized(base) {
+            /*synchronized*/ lock (baseClass) {
                 // if (myThread == null) {                         // contract on
                 //   myThread = Thread.currentThread ();           // a virgin AltingBarrier
                 // }                                               // is an error ???
                 // else                                            // (PHW)
-                if (myThread != Thread.currentThread())
+                if (myThread != Thread.CurrentThread())
                 {
                     throw new AltingBarrierError(
                       "\n*** AltingBarrier contract attempted by non-owner."
@@ -284,7 +284,7 @@ namespace CSPlang
                       "\n*** AltingBarrier contract attempted whilst resigned."
                     );
                 }
-                base.contract(ab);
+                baseClass.contract(ab);
             }
         }
 
@@ -310,12 +310,12 @@ namespace CSPlang
          */
         public void contract()
         {
-            synchronized(base) {
+            /*synchronized*/ lock (baseClass) {
                 // if (myThread == null) {                         // contract on
                 //   myThread = Thread.currentThread ();           // a virgin AltingBarrier
                 // }                                               // is an error ???
                 // else                                            // (PHW)
-                if (myThread != Thread.currentThread())
+                if (myThread != Thread.CurrentThread())
                 {
                     throw new AltingBarrierError(
                       "\n*** AltingBarrier contract attempted by non-owner."
@@ -327,19 +327,19 @@ namespace CSPlang
                       "\n*** AltingBarrier contract attempted whilst resigned."
                     );
                 }
-                base.contract(this);
+                baseClass.contract(this);
             }
         }
 
         //Boolean enable(Alternative a)
         protected override bool enable(Alternative alt)
         {            // package-only visible
-            synchronized(base) {
+            /*synchronized*/ lock (baseClass) {
                 if (myThread == null)
                 {
-                    myThread = Thread.currentThread();
+                    myThread = Thread.CurrentThread();
                 }
-                else if (myThread != Thread.currentThread())
+                else if (myThread != Thread.CurrentThread())
                 {
                     throw new AltingBarrierError(
                       "\n*** AltingBarrier front-end enable by more than one Thread."
@@ -355,7 +355,7 @@ namespace CSPlang
                 {                      // in case the same barrier
                     return false;                         // occurs more than once in
                 }                                       // the same Alternative.
-                if (base.enable())
+                if (baseClass.enable())
                 {
                     a.setBarrierTrigger();               // let Alternative know we did it
                     return true;
@@ -371,12 +371,12 @@ namespace CSPlang
         //        Boolean disable()
         protected override bool disable()
         {                        // package-only visible
-            synchronized(base) {
+            /*synchronized*/ lock (baseClass) {
                 if (alt == null)
                 {                      // in case the same barrier
                     return false;                         // occurs more than once in
                 }                                       // the same Alternative.
-                if (base.disable())
+                if (baseClass.disable())
                 {
                     alt.setBarrierTrigger();             // let Alternative know we did it
                     alt = null;
@@ -426,7 +426,7 @@ namespace CSPlang
          */
         public void resign()
         {
-            synchronized(base) {
+            /*synchronized*/ lock (baseClass) {
                 if (!enrolled)
                 {
                     throw new AltingBarrierError(
@@ -434,7 +434,7 @@ namespace CSPlang
                     );
                 }
                 enrolled = false;
-                base.resign();
+                baseClass.resign();
             }
         }
 
@@ -463,7 +463,7 @@ namespace CSPlang
          */
         public void enroll()
         {
-            synchronized(base) {
+            /*synchronized*/ lock (baseClass) {
                 if (enrolled)
                 {
                     throw new AltingBarrierError(
@@ -471,7 +471,7 @@ namespace CSPlang
                     );
                 }
                 enrolled = true;
-                base.enroll();
+                baseClass.enroll();
             }
         }
 
@@ -494,14 +494,14 @@ namespace CSPlang
          */
         public void mark()
         {
-            synchronized(base) {
+            /*synchronized*/ lock (baseClass) {
                 if (!enrolled)
                 {
                     throw new AltingBarrierError(
                       "\n*** Attempt to AltingBarrier.mark() a resigned front-end."
                     );
                 }
-                myThread = Thread.currentThread();
+                myThread = Thread.CurrentThread();
             }
         }
 
@@ -523,7 +523,7 @@ namespace CSPlang
          *   AltingBarrier[] action = AltingBarrier.create (n);
          * 
          *   Parallel[] system = new Parallel[n];
-         *   for (int i = 0; i < system.length; i++) {
+         *   for (int i = 0; i < system.Length; i++) {
          *     system[i] = new Something (action[i], ...);
          *   }
          * 
@@ -535,7 +535,7 @@ namespace CSPlang
          *     // note: some 'system' processes may have resigned their 'action' front-ends.
          *     // note: in the next run of 'system', its processes may be <i>different</i>
          *     //       from the point of view of the 'action' front-ends.
-         *     for (int i = 0; i < action.length; i++) {
+         *     for (int i = 0; i < action.Length; i++) {
          *       action[i].reset ();
          *     }
          *     // deduce: loop invariant re-established.
@@ -544,11 +544,11 @@ namespace CSPlang
          */
         public void reset()
         {
-            synchronized(base) {
+            /*synchronized*/ lock (baseClass) {
                 if (!enrolled)
                 {
                     enrolled = true;
-                    base.enroll();
+                    baseClass.enroll();
                 }
                 myThread = null;
             }

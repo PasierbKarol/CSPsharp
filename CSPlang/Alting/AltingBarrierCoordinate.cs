@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 
 namespace CSPlang
 {
@@ -30,12 +31,13 @@ namespace CSPlang
         /* Invoked at start of an enable sequence involving a barrier. */
         public static void startEnable()
         {
-            synchronized(activeLock) {
+            /*synchronized*/ lock (activeLock) {
                 if (active > 0)
                 {
                     try
                     {
-                        activeLock.wait();
+                        //activeLock.wait();
+                        Monitor.Wait(activeLock); //Guessing what should be here. Was empty
                         while (active > 0)
                         {
                             // This may be a spurious wakeup.  More likely, this is a properly
@@ -43,12 +45,12 @@ namespace CSPlang
                             // by another thread (quite possibly the notifying one) that has
                             // (re-)acquired it and set 'active' greater than zero.  We have
                             // not instrumented the code to tell the difference.  Either way:
-                            activeLock.wait();
+                            Monitor.Wait(activeLock); //Guessing what should be here. Was empty
                         }
                     }
-                    catch (InterruptedException e)
+                    catch (/*InterruptedException*/  ThreadInterruptedException e)
                     {
-                        throw new ProcessInterruptedException(e.toString());
+                        throw new ProcessInterruptedException(e.ToString());
                     }
                 }
                 if (active != 0)
@@ -65,7 +67,7 @@ namespace CSPlang
         /* Invoked at finish of an unsuccessful enable sequence involving a barrier. */
         public static void finishEnable()
         {
-            synchronized(activeLock) {
+            /*synchronized*/ lock (activeLock) {
                 if (active != 1)
                 {
                     throw new JCSP_InternalError(
@@ -74,7 +76,8 @@ namespace CSPlang
                 );
                 }
                 active = 0;
-                activeLock.notify();
+                //activeLock.notify();
+                Monitor.Pulse(activeLock);
             }
         }
 
@@ -83,7 +86,7 @@ namespace CSPlang
          *
          * @param n The number of processes being released to start their disable sequences.
          */
-        static void startDisable(int n)
+        public static void startDisable(int n)
         {
             if (n <= 0)
             {
@@ -91,7 +94,7 @@ namespace CSPlang
                   "\n*** attempt to start " + n + " disable sequences!"
                 );
             }
-            synchronized(activeLock) {               // not necessary ... ?
+            /*synchronized*/ lock (activeLock) {               // not necessary ... ?
                 if (active != 1)
                 {
                     throw new JCSP_InternalError(
@@ -106,7 +109,7 @@ namespace CSPlang
         /* Invoked at finish of a disable sequence selecting a barrier. */
         public static void finishDisable()
         {
-            synchronized(activeLock) {
+            /*synchronized*/ lock (activeLock) {
                 if (active < 1)
                 {
                     throw new JCSP_InternalError(
@@ -117,7 +120,7 @@ namespace CSPlang
                 active--;
                 if (active == 0)
                 {
-                    activeLock.notify();
+                    Monitor.Pulse(activeLock);
                 }
             }
         }
