@@ -482,7 +482,7 @@ namespace CSPlang
 		 * This is a call-back from an AltingBarrier.
 		 * It is still in the flow of control of the ALTing process.
 		 */
-		void setBarrierTrigger()
+	    public void setBarrierTrigger()
 		{
 			barrierTrigger = true;
 		}

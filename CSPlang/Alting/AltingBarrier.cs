@@ -7,10 +7,10 @@ namespace CSPlang
     {
         /** This references the barrier on which this is enrolled.
            */
-        AltingBarrierBase baseClass;
+        public AltingBarrierBase baseClass;
 
         /** Link to the next <i>front-end</i> (used by {@link AltingBarrierBase}). */
-        AltingBarrier next = null;
+        public AltingBarrier next = null;
 
         /** The process offering this barrier (protected by the base monitor). */
         private Alternative alt = null;
@@ -21,7 +21,7 @@ namespace CSPlang
         /** Safety check (protected by the base monitor).
          *  Also package visible (needed by the base.contract(...) method).
          */
-        Boolean enrolled = true;
+        public Boolean enrolled = true;
 
         /** Used to support the {@link #sync() <code>sync</code>} method. */
         private Alternative singleAlt = null;
@@ -153,9 +153,9 @@ namespace CSPlang
             /*synchronized*/ lock (baseClass) {
                 if (myThread == null)
                 {
-                    myThread = Thread.CurrentThread();
+                    myThread = Thread.CurrentThread;
                 }
-                else if (myThread != Thread.CurrentThread())
+                else if (myThread != Thread.CurrentThread)
                 {
                     throw new AltingBarrierError(
                       "\n*** AltingBarrier expand attempted by non-owner."
@@ -200,9 +200,9 @@ namespace CSPlang
             /*synchronized*/ lock (baseClass) {
                 if (myThread == null)
                 {
-                    myThread = Thread.CurrentThread();
+                    myThread = Thread.CurrentThread;
                 }
-                else if (myThread != Thread.CurrentThread())
+                else if (myThread != Thread.CurrentThread)
                 {
                     throw new AltingBarrierError(
                       "\n*** AltingBarrier expand attempted by non-owner."
@@ -272,7 +272,7 @@ namespace CSPlang
                 //   myThread = Thread.currentThread ();           // a virgin AltingBarrier
                 // }                                               // is an error ???
                 // else                                            // (PHW)
-                if (myThread != Thread.CurrentThread())
+                if (myThread != Thread.CurrentThread)
                 {
                     throw new AltingBarrierError(
                       "\n*** AltingBarrier contract attempted by non-owner."
@@ -315,7 +315,7 @@ namespace CSPlang
                 //   myThread = Thread.currentThread ();           // a virgin AltingBarrier
                 // }                                               // is an error ???
                 // else                                            // (PHW)
-                if (myThread != Thread.CurrentThread())
+                if (myThread != Thread.CurrentThread)
                 {
                     throw new AltingBarrierError(
                       "\n*** AltingBarrier contract attempted by non-owner."
@@ -332,14 +332,14 @@ namespace CSPlang
         }
 
         //Boolean enable(Alternative a)
-        protected override bool enable(Alternative alt)
+        public override bool enable(Alternative a)
         {            // package-only visible
             /*synchronized*/ lock (baseClass) {
                 if (myThread == null)
                 {
-                    myThread = Thread.CurrentThread();
+                    myThread = Thread.CurrentThread;
                 }
-                else if (myThread != Thread.CurrentThread())
+                else if (myThread != Thread.CurrentThread)
                 {
                     throw new AltingBarrierError(
                       "\n*** AltingBarrier front-end enable by more than one Thread."
@@ -369,7 +369,7 @@ namespace CSPlang
         }
 
         //        Boolean disable()
-        protected override bool disable()
+        public override bool disable()
         {                        // package-only visible
             /*synchronized*/ lock (baseClass) {
                 if (alt == null)
@@ -396,7 +396,7 @@ namespace CSPlang
          * scheduled!  If we are resigned, ditto.  Whoever is calling this 'schedule'
          * has the 'base' monitor.
          */
-        void schedule()
+        public void schedule()
         {                          // package-only visible
             if (alt != null)
             {
@@ -501,7 +501,7 @@ namespace CSPlang
                       "\n*** Attempt to AltingBarrier.mark() a resigned front-end."
                     );
                 }
-                myThread = Thread.CurrentThread();
+                myThread = Thread.CurrentThread;
             }
         }
 

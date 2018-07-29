@@ -17,5 +17,24 @@ namespace CSPlang
          * @return state of the channel.
          */
         public abstract Boolean pending();
+        public void poison(int strength)
+        {
+            throw new NotImplementedException();
+        }
+
+        public object read()
+        {
+            throw new NotImplementedException();
+        }
+
+        public object startRead()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void endRead()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

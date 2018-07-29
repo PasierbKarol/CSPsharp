@@ -33,7 +33,7 @@ namespace CSPlang
          * @return the new front-ends.
          * 
          */
-        AltingBarrier[] expand(int n)
+        public AltingBarrier[] expand(int n)
         {
             AltingBarrier[] ab = new AltingBarrier[n];
             for (int i = 0; i < n; i++)
@@ -58,7 +58,7 @@ namespace CSPlang
          * @return the new front-ends.
          * 
          */
-        public AltingBarrier expand()
+        internal AltingBarrier expand()
         {
             enrolled++;
             countdown++;
@@ -78,7 +78,7 @@ namespace CSPlang
          *   This array must be unaltered from one previously delivered by
          *   an {@link #expand expand}.
          */
-        void contract(AltingBarrier[] ab)
+        internal void contract(AltingBarrier[] ab)
         {
 
             // assume: (ab != null) && (ab.Length > 0)
@@ -109,7 +109,7 @@ namespace CSPlang
             // of the code does not depend on values of "ab", subsequent to their
             // anullment.
 
-            ab[0].base = null;
+            ab[0].baseClass = null;
             ab[0] = null;
 
             // deduce: (fb == ab[0]) && (fb != null)
@@ -136,7 +136,7 @@ namespace CSPlang
                     );
                 }
                 // deduce: (fb == ab[i]) && (fb != null)
-                ab[i].base = null;
+                ab[i].baseClass = null;
                 ab[i] = null;
             }
 
@@ -195,7 +195,7 @@ namespace CSPlang
          *   This array must be unaltered from one previously delivered by
          *   an {@link #expand expand}.
          */
-        void contract(AltingBarrier ab)
+        internal void contract(AltingBarrier ab)
         {
 
             // assume: (ab != null)
@@ -229,7 +229,7 @@ namespace CSPlang
                 fa.next = fb.next;
             }
 
-            ab.base = null;
+            ab.baseClass = null;
 
             if (ab.enrolled)
             {
@@ -269,7 +269,7 @@ namespace CSPlang
          *
          * @return true if all the offers are in.
          */
-        Boolean enable()
+        internal Boolean enable()
         {
             countdown--;
             if (countdown == 0)
@@ -299,7 +299,7 @@ namespace CSPlang
          *
          * @return true all the offers are in.
          */
-        Boolean disable()
+        internal Boolean disable()
         {
             if (countdown == enrolled)
             {
@@ -319,7 +319,7 @@ namespace CSPlang
          * on this AltingBarrierBase.</I>
          * <p>
          */
-        void resign()
+        internal void resign()
         {
             enrolled--;
             countdown--;
@@ -346,7 +346,7 @@ namespace CSPlang
          * <I>Note: this method should only be called by an AltingBarrier synchronised
          * on this AltingBarrierBase.</I>
          */
-        void enroll()
+        internal void enroll()
         {
             enrolled++;
             countdown++;
