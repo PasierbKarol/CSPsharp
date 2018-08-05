@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
+using CSPlang.Any2;
+using CSPlang.Shared;
 
 namespace CSPlang.One2
 {
@@ -8,25 +11,27 @@ namespace CSPlang.One2
     {
         private ChannelInternals channel;
         /** The mutex on which readers must synchronize */
-        private final Mutex readMutex = new Mutex();
+        private readonly Mutex readMutex = new Mutex();
 
         internal One2AnyImpl(ChannelInternals _channel)
         {
             channel = _channel;
         }
 
-        public SharedChannelInput in() {
-            return new SharedChannelInputImpl(this,0);
+        public SharedChannelInput In()
+        {
+            return new SharedChannelInputImpl(this, 0);
         }
 
-        public ChannelOutput out() { 
-            return new ChannelOutputImpl(channel,0);
+        public ChannelOutput Out()
+        {
+            return new ChannelOutputImpl(channel, 0);
         }
 
         public void endRead()
         {
             channel.endRead();
-            readMutex.release();
+            readMutex.ReleaseMutex();
 
         }
 
@@ -40,11 +45,11 @@ namespace CSPlang.One2
             }
             finally
             {
-                readMutex.release();
+                readMutex.ReleaseMutex();
             }
         }
 
-//begin never used:
+        //begin never used:
         public Boolean readerDisable()
         {
             return false;
@@ -59,13 +64,15 @@ namespace CSPlang.One2
         {
             return false;
         }
-//end never used
+
+
+        //end never used
 
         public void readerPoison(int strength)
         {
             readMutex.claim();
             channel.readerPoison(strength);
-            readMutex.release();
+            readMutex.ReleaseMutex();
         }
 
         public Object startRead()
@@ -78,13 +85,13 @@ namespace CSPlang.One2
             catch (RuntimeException e)
             {
                 channel.endRead();
-                readMutex.release();
+                readMutex.ReleaseMutex();
                 throw e;
             }
 
         }
 
-//begin never used
+        //begin never used
         public void write(Object obj)
         {
             channel.write(obj);
@@ -96,5 +103,20 @@ namespace CSPlang.One2
         }
         //end never used
 
+
+        public bool writerEnable(Alternative alt)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool writerDisable()
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool writerPending()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

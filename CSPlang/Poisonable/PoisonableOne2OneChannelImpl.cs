@@ -1,9 +1,10 @@
 ﻿using System;
+using System.Threading;
 
 namespace CSPlang
 {
 	[Serializable]
-	internal class PoisonableOne2OneChannelImpl : One2OneChannel,  ChannelInternals
+	internal class PoisonableOne2OneChannelImpl : One2OneChannel, ChannelInternals
 	{
 		/** The monitor synchronising reader and writer on this channel */
 		private Object rwMonitor = new Object();
@@ -44,7 +45,7 @@ namespace CSPlang
 			return poisonStrength > 0;
 		}
 
-	   internal	PoisonableOne2OneChannelImpl(int _immunity)
+		internal PoisonableOne2OneChannelImpl(int _immunity)
 		{
 			immunity = _immunity;
 		}
@@ -61,311 +62,337 @@ namespace CSPlang
 		 *          channel.
 		 */
 		public AltingChannelInput In()
-	{
-		return new AltingChannelInputImpl(this, immunity);
-	}
-
-	/**
-	 * Returns the <code>ChannelOutput</code> object to use for this channel.
-	 * As <code>One2OneChannelImpl</code> implements
-	 * <code>ChannelOutput</code> itself, this method simply returns
-	 * a reference to the object that it is called on.
-	 *
-	 * @return the <code>ChannelOutput</code> object to use for this
-	 *          channel.
-	 */
-	public ChannelOutput Out()
-	{
-		return new ChannelOutputImpl(this, immunity);
-}
-
-/*************Methods from ChannelOutput*******************************/
-
-/**
- * Writes an <TT>Object</TT> to the channel.
- *
- * @param value the object to write to the channel.
- */
-public void write(Object value)
-{
-	lock (rwMonitor) {
-		if (isPoisoned())
 		{
-			throw new PoisonException(poisonStrength);
+			return new AltingChannelInputImpl(this, immunity);
 		}
 
-		hold = value;
-		if (empty)
+		/**
+		 * Returns the <code>ChannelOutput</code> object to use for this channel.
+		 * As <code>One2OneChannelImpl</code> implements
+		 * <code>ChannelOutput</code> itself, this method simply returns
+		 * a reference to the object that it is called on.
+		 *
+		 * @return the <code>ChannelOutput</code> object to use for this
+		 *          channel.
+		 */
+		public ChannelOutput Out()
 		{
-			empty = false;
-			if (alt != null)
+			return new ChannelOutputImpl(this, immunity);
+		}
+
+		/*************Methods from ChannelOutput*******************************/
+
+		/**
+		 * Writes an <TT>Object</TT> to the channel.
+		 *
+		 * @param value the object to write to the channel.
+		 */
+		public void write(Object value)
+		{
+			lock (rwMonitor)
 			{
-				alt.schedule();
-			}
-		}
-		else
-		{
-			empty = true;
-			rwMonitor.notify();
-		}
-		try
-		{
-			rwMonitor.wait();
-			while (spuriousWakeUp && !isPoisoned())
-			{
-				if (Spurious.logging)
+				if (isPoisoned())
 				{
-					SpuriousLog.record(SpuriousLog.One2OneChannelWrite);
+					throw new PoisonException(poisonStrength);
 				}
-				rwMonitor.wait();
+
+				hold = value;
+				if (empty)
+				{
+					empty = false;
+					if (alt != null)
+					{
+						alt.schedule();
+					}
+				}
+				else
+				{
+					empty = true;
+					Monitor.Pulse(rwMonitor);
+				}
+				try
+				{
+					Monitor.Wait(rwMonitor);
+					while (spuriousWakeUp && !isPoisoned())
+					{
+						if (Spurious.logging)
+						{
+							SpuriousLog.record(SpuriousLog.One2OneChannelWrite);
+						}
+						Monitor.Wait(rwMonitor);
+					}
+					spuriousWakeUp = true;
+				}
+				catch (ThreadInterruptedException e)
+				{
+					throw new ProcessInterruptedException(
+						"*** Thrown from One2OneChannel.write (Object)\n" + e.ToString());
+				}
+
+				if (done)
+				{
+					done = false;
+				}
+				else if (isPoisoned())
+				{
+					hold = null;
+					throw new PoisonException(poisonStrength);
+				}
+				else
+				{
+					done = true;
+				}
+
 			}
-			spuriousWakeUp = true;
-		}
-		catch (InterruptedException e)
-		{
-			throw new ProcessInterruptedException(
-				"*** Thrown from One2OneChannel.write (Object)\n" + e.toString());
 		}
 
-		if (done)
-		{
-			done = false;
-		}
-		else if (isPoisoned())
-		{
-			hold = null;
-			throw new PoisonException(poisonStrength);
-		}
-		else
-		{
-			done = true;
-		}
+		/** ***********Methods from AltingChannelInput************************* */
 
-	}
-}
-
-/** ***********Methods from AltingChannelInput************************* */
-
-/**
-* Reads an <TT>Object</TT> from the channel.
-*
-* @return the object read from the channel.
+		/**
+		* Reads an <TT>Object</TT> from the channel.
+		*
+		* @return the object read from the channel.
 */
-public Object read()
-{
-	lock (rwMonitor) {
-		if (isPoisoned())
+		public Object read()
 		{
-			throw new PoisonException(poisonStrength);
-		}
-
-
-		if (empty)
-		{
-			empty = false;
-			try
+			lock (rwMonitor)
 			{
-				rwMonitor.wait();
-				while (!empty && !isPoisoned())
+				if (isPoisoned())
 				{
-					if (Spurious.logging)
+					throw new PoisonException(poisonStrength);
+				}
+
+
+				if (empty)
+				{
+					empty = false;
+					try
 					{
-						SpuriousLog.record(SpuriousLog.One2OneChannelRead);
+						Monitor.Wait(rwMonitor);
+						while (!empty && !isPoisoned())
+						{
+							if (Spurious.logging)
+							{
+								SpuriousLog.record(SpuriousLog.One2OneChannelRead);
+							}
+							Monitor.Wait(rwMonitor);
+						}
 					}
-					rwMonitor.wait();
+					catch (ThreadInterruptedException e)
+					{
+						throw new ProcessInterruptedException("*** Thrown from One2OneChannel.read ()\n"
+														   + e.ToString());
+					}
+				}
+				else
+				{
+					empty = true;
+				}
+				spuriousWakeUp = false;
+
+				if (isPoisoned())
+				{
+					throw new PoisonException(poisonStrength);
+				}
+				else
+				{
+					done = true;
+					Monitor.Pulse(rwMonitor);
+					return hold;
 				}
 			}
-			catch (InterruptedException e)
+		}
+
+		public Object startRead()
+		{
+			lock (rwMonitor)
 			{
-				throw new ProcessInterruptedException("*** Thrown from One2OneChannel.read ()\n"
-												   + e.toString());
+				if (isPoisoned())
+				{
+					throw new PoisonException(poisonStrength);
+				}
+
+				if (empty)
+				{
+					empty = false;
+					try
+					{
+						Monitor.Wait(rwMonitor);
+						while (!empty && !isPoisoned())
+						{
+							if (Spurious.logging)
+							{
+								SpuriousLog.record(SpuriousLog.One2OneChannelRead);
+							}
+							Monitor.Wait(rwMonitor);
+						}
+					}
+					catch (ThreadInterruptedException e)
+					{
+						throw new ProcessInterruptedException("*** Thrown from One2OneChannel.read ()\n"
+														   + e.ToString());
+					}
+				}
+				else
+				{
+					empty = true;
+				}
+
+				if (isPoisoned())
+				{
+					throw new PoisonException(poisonStrength);
+				}
+
+				return hold;
 			}
 		}
-		else
-		{
-			empty = true;
-		}
-		spuriousWakeUp = false;
 
-		if (isPoisoned())
+		public void endRead()
 		{
-			throw new PoisonException(poisonStrength);
-		}
-		else
-		{
-			done = true;
-			rwMonitor.notify();
-			return hold;
-		}
-	}
-}
-
-public Object startRead()
-{
-	lock (rwMonitor) {
-		if (isPoisoned())
-		{
-			throw new PoisonException(poisonStrength);
-		}
-
-		if (empty)
-		{
-			empty = false;
-			try
+			lock (rwMonitor)
 			{
-				rwMonitor.wait();
-				while (!empty && !isPoisoned())
+				spuriousWakeUp = false;
+				Monitor.Pulse(rwMonitor);
+			}
+		}
+
+
+		/**
+		 * turns on Alternative selection for the channel. Returns true if the
+		 * channel has data that can be read immediately.
+		 * <P>
+		 * <I>Note: this method should only be called by the Alternative class</I>
+		 *
+		 * @param alt the Alternative class which will control the selection
+		 * @return true if the channel has data that can be read, else false
+		 */
+		public Boolean readerEnable(Alternative alt)
+		{
+			lock (rwMonitor)
+			{
+				if (isPoisoned())
 				{
-					if (Spurious.logging)
-					{
-						SpuriousLog.record(SpuriousLog.One2OneChannelRead);
-					}
-					rwMonitor.wait();
+					return true;
+				}
+
+
+				if (empty)
+				{
+					this.alt = alt;
+					return false;
+				}
+				else
+				{
+					return true;
 				}
 			}
-			catch (InterruptedException e)
+		}
+
+		/**
+		 * turns off Alternative selection for the channel. Returns true if the
+		 * channel contained data that can be read.
+		 * <P>
+		 * <I>Note: this method should only be called by the Alternative class</I>
+		 *
+		 * @return true if the channel has data that can be read, else false
+		 */
+		public Boolean readerDisable()
+		{
+			lock (rwMonitor)
 			{
-				throw new ProcessInterruptedException("*** Thrown from One2OneChannel.read ()\n"
-												   + e.toString());
+				alt = null;
+				return !empty || isPoisoned();
 			}
 		}
-		else
+
+		/**
+		 * Returns whether there is data pending on this channel.
+		 * <P>
+		 * <I>Note: if there is, it won't go away until you read it.  But if there
+		 * isn't, there may be some by the time you check the result of this method.</I>
+		 * <P>
+		 * This method is provided for convenience.  Its functionality can be provided
+		 * by <I>Pri Alting</I> the channel against a <TT>SKIP</TT> guard, although
+		 * at greater run-time and syntactic cost.  For example, the following code
+		 * fragment:
+		 * <PRE>
+		 *   if (c.pending ()) {
+		 *     Object x = c.read ();
+		 *     ...  do something with x
+		 *   } else (
+		 *     ...  do something else
+		 *   }
+		 * </PRE>
+		 * is equivalent to:
+		 * <PRE>
+		 *   if (c_pending.priSelect () == 0) {
+		 *     Object x = c.read ();
+		 *     ...  do something with x
+		 *   } else (
+		 *     ...  do something else
+		 * }
+		 * </PRE>
+		 * where earlier would have had to have been declared:
+		 * <PRE>
+		 * final Alternative c_pending =
+		 *   new Alternative (new Guard[] {c, new Skip ()});
+		 * </PRE>
+		 *
+		 * @return state of the channel.
+		 */
+		public Boolean readerPending()
 		{
-			empty = true;
-		}
-
-		if (isPoisoned())
-		{
-			throw new PoisonException(poisonStrength);
-		}
-
-		return hold;
-	}
-}
-
-public void endRead()
-{
-	lock (rwMonitor) {
-		spuriousWakeUp = false;
-		rwMonitor.notify();
-	}
-}
-
-
-/**
- * turns on Alternative selection for the channel. Returns true if the
- * channel has data that can be read immediately.
- * <P>
- * <I>Note: this method should only be called by the Alternative class</I>
- *
- * @param alt the Alternative class which will control the selection
- * @return true if the channel has data that can be read, else false
- */
-public Boolean readerEnable(Alternative alt)
-{
-	lock (rwMonitor) {
-		if (isPoisoned())
-		{
-			return true;
-		}
-
-
-		if (empty)
-		{
-			this.alt = alt;
-			return false;
-		}
-		else
-		{
-			return true;
-		}
-	}
-}
-
-/**
- * turns off Alternative selection for the channel. Returns true if the
- * channel contained data that can be read.
- * <P>
- * <I>Note: this method should only be called by the Alternative class</I>
- *
- * @return true if the channel has data that can be read, else false
- */
-public Boolean readerDisable()
-{
-	lock (rwMonitor) {
-		alt = null;
-		return !empty || isPoisoned();
-	}
-}
-
-/**
- * Returns whether there is data pending on this channel.
- * <P>
- * <I>Note: if there is, it won't go away until you read it.  But if there
- * isn't, there may be some by the time you check the result of this method.</I>
- * <P>
- * This method is provided for convenience.  Its functionality can be provided
- * by <I>Pri Alting</I> the channel against a <TT>SKIP</TT> guard, although
- * at greater run-time and syntactic cost.  For example, the following code
- * fragment:
- * <PRE>
- *   if (c.pending ()) {
- *     Object x = c.read ();
- *     ...  do something with x
- *   } else (
- *     ...  do something else
- *   }
- * </PRE>
- * is equivalent to:
- * <PRE>
- *   if (c_pending.priSelect () == 0) {
- *     Object x = c.read ();
- *     ...  do something with x
- *   } else (
- *     ...  do something else
- * }
- * </PRE>
- * where earlier would have had to have been declared:
- * <PRE>
- * final Alternative c_pending =
- *   new Alternative (new Guard[] {c, new Skip ()});
- * </PRE>
- *
- * @return state of the channel.
- */
-public Boolean readerPending()
-{
-	lock (rwMonitor) {
-		return !empty || isPoisoned();
-	}
-}
-
-public void writerPoison(int strength)
-{
-	if (strength > 0)
-	{
-		lock (rwMonitor) {
-			this.poisonStrength = strength;
-
-			rwMonitor.notifyAll();
-
-			if (null != alt)
+			lock (rwMonitor)
 			{
-				alt.schedule();
+				return !empty || isPoisoned();
 			}
 		}
-	}
-}
-public void readerPoison(int strength)
-{
-	if (strength > 0)
-	{
-		lock (rwMonitor) {
-			this.poisonStrength = strength;
 
-			rwMonitor.notifyAll();
+
+
+		public void writerPoison(int strength)
+		{
+			if (strength > 0)
+			{
+				lock (rwMonitor)
+				{
+					this.poisonStrength = strength;
+
+					Monitor.PulseAll(rwMonitor);
+
+					if (null != alt)
+					{
+						alt.schedule();
+					}
+				}
+			}
 		}
-	}
-}
+		public void readerPoison(int strength)
+		{
+			if (strength > 0)
+			{
+				lock (rwMonitor)
+				{
+					this.poisonStrength = strength;
+
+					Monitor.PulseAll(rwMonitor);
+				}
+			}
+		}
+
+		public bool writerEnable(Alternative alt)
+		{
+			throw new NotImplementedException();
+		}
+
+		public bool writerDisable()
+		{
+			throw new NotImplementedException();
+		}
+
+		public bool writerPending()
+		{
+			throw new NotImplementedException();
+		}
 	}
 }

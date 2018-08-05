@@ -75,10 +75,10 @@ namespace CSPlang
                 {
                     Thread.Sleep(delay);
                 }
-                catch (InterruptedException e)
+                catch (ThreadInterruptedException  e)
                 {
                     throw new ProcessInterruptedException
-                            ("*** Thrown from CSTimer.after (long)\n" + e.toString());
+                            ("*** Thrown from CSTimer.after (long)\n" + e.ToString());
                 }
         }
 
@@ -94,10 +94,10 @@ namespace CSPlang
                 {
                     Thread.Sleep(msecs);
                 }
-                catch (InterruptedException e)
+                catch (ThreadInterruptedException  e)
                 {
                     throw new ProcessInterruptedException
-                            ("*** Thrown from CSTimer.sleep (long)\n" + e.toString());
+                            ("*** Thrown from CSTimer.sleep (long)\n" + e.ToString());
                 }
         }
 

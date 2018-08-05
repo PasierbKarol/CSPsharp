@@ -2,15 +2,14 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace CSPlang
+namespace CSPlang.Alting
 {
-    class AltingChannelInputImpl
+    class AltingChannelInputIntImpl : AltingChannelInputInt
     {
-
-        private ChannelInternals channel;
+        private ChannelInternalsInt channel;
         private int immunity;
 
-        internal AltingChannelInputImpl(ChannelInternals _channel, int _immunity)
+        AltingChannelInputIntImpl(ChannelInternalsInt _channel, int _immunity)
         {
             channel = _channel;
             immunity = _immunity;
@@ -37,12 +36,12 @@ namespace CSPlang
             channel.endRead();
         }
 
-        public Object read()
+        public int read()
         {
             return channel.read();
         }
 
-        public Object startRead()
+        public int startRead()
         {
             return channel.startRead();
         }

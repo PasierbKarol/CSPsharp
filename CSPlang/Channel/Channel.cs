@@ -308,7 +308,7 @@ namespace CSPlang
         {
             SharedChannelInput[] _in = new SharedChannelInput[c.Length];
             for (int i = 0; i < c.Length; i++)
-                _in[i] = c[i]._in();
+                _in[i] = c[i].In();
             return _in;
         }
 
@@ -372,7 +372,7 @@ namespace CSPlang
     {
         SharedChannelOutput[] _in = new SharedChannelOutput[c.Length];
         for (int i = 0; i < c.Length; i++)
-            _in[i] = c[i]._out();
+            _in[i] = c[i].Out();
         return _in;
     }
 

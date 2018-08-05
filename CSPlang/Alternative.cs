@@ -181,7 +181,7 @@ namespace CSPlang
 						else
 						{
 							Monitor.Wait(altMonitor); //Guessing what should be here. Originall it was altMonitor.wait () - KP
-                            while (state == waiting)
+							while (state == waiting)
 							{
 								if (Spurious.logging)
 								{
@@ -482,7 +482,7 @@ namespace CSPlang
 		 * This is a call-back from an AltingBarrier.
 		 * It is still in the flow of control of the ALTing process.
 		 */
-	    public void setBarrierTrigger()
+		public void setBarrierTrigger()
 		{
 			barrierTrigger = true;
 		}
@@ -507,7 +507,7 @@ namespace CSPlang
 					Monitor.Pulse(altMonitor); //Originally it was altMonitor.Notify() - KP
 
 
-                    break;
+					break;
 					// case ready: case inactive:
 					// break
 				}

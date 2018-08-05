@@ -100,5 +100,21 @@ namespace CSPlang.Any2
                 channel.writerPoison(strength);
             }
         }
+
+
+        public bool writerEnable(Alternative alt)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool writerDisable()
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool writerPending()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

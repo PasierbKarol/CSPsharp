@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using CSPlang.Any2;
+using CSPlang.One2;
+using CSPutil;
 
 namespace CSPlang
 {
@@ -11,9 +14,9 @@ namespace CSPlang
         /**
          * Constructs a new factory.
          */
-        public StandardChannelFactory()
+        public StandardChannelFactory() : base()
         {
-            base();
+            
         }
 
         /**

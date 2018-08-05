@@ -7,7 +7,7 @@ namespace CSPlang
     internal class Any2OneImpl : ChannelInternals, Any2OneChannel
     {
         private ChannelInternals channel;
-        private final Object writeMonitor = new Object();
+        private readonly Object writeMonitor = new Object();
 
         internal Any2OneImpl(ChannelInternals _channel)
         {
@@ -40,11 +40,7 @@ namespace CSPlang
             return channel.readerPending();
         }
 
-        public void readerPoison(int strength)
-        {
-            channel.readerPoison(strength);
-
-        }
+        
 
         public Object startRead()
         {
@@ -74,6 +70,27 @@ namespace CSPlang
 
         public SharedChannelOutput Out() {
             return new SharedChannelOutputImpl(this,0);
+        }
+
+        public bool writerEnable(Alternative alt)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool writerDisable()
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool writerPending()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void readerPoison(int strength)
+        {
+            channel.readerPoison(strength);
+
         }
 
     }

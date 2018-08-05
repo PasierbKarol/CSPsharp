@@ -4,8 +4,9 @@ using CSPutil;
 
 namespace CSPlang
 {
-    internal class BufferedOne2OneChannel : One2OneChannel, ChannelInternals
+    internal class PoisonableBufferedOne2OneChannel : One2OneChannel, ChannelInternals
     {
+
         /** The ChannelDataStore used to store the data for the channel */
         private readonly ChannelDataStore data;
 
@@ -13,17 +14,28 @@ namespace CSPlang
 
         private Alternative alt;
 
+        //Only passed to channel-ends, not used directly:
+        private int immunity;
+
+        private int poisonStrength = 0;
+
         /**
          * Constructs a new BufferedOne2OneChannel with the specified ChannelDataStore.
          *
          * @param data the ChannelDataStore used to store the data for the channel
          */
-        public BufferedOne2OneChannel(ChannelDataStore data)
+        public PoisonableBufferedOne2OneChannel(ChannelDataStore data, int _immunity)
         {
             if (data == null)
                 throw new ArgumentException
                         ("Null ChannelDataStore given to channel constructor ...\n");
             this.data = (ChannelDataStore)data.clone();
+            immunity = _immunity;
+        }
+
+        private Boolean isPoisoned()
+        {
+            return poisonStrength > 0;
         }
 
         /**
@@ -33,15 +45,21 @@ namespace CSPlang
          */
         public Object read()
         {
-            /*synchronized*/
             lock (rwMonitor)
             {
+
                 if (data.getState() == ChannelDataStore.EMPTY)
                 {
+                    //Reader only sees poison if buffer is empty:
+                    if (isPoisoned())
+                    {
+                        throw new PoisonException(poisonStrength);
+                    }
+
                     try
                     {
                         Monitor.Wait(rwMonitor);
-                        while (data.getState() == ChannelDataStore.EMPTY)
+                        while (data.getState() == ChannelDataStore.EMPTY && !isPoisoned())
                         {
                             if (Spurious.logging)
                             {
@@ -56,7 +74,13 @@ namespace CSPlang
                           "*** Thrown from One2OneChannel.read (int)\n" + e.ToString()
                         );
                     }
+
+                    if (isPoisoned())
+                    {
+                        throw new PoisonException(poisonStrength);
+                    }
                 }
+
                 Monitor.Pulse(rwMonitor);
                 return data.get();
             }
@@ -64,15 +88,20 @@ namespace CSPlang
 
         public Object startRead()
         {
-            /*synchronized*/
             lock (rwMonitor)
             {
+
                 if (data.getState() == ChannelDataStore.EMPTY)
                 {
+                    //    	Reader only sees poison if buffer is empty:
+                    if (isPoisoned())
+                    {
+                        throw new PoisonException(poisonStrength);
+                    }
                     try
                     {
                         Monitor.Wait(rwMonitor);
-                        while (data.getState() == ChannelDataStore.EMPTY)
+                        while (data.getState() == ChannelDataStore.EMPTY && !isPoisoned())
                         {
                             if (Spurious.logging)
                             {
@@ -86,6 +115,12 @@ namespace CSPlang
                         throw new ProcessInterruptedException(
                           "*** Thrown from One2OneChannel.read (int)\n" + e.ToString()
                         );
+                    }
+
+                    //    Reader only sees poison if buffer is empty:
+                    if (isPoisoned())
+                    {
+                        throw new PoisonException(poisonStrength);
                     }
                 }
 
@@ -95,7 +130,6 @@ namespace CSPlang
 
         public void endRead()
         {
-            /*synchronized*/
             lock (rwMonitor)
             {
                 data.endGet();
@@ -110,9 +144,14 @@ namespace CSPlang
          */
         public void write(Object value)
         {
-            /*synchronized*/
             lock (rwMonitor)
             {
+                //Writer always sees poison:
+                if (isPoisoned())
+                {
+                    throw new PoisonException(poisonStrength);
+                }
+
                 data.put(value);
                 if (alt != null)
                 {
@@ -127,7 +166,7 @@ namespace CSPlang
                     try
                     {
                         Monitor.Wait(rwMonitor);
-                        while (data.getState() == ChannelDataStore.FULL)
+                        while (data.getState() == ChannelDataStore.FULL && !isPoisoned())
                         {
                             if (Spurious.logging)
                             {
@@ -141,6 +180,11 @@ namespace CSPlang
                         throw new ProcessInterruptedException(
                           "*** Thrown from One2OneChannel.write (Object)\n" + e.ToString()
                         );
+                    }
+
+                    if (isPoisoned())
+                    {
+                        throw new PoisonException(poisonStrength);
                     }
                 }
             }
@@ -157,10 +201,15 @@ namespace CSPlang
          */
         public Boolean readerEnable(Alternative alt)
         {
-            /*synchronized*/
             lock (rwMonitor)
             {
-                if (data.getState() == ChannelDataStore.EMPTY)
+                if (isPoisoned())
+                {
+                    //If it's poisoned, it will be ready whether because of the poison, or because
+                    //the buffer has data in it
+                    return true;
+                }
+                else if (data.getState() == ChannelDataStore.EMPTY)
                 {
                     this.alt = alt;
                     return false;
@@ -182,11 +231,10 @@ namespace CSPlang
          */
         public Boolean readerDisable()
         {
-            /*synchronized*/
             lock (rwMonitor)
             {
                 alt = null;
-                return data.getState() != ChannelDataStore.EMPTY;
+                return data.getState() != ChannelDataStore.EMPTY || isPoisoned();
             }
         }
 
@@ -227,14 +275,11 @@ namespace CSPlang
          */
         public Boolean readerPending()
         {
-            /*synchronized*/
             lock (rwMonitor)
             {
-                return (data.getState() != ChannelDataStore.EMPTY);
+                return (data.getState() != ChannelDataStore.EMPTY) || isPoisoned();
             }
         }
-
-        
 
         /**
          * Returns the <code>AltingChannelInput</code> to use for this channel.
@@ -247,7 +292,7 @@ namespace CSPlang
          */
         public AltingChannelInput In()
         {
-            return new AltingChannelInputImpl(this, 0);
+            return new AltingChannelInputImpl(this, immunity);
         }
 
         /**
@@ -261,31 +306,43 @@ namespace CSPlang
          */
         public ChannelOutput Out()
         {
-            return new ChannelOutputImpl(this, 0);
+            return new ChannelOutputImpl(this, immunity);
         }
 
-        //  No poison in these channels:
         public void writerPoison(int strength)
         {
+            if (strength > 0)
+            {
+                lock (rwMonitor)
+                {
+                    this.poisonStrength = strength;
+
+                    //Poison by writer does *NOT* clear the buffer
+
+                    Monitor.PulseAll(rwMonitor);
+
+                    if (null != alt)
+                    {
+                        alt.schedule();
+                    }
+                }
+            }
         }
         public void readerPoison(int strength)
         {
+            if (strength > 0)
+            {
+                lock (rwMonitor)
+                {
+                    this.poisonStrength = strength;
+
+                    //Poison by reader clears the buffer:
+                    data.removeAll();
+
+                    Monitor.PulseAll(rwMonitor);
+                }
+            }
         }
 
-
-        public bool writerEnable(Alternative alt)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool writerDisable()
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool writerPending()
-        {
-            throw new NotImplementedException();
-        }
     }
 }
