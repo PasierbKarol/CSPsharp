@@ -5,11 +5,11 @@
         /**
  * Returns the input channel end.
  */
-        AltingChannelInput _in();
+        AltingChannelInput In();
 
         /**
          * Returns the output channel end.
          */
-        ChannelOutput _out();
+        ChannelOutput Out();
     }
 }

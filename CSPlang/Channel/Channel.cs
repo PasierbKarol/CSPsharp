@@ -15,8 +15,8 @@ namespace CSPlang
     public class Channel
     {
         /**
-     * Private constructor to stop users from instantiating this class.
-     */
+        * Private constructor to stop users from instantiating this class.
+        */
         private Channel()
         {
             //this class should not be instantiated
@@ -324,7 +324,7 @@ namespace CSPlang
         {
             AltingChannelInput[] _in = new AltingChannelInput[c.Length];
             for (int i = 0; i < c.Length; i++)
-                _in[i] = c[i]._in();
+                _in[i] = c[i].In();
             return _in;
         }
 
@@ -340,7 +340,7 @@ namespace CSPlang
         {
             SharedChannelInput[] _in = new SharedChannelInput[c.Length];
             for (int i = 0; i < c.Length; i++)
-                _in[i] = c[i]._in();
+                _in[i] = c[i].In();
             return _in;
         }
 
@@ -356,7 +356,7 @@ namespace CSPlang
         {
             AltingChannelInput[] _in = new AltingChannelInput[c.Length];
             for (int i = 0; i < c.Length; i++)
-           _in[i] = c[i]._in();
+           _in[i] = c[i].In();
         return _in;
     }
 
@@ -388,7 +388,7 @@ public static SharedChannelOutput[] getOutputArray(Any2OneChannel[] c)
 {
     SharedChannelOutput[] _in = new SharedChannelOutput[c.Length];
     for (int i = 0; i < c.Length; i++)
-            _in[i] = c[i]._out();
+            _in[i] = c[i].Out();
         return _in;
     }
 
@@ -404,7 +404,7 @@ public static SharedChannelOutput[] getOutputArray(Any2OneChannel[] c)
 {
     ChannelOutput[] _in = new ChannelOutput[c.Length];
     for (int i = 0; i < c.Length; i++)
-            _in[i] = c[i]._out();
+            _in[i] = c[i].Out();
         return _in;
     }
 
@@ -420,7 +420,7 @@ public static SharedChannelOutput[] getOutputArray(Any2OneChannel[] c)
 {
     ChannelOutput[] _in = new ChannelOutput[c.Length];
     for (int i = 0; i < c.Length; i++)
-            _in[i] = c[i]._out();
+            _in[i] = c[i].Out();
         return _in;
     }
     

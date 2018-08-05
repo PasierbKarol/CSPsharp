@@ -12,7 +12,7 @@ namespace CSPlang
 		private Object hold;
 
 		/** The synchronisation flag */
-		private boolean empty = true;
+		private Boolean empty = true;
 
 		/**
 		   * This flag indicates that the last transfer went OK. The purpose is to not
@@ -20,7 +20,7 @@ namespace CSPlang
 		   * OK, but the reader side injected poison before the writer side finished
 		   * processing of the last write transfer.
 		   */
-		private boolean done = false;
+		private Boolean done = false;
 
 		/**
 		 * 0 means unpoisoned
@@ -36,10 +36,10 @@ namespace CSPlang
 		private Alternative alt;
 
 		/** Flag to deal with a spurious wakeup during a write */
-		private boolean spuriousWakeUp = true;
+		private Boolean spuriousWakeUp = true;
 
 
-		private boolean isPoisoned()
+		private Boolean isPoisoned()
 		{
 			return poisonStrength > 0;
 		}
@@ -60,7 +60,7 @@ namespace CSPlang
 		 * @return the <code>AltingChannelInput</code> object to use for this
 		 *          channel.
 		 */
-		public AltingChannelInput in()
+		public AltingChannelInput In()
 	{
 		return new AltingChannelInputImpl(this, immunity);
 	}
@@ -74,7 +74,7 @@ namespace CSPlang
 	 * @return the <code>ChannelOutput</code> object to use for this
 	 *          channel.
 	 */
-	public ChannelOutput out()
+	public ChannelOutput Out()
 	{
 		return new ChannelOutputImpl(this, immunity);
 }
@@ -88,7 +88,7 @@ namespace CSPlang
  */
 public void write(Object value)
 {
-	synchronized(rwMonitor) {
+	lock (rwMonitor) {
 		if (isPoisoned())
 		{
 			throw new PoisonException(poisonStrength);
@@ -153,7 +153,7 @@ public void write(Object value)
 */
 public Object read()
 {
-	synchronized(rwMonitor) {
+	lock (rwMonitor) {
 		if (isPoisoned())
 		{
 			throw new PoisonException(poisonStrength);
@@ -202,7 +202,7 @@ public Object read()
 
 public Object startRead()
 {
-	synchronized(rwMonitor) {
+	lock (rwMonitor) {
 		if (isPoisoned())
 		{
 			throw new PoisonException(poisonStrength);
@@ -245,7 +245,7 @@ public Object startRead()
 
 public void endRead()
 {
-	synchronized(rwMonitor) {
+	lock (rwMonitor) {
 		spuriousWakeUp = false;
 		rwMonitor.notify();
 	}
@@ -261,9 +261,9 @@ public void endRead()
  * @param alt the Alternative class which will control the selection
  * @return true if the channel has data that can be read, else false
  */
-public boolean readerEnable(Alternative alt)
+public Boolean readerEnable(Alternative alt)
 {
-	synchronized(rwMonitor) {
+	lock (rwMonitor) {
 		if (isPoisoned())
 		{
 			return true;
@@ -290,9 +290,9 @@ public boolean readerEnable(Alternative alt)
  *
  * @return true if the channel has data that can be read, else false
  */
-public boolean readerDisable()
+public Boolean readerDisable()
 {
-	synchronized(rwMonitor) {
+	lock (rwMonitor) {
 		alt = null;
 		return !empty || isPoisoned();
 	}
@@ -333,9 +333,9 @@ public boolean readerDisable()
  *
  * @return state of the channel.
  */
-public boolean readerPending()
+public Boolean readerPending()
 {
-	synchronized(rwMonitor) {
+	lock (rwMonitor) {
 		return !empty || isPoisoned();
 	}
 }
@@ -344,7 +344,7 @@ public void writerPoison(int strength)
 {
 	if (strength > 0)
 	{
-		synchronized(rwMonitor) {
+		lock (rwMonitor) {
 			this.poisonStrength = strength;
 
 			rwMonitor.notifyAll();
@@ -360,7 +360,7 @@ public void readerPoison(int strength)
 {
 	if (strength > 0)
 	{
-		synchronized(rwMonitor) {
+		lock (rwMonitor) {
 			this.poisonStrength = strength;
 
 			rwMonitor.notifyAll();

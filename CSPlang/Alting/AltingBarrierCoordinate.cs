@@ -76,8 +76,8 @@ namespace CSPlang
                 );
                 }
                 active = 0;
-                //activeLock.notify();
-                Monitor.Pulse(activeLock);
+                Monitor.Pulse(activeLock); // Originally was activeLock.notify() - KP
+
             }
         }
 

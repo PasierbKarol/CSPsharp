@@ -33,7 +33,7 @@ namespace CSPlang
          * @return the <code>AltingChannelInput</code> object to use for this
          *          channel.
          */
-        public AltingChannelInput _in()
+        public AltingChannelInput In()
         {
             return new AltingChannelInputImpl(this, 0);
         }
@@ -47,7 +47,7 @@ namespace CSPlang
          * @return the <code>ChannelOutput</code> object to use for this
          *          channel.
          */
-        public ChannelOutput _out()
+        public ChannelOutput Out()
         {
             return new ChannelOutputImpl(this, 0);
         }

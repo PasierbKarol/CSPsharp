@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
+using CSPlang.Shared;
 
 namespace CSPlang.Any2
 {
@@ -8,26 +10,26 @@ namespace CSPlang.Any2
     {
         private ChannelInternals channel;
         /** The mutex on which readers must synchronize */
-        private final Mutex readMutex = new Mutex();
-        private final Object writeMonitor = new Object();
+        private readonly Mutex readMutex = new Mutex();
+        private readonly Object writeMonitor = new Object();
 
         public Any2AnyImpl(ChannelInternals _channel)
         {
             channel = _channel;
         }
 
-        public SharedChannelInput in() {
+        public SharedChannelInput In() {
             return new SharedChannelInputImpl(this,0);
         }
 
-        public SharedChannelOutput out() { 
+        public SharedChannelOutput Out() { 
             return new SharedChannelOutputImpl(this,0);
         }
 
         public void endRead()
         {
             channel.endRead();
-            readMutex.release();
+            readMutex.ReleaseMutex(); //originally it was just .release. - KP
 
         }
 
@@ -41,22 +43,22 @@ namespace CSPlang.Any2
             }
             finally
             {
-                readMutex.release();
+                readMutex.ReleaseMutex();
             }
         }
 
 //begin never used:
-        public boolean readerDisable()
+        public Boolean readerDisable()
         {
             return false;
         }
 
-        public boolean readerEnable(Alternative alt)
+        public Boolean readerEnable(Alternative alt)
         {
             return false;
         }
 
-        public boolean readerPending()
+        public Boolean readerPending()
         {
             return false;
         }
@@ -66,7 +68,7 @@ namespace CSPlang.Any2
         {
             readMutex.claim();
             channel.readerPoison(strength);
-            readMutex.release();
+            readMutex.ReleaseMutex();
         }
 
         public Object startRead()
@@ -79,7 +81,7 @@ namespace CSPlang.Any2
             catch (RuntimeException e)
             {
                 channel.endRead();
-                readMutex.release();
+                readMutex.ReleaseMutex();
                 throw e;
             }
 
@@ -87,14 +89,14 @@ namespace CSPlang.Any2
 
         public void write(Object obj)
         {
-            synchronized(writeMonitor) {
+            lock (writeMonitor) {
                 channel.write(obj);
             }
         }
 
         public void writerPoison(int strength)
         {
-            synchronized(writeMonitor) {
+            lock (writeMonitor) {
                 channel.writerPoison(strength);
             }
         }

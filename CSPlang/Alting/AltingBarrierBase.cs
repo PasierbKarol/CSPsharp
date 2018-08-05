@@ -6,10 +6,10 @@ namespace CSPlang
 {
     public class AltingBarrierBase
     {
-        /**
-   * All front-ends are chained off here.  Each process enrolled must have one,
-   * and only one, of these.
-   */
+    /**
+    * All front-ends are chained off here.  Each process enrolled must have one,
+    * and only one, of these.
+    */
         private AltingBarrier frontEnds = null;
 
         /** The number of processes enrolled. */
@@ -38,7 +38,7 @@ namespace CSPlang
             AltingBarrier[] ab = new AltingBarrier[n];
             for (int i = 0; i < n; i++)
             {
-                frontEnds = new AltingBarrier( this, frontEnds);
+                frontEnds = new AltingBarrier(this, frontEnds);
                 ab[i] = frontEnds;
             }
             enrolled += n;

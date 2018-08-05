@@ -45,17 +45,17 @@ namespace CSPlang.One2
         }
 
 //begin never used:
-        public boolean readerDisable()
+        public Boolean readerDisable()
         {
             return false;
         }
 
-        public boolean readerEnable(Alternative alt)
+        public Boolean readerEnable(Alternative alt)
         {
             return false;
         }
 
-        public boolean readerPending()
+        public Boolean readerPending()
         {
             return false;
         }

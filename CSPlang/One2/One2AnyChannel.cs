@@ -7,11 +7,11 @@ namespace CSPlang
         /**
  * Returns the input end of the channel.
  */
-        SharedChannelInput _in();
+        SharedChannelInput In();
 
         /**
          * Returns the output end of the channel.
          */
-        ChannelOutput _out();
+        ChannelOutput Out();
     }
 }

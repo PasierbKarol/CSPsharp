@@ -1,4 +1,5 @@
-﻿using CSPutil;
+﻿using System;
+using CSPutil;
 
 namespace CSPlang
 {
@@ -31,7 +32,7 @@ namespace CSPlang
          */
         public Object read()
         {
-            synchronized(rwMonitor) {
+            /*synchronized*/ lock (rwMonitor) {
                 if (data.getState() == ChannelDataStore.EMPTY)
                 {
                     try
@@ -60,7 +61,7 @@ namespace CSPlang
 
         public Object startRead()
         {
-            synchronized(rwMonitor) {
+            /*synchronized*/ lock (rwMonitor) {
                 if (data.getState() == ChannelDataStore.EMPTY)
                 {
                     try
@@ -89,7 +90,7 @@ namespace CSPlang
 
         public void endRead()
         {
-            synchronized(rwMonitor) {
+            /*synchronized*/ lock (rwMonitor) {
                 data.endGet();
                 rwMonitor.notify();
             }
@@ -102,7 +103,7 @@ namespace CSPlang
          */
         public void write(Object value)
         {
-            synchronized(rwMonitor) {
+            /*synchronized*/ lock (rwMonitor) {
                 data.put(value);
                 if (alt != null)
                 {
@@ -145,9 +146,9 @@ namespace CSPlang
          * @param alt the Alternative class which will control the selection
          * @return true if the channel has data that can be read, else false
          */
-        public boolean readerEnable(Alternative alt)
+        public Boolean readerEnable(Alternative alt)
         {
-            synchronized(rwMonitor) {
+            /*synchronized*/ lock (rwMonitor) {
                 if (data.getState() == ChannelDataStore.EMPTY)
                 {
                     this.alt = alt;
@@ -168,9 +169,9 @@ namespace CSPlang
          *
          * @return true if the channel has data that can be read, else false
          */
-        public boolean readerDisable()
+        public Boolean readerDisable()
         {
-            synchronized(rwMonitor) {
+            /*synchronized*/ lock (rwMonitor) {
                 alt = null;
                 return data.getState() != ChannelDataStore.EMPTY;
             }
@@ -211,9 +212,9 @@ namespace CSPlang
          *
          * @return state of the channel.
          */
-        public boolean readerPending()
+        public Boolean readerPending()
         {
-            synchronized(rwMonitor) {
+            /*synchronized*/ lock (rwMonitor) {
                 return (data.getState() != ChannelDataStore.EMPTY);
             }
         }
@@ -227,7 +228,7 @@ namespace CSPlang
          * @return the <code>AltingChannelInput</code> object to use for this
          *          channel.
          */
-        public AltingChannelInput in()
+        public AltingChannelInput In()
     {
         return new AltingChannelInputImpl(this,0);
     }
@@ -241,7 +242,7 @@ namespace CSPlang
      * @return the <code>ChannelOutput</code> object to use for this
      *          channel.
      */
-    public ChannelOutput out()
+    public ChannelOutput Out()
     {
         return new ChannelOutputImpl(this,0);
 }

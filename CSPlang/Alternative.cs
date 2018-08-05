@@ -17,13 +17,13 @@ namespace CSPlang
 		}
 
 
-		//======================================================= Karol's Code above ============================
+		//======================================================= Karol's Code above. Taken form SO ============================
 
 
-		/** The monitor synchronising the writers and alting reader */
-		//Apparently this has to be Monitor class to have required functionality - Karol: https://stackoverflow.com/questions/209281/c-sharp-equivalent-to-javas-wait-and-notify 
+		/** The monitor synchronizing the writers and alting reader  - K.P. */
+		//Apparently this has to be Monitor class to have required functionality - K.P.: https://stackoverflow.com/questions/209281/c-sharp-equivalent-to-javas-wait-and-notify 
 		protected Object altMonitor = new Object();
-		//Monitor cannot be initialized
+		//Monitor cannot be initialized - K.P
 
 
 		private const int enabling = 0;
@@ -87,7 +87,7 @@ namespace CSPlang
 		 *
 		 * @param guard the event guards over which the select operations will be made.
 		 */
-		public Alternative(Guard[] guard) //Guard here was readonly - Karol
+		public Alternative(Guard[] guard) //Guard here was readonly - K.P. 
 		{
 			this.guard = guard;
 			for (int i = 0; i < guard.Length; i++)
@@ -180,8 +180,8 @@ namespace CSPlang
 						}
 						else
 						{
-							Monitor.Wait(altMonitor); //Guessing what should be here. Was empty
-							while (state == waiting)
+							Monitor.Wait(altMonitor); //Guessing what should be here. Originall it was altMonitor.wait () - KP
+                            while (state == waiting)
 							{
 								if (Spurious.logging)
 								{
@@ -504,10 +504,10 @@ namespace CSPlang
 					break;
 					case waiting:
 					state = ready;
-					//altMonitor.Notify();
-					Monitor.Pulse(altMonitor);
+					Monitor.Pulse(altMonitor); //Originally it was altMonitor.Notify() - KP
 
-					break;
+
+                    break;
 					// case ready: case inactive:
 					// break
 				}
