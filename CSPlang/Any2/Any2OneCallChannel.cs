@@ -97,7 +97,7 @@ namespace CSPlang.Any2
      * <H3><A NAME="Network">Building a CALL Channel Network</H3>
      * Network building with CALL channels is the same as building with <I>ordinary</I>
      * channels.  First construct the channels and, then, construct the processes
-     * - plugging in the channels as required and running them in {@link Parallel}.
+     * - plugging in the channels as required and running them in {@link CSPParallel}.
      * <P>
      * For example, the network consisting of one <I>server</I> and several <I>clients</I>:
      * <p><IMG SRC="doc-files\Any2OneCallChannel1.gif"></p>
@@ -112,9 +112,9 @@ namespace CSPlang.Any2
      *       aClients[i] = new A (c);
      *     }
      * <I></I>
-     *     new Parallel (
+     *     new CSPParallel (
      *       new CSProcess[] {
-     *         new Parallel (aClients),
+     *         new CSPParallel (aClients),
      *         new B2 (c)
      *       }
      *     ).run ();
@@ -469,11 +469,11 @@ namespace CSPlang.Any2
      *       phils[i] = new Phil (philId[i], service, thinkTime, eatTime, i == 0);
      *     }
      * <I></I>
-     *     new Parallel (
+     *     new CSPParallel (
      *       new CSProcess[] {
      *         new Clock (),
      *         new Canteen (service, supply, serviceTime, supplyTime, maxChickens),
-     *         new Parallel (phils),
+     *         new CSPParallel (phils),
      *         new Chef ("Pierre", 4, 2000, supply),
      *         // chefId, batchSize, batchTime
      *         new Chef ("Henri", 10, 20000, supply),
@@ -575,11 +575,11 @@ namespace CSPlang.Any2
      *                            thinkTime, eatTime, i == 0);
      *     }
      * <I></I>
-     *     new Parallel (
+     *     new CSPParallel (
      *       new CSProcess[] {
      *         new Clock (),
      *         canteen,
-     *         new Parallel (phils),
+     *         new CSPParallel (phils),
      *         new Chef ("Pierre", 4, 2000, canteen.supply),
      *         new Chef ("Henri", 10, 20000, canteen.supply),
      *         new Chef ("Sid", 100, 60000, canteen.supply)
@@ -602,7 +602,7 @@ namespace CSPlang.Any2
      * <PRE>
      *     new {@link ProcessManager} (this).start ();
      * </PRE>
-     * Of course, the <TT>canteen</TT> instance should then be removed from the {@link Parallel}
+     * Of course, the <TT>canteen</TT> instance should then be removed from the {@link CSPParallel}
      * construction above.
      * <P>
      * [<I>Warning:</I> be careful if sub-classes are allowed (i.e. the <TT>Canteen</TT> class

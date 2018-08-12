@@ -11,7 +11,7 @@ namespace CSPlang.One2
     {
         private ChannelInternals channel;
         /** The mutex on which readers must synchronize */
-        private readonly Mutex readMutex = new Mutex();
+        private readonly CSPMutex _readCspMutex = new CSPMutex();
 
         internal One2AnyImpl(ChannelInternals _channel)
         {
@@ -31,13 +31,13 @@ namespace CSPlang.One2
         public void endRead()
         {
             channel.endRead();
-            readMutex.ReleaseMutex();
+            _readCspMutex.ReleaseMutex();
 
         }
 
         public Object read()
         {
-            readMutex.claim();
+            _readCspMutex.claim();
             //A poison exception might be thrown, hence the try/finally:		
             try
             {
@@ -45,7 +45,7 @@ namespace CSPlang.One2
             }
             finally
             {
-                readMutex.ReleaseMutex();
+                _readCspMutex.ReleaseMutex();
             }
         }
 
@@ -70,14 +70,14 @@ namespace CSPlang.One2
 
         public void readerPoison(int strength)
         {
-            readMutex.claim();
+            _readCspMutex.claim();
             channel.readerPoison(strength);
-            readMutex.ReleaseMutex();
+            _readCspMutex.ReleaseMutex();
         }
 
         public Object startRead()
         {
-            readMutex.claim();
+            _readCspMutex.claim();
             try
             {
                 return channel.startRead();
@@ -85,7 +85,7 @@ namespace CSPlang.One2
             catch (RuntimeException e)
             {
                 channel.endRead();
-                readMutex.ReleaseMutex();
+                _readCspMutex.ReleaseMutex();
                 throw e;
             }
 

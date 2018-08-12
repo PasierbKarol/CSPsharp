@@ -84,7 +84,7 @@ namespace CSPlang
          * throughout its lifetime -- however, see {@link #mark mark}.
          * <p>
          * <i>Note:</i> if a known number of processes needing the barrier are to be run
-         * (e.g. by a {@link Parallel}), creating the barrier with an array of
+         * (e.g. by a {@link CSPParallel}), creating the barrier with an array of
          * <i>front-end</i>s using {@link #create(int) create(n)} would be more convenient.
          * <p>
          *
@@ -98,7 +98,7 @@ namespace CSPlang
         /**
          * This expands the number of processes enrolled in this <i>alting</i> barrier.
          * <p>
-         * Use it when an enrolled process is about to go {@link Parallel} itself and
+         * Use it when an enrolled process is about to go {@link CSPParallel} itself and
          * some/all of those sub-processes also need to be enrolled.
          * It returns an array new <i>front-end</i>s for this barrier.
          * It is the invoker's responsibility to pass these on to those sub-processes.
@@ -117,13 +117,13 @@ namespace CSPlang
          * may be running in a different thread) really has to do this.]</i>
          * </p>
          * <p>
-         * Following termination of the {@link Parallel}, the original process must
+         * Following termination of the {@link CSPParallel}, the original process must
          * take back ownership of its original <code>AltingBarrier</code> <i>(loaned to one
          * of the sub-processes, which may have been running on a different thread)</i>
          * by {@link #mark mark}ing it again.
          * </p>
          * <p>
-         * Also following termination of the {@link Parallel}, the original process
+         * Also following termination of the {@link CSPParallel}, the original process
          * must contract the number of processes enrolled on the barrier.
          * To do this, it must have retained the <i>front-end</i> array returned by
          * this method and pass it to {@link #contract(AltingBarrier[]) contract}.
@@ -222,13 +222,13 @@ namespace CSPlang
          * This contracts the number of processes enrolled in this <i>alting</i> barrier.
          * The given <i>front-end</i>s are discarded.
          * <p>
-         * Use it following termination of a {@link Parallel}, some/all of whose
+         * Use it following termination of a {@link CSPParallel}, some/all of whose
          * sub-processes were enrolled by being given <i>front-end</i>s
          * returned by {@link #expand(int) expand}.
          * See the documentation for {@link #expand(int) expand}.
          * </p>
          * <p>
-         * <i>Warning:</i> only the process that went {@link Parallel} should invoke
+         * <i>Warning:</i> only the process that went {@link CSPParallel} should invoke
          * this method -- never one of the sub-processes.
          * </p>
          * <p>
@@ -522,7 +522,7 @@ namespace CSPlang
          * <pre>
          *   AltingBarrier[] action = AltingBarrier.create (n);
          * 
-         *   Parallel[] system = new Parallel[n];
+         *   CSPParallel[] system = new CSPParallel[n];
          *   for (int i = 0; i < system.Length; i++) {
          *     system[i] = new Something (action[i], ...);
          *   }

@@ -79,10 +79,10 @@ namespace CSPlang
      *     System.out.println ("*** Flusher: interval = " + interval
      *                         + " milliseconds");
      * <I></I>
-     *     new Parallel (
+     *     new CSPParallel (
      *       new CSProcess[] {
      *         flusher,
-     *         new Parallel (workers)
+     *         new CSPParallel (workers)
      *       }
      *     ).run ();
      * <I></I>
@@ -202,10 +202,10 @@ namespace CSPlang
      *       dingbats[i] = new Dingbat (i + minDingbat, bucket);
      *     }
      * <I></I>
-     *     new Parallel (
+     *     new CSPParallel (
      *       new CSProcess[] {
      *         bucketKeeper,
-     *         new Parallel (dingbats)
+     *         new CSPParallel (dingbats)
      *       }
      *     ).run ();
      * <I></I>

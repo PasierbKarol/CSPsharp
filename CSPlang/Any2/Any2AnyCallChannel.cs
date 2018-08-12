@@ -92,7 +92,7 @@ namespace CSPlang.Any2
      * <H3><A NAME="Network">Building a CALL Channel Network</H3>
      * Network building with CALL channels is the same as building with <I>ordinary</I>
      * channels.  First construct the channels and, then, construct the processes
-     * - plugging in the channels as required and running them in {@link Parallel}.
+     * - plugging in the channels as required and running them in {@link CSPParallel}.
      * <P>
      * For example, the network consisting of several <I>clients</I> and several <I>servers</I>:
      * <p><IMG SRC="doc-files\Any2AnyCallChannel1.gif"></p>
@@ -112,10 +112,10 @@ namespace CSPlang.Any2
      *       bServers[i] = new B2 (c);
      *     }
      * <I></I>
-     *     new Parallel (
+     *     new CSPParallel (
      *       new CSProcess[] {
-     *         new Parallel (aClients),
-     *         new Parallel (bServers)
+     *         new CSPParallel (aClients),
+     *         new CSPParallel (bServers)
      *       }
      *     ).run ();
      * </PRE>
@@ -402,13 +402,13 @@ namespace CSPlang.Any2
      *                            thinkTime, eatTime, i == 0);
      *     }
      * <I></I>
-     *     new Parallel (
+     *     new CSPParallel (
      *       new CSProcess[] {
      *         new Clock (),
      *         new Canteen (canteenService, supply,
      *                      canteenServiceTime, canteenSupplyTime, maxChickens),
-     *         new Parallel (students),
-     *         new Parallel (profs),
+     *         new CSPParallel (students),
+     *         new CSPParallel (profs),
      *         new Chef ("Pierre", 4, 2000, supply),
      *         // chefId, batchSize, batchTime
      *         new Chef ("Henri", 10, 20000, supply),
