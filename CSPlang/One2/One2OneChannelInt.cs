@@ -26,14 +26,55 @@
 //                                                                  //
 //////////////////////////////////////////////////////////////////////
 
+using CSPlang.Alting;
+
 namespace CSPlang
 {
 
     /**
+     * This implements a one-to-one integer channel.
+     * <H2>Description</H2>
+     * <TT>One2OneChannelIntImpl</TT> implements a one-to-one integer channel.  Multiple
+     * readers or multiple writers are not allowed -- these are catered for
+     * by {@link Any2OneChannelInt},
+     * {@link One2AnyChannelInt} or
+     * {@link Any2AnyChannelInt}.
+     * <P>
+     * The reading process may {@link Alternative <TT>ALT</TT>} on this channel.
+     * The writing process is committed (i.e. it may not back off).
+     * <P>
+     * The default semantics of the channel is that of CSP -- i.e. it is
+     * zero-buffered and fully synchronised.  The reading process must wait
+     * for a matching writer and vice-versa.
+     * <P>
+     * A factory pattern is used to create channel instances. The <tt>create</tt> methods of {@link Channel}
+     * allow creation of channels, arrays of channels and channels with varying semantics such as
+     * buffering with a user-defined capacity or overwriting with various policies.
+     * Standard examples are given in the <TT>jcsp.util</TT> package, but
+     * <I>careful users</I> may write their own.
+     * <P>
+     * Other static <TT>create</TT> methods allows the user to create fully
+     * initialised arrays of channels, including plug-ins if required.
      *
+     * @see jcsp.lang.Alternative
+     * @see jcsp.lang.Any2OneChannelIntImpl
+     * @see jcsp.lang.One2AnyChannelIntImpl
+     * @see jcsp.lang.Any2AnyChannelIntImpl
+     * @see jcsp.util.ints.ChannelDataStoreInt
+     *
+     * @author P.D.Austin
+     * @author P.H.Welch
      */
-    public interface ConnectionWithSharedAltingServer
+    public interface One2OneChannelInt
     {
-        SharedConnectionServer server();
+        /**
+         * Returns the input end of the channel.
+         */
+        AltingChannelInputInt In();
+
+        /**
+         * Returns the output end of the channel.
+         */
+        ChannelOutputInt Out();
     }
 }

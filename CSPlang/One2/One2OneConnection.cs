@@ -26,14 +26,26 @@
 //                                                                  //
 //////////////////////////////////////////////////////////////////////
 
+using CSPlang.Alting;
+
 namespace CSPlang
 {
 
     /**
+     * Defines an interface for a connection that can be used by a single server and single client.
+     *
      *
      */
-    public interface ConnectionWithSharedAltingServer
+    public interface One2OneConnection
     {
-        SharedConnectionServer server();
+        /**
+         * Returns the client end of the connection.
+         */
+        AltingConnectionClient client();
+
+        /**
+         * Returns the server end of the connection.
+         */
+        AltingConnectionServer server();
     }
 }

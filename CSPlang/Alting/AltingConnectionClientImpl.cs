@@ -28,9 +28,9 @@ namespace CSPlang.Alting
         protected AltingConnectionClientImpl(AltingChannelInput fromServer,
                                              ChannelOutput openToServer,
                                              ChannelOutput reqToServer,
-                                             ChannelOutput backToClient)
+                                             ChannelOutput backToClient) : base (fromServer)
         {
-            super(fromServer);
+            
             this.fromServer = fromServer;
             this.openToServer = openToServer;
             this.reqToServer = reqToServer;
