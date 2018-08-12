@@ -1,18 +1,17 @@
-﻿using CSPlang.Shared;
+﻿using CSPlang.Alting;
 
 namespace CSPlang.Any2
 {
-
     /**
- * This defines an interface for an any-to-one object channel,
+ * This defines an interface for an any-to-one integer channel,
  * safe for use by many writers and one reader.
  * <H2>Description</H2>
- * <TT>Any2OneChannel</TT> is an implementation of a channel which
+ * <TT>Any2OneChannelInt</TT> is an implementation of an integer channel which
  * is safe for use by many writing processes but only one reader.
  * Writing processes compete with each other to use the channel.
  * Only the reader and one writer will
  * actually be using the channel at any one time.  This is taken care of by
- * <TT>Any2OneChannel</TT> -- user processes just read from or write to it.
+ * <TT>Any2OneChannelInt</TT> -- user processes just read from or write to it.
  * <P>
  * The reading process may {@link Alternative <TT>ALT</TT>} on this channel.
  * The writing process is committed (i.e. it may not back off).
@@ -39,26 +38,23 @@ namespace CSPlang.Any2
  * <I>any-1</I> channels.
  *
  * @see jcsp.lang.Alternative
- * @see jcsp.lang.One2OneChannel
- * @see jcsp.lang.One2AnyChannel
- * @see jcsp.lang.Any2AnyChannel
- * @see jcsp.util.ChannelDataStore
+ * @see jcsp.lang.One2OneChannelInt
+ * @see jcsp.lang.One2AnyChannelInt
+ * @see jcsp.lang.Any2AnyChannelInt
+ * @see jcsp.util.ints.ChannelDataStoreInt
  *
  * @author P.D.Austin and P.H.Welch
  */
-
-
-
-    public interface Any2OneChannel
+    public interface Any2OneChannelInt
     {
         /**
      * Returns the input end of the channel.
      */
-        AltingChannelInput In();
+        AltingChannelInputInt In();
 
         /**
          * Returns the output end of the channel.
          */
-        SharedChannelOutput Out();
+        SharedChannelOutputInt Out();
     }
 }

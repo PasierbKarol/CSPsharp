@@ -1,24 +1,27 @@
-﻿using CSPlang.Shared;
-
-namespace CSPlang.Any2
+﻿namespace CSPlang.Any2
 {
-
     /**
- * This defines an interface for an any-to-one object channel,
- * safe for use by many writers and one reader.
+ * This defines an interface for an any-to-any integer channel,
+ * safe for use by many writers and many readers.
  * <H2>Description</H2>
- * <TT>Any2OneChannel</TT> is an implementation of a channel which
- * is safe for use by many writing processes but only one reader.
- * Writing processes compete with each other to use the channel.
- * Only the reader and one writer will
+ * <TT>Any2AnyChannelInt</TT> is an implementation of a channel which
+ * is safe for use by many reading and writing processes.  Reading processes
+ * compete with each other to use the channel.  Writing processes compete
+ * with each other to use the channel.  Only one reader and one writer will
  * actually be using the channel at any one time.  This is taken care of by
- * <TT>Any2OneChannel</TT> -- user processes just read from or write to it.
+ * <TT>Any2AnyChannelInt</TT> -- user processes just read from or write to it.
  * <P>
- * The reading process may {@link Alternative <TT>ALT</TT>} on this channel.
- * The writing process is committed (i.e. it may not back off).
+ * <I>Please note that this is a safely shared channel and not
+ * a multicaster.  Currently, multicasting has to be managed by
+ * writing active processes (see {@link jcsp.plugNplay.DynamicDelta}
+ * for an example of broadcasting).</I>
+ * <P>
+ * All reading processes and writing processes commit to the channel
+ * (i.e. may not back off).  This means that the reading processes
+ * <I>may not</I> {@link Alternative <TT>ALT</TT>} on this channel.
  * <P>
  * The default semantics of the channel is that of CSP -- i.e. it is
- * zero-buffered and fully synchronised.  The reading process must wait
+ * zero-buffered and fully synchronised.  A reading process must wait
  * for a matching writer and vice-versa.
  * <P>
  * A factory pattern is used to create channel instances. The <tt>create</tt> methods of {@link Channel}
@@ -28,7 +31,7 @@ namespace CSPlang.Any2
  * <I>careful users</I> may write their own.
  *
  * <H3><A NAME="Caution">Implementation Note and Caution</H3>
- * <I>Fair</I> servicing of writers to this channel depends on the <I>fair</I>
+ * <I>Fair</I> servicing of readers and writers to this channel depends on the <I>fair</I>
  * servicing of requests to enter a <TT>synchronized</TT> block (or method) by
  * the underlying Java Virtual Machine (JVM).  Java does not specify how threads
  * waiting to synchronize should be handled.  Currently, Sun's standard JDKs queue
@@ -36,29 +39,18 @@ namespace CSPlang.Any2
  * that puts such competing requests on a stack - which is legal but <I>unfair</I>
  * and can lead to infinite starvation.  This is a problem for <I>any</I> Java system
  * relying on good behaviour from <TT>synchronized</TT>, not just for these
- * <I>any-1</I> channels.
+ * <I>any-any</I> channels.
  *
- * @see jcsp.lang.Alternative
  * @see jcsp.lang.One2OneChannel
+ * @see jcsp.lang.Any2OneChannel
  * @see jcsp.lang.One2AnyChannel
- * @see jcsp.lang.Any2AnyChannel
- * @see jcsp.util.ChannelDataStore
+ * @see jcsp.util.ints.ChannelDataStoreInt
  *
  * @author P.D.Austin and P.H.Welch
  */
-
-
-
-    public interface Any2OneChannel
+    public interface Any2AnyChannelInt
     {
-        /**
-     * Returns the input end of the channel.
-     */
-        AltingChannelInput In();
-
-        /**
-         * Returns the output end of the channel.
-         */
-        SharedChannelOutput Out();
+        SharedChannelInputInt In();
+        SharedChannelOutputInt Out();
     }
 }

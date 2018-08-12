@@ -6,7 +6,7 @@ namespace CSPlang
     {
         public Any2OneChannelImpl() : base (new One2OneChannelImpl())
         {
-            throw new System.NotImplementedException();
+
         }
 
 
