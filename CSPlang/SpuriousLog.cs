@@ -1,7 +1,52 @@
-﻿using System;
+﻿/*************************************************************************
+*                                                                        *
+*  JCSP ("CSP for Java") libraries                                       *
+*  Copyright (C) 1996-2001 Peter Welch and Paul Austin.                  *
+*                                                                        *
+*  This library is free software; you can redistribute it and/or         *
+*  modify it under the terms of the GNU Lesser General Public            *
+*  License as published by the Free Software Foundation; either          *
+*  version 2.1 of the License, or (at your option) any later version.    *
+*                                                                        *
+*  This library is distributed in the hope that it will be useful,       *
+*  but WITHOUT ANY WARRANTY; without even the implied warranty of        *
+*  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU     *
+*  Lesser General Public License for more details.                       *
+*                                                                        *
+*  You should have received a copy of the GNU Lesser General Public      *
+*  License along with this library; if not, write to the Free Software   *
+*  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307,  *
+*  USA.                                                                  *
+*                                                                        *
+*  Author contact: P.H.Welch@ukc.ac.uk                                   *
+*                                                                        *
+*************************************************************************/
+
+
+using System;
 
 namespace CSPlang
 {
+    /**
+ * This holds the log of spurious wakeups and early timeouts.
+ * <H2>Description</H2>
+ * The <tt>java.lang.Object.wait</tt> method sometimes returns <i>spuriously</i>
+ * - i.e. without being <tt>notify</tt>'d by another thread or <tt>interrupt</tt>ed 
+ * or timed-out!  This class is an optional (static) repository holding and reporting
+ * counts of any such spurious wakeups.  JCSP handles all spurious wakeups cleanly.
+ * <p>
+ * Some JVMs also timeout on calls of <tt>wait(timeout)</tt> early.  This class
+ * enables the specification of <i>how early</i> will be acceptable to JCSP.
+ * <i>``Timeouts''</i> returned earlier than the set threshold are treated as
+ * <i>spurious wakeups</i> (i.e. the process is put back to sleep).
+ * Provision is also made for counting and reporting the accepted early timeouts.
+ * <p>
+ * To operate, this logging must first be switched on ({@link #start}). 
+ *
+ * @author P.H.Welch
+ */
+
+
     public class SpuriousLog
     {
 

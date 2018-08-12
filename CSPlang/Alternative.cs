@@ -1,9 +1,568 @@
-﻿using System;
+﻿//////////////////////////////////////////////////////////////////////
+//                                                                  //
+//  JCSP ("CSP for Java") Libraries                                 //
+// Copyright 1996-2017 Peter Welch, Paul Austin and Neil Brown      //
+//           2005-2017 Kevin Chalmers and Jon Kerridge              //
+//                                                                  //
+// Licensed under the Apache License, Version 2.0 (the "License");  //
+// you may not use this file except in compliance with the License. //
+// You may obtain a copy of the License at                          //
+//                                                                  //
+//      http://www.apache.org/licenses/LICENSE-2.0                  //
+//                                                                  //
+// Unless required by applicable law or agreed to in writing,       //
+// software distributed under the License is distributed on         //
+// an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,  //
+// either express or implied. See the License for the specific      //
+// language governing permissions and limitations under the License.//
+//                                                                  //
+//                                                                  //
+//                                                                  //
+//                                                                  //
+//  Author Contact: P.H.Welch@ukc.ac.uk                             //
+//                                                                  //
+//  Author contact: K.Chalmers@napier.ac.uk                         //
+//                                                                  //
+//                                                                  //
+//////////////////////////////////////////////////////////////////////
+
+
+
+using System;
 using System.Threading;
 
 namespace CSPlang
 {
-
+	/**
+* This enables a process to wait passively for and choose
+* between a number of {@link Guard} events.
+* <P>
+* <A HREF="#constructor_summary">Shortcut to the Constructor and Method Summaries.</A>
+* <H2>Description</H2>
+* The <code>Alternative</code> class enables a <code>CSProcess</code> to wait passively for and
+* choose between a number of {@link Guard} events.  This is known as
+* <code>ALT</code><I>ing</I>.
+* <P>
+* <I>Note: for those familiar with the <I><B>occam</B></I> multiprocessing
+* language, this gives the semantics of the </I><code>ALT</code><I> and
+* </I><code>PRI</code> <code>ALT</code><I> constructs, extended with a built-in implementation
+* of the classical </I><code>FAIR</code> <code>ALT</code><I>.</I>
+* <P>
+* The <code>Alternative</code> constructor takes an array of guards.  Processes
+* that need to <I>Alt</I> over more than one set of guards will need a separate
+* <code>Alternative</code> instance for each set.
+* <P>
+* Six types of <code>Guard</code> are provided in <code>jcsp.lang</code>:
+* <UL>
+*   <LI>
+*      {@link AltingChannelInput}: <I>object channel input</I> --
+*      ready if unread data is pending in the channel.
+*   <LI>
+*      {@link AltingChannelInputInt}: <I>integer channel input</I> --
+*      ready if unread data is pending in the channel.
+*   <LI>
+*      {@link AltingChannelAccept}: <I>CALL channel accept</I> --
+*      ready if an unaccepted call is pending on the channel.
+*   <LI>
+*      {@link AltingBarrier}: <I>barrier synchronisation</I> --
+*      ready if all enrolled processes are offering to synchronise.
+*   <LI>
+*      {@link CSTimer}: <I>timeout</I> --
+*      ready if the timeout has expired (timeout
+*      values are absolute time values, not delays)
+*   <LI>
+*      {@link Skip}: <I>skip</I> --
+*      always ready.
+* </UL>
+* <P>
+* By invoking one of the following methods, a process may passively wait for
+* one or more of the guards associated with an <code>Alternative</code> object
+* to become ready.  The methods differ in the way they choose which guard
+* to select in the case when two or more guards are ready:
+* <UL>
+*   <LI>
+*      {@link #select() <code>select</code>} waits for one or more of the guards
+*      to become ready.  If more than one become ready, it makes an
+*      <I>arbitrary</I> choice between them (and corresponds to the
+*      <I><B>occam</B></I> <code>ALT</code>).
+*   <LI>
+*      {@link #priSelect() <code>priSelect</code>} also waits for one or more of
+*      the guards to become ready.  However, if more than one becomes ready,
+*      it chooses the <I>first</I> one listed (and corresponds to the
+*      <I><B>occam</B></I> <code>PRI</code> <code>ALT</code>).  Note: the use of
+*      <code>priSelect</code> between channel inputs and a skip guard (at lowest
+*      priority) gives us a <I>polling</I> operation on the <I>readiness</I>
+*      of those channels.</I>
+*   <LI>
+*      {@link #fairSelect() <code>fairSelect</code>} also waits for one or more
+*      of the guards to become ready.  If more than one become ready, it
+*      prioritises its choice so that the guard it chose <I>the last time
+*      it was invoked</I> has lowest priority this time.  This corresponds
+*      to a common <I><B>occam</B></I> idiom used for real-time applications.
+*      If <code>fairSelect</code> is used
+*      in a loop, a ready guard has the guarantee that no other guard will be
+*      serviced <I>twice</I> before it will be serviced.  This enables
+*      an upper bound on service times to be calculated and ensures that no
+*      ready guard can be indefinitely starved.
+* </UL>
+* <P>
+* Finally, each guard may be <A HREF="Alternative.html#Wot-no-Chickens">
+* <I>pre-conditioned</I></A> with a run-time test
+* to decide if it should be considered in the current choice.  This allows
+* considerable flexibilty -- for example, we can decide whether timeouts
+* shoud be set, channels refused or polling enabled depending
+* on the run-time state of the <I>Alting</I> process.
+* </P>
+* <H2>Examples</H2>
+* <H3>A Fair Multiplexor</H3>
+* This example demonstrates a process that <I>fairly</I> multiplexes traffic
+* from its array of input channels to its single output channel.  No input
+* channel will be starved, regardless of the eagerness of its competitors.
+* <PRE>
+* import jcsp.lang.*;
+* <I></I>
+* public class FairPlex implements CSProcess {
+* <I></I>
+*   private final AltingChannelInput[] in;
+*   private final ChannelOutput out;
+* <I></I>
+*   public FairPlex (final AltingChannelInput[] in, final ChannelOutput out) {
+*     this.in = in;
+*     this.out = out;
+*   }
+* <I></I>
+*   public void run () {
+* <I></I>
+*     final Alternative alt = new Alternative (in);
+* <I></I>
+*     while (true) {
+*       final int index = alt.fairSelect ();
+*       out.write (in[index].read ());
+*     }
+* <I></I>
+*   }
+* <I></I>
+* }
+* </PRE>
+* Note that if <code>priSelect</code> were used above, higher-indexed channels would be
+* starved if lower-indexed channels were continually demanding service.
+* If <code>select</code> were used, no starvation analysis is possible.
+* The <code>select</code> mechanism should only be used when starvation is not an issue.
+* 
+* <H3><A NAME="FairMuxTime">A Fair Multiplexor with a Timeout</H3>
+* This examples demonstrates a process that <I>fairly</I> multiplexes traffic
+* from its input channels to its single output channel, but which timeouts
+* after a user-settable time.  Whilst running, no input channel
+* will be starved, regardless of the eagerness of its competitors.
+* <PRE>
+* import jcsp.lang.*;
+* <I></I>
+* public class FairPlexTime implements CSProcess {
+* <I></I>
+*   private final AltingChannelInput[] in;
+*   private final ChannelOutput out;
+*   private final long timeout;
+* <I></I>
+*   public FairPlexTime (final AltingChannelInput[] in, final ChannelOutput out,
+*                        final long timeout) {
+*     this.in = in;
+*     this.out = out;
+*     this.timeout = timeout;
+*   }
+* <I></I>
+*   public void run () {
+* <I></I>
+*     final Guard[] guards = new Guard[in.length + 1];
+*     System.arraycopy (in, 0, guards, 0, in.length);
+* <I></I>
+*     final CSTimer tim = new CSTimer ();
+*     final int timerIndex = in.length;
+*     guards[timerIndex] = tim;
+* <I></I>
+*     final Alternative alt = new Alternative (guards);
+* <I></I>
+*     boolean running = true;
+*     tim.setAlarm (tim.read () + timeout);
+*     while (running) {
+*       final int index = alt.fairSelect ();
+*       if (index == timerIndex) {
+*         running = false;
+*       } else {
+*         out.write (in[index].read ());
+*       }
+*     }
+* <I></I>
+*   }
+* <I></I>
+* }
+* </PRE>
+* Note that if <code>priSelect</code> were used above, higher-indexed guards would be
+* starved if lower-indexed guards were continually demanding service -- and
+* the timeout would never be noticed.
+* If <code>select</code> were used, no starvation analysis is possible.
+* <P>
+* To demonstrate <code>FairPlexTime</code>, consider:
+* <PRE>
+* import jcsp.lang.*;
+* import jcsp.plugNplay.Printer;
+* <I></I>
+* class FairPlexTimeTest {
+* <I></I>
+*   public static void main (String[] args) {
+* <I></I>
+*     final One2OneChannel[] a = Channel.createOne2One (5);
+*     final One2OneChannel b = Channel.createOne2One ();
+* <I></I>
+*     new Parallel (
+*       new CSProcess[] {
+*         new Regular (a[0].out (), 0, 5),
+*         new Regular (a[1].out (), 1, 5),
+*         new Regular (a[2].out (), 2, 5),
+*         new Regular (a[3].out (), 3, 5),
+*         new Regular (a[4].out (), 4, 5),
+*         new FairPlexTime (Channel.getInputArray (a), b.out (), 10000),
+*         new Printer (b.in (), "FairPlexTimeTest ==> ", "\n")
+*       }
+*     ).run ();
+* <I></I>
+*   }
+* <I></I>
+* }
+* </PRE>
+* where <code>Regular</code> (documented as an example in the {@link CSTimer}
+* class) attempts to output an <code>Integer</code> (defined by its second parameter) to
+* the channel (defined by its first parameter) at a regular interval (defined by its
+* third parameter in msecs).  If you are using a relatively slow <I>JVM</I> (such as
+* <code>JDK1.1.x</code>), the input channels to <code>FairPlexTime</code> will always be
+* ready.  Faster <I>JVM</I>s (such as <code>JDK1.2</code>) are able to clear all input
+* channels leaving the timeout guard selectable.  Either way, all channels are
+* fairly serviced and the eventual timeout (after 10 seconds) is processed.
+* <P>
+* If <code>FairPlexTime</code> had used <code>alt.priSelect</code> instead of
+* <code>alt.fairSelect</code> and a slow <I>JVM</I> is used, the higher indexed channels
+* would not get serviced and neither would the timeout.  Try it and see!  Notice
+* the different behaviour if you freeze screen output (with <I>ctl-s</I>) and, then,
+* resume it (with <I>ctl-q</I>).  The moral is that <code>fairSelect</code> frees
+* us from worries such as the speed of our <I>JVM</I> and its scheduling behaviour.
+* <P>
+* Sometimes, of course, we need to use <code>priSelect</code> to impose a <I>specific</I>
+* (as opposed to <I>fair</I>) choice that overcomes the external scheduling of events.
+* For example, if we were concerned that the timeout in <code>FairPlexTime</code> should
+* be responded to <I>immediately</I> and unconcerned about the fair servicing of its
+* channels, we could put its <code>CSTimer</code> as the first element of its <code>Guard</code>
+* array and use a <code>priSelect</code>.
+*
+* <H3><A NAME="STFR">A Simple Traffic Flow Regulator</H3>
+* The <code>Regulate</code> process controls the flow of traffic from its <code>in</code> to
+* <code>out</code> channels.  It produces a constant rate of output flow, regardless of
+* the rate of its input.  At the end of each timeslice defined by the required output
+* rate, it outputs the last object input during that timeslice.  If nothing has come
+* in during a timeslice, the previous output will be repeated (note: this will be a
+* <code>null</code> if nothing has ever arrived).  If the input flow is greater than
+* the required output flow, data will be discarded.
+* <P>
+* The interval (in msecs) defining the output flow rate is given by a constructor
+* argument; but it can be reset at any time by sending a new interval (as a <code>Long</code>)
+* down the <code>reset</code> channel.
+* <P>
+* <I> Note: this example shows how simple it is to program time-regulated functionality
+* like that performed by </I><code>java.awt.Component.repaint</code><I>.</I>
+* <PRE>
+* import jcsp.lang.*;
+* <I></I>
+* public class Regulate implements CSProcess {
+* <I></I>
+*   private final AltingChannelInput in, reset;
+*   private final ChannelOutput out;
+*   private final long initialInterval;
+* <I></I>
+*   public Regulate (final AltingChannelInput in, final AltingChannelInput reset,
+*                    final ChannelOutput out, final long initialInterval) {
+*     this.in = in;
+*     this.reset = reset;
+*     this.out = out;
+*     this.initialInterval = initialInterval;
+*   }
+* <I></I>
+*   public void run () {
+* <I></I>
+*     final CSTimer tim = new CSTimer ();
+* <I></I>
+*     final Guard[] guards = {reset, tim, in};              // prioritised order
+*     final int RESET = 0;                                  // index into guards
+*     final int TIM = 1;                                    // index into guards
+*     final int IN = 2;                                     // index into guards
+* <I></I>
+*     final Alternative alt = new Alternative (guards);
+* <I></I>
+*     Object x = null;                                      // holding object
+* <I></I>
+*     long interval = initialInterval;
+* <I></I>
+*     long timeout = tim.read () + interval;
+*     tim.setAlarm (timeout);
+* <I></I>
+*     while (true) {
+*       switch (alt.priSelect ()) {
+*         case RESET:
+*           interval = ((Long) reset.read ()).longValue ();
+*           timeout = tim.read ();                          // fall through
+*         case TIM:
+*           out.write (x);
+*           timeout += interval;
+*           tim.setAlarm (timeout);
+*         break;
+*         case IN:
+*           x = in.read ();
+*         break;
+*       }
+*     }
+* <I></I>
+*   }
+* <I></I>
+* }
+* </PRE>
+* <P>
+* To demonstrate <code>Regulate</code>, consider:
+* <PRE>
+* class RegulateTest {
+* <I></I>
+*   public static void main (String[] args) {
+* <I></I>
+*     final One2OneChannel a = Channel.createOne2One ();
+*     final One2OneChannel b = Channel.createOne2One ();
+*     final One2OneChannel c = Channel.createOne2One ();
+* <I></I>
+*     final One2OneChannel reset = Channel.createOne2One (new OverWriteOldestBuffer (1));
+* <I></I>
+*     new Parallel (
+*       new CSProcess[] {
+*         new Numbers (a.out ()),
+*         // generate numbers
+*         new FixedDelay (250, a.in (), b.out ()),
+*         // let them through every quarter second
+*         new Regulate (b.in (), reset.in (), c.out (), 1000),
+*         // initially sample every second
+*         new CSProcess () {
+*           public void run () {
+*             Long[] sample = {new Long (1000), new Long (250), new Long (100)};
+*             int[] count = {10, 40, 100};
+*             while (true) {
+*               for (int cycle = 0; cycle < sample.length; cycle++) {
+*                 reset.write (sample[cycle]);
+*                 System.out.println ("\nSampling every " + sample[cycle] +
+*                                     " ms ...\n");
+*                 for (int i = 0; i < count[cycle]; i++) {
+*                   Integer n = (Integer) c.read ();
+*                   System.out.println ("\t==> " + n);
+*                 }
+*               }
+*             }
+*           }
+*         }
+*       }
+*     ).run ();
+*   }
+* <I></I>
+* }
+* </PRE>
+* The reader may like to consider the danger of deadlock in the above system if
+* the <code>reset</code> channel were not an <I>overwriting</I> one.
+*
+* <A NAME="Polling">
+* <H3>Polling</H3>
+* Sometimes, we want to handle incoming channel data if it's there, but get on with
+* something else if all is quiet.  This can be done by <code>PRI</code> <code>ALT</code><I>ing</I>
+* the channels we wish to poll against a <code>SKIP</code> guard:
+* <PRE>
+* import jcsp.lang.*;
+* <I></I>
+* public class Polling implements CSProcess {
+* <I></I>
+*   private final AltingChannelInput in0;
+*   private final AltingChannelInput in1;
+*   private final AltingChannelInput in2;
+*   private final ChannelOutput out;
+* <I></I>
+*   public Polling (final AltingChannelInput in0, final AltingChannelInput in1,
+*                   final AltingChannelInput in2, final ChannelOutput out) {
+*     this.in0 = in0;
+*     this.in1 = in1;
+*     this.in2 = in2;
+*     this.out = out;
+*   }
+* <I></I>
+*   public void run() {
+* <I></I>
+*     final Skip skip = new Skip ();
+*     final Guard[] guards = {in0, in1, in2, skip};
+*     final Alternative alt = new Alternative (guards);
+* <I></I>
+*     while (true) {
+*       switch (alt.priSelect ()) {
+*         case 0:
+*           ...  process data pending on channel in0 ...
+*         break;
+*         case 1:
+*           ...  process data pending on channel in1 ...
+*         break;
+*         case 2:
+*           ...  process data pending on channel in2 ...
+*         break;
+*         case 3:
+*           ...  nothing available for the above ...
+*           ...  so get on with something else for a while ...
+*           ...  then loop around and poll again ...
+*         break;
+*       }
+*     }
+* <I></I>
+*   }
+* <I></I>
+* }
+* </PRE>
+* The above technique lets us poll <I>any</I> {@link Guard} events, including
+* timeouts.  If we just want to poll <I>channels</I> for input events, see
+* the {@link AltingChannelInput#pending pending} methods of the various
+* ``<TT>...2One...</TT>'' channels for a more direct and efficient way.
+* <P>
+* <I>Note: polling is an often overused technique.  Make sure your design would
+* not be better suited with a blocking ALT and with the `something else' done by
+* a process running in parallel.</I>
+*
+* <A NAME="Wot-no-Chickens">
+* <H3>The <A HREF="http://wotug.org/parallel/groups/wotug/java/discussion/">`Wot-no-Chickens?'</A> Canteen</H3>
+* This examples demonstrates the use of <I>pre-conditions</I> on the <code>ALT</code>
+* guards.  The <code>Canteen</code> process buffers a supply of chickens.  It can
+* hold a maximum of 20 chickens.  Chickens are supplied on the <code>supply</code>
+* line in batches of, at most, 4.  Chickens are requested by hungry philosophers
+* who share the <code>request</code> line to the <code>Canteen</code>.  In response to
+* such requests, one chicken is delivered down the <code>deliver</code> line.
+* <P>
+* The <code>Canteen</code> refuses further supplies if it has no room for the maximum
+* (4) batch supply.  The <code>Canteen</code> refuses requests from the philosophers
+* if it has no chickens.
+* <PRE>
+* import jcsp.lang.*;
+* <I></I>
+* public class Canteen implements CSProcess {
+* <I></I>
+*   private final AltingChannelInput supply;    // from the cook
+*   private final AltingChannelInput request;   // from a philosopher
+*   private final ChannelOutput deliver;        // to a philosopher
+* <I></I>
+*   public Canteen (final AltingChannelInput supply,
+*                   final AltingChannelInput request,
+*                   final ChannelOutput deliver) {
+*     this.supply = supply;
+*     this.request = request;
+*     this.deliver = deliver;
+*   }
+* <I></I>
+*   public void run() {
+* <I></I>
+*     final Guard[] guard = {supply, request};
+*     final boolean[] preCondition = new boolean[guard.length];
+*     final int SUPPLY = 0;
+*     final int REQUEST = 1;
+* <I></I>
+*     final Alternative alt = new Alternative (guard);
+* <I></I>
+*     final int maxChickens = 20;
+*     final int maxSupply = 4;
+*     final int limitChickens = maxChickens - maxSupply;
+* <I></I>
+*     final Integer oneChicken = new Integer (1);
+*     // ready to go!
+* <I></I>
+*     int nChickens = 0;
+*     // invariant : 0 <= nChickens <= maxChickens
+* <I></I>
+*     while (true) {
+*       preCondition[SUPPLY] = (nChickens <= limitChickens);
+*       preCondition[REQUEST] = (nChickens > 0);
+*       switch (alt.priSelect (preCondition)) {
+*         case SUPPLY:
+*           nChickens += ((Integer) supply.read ()).intValue ();  // <= maxSupply
+*         break;
+*         case REQUEST:
+*           Object dummy = request.read ();
+*           // we have to still input the signal
+*           deliver.write (oneChicken);
+*           // preCondition ==> (nChickens > 0)
+*           nChickens--;
+*         break;
+*       }
+*     }
+* <I></I>
+*   }
+* <I></I>
+* }
+* </PRE>
+* <P>
+* Contrast the above programming of the canteen as a CSP <I>process</I> rather
+* than a <I>monitor</I>.  A monitor cannot refuse a callback when noone has the lock,
+* even though it may not be in a state to process it.  In the above, a <code>supply</code>
+* <I>method</I> would have to cope with its being called when there is no room to take the supply.
+* A <code>request</code> <I>method</I> would have to be dealt with even though there may be no chickens
+* to deliver.  Monitors manage such problems by putting their callers on hold
+* (<code>wait</code>), but that means that their methods have to rely on each other to get
+* out of any resulting embarassment (using <code>notify</code>).
+* And that means that the logic of those methods has to be tightly coupled, which
+* makes reasoning about them hard.  This gets worse the more interdependent methods
+* the monitor has.
+* <P>
+* On the other hand, the above <code>Canteen</code> <I>process</I> simply refuses service on
+* its <code>supply</code> and <code>request</code> <I>channels</I> if it can't cope, leaving
+* the supplying or requesting processes waiting harmlessly on those channels.
+* The service responses can assume their run-time set <I>pre-conditions</I> and have
+* independent -- and trivial -- logic.  When circumstances permit,
+* the blocked processes are serviced in the normal way.
+* </P>
+* <H2>Implementation Footnote</H2>
+* This <code>Alternative</code> class and the various channel classes
+* (e.g. {@link One2OneChannel}) are mutually dependent monitors -- they see instances
+* of each other and invoke each others' strongly interdependent methods.  This logic
+* is inspired by the published algorithms and data structures burnt into the microcode
+* of the <I>transputer</I> some 15 years ago (1984).  Getting this logic <I>`right'</I>
+* in the context of Java monitors is something we have done <code>(n + 1)</code> times,
+* only to find it flawed <code>n</code> times with an unsuspected race-hazard months
+* (sometimes years) later.  Hopefully, we have it <I>right</I> now ... but a proof
+* of correctness is really needed!
+* </P>
+* To this end, a formal (CSP) model of Java's monitor primitives
+* (the <code>synchronized</code> keyword and the <code>wait</code>, <code>notify</code> and
+* <code>notifyAll</code> methods of the <code>Object</code> class) has been built.
+* This has been used for the <I>formal verification</I> of the JCSP implementation
+* of channel <code>read</code> and <code>write</code>, along with the correctness of
+* <I>2-way</I> channel input <code>Alternative</code>s.
+* Details and references are listed under
+* <A HREF="http://www.cs.ukc.ac.uk/projects/ofa/jcsp/index.html#Model"><I>`A CSP Model
+* for Java Threads'</I> on the JCSP web-site</A>.
+* [The proof uses the <A HREF="http://www.formal.demon.co.uk/FDR2.html">FDR</A>
+* model checker.  Model checkers do not easily allow verification of results containing
+* free variables - such as the correctness of the <I>n-way</I> <code>Alternative</code>.
+* An investigation of this using <I>formal transformation</I> of one system of CSP equations
+* into another, rather than <I>model checking</I> is being considered.]
+* <P>
+* The <I>transputer</I> designers always said that getting its microcoded scheduler
+* logic right was one of their hardest tasks.  Working directly with the monitor
+* concept means working at a similar level of difficulty for application programs.
+* One of the goals of JCSP is to protect users from ever having to work at that level,
+* providing instead a range of CSP primitives whose ease of use scales well with
+* application complexity -- and in whose implementation those monitor complexities
+* are correctly distilled and hidden.
+*
+* @see jcsp.lang.Guard
+* @see jcsp.lang.AltingChannelInput
+* @see jcsp.lang.AltingChannelInputInt
+* @see jcsp.lang.AltingChannelAccept
+* @see jcsp.lang.AltingBarrier
+* @see jcsp.lang.CSTimer
+* @see jcsp.lang.Skip
+* 
+* @author P.H.Welch and P.D.Austin
+*/
 
 	public class Alternative
 	{

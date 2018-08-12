@@ -26,6 +26,8 @@
 //                                                                  //
 //////////////////////////////////////////////////////////////////////
 
+using CSPlang.Shared;
+
 namespace CSPlang
 {
 
@@ -34,7 +36,7 @@ namespace CSPlang
      *
      *
      */
-    interface ConnectionWithSharedAltingClient
+    public interface ConnectionWithSharedAltingClient
     {
         SharedAltingConnectionClient client();
     }

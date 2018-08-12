@@ -1,6 +1,32 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿//////////////////////////////////////////////////////////////////////
+//                                                                  //
+//  JCSP ("CSP for Java") Libraries                                 //
+// Copyright 1996-2017 Peter Welch, Paul Austin and Neil Brown      //
+//           2005-2017 Kevin Chalmers and Jon Kerridge              //
+//                                                                  //
+// Licensed under the Apache License, Version 2.0 (the "License");  //
+// you may not use this file except in compliance with the License. //
+// You may obtain a copy of the License at                          //
+//                                                                  //
+//      http://www.apache.org/licenses/LICENSE-2.0                  //
+//                                                                  //
+// Unless required by applicable law or agreed to in writing,       //
+// software distributed under the License is distributed on         //
+// an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,  //
+// either express or implied. See the License for the specific      //
+// language governing permissions and limitations under the License.//
+//                                                                  //
+//                                                                  //
+//                                                                  //
+//                                                                  //
+//  Author Contact: P.H.Welch@ukc.ac.uk                             //
+//                                                                  //
+//  Author contact: K.Chalmers@napier.ac.uk                         //
+//                                                                  //
+//                                                                  //
+//////////////////////////////////////////////////////////////////////
+
+
 using CSPlang.Any2;
 using CSPlang.One2;
 using CSPlang.Shared;
@@ -8,10 +34,28 @@ using CSPutil;
 
 namespace CSPlang
 {
-    /*Channel will be using other libraries
-     * import jcsp.util.ChannelDataStore;
-     *import jcsp.util.ints.ChannelDataStoreInt;
-     */
+    /**
+    * <p>This class provides static factory methods for constructing
+    * various different types of channel objects. There are also methods
+    * for constructing arrays of identical channels.
+    * </p>
+    *
+    * <p>The current implementation constructs "safe" channels which have separate
+    * delegate objects for their read and write ends. This stops a
+    * <code>ChannelInput</code> from being cast into a <code>ChannelOutput</code>
+    * object. The <code>StandardChannelFactory</code> class is used to construct the
+    * channels.
+    * </p>
+    *
+    * <p>Non-safe channels can be constructed by using an instance of the
+    * <code>RiskyChannelFactory</code> class. The channels produced by this
+    * factory have read and write ends implemented by the same object. This is
+    * is more efficient (there are two less objects and delegate method calls)
+    * but could lead to errors if users make incorrect casts.
+    * </p>
+    *
+    *
+    */
     public class Channel
     {
         /**

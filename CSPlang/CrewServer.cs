@@ -26,29 +26,31 @@
 //                                                                  //
 //////////////////////////////////////////////////////////////////////
 
+using CSPlang.Alting;
+
 namespace CSPlang
 {
 
     /**
      * @author P.H.Welch
      */
-    class CrewServer implements CSProcess
+    class CrewServer : IamCSProcess
     {
 
-    public static final int READER = 0;
-    public static final int WRITER = 1;
+    public static readonly int READER = 0;
+    public static readonly int WRITER = 1;
 
-    private final AltingChannelInputInt request;
-    private final AltingChannelInputInt writerControl;
-    private final AltingChannelInputInt readerRelease;
+    private readonly AltingChannelInputInt request;
+    private readonly AltingChannelInputInt writerControl;
+    private readonly AltingChannelInputInt readerRelease;
 
     ///TODO change this to use poisoning of the above channels, once poison is added
-    private final AltingChannelInputInt poison;
+    private readonly AltingChannelInputInt poison;
 
-    public CrewServer(final AltingChannelInputInt request,
-    final AltingChannelInputInt writerControl,
-    final AltingChannelInputInt readerRelease,
-    final AltingChannelInputInt poison)
+    public CrewServer(readonly AltingChannelInputInt request,
+    readonly AltingChannelInputInt writerControl,
+    readonly AltingChannelInputInt readerRelease,
+    readonly AltingChannelInputInt poison)
     {
         this.request = request;
         this.writerControl = writerControl;
@@ -59,19 +61,19 @@ namespace CSPlang
     public void run()
     {
         int nReaders = 0;
-        final Alternative altMain =
+        readonly Alternative altMain =
             new Alternative(new Guard[] { readerRelease, request, poison });
-        final int MAIN_READER_RELEASE = 0;
-        final int MAIN_REQUEST = 1;
-        final int MAIN_POISON = 2;
-        final Alternative altWriteComplete =
+        readonly int MAIN_READER_RELEASE = 0;
+        readonly int MAIN_REQUEST = 1;
+        readonly int MAIN_POISON = 2;
+        readonly Alternative altWriteComplete =
             new Alternative(new Guard[] { writerControl, poison });
-        final int WC_WRITER_CONTROL = 0;
-        final int WC_POISON = 1;
-        final Alternative altReadComplete =
+        readonly int WC_WRITER_CONTROL = 0;
+        readonly int WC_POISON = 1;
+        readonly Alternative altReadComplete =
             new Alternative(new Guard[] { readerRelease, poison });
-        final int RC_READER_RELEASE = 0;
-        final int RC_POISON = 1;
+        readonly int RC_READER_RELEASE = 0;
+        readonly int RC_POISON = 1;
         while (true)
         {
             // invariant : (nReaders is the number of current readers) and (there are no writers)
@@ -98,7 +100,7 @@ namespace CSPlang
                             nReaders--; // tmp
                             break;
                             case RC_POISON:
-                            poison.read(); // let the finalizer complete
+                            poison.read(); // let the readonlyizer complete
                             return;
                         }
                     }
@@ -111,7 +113,7 @@ namespace CSPlang
                         writerControl.read(); // let writer finish writing
                         break;
                         case WC_POISON:
-                        poison.read(); // let the finalizer complete
+                        poison.read(); // let the readonlyizer complete
                         return;
                     }
 
@@ -120,7 +122,7 @@ namespace CSPlang
 
                 break;
                 case MAIN_POISON:
-                poison.read(); // let the finalizer complete
+                poison.read(); // let the readonlyizer complete
                 return;
             }
         }

@@ -9,24 +9,24 @@ namespace CSPlang.Alting
         private ChannelInternalsInt channel;
         private int immunity;
 
-        AltingChannelInputIntImpl(ChannelInternalsInt _channel, int _immunity)
+        internal AltingChannelInputIntImpl(ChannelInternalsInt _channel, int _immunity)
         {
             channel = _channel;
             immunity = _immunity;
         }
 
 
-        public Boolean pending()
+        public override Boolean pending()
         {
             return channel.readerPending();
         }
 
-        Boolean disable()
+        public override Boolean disable()
         {
             return channel.readerDisable();
         }
 
-        Boolean enable(Alternative alt)
+        public override Boolean enable(Alternative alt)
         {
             return channel.readerEnable(alt);
         }

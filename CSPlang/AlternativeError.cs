@@ -27,7 +27,6 @@ using System;
 namespace CSPlang
 {
 
-    //{{{  javadoc
     /**
      * This is thrown for an illegal operation on an Alternative.
      *
@@ -37,7 +36,6 @@ namespace CSPlang
      *
      * @author P.H.Welch
      */
-    //}}}
 
     public class AlternativeError : Exception
     {

@@ -7,7 +7,7 @@ namespace CSPlang.Shared
         private ChannelInternalsInt channel;
         private int immunity;
 
-        SharedChannelOutputIntImpl(ChannelInternalsInt _channel, int _immunity)
+        internal SharedChannelOutputIntImpl(ChannelInternalsInt _channel, int _immunity)
         {
             channel = _channel;
             immunity = _immunity;

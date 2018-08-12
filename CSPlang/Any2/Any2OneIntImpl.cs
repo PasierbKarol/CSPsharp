@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using CSPlang.Alting;
+using CSPlang.Shared;
 
 namespace CSPlang.Any2
 {
@@ -25,17 +27,17 @@ namespace CSPlang.Any2
             return channel.read();
         }
 
-        public boolean readerDisable()
+        public Boolean readerDisable()
         {
             return channel.readerDisable();
         }
 
-        public boolean readerEnable(Alternative alt)
+        public Boolean readerEnable(Alternative alt)
         {
             return channel.readerEnable(alt);
         }
 
-        public boolean readerPending()
+        public Boolean readerPending()
         {
             return channel.readerPending();
         }
@@ -54,7 +56,7 @@ namespace CSPlang.Any2
 
         public void write(int n)
         {
-            synchronized(writeMonitor) {
+            lock (writeMonitor) {
                 channel.write(n);
             }
 
@@ -62,17 +64,17 @@ namespace CSPlang.Any2
 
         public void writerPoison(int strength)
         {
-            synchronized(writeMonitor) {
+            lock (writeMonitor) {
                 channel.writerPoison(strength);
             }
 
         }
 
-        public AltingChannelInputInt in() {
+        public AltingChannelInputInt In() {
             return new AltingChannelInputIntImpl(channel,0);
         }
 
-        public SharedChannelOutputInt out() {
+        public SharedChannelOutputInt Out() {
             return new SharedChannelOutputIntImpl(this,0);
         }
 

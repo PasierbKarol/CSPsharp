@@ -1,9 +1,78 @@
-﻿using System;
+﻿//////////////////////////////////////////////////////////////////////
+//                                                                  //
+//  JCSP ("CSP for Java") Libraries                                 //
+// Copyright 1996-2017 Peter Welch, Paul Austin and Neil Brown      //
+//           2005-2017 Kevin Chalmers and Jon Kerridge              //
+//                                                                  //
+// Licensed under the Apache License, Version 2.0 (the "License");  //
+// you may not use this file except in compliance with the License. //
+// You may obtain a copy of the License at                          //
+//                                                                  //
+//      http://www.apache.org/licenses/LICENSE-2.0                  //
+//                                                                  //
+// Unless required by applicable law or agreed to in writing,       //
+// software distributed under the License is distributed on         //
+// an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,  //
+// either express or implied. See the License for the specific      //
+// language governing permissions and limitations under the License.//
+//                                                                  //
+//                                                                  //
+//                                                                  //
+//                                                                  //
+//  Author Contact: P.H.Welch@ukc.ac.uk                             //
+//                                                                  //
+//  Author contact: K.Chalmers@napier.ac.uk                         //
+//                                                                  //
+//                                                                  //
+//////////////////////////////////////////////////////////////////////
+
+
+using System;
 using System.Threading;
 
 namespace CSPlang
 {
-	[Serializable]
+    /**
+ * This implements a one-to-one object channel.
+ * <H2>Description</H2>
+ * <TT>One2OneChannelImpl</TT> implements a one-to-one object channel.  Multiple
+ * readers or multiple writers are not allowed -- these are catered for
+ * by {@link Any2OneChannelImpl},
+ * {@link One2AnyChannelImpl} or
+ * {@link Any2AnyChannelImpl}.
+ * <P>
+ * The reading process may {@link Alternative <TT>ALT</TT>} on this channel.
+ * The writing process is committed (i.e. it may not back off).
+ * <P>
+ * The default semantics of the channel is that of CSP -- i.e. it is
+ * zero-buffered and fully synchronised.  The reading process must wait
+ * for a matching writer and vice-versa.
+ * <P>
+ * However, the static <TT>create</TT> method allows the user to create
+ * a channel with a <I>plug-in</I> driver conforming to the
+ * {@link jcsp.util.ChannelDataStore <TT>ChannelDataStore</TT>}
+ * interface.  This allows a variety of different channel semantics to be
+ * introduced -- including buffered channels of user-defined capacity
+ * (including infinite), overwriting channels (with various overwriting
+ * policies) etc..
+ * Standard examples are given in the <TT>jcsp.util</TT> package, but
+ * <I>careful users</I> may write their own.
+ * <P>
+ * Other static <TT>create</TT> methods allows the user to create fully
+ * initialised arrays of channels, including plug-ins if required.
+ *
+ * @see jcsp.lang.Alternative
+ * @see jcsp.lang.Any2OneChannelImpl
+ * @see jcsp.lang.One2AnyChannelImpl
+ * @see jcsp.lang.Any2AnyChannelImpl
+ * @see jcsp.util.ChannelDataStore
+ *
+ * @author P.D.Austin
+ * @author P.H.Welch
+ */
+
+
+    [Serializable]
 	internal class PoisonableOne2OneChannelImpl : One2OneChannel, ChannelInternals
 	{
 		/** The monitor synchronising reader and writer on this channel */
