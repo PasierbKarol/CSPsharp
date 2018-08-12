@@ -9,7 +9,7 @@ namespace CSPlang
     private ChannelInternals channel;
     private int immunity;
 
-    ChannelInputImpl(ChannelInternals _channel, int _immunity)
+        internal ChannelInputImpl(ChannelInternals _channel, int _immunity)
     {
         channel = _channel;
         immunity = _immunity;
