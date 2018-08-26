@@ -8,4 +8,9 @@
     <ProjectReference Include="..\CSPutil\CSPutil.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Connection\" />
+    <Folder Include="Rejectable\" />
+  </ItemGroup>
+
 </Project>

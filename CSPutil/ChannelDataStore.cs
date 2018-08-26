@@ -1,24 +1,92 @@
-﻿using System;
+﻿//////////////////////////////////////////////////////////////////////
+//                                                                  //
+//  JCSP ("CSP for Java") Libraries                                 //
+// Copyright 1996-2017 Peter Welch, Paul Austin and Neil Brown      //
+//           2005-2017 Kevin Chalmers and Jon Kerridge              //
+//                                                                  //
+// Licensed under the Apache License, Version 2.0 (the "License");  //
+// you may not use this file except in compliance with the License. //
+// You may obtain a copy of the License at                          //
+//                                                                  //
+//      http://www.apache.org/licenses/LICENSE-2.0                  //
+//                                                                  //
+// Unless required by applicable law or agreed to in writing,       //
+// software distributed under the License is distributed on         //
+// an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,  //
+// either express or implied. See the License for the specific      //
+// language governing permissions and limitations under the License.//
+//                                                                  //
+//                                                                  //
+//                                                                  //
+//                                                                  //
+//  Author Contact: P.H.Welch@ukc.ac.uk                             //
+//                                                                  //
+//  Author contact: K.Chalmers@napier.ac.uk                         //
+//                                                                  //
+//                                                                  //
+//////////////////////////////////////////////////////////////////////
+
+
+using System;
 
 namespace CSPutil
 {
+    /**
+ * This is the interface for object channel plug-ins that define their buffering
+ * characteristics.
+ * <H2>Description</H2>
+ * <TT>ChannelDataStore</TT> defines the interface to the logic used by
+ * channels defined in the <TT>jcsp.lang</TT> package to manage the data
+ * being communicated.
+ * <P>
+ * This enables that logic to be varied by creating channels specifying
+ * a particular implementation of this interface.  This reduces the number of
+ * classes that would otherwise need to be defined.  The default channel
+ * constructor (with no parameters) uses the <TT>ZeroBuffer</TT> implementation,
+ * which gives the standard CSP semantics -- no buffering and full synchronisation
+ * between reading and writing processes.
+ * See the static
+ * {@link jcsp.lang.Channel#createOne2One(jcsp.util.ChannelDataStore) <TT>create</TT>}
+ * methods of {@link jcsp.lang.Channel} etc.
+ * <P>
+ * <I>Note: instances of </I><TT>ChannelDataStore</TT><I> implementations are
+ * used by the various channel classes within </I><TT>jcsp.lang</TT><I>
+ * in a thread-safe way.  They are not intended for any other purpose.
+ * Developers of new </I><TT>ChannelDataStore</TT><I> implementations,
+ * therefore, do not need to worry about thread safety (e.g. by making its
+ * methods </I><TT>synchronized</TT><I>).  Also, developers can assume that
+ * the documented pre-conditions for invoking the </I><TT>get</TT><I>
+ * and </I><TT>put</TT><I> methods will be met.</I>
+ *
+ * @see jcsp.util.ZeroBuffer
+ * @see jcsp.util.CSPBuffer
+ * @see jcsp.util.OverWriteOldestBuffer
+ * @see jcsp.util.OverWritingBuffer
+ * @see jcsp.util.OverFlowingBuffer
+ * @see jcsp.util.InfiniteBuffer
+ * @see jcsp.lang.Channel
+ *
+ * @author P.D.Austin
+ */
+
+
     public interface ChannelDataStore : ICloneable
     {
         /** Indicates that the <TT>ChannelDataStore</TT> is empty
      * -- it can accept only a <TT>put</TT>.
      */
-        final static int EMPTY = 0;
+        readonly static int EMPTY = 0;
 
         /**
          * Indicates that the <TT>ChannelDataStore</TT> is neither empty nor full
          * -- it can accept either a <TT>put</TT> or a <TT>get</TT> call.
          */
-        final static int NONEMPTYFULL = 1;
+        readonly static int NONEMPTYFULL = 1;
 
         /** Indicates that the <TT>ChannelDataStore</TT> is full
          * -- it can accept only a <TT>get</TT>.
          */
-        final static int FULL = 2;
+        readonly static int FULL = 2;
 
         /**
          * Returns the current state of the <TT>ChannelDataStore</TT>.
