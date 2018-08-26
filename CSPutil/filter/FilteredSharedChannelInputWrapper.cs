@@ -1,46 +1,45 @@
-    //////////////////////////////////////////////////////////////////////
-    //                                                                  //
-    //  JCSP ("CSP for Java") Libraries                                 //
-    // Copyright 1996-2017 Peter Welch, Paul Austin and Neil Brown      //
-    //           2005-2017 Kevin Chalmers and Jon Kerridge              //
-    //                                                                  //
-    // Licensed under the Apache License, Version 2.0 (the "License");  //
-    // you may not use this file except in compliance with the License. //
-    // You may obtain a copy of the License at                          //
-    //                                                                  //
-    //      http://www.apache.org/licenses/LICENSE-2.0                  //
-    //                                                                  //
-    // Unless required by applicable law or agreed to in writing,       //
-    // software distributed under the License is distributed on         //
-    // an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,  //
-    // either express or implied. See the License for the specific      //
-    // language governing permissions and limitations under the License.//
-    //                                                                  //
-    //                                                                  //
-    //                                                                  //
-    //                                                                  //
-    //  Author Contact: P.H.Welch@ukc.ac.uk                             //
-    //                                                                  //
-    //  Author contact: K.Chalmers@napier.ac.uk                         //
-    //                                                                  //
-    //                                                                  //
-    //////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////
+//                                                                  //
+//  JCSP ("CSP for Java") Libraries                                 //
+// Copyright 1996-2017 Peter Welch, Paul Austin and Neil Brown      //
+//           2005-2017 Kevin Chalmers and Jon Kerridge              //
+//                                                                  //
+// Licensed under the Apache License, Version 2.0 (the "License");  //
+// you may not use this file except in compliance with the License. //
+// You may obtain a copy of the License at                          //
+//                                                                  //
+//      http://www.apache.org/licenses/LICENSE-2.0                  //
+//                                                                  //
+// Unless required by applicable law or agreed to in writing,       //
+// software distributed under the License is distributed on         //
+// an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,  //
+// either express or implied. See the License for the specific      //
+// language governing permissions and limitations under the License.//
+//                                                                  //
+//                                                                  //
+//                                                                  //
+//                                                                  //
+//  Author Contact: P.H.Welch@ukc.ac.uk                             //
+//                                                                  //
+//  Author contact: K.Chalmers@napier.ac.uk                         //
+//                                                                  //
+//                                                                  //
+//////////////////////////////////////////////////////////////////////
 
-package jcsp.util.filter;
+using System;
 
-import jcsp.lang.*;
+namespace CSPutil
+{
 
-/**
- * This is wrapper for a <code>SharedChannelInput</code> that adds
- * read filtering. Instances of this class can be safely used by
- * multiple concurrent processes.
- *
- *
- */
-public class FilteredSharedChannelInputWrapper
-        extends FilteredChannelInputWrapper
-        implements FilteredSharedChannelInput
-{    
+    /**
+     * This is wrapper for a <code>SharedChannelInput</code> that adds
+     * read filtering. Instances of this class can be safely used by
+     * multiple concurrent processes.
+     *
+     *
+     */
+    public class FilteredSharedChannelInputWrapper : FilteredChannelInputWrapper, FilteredSharedChannelInput
+    {
     /**
      * The object used for synchronization by the methods here to protect the readers from each other
      * when manipulating the filters and reading data.
@@ -52,15 +51,15 @@ public class FilteredSharedChannelInputWrapper
      *
      * @param in the existing channel end.
      */
-    public FilteredSharedChannelInputWrapper(SharedChannelInput in)
+    public FilteredSharedChannelInputWrapper(SharedChannelInput In) : base(In)
     {
-        super(in);        
+        
         synchObject = new Object();
     }
 
     public Object read()
     {
-        synchronized (synchObject)
+        synchronized(synchObject)
         {
             return super.read();
         }
@@ -68,7 +67,7 @@ public class FilteredSharedChannelInputWrapper
 
     public void addReadFilter(Filter filter)
     {
-        synchronized (synchObject)
+        synchronized(synchObject)
         {
             super.addReadFilter(filter);
         }
@@ -76,7 +75,7 @@ public class FilteredSharedChannelInputWrapper
 
     public void addReadFilter(Filter filter, int index)
     {
-        synchronized (synchObject)
+        synchronized(synchObject)
         {
             super.addReadFilter(filter, index);
         }
@@ -84,7 +83,7 @@ public class FilteredSharedChannelInputWrapper
 
     public void removeReadFilter(Filter filter)
     {
-        synchronized (synchObject)
+        synchronized(synchObject)
         {
             super.removeReadFilter(filter);
         }
@@ -92,7 +91,7 @@ public class FilteredSharedChannelInputWrapper
 
     public void removeReadFilter(int index)
     {
-        synchronized (synchObject)
+        synchronized(synchObject)
         {
             super.removeReadFilter(index);
         }
@@ -100,7 +99,7 @@ public class FilteredSharedChannelInputWrapper
 
     public Filter getReadFilter(int index)
     {
-        synchronized (synchObject)
+        synchronized(synchObject)
         {
             return super.getReadFilter(index);
         }
@@ -108,9 +107,10 @@ public class FilteredSharedChannelInputWrapper
 
     public int getReadFilterCount()
     {
-        synchronized (synchObject)
+        synchronized(synchObject)
         {
             return super.getReadFilterCount();
         }
+    }
     }
 }

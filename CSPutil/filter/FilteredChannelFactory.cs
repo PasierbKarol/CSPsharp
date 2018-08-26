@@ -1,56 +1,50 @@
-    //////////////////////////////////////////////////////////////////////
-    //                                                                  //
-    //  JCSP ("CSP for Java") Libraries                                 //
-    // Copyright 1996-2017 Peter Welch, Paul Austin and Neil Brown      //
-    //           2005-2017 Kevin Chalmers and Jon Kerridge              //
-    //                                                                  //
-    // Licensed under the Apache License, Version 2.0 (the "License");  //
-    // you may not use this file except in compliance with the License. //
-    // You may obtain a copy of the License at                          //
-    //                                                                  //
-    //      http://www.apache.org/licenses/LICENSE-2.0                  //
-    //                                                                  //
-    // Unless required by applicable law or agreed to in writing,       //
-    // software distributed under the License is distributed on         //
-    // an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,  //
-    // either express or implied. See the License for the specific      //
-    // language governing permissions and limitations under the License.//
-    //                                                                  //
-    //                                                                  //
-    //                                                                  //
-    //                                                                  //
-    //  Author Contact: P.H.Welch@ukc.ac.uk                             //
-    //                                                                  //
-    //  Author contact: K.Chalmers@napier.ac.uk                         //
-    //                                                                  //
-    //                                                                  //
-    //////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////
+//                                                                  //
+//  JCSP ("CSP for Java") Libraries                                 //
+// Copyright 1996-2017 Peter Welch, Paul Austin and Neil Brown      //
+//           2005-2017 Kevin Chalmers and Jon Kerridge              //
+//                                                                  //
+// Licensed under the Apache License, Version 2.0 (the "License");  //
+// you may not use this file except in compliance with the License. //
+// You may obtain a copy of the License at                          //
+//                                                                  //
+//      http://www.apache.org/licenses/LICENSE-2.0                  //
+//                                                                  //
+// Unless required by applicable law or agreed to in writing,       //
+// software distributed under the License is distributed on         //
+// an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,  //
+// either express or implied. See the License for the specific      //
+// language governing permissions and limitations under the License.//
+//                                                                  //
+//                                                                  //
+//                                                                  //
+//                                                                  //
+//  Author Contact: P.H.Welch@ukc.ac.uk                             //
+//                                                                  //
+//  Author contact: K.Chalmers@napier.ac.uk                         //
+//                                                                  //
+//                                                                  //
+//////////////////////////////////////////////////////////////////////
 
-package jcsp.util.filter;
-
-import jcsp.lang.*;
-import jcsp.util.ChannelDataStore;
-
-/**
- * <p>This class is used for constructing Filtered Channels.
- * The objects returned by instances of this class will implement
- * the appropriate Filtered Channel interfaces even though the return
- * types are not declared as being Filtered Channels. This is so
- * that this class can implement the <code>ChannelFactory</code> and
- * <code>ChannelArrayFactory</code> interfaces. Instances of this class
- * can therefore be used in place of the standard channel factory classes.</p>
- *
- * <p>A set of read and/or write filters can be specified so that all of the channels created by this
- * factory will have the same buffering properties.</p>
- *
- *
- */
-public class FilteredChannelFactory
-        implements ChannelFactory,
-        ChannelArrayFactory,
-        BufferedChannelFactory,
-        BufferedChannelArrayFactory
+namespace CSPutil
 {
+
+    /**
+     * <p>This class is used for constructing Filtered Channels.
+     * The objects returned by instances of this class will implement
+     * the appropriate Filtered Channel interfaces even though the return
+     * types are not declared as being Filtered Channels. This is so
+     * that this class can implement the <code>ChannelFactory</code> and
+     * <code>ChannelArrayFactory</code> interfaces. Instances of this class
+     * can therefore be used in place of the standard channel factory classes.</p>
+     *
+     * <p>A set of read and/or write filters can be specified so that all of the channels created by this
+     * factory will have the same buffering properties.</p>
+     *
+     *
+     */
+    public class FilteredChannelFactory: ChannelFactory,ChannelArrayFactory,BufferedChannelFactory,BufferedChannelArrayFactory
+    {
     /**
      * Underlying factory for creating the base channels.
      */
@@ -102,10 +96,10 @@ public class FilteredChannelFactory
     private void installFilters(ReadFiltered readFiltered, WriteFiltered writeFiltered)
     {
         if (readFilters != null)
-            for (int i = 0; i < readFilters.length; i++)
+            for (int i = 0; i < readFilters.Length; i++)
                 readFiltered.addReadFilter(readFilters[i]);
         if (writeFilters != null)
-            for (int i = 0; i < writeFilters.length; i++)
+            for (int i = 0; i < writeFilters.Length; i++)
                 writeFiltered.addWriteFilter(writeFilters[i]);
     }
 
@@ -169,9 +163,11 @@ public class FilteredChannelFactory
     public One2OneChannel[] createOne2One(int n)
     {
         One2OneChannel[] toReturn = new One2OneChannel[n];
-        for (int i = 0; i < n; i++) {
+        for (int i = 0; i < n; i++)
+        {
             toReturn[i] = createOne2One();
         }
+
         return toReturn;
     }
 
@@ -357,5 +353,6 @@ public class FilteredChannelFactory
         for (int i = 0; i < n; i++)
             toReturn[i] = createAny2Any(buffer);
         return toReturn;
+    }
     }
 }
