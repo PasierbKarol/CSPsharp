@@ -34,6 +34,6 @@ namespace CSPlang
      */
     class ConnectionClientOpenMessage : ConnectionClientMessage
     {
-    ChannelOutput replyChannel;
+        internal ChannelOutput replyChannel;
     }
 }

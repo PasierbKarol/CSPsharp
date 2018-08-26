@@ -89,7 +89,7 @@ namespace CSPlang
          * @throws  IllegalStateException	if the method is called when it is
          *                                  not meant to be.
          */
-         void request(Object data) throws IllegalStateException;
+         void request(Object data);// throws IllegalStateException;
 
         /**
          * <p>Receives some data back from the server after
@@ -104,7 +104,7 @@ namespace CSPlang
          * @throws  IllegalStateException	if the method is called when it is
          *                                  not meant to be.
          */
-         Object reply() throws IllegalStateException;
+         Object reply();// throws IllegalStateException;
 
         /**
          * <p>Returns whether the server has kept its end of the Connection open.
@@ -114,7 +114,7 @@ namespace CSPlang
          * @return <code>true</code> iff the server has kept the connection
          *          open.
          */
-         Boolean isOpen() throws IllegalStateException;
+         Boolean isOpen();// throws IllegalStateException;
 
     }
 }

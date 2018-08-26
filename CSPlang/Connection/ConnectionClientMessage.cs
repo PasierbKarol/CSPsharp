@@ -42,6 +42,6 @@ namespace CSPlang
 
     class ConnectionClientMessage
     {
-        Object data;
+        internal Object data;
     }
 }

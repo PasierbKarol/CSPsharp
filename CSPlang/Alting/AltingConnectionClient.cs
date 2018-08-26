@@ -157,5 +157,20 @@ namespace CSPlang.Alting
         {
             return altingChannel.pending();
         }
+
+        public void request(object data)
+        {
+            throw new NotImplementedException();
+        }
+
+        public object reply()
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool isOpen()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

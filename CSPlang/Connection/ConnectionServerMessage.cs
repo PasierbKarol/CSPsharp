@@ -39,7 +39,7 @@ namespace CSPlang
     [Serializable]
     class ConnectionServerMessage
     {
-        Boolean open;
-        Object data;
+        internal Boolean open;
+        internal Object data;
     }
 }

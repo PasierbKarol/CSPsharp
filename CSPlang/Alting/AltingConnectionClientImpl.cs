@@ -53,8 +53,8 @@ namespace CSPlang.Alting
         private ChannelOutput reqToServer;
         private ChannelOutput backToClient;
 
-        private ConnectionClientMessage msg = new ConnectionClientMessage();
-        private ConnectionClientOpenMessage msgOpen = new ConnectionClientOpenMessage();
+        private ConnectionClientMessage message = new ConnectionClientMessage();
+        private ConnectionClientOpenMessage messageOpen = new ConnectionClientOpenMessage();
 
         /**
          * Constructs a new instance. This constructor must be called by a subclass which is responsible
@@ -63,9 +63,8 @@ namespace CSPlang.Alting
         protected AltingConnectionClientImpl(AltingChannelInput fromServer,
                                              ChannelOutput openToServer,
                                              ChannelOutput reqToServer,
-                                             ChannelOutput backToClient) : base (fromServer)
+                                             ChannelOutput backToClient) : base(fromServer)
         {
-            
             this.fromServer = fromServer;
             this.openToServer = openToServer;
             this.reqToServer = reqToServer;
@@ -79,86 +78,124 @@ namespace CSPlang.Alting
          *
          * @param data	the <code>Object</code> to send to the server.
          */
-        public void request(Object data) throws IllegalStateException
+        public void request(Object data)// throws IllegalStateException
         {
-        if (currentClientState == CLIENT_STATE_MADE_REQ)
-            throw new IllegalStateException
-                    ("Cannot call request(Object) twice without calling reply().");
-        //this will claim the use of the client
-        if (currentClientState == CLIENT_STATE_CLOSED)
-        {
-            claim();
-        msgOpen.data = data;
-            msgOpen.replyChannel = backToClient;
-            openToServer.write(msgOpen);
+            try
+            {
+                if (currentClientState == CLIENT_STATE_MADE_REQ)
+                    //throw new IllegalStateException ("Cannot call request(Object) twice without calling reply().");
+                    //this will claim the use of the client
+                    if (currentClientState == CLIENT_STATE_CLOSED)
+                    {
+                        claim();
+                        messageOpen.data = data;
+                        messageOpen.replyChannel = backToClient;
+                        openToServer.write(messageOpen);
+                    }
+                    else
+                    {
+                        message.data = data;
+                        reqToServer.write(message);
+                    }
+                currentClientState = CLIENT_STATE_MADE_REQ;
+            }
+            catch (InvalidOperationException)
+            {
+
+                throw;
+            }
         }
-        else
+
+        /**
+         * Receives some data back from the server after
+         * <code>request(Object)</code> has been called.
+         *
+         * @return the <code>Object</code> sent from the server.
+         */
+        public Object reply()// throws 
         {
-            msg.data = data;
-            reqToServer.write(msg);
+            try
+            {
+                //moved it out from the if statement below and had to initialize it with empty object - KP
+                ConnectionServerMessage serverReply = new ConnectionServerMessage();
+
+                if (currentClientState != CLIENT_STATE_MADE_REQ)
+                {
+                    try
+                    {
+                        serverReply = (ConnectionServerMessage)fromServer.read();
+                    }
+                    catch (InvalidOperationException)
+                    {
+                        throw new InvalidOperationException("Cannot call reply() on a ConnectionClient that is not waiting for a reply.");
+                    }
+
+                }
+
+                //check whether the server closed the connection
+                currentClientState = serverReply.open ? CLIENT_STATE_OPEN : CLIENT_STATE_CLOSED;
+                if (serverReply.open)
+                    currentClientState = CLIENT_STATE_OPEN;
+                else
+                {
+                    currentClientState = CLIENT_STATE_CLOSED;
+                    release();
+                }
+                return serverReply.data;
+            }
+            catch (InvalidOperationException)
+            {
+
+                throw;
+            }
         }
-currentClientState = CLIENT_STATE_MADE_REQ;
-    }
 
-    /**
-     * Receives some data back from the server after
-     * <code>request(Object)</code> has been called.
-     *
-     * @return the <code>Object</code> sent from the server.
-     */
-    public Object reply() throws IllegalStateException
-{
-        if (currentClientState != CLIENT_STATE_MADE_REQ)
-            throw new IllegalStateException
-                    ("Cannot call reply() on a ConnectionClient that is not waiting for a reply.");
-ConnectionServerMessage serverReply = (ConnectionServerMessage)fromServer.read();
-
-//check whether the server closed the connection
-currentClientState = serverReply.open? CLIENT_STATE_OPEN : CLIENT_STATE_CLOSED;
-        if (serverReply.open)
-            currentClientState = CLIENT_STATE_OPEN;
-        else
+        /**
+         * Returns whether the server has kept its end of the Connection open.
+         * This should only be called after a call to <code>reply()</code> and
+         * before any other Connection method is called.
+         *
+         * @return <code>true</code> iff the server has kept the connection
+         *          open.
+         */
+        public Boolean isOpen()// throws 
         {
-            currentClientState = CLIENT_STATE_CLOSED;
-            release();
+            if (currentClientState == CLIENT_STATE_MADE_REQ)
+            {
+                throw new InvalidOperationException("Can only call isOpen() just after a reply has been received from the server.");
+            }
+
+            return currentClientState == CLIENT_STATE_OPEN;
         }
-        return serverReply.data;
-    }
 
-    /**
-     * Returns whether the server has kept its end of the Connection open.
-     * This should only be called after a call to <code>reply()</code> and
-     * before any other Connection method is called.
-     *
-     * @return <code>true</code> iff the server has kept the connection
-     *          open.
-     */
-    public boolean isOpen() throws IllegalStateException
-{
-        if (currentClientState == CLIENT_STATE_MADE_REQ)
-            throw new IllegalStateException
-                    ("Can only call isOpen() just after a reply has been received from the server.");
-        return currentClientState == CLIENT_STATE_OPEN;
-    }
+        /**
+         * This claims a lock on the client.
+         * This implementation does nothing as instances of this
+         * class are only meant to be used with One2?Connection objects.
+         *
+         */
+        protected void claim()
+        {
+        }
 
-    /**
-     * This claims a lock on the client.
-     * This implementation does nothing as instances of this
-     * class are only meant to be used with One2?Connection objects.
-     *
-     */
-    protected void claim()
-{
-}
+        /**
+         * This releases a lock on the client.
+         * This implementation does nothing as instances of this
+         * class are only meant to be used with One2?Connection objects.
+         *
+         */
+        protected void release()
+        {
+        }
 
-/**
- * This releases a lock on the client.
- * This implementation does nothing as instances of this
- * class are only meant to be used with One2?Connection objects.
- *
- */
-protected void release()
-{
-}
+        public override bool enable(Alternative alt)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override bool disable()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

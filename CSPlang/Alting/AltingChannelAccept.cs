@@ -54,6 +54,9 @@ namespace CSPlang.Alting
 
     public abstract class AltingChannelAccept : Guard, ChannelAccept
     {
-
+        public int accept(IamCSProcess server)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

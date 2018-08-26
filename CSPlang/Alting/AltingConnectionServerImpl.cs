@@ -83,9 +83,8 @@ namespace CSPlang.Alting
          * creating the channels.
          */
         protected AltingConnectionServerImpl(AltingChannelInput openIn,
-                                             AltingChannelInput furtherRequestIn)
+                                             AltingChannelInput furtherRequestIn) : base(openIn)
         {
-            super(openIn);
             this.openIn = openIn;
             this.furtherRequestIn = furtherRequestIn;
             this.currentInputChannel = openIn;
@@ -103,14 +102,15 @@ namespace CSPlang.Alting
         public Object request() //throws IllegalStateException
         {
             if (currentServerState == SERVER_STATE_RECEIVED)
-                throw new IllegalStateException
-                        ("Cannot call request() twice on ConnectionServer without replying to the client first.");
+            {
+                throw new InvalidOperationException("Cannot call request() twice on ConnectionServer without replying to the client first.");
+            }
             ConnectionClientMessage msg = (ConnectionClientMessage)currentInputChannel.read();
 
             if (currentServerState == SERVER_STATE_CLOSED)
             {
-                if (msg instanceof ConnectionClientOpenMessage)
-            {
+                if (msg is ConnectionClientOpenMessage)
+                {
                     //channel to use to reply to client
                     toClient = ((ConnectionClientOpenMessage)msg).replyChannel;
                     setAltingChannel(furtherRequestIn);
@@ -121,8 +121,10 @@ namespace CSPlang.Alting
                     //message after connection closed
                     this.msg = new ConnectionServerMessage();
                 }
-            else
-                throw new IllegalStateException("Invalid message received from client");
+                else
+                {
+                    throw new InvalidOperationException("Invalid message received from client");
+                }
             }
             currentServerState = SERVER_STATE_RECEIVED;
             return msg.data;
@@ -136,66 +138,98 @@ namespace CSPlang.Alting
          *
          * @param	data	the data to send to the client.
          */
-        public void reply(Object data) throws IllegalStateException
+        public void reply(Object data)
         {
-            reply(data, false);
-}
+            try
+            {
+                reply(data, false);
+            }
+            catch (InvalidOperationException)
+            {
 
-
-    /**
-     * Sends some data back to the client after a request
-     * has been received. The closed parameter indicates whether or not
-     * the connection should be closed. The connection will be closed
-     * iff close is <code>true</code>.
-     *
-     * @param	data	the data to send to the client.
-     * @param  close   <code>boolean</code> indicating whether or not the
-     *                  connection should be closed.
-     */
-    public void reply(Object data, boolean close) throws IllegalStateException
-    {
-        if (currentServerState != SERVER_STATE_RECEIVED)
-            throw new IllegalStateException
-                    ("Cannot call reply(Object, boolean) on a ConnectionServer that has not received an unacknowledge request.");
-
-    //set open to true before replying
-    msg.data = data;
-        msg.open = !close;
-        toClient.write(msg);
-        if (close)
-        {
-            currentServerState = SERVER_STATE_CLOSED;
-            toClient = null;
-            setAltingChannel(openIn);
-    currentInputChannel = openIn;
+                throw;
+            }
         }
-        else
-            currentServerState = SERVER_STATE_OPEN;
-    }
 
-    /**
-     * Sends some data back to the client and closes the connection.
-     * This method will not block. After calling this method, the
-     * server may call <code>accept()</code> in order to allow another
-     * connection to this server to be established.
-     *
-     * If this method did not take any data to send back to the client,
-     * and the server was meant to call <code>reply(Object)</code> followed
-     * by a <code>close()</code>, then there would be a race hazard at the
-     * client as it would not know whether the connection had
-     * remained open or not.
-     *
-     * @param data	the data to send back to client.
-     */
-    public void replyAndClose(Object data) throws IllegalStateException
-{
-    reply(data, true);
-}
 
-protected int getServerState()
-{
-    return currentServerState;
-}
+        /**
+         * Sends some data back to the client after a request
+         * has been received. The closed parameter indicates whether or not
+         * the connection should be closed. The connection will be closed
+         * iff close is <code>true</code>.
+         *
+         * @param	data	the data to send to the client.
+         * @param  close   <code>boolean</code> indicating whether or not the
+         *                  connection should be closed.
+         */
+        public void reply(Object data, Boolean close)// throws 
+        {
+            try
+            {
+                if (currentServerState != SERVER_STATE_RECEIVED)
+                    throw new InvalidOperationException("Cannot call reply(Object, boolean) on a ConnectionServer that has not received an unacknowledge request.");
 
+                //set open to true before replying
+                msg.data = data;
+                msg.open = !close;
+                toClient.write(msg);
+                if (close)
+                {
+                    currentServerState = SERVER_STATE_CLOSED;
+                    toClient = null;
+                    setAltingChannel(openIn);
+                    currentInputChannel = openIn;
+                }
+                else
+                    currentServerState = SERVER_STATE_OPEN;
+            }
+            catch (InvalidOperationException)
+            {
+
+                throw;
+            }
+        }
+
+        /**
+         * Sends some data back to the client and closes the connection.
+         * This method will not block. After calling this method, the
+         * server may call <code>accept()</code> in order to allow another
+         * connection to this server to be established.
+         *
+         * If this method did not take any data to send back to the client,
+         * and the server was meant to call <code>reply(Object)</code> followed
+         * by a <code>close()</code>, then there would be a race hazard at the
+         * client as it would not know whether the connection had
+         * remained open or not.
+         *
+         * @param data	the data to send back to client.
+         */
+        public void replyAndClose(Object data) //throws 
+        {
+            try
+            {
+                reply(data, true);
+            }
+            catch (InvalidOperationException)
+            {
+
+                throw;
+            }
+        }
+
+        protected int getServerState()
+        {
+            return currentServerState;
+        }
+
+        public override bool enable(Alternative alt)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override bool disable()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -94,5 +94,24 @@ namespace CSPlang.Alting
      * @return state of the channel.
      */
         public abstract Boolean pending();
+        public void poison(int strength)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int read()
+        {
+            throw new NotImplementedException();
+        }
+
+        public int startRead()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void endRead()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

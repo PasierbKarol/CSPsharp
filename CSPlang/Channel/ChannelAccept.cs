@@ -60,6 +60,6 @@ namespace CSPlang
          *
          * @param server the <I>server</I> process receiving the CALL.
          */
-        int accept(CSProcess server);
+        int accept(IamCSProcess server);
     }
 }
