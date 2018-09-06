@@ -60,7 +60,7 @@ namespace CSPlang.Alting
          * Constructs a new instance. This constructor must be called by a subclass which is responsible
          * for creating the channels used by the connection and must pass them into this constructor.
          */
-        protected AltingConnectionClientImpl(AltingChannelInput fromServer,
+        protected internal AltingConnectionClientImpl(AltingChannelInput fromServer,
                                              ChannelOutput openToServer,
                                              ChannelOutput reqToServer,
                                              ChannelOutput backToClient) : base(fromServer)
@@ -84,7 +84,7 @@ namespace CSPlang.Alting
             {
                 if (currentClientState == CLIENT_STATE_MADE_REQ)
                     //throw new IllegalStateException ("Cannot call request(Object) twice without calling reply().");
-                    //this will claim the use of the client
+                    //this will Claim the use of the client
                     if (currentClientState == CLIENT_STATE_CLOSED)
                     {
                         claim();

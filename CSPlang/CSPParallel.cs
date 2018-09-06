@@ -220,7 +220,7 @@ namespace CSPlang
      * <P>
      * If a <TT>CSPParallel</TT> process has finished its <TT>run()</TT> and <I>is not</I> going
      * to be used again, its parked threads may be unparked and terminated by invoking
-     * its {@link #releaseAllThreads <TT>releaseAllThreads</TT>} method.  This will release
+     * its {@link #releaseAllThreads <TT>releaseAllThreads</TT>} method.  This will Release
      * the memory used by those threads.
      *
      * @see jcsp.lang.IamCSProcess
@@ -254,7 +254,7 @@ namespace CSPlang
         // invariant : (0 <= nThreads <= parThreads.length)
 
         /** Used to synchronise the termination of processes in each run of <TT>CSPParallel</TT> */
-        private Barrier barrier = new Barrier();
+        private CSPBarrier _cspBarrier = new CSPBarrier();
 
         private Boolean priority;
 
@@ -530,7 +530,7 @@ public void removeAllProcesses()
 }
 
 /**
- * System finalizer. When this object falls out of scope it will release all of the threads that it
+ * System finalizer. When this object falls out of scope it will Release all of the threads that it
  * has allocated.
  */
 protected void finalize() throws Throwable
@@ -540,7 +540,7 @@ protected void finalize() throws Throwable
 
 /**
  * Release all threads saved by the <TT>CSPParallel</TT> object for future runs -
- * the threads all terminate and release their associated workspaces.
+ * the threads all terminate and Release their associated workspaces.
  * This should only be executed when the <TT>CSPParallel</TT> object is not running.
  * If this <TT>CSPParallel</TT> object is run again, the necessary threads will be
  * recreated.

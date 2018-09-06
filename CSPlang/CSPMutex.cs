@@ -16,7 +16,7 @@ namespace CSPlang
         private Boolean claimed = false;
         private CSPMutex mutexToLock; //Added this variable to be used for the Monitor - KP
 
-        public void claim()
+        public void Claim()
         {
             lock (mutexToLock)
             { //changed this to mutexToLock - KP
@@ -29,7 +29,7 @@ namespace CSPlang
                     catch (ThreadInterruptedException e)
                     {
                         throw new ProcessInterruptedException(
-                            "*** Thrown from CSPMutex.claim()\n" + e.ToString()
+                            "*** Thrown from CSPMutex.Claim()\n" + e.ToString()
                         );
                     }
                 }
@@ -38,7 +38,7 @@ namespace CSPlang
             }
         }
 
-        public void release()
+        public void Release()
         {
             lock (mutexToLock)
             { //changed this to mutexToLock - KP

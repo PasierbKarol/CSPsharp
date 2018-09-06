@@ -26,6 +26,8 @@
 //                                                                  //
 //////////////////////////////////////////////////////////////////////
 
+using System;
+
 namespace CSPlang
 {
 
@@ -310,132 +312,137 @@ namespace CSPlang
 
     public class Sequence : IamCSProcess
     {
-    /** The processes to be executed in sequence */
-    private IamCSProcess[] processes;
+        /** The processes to be executed in sequence */
+        private IamCSProcess[] processes;
 
-    /** The number of processes in this <TT>Sequence</TT> */
-    private int nProcesses = 0;
+        /** The number of processes in this <TT>Sequence</TT> */
+        private int nProcesses = 0;
 
-    // invariant : (0 <= nProcesses <= processes.Length)
+        // invariant : (0 <= nProcesses <= processes.Length)
 
-    /**
-     * Construct a new <TT>Sequence</TT> object initially without any processes.
-     */
-    public Sequence()
-    {
-        this (null);
-    }
-
-    /**
-     * Construct a new <TT>Sequence</TT> object with the processes specified.
-     *
-     * @param processes the processes to be executed in sequence
-     */
-    public Sequence(IamCSProcess[] processes)
-    {
-        if (processes != null)
+        /**
+         * Construct a new <TT>Sequence</TT> object initially without any processes.
+         */
+        public Sequence()
         {
-            nProcesses = processes.Length;
-            this.processes = new IamCSProcess[nProcesses];
-            System.arraycopy(processes, 0, this.processes, 0, nProcesses);
+            //this (null); //Constructor cannot return null - KP
         }
-        else
+
+        /**
+         * Construct a new <TT>Sequence</TT> object with the processes specified.
+         *
+         * @param processes the processes to be executed in sequence
+         */
+        public Sequence(IamCSProcess[] processes)
         {
+            if (processes != null)
+            {
+                nProcesses = processes.Length;
+                this.processes = new IamCSProcess[nProcesses];
+                Array.Copy(processes, 0, this.processes, 0, nProcesses);
+            }
+            else
+            {
+                nProcesses = 0;
+                this.processes = new IamCSProcess[0];
+            }
+        }
+
+        /**
+         * Add the process to the <TT>Sequence</TT> object.
+         * The extended network
+         * will be executed the next time run() is invoked.
+         *
+         * @param process The CSProcess to be added
+         */
+        public /*synchronized*/ void addProcess(IamCSProcess process)
+        {
+            if (process != null)
+            {
+                /*final*/
+                int targetProcesses = nProcesses + 1;
+                if (targetProcesses > processes.Length)
+                {
+                    /*final*/
+                    IamCSProcess[] tmp = processes;
+                    processes = new IamCSProcess[2 * targetProcesses];
+                    Array.Copy(tmp, 0, processes, 0, nProcesses);
+                }
+
+                processes[nProcesses] = process;
+                nProcesses = targetProcesses;
+            }
+        }
+
+        /**
+         * Add the array of processes to the <TT>Sequence</TT> object.
+         * The extended network
+         * will be executed the next time run() is invoked.
+         *
+         * @param processes the processes to be added
+         */
+        public /*synchronized*/ void addProcess(IamCSProcess[] newProcesses)
+        {
+            if (processes != null)
+            {
+                /*final*/
+                int extra = newProcesses.Length;
+                /*final*/
+                int targetProcesses = nProcesses + extra;
+                if (targetProcesses > processes.Length)
+                {
+                    /*final*/
+                    IamCSProcess[] tmp = processes;
+                    processes = new IamCSProcess[2 * targetProcesses];
+                    Array.Copy(tmp, 0, processes, 0, nProcesses);
+                }
+
+                Array.Copy(newProcesses, 0, processes, nProcesses, extra);
+                nProcesses = targetProcesses;
+            }
+        }
+
+        /**
+         * Remove a process from the <TT>Sequence</TT> object. The cut-down network
+         * will be executed the next time run() is invoked.
+         *
+         * @param process the process to be removed
+         */
+        public /*synchronized*/ void removeProcess(IamCSProcess process)
+        {
+            for (int i = 0; i < nProcesses; i++)
+            {
+                if (processes[i] == process)
+                {
+                    if (i < nProcesses - 1)
+                        Array.Copy(processes, i + 1, processes, i, nProcesses - (i + 1));
+                    nProcesses--;
+                    processes[nProcesses] = null;
+                    return;
+                }
+            }
+        }
+
+        /**
+         * Remove all processes from the <TT>Sequence</TT> object.  The cut-down network
+         * will not be executed until the next time <TT>run()</TT> is invoked.
+         */
+        public /*synchronized*/ void removeAllProcesses()
+        {
+            for (int i = 0; i < nProcesses; i++)
+                processes[i] = null;
             nProcesses = 0;
-            this.processes = new IamCSProcess[0];
         }
-    }
 
-    /**
-     * Add the process to the <TT>Sequence</TT> object.
-     * The extended network
-     * will be executed the next time run() is invoked.
-     *
-     * @param process The CSProcess to be added
-     */
-    public synchronized void addProcess(IamCSProcess process)
-    {
-        if (process != null)
+        /**
+         * Run the sequential composition of the processes registered with this
+         * <TT>Sequence</TT> object.
+         */
+        public void run()
         {
-            final int targetProcesses = nProcesses + 1;
-            if (targetProcesses > processes.Length)
-            {
-                final IamCSProcess[] tmp = processes;
-                processes = new IamCSProcess[2 * targetProcesses];
-                System.arraycopy(tmp, 0, processes, 0, nProcesses);
-            }
-
-            processes[nProcesses] = process;
-            nProcesses = targetProcesses;
+            for (int i = 0; i < nProcesses; i++)
+                processes[i].run();
         }
     }
-
-    /**
-     * Add the array of processes to the <TT>Sequence</TT> object.
-     * The extended network
-     * will be executed the next time run() is invoked.
-     *
-     * @param processes the processes to be added
-     */
-    public synchronized void addProcess(IamCSProcess[] newProcesses)
-    {
-        if (processes != null)
-        {
-            final int extra = newProcesses.Length;
-            final int targetProcesses = nProcesses + extra;
-            if (targetProcesses > processes.Length)
-            {
-                final IamCSProcess[] tmp = processes;
-                processes = new IamCSProcess[2 * targetProcesses];
-                System.arraycopy(tmp, 0, processes, 0, nProcesses);
-            }
-
-            System.arraycopy(newProcesses, 0, processes, nProcesses, extra);
-            nProcesses = targetProcesses;
-        }
-    }
-
-    /**
-     * Remove a process from the <TT>Sequence</TT> object. The cut-down network
-     * will be executed the next time run() is invoked.
-     *
-     * @param process the process to be removed
-     */
-    public synchronized void removeProcess(IamCSProcess process)
-    {
-        for (int i = 0; i < nProcesses; i++)
-        {
-            if (processes[i] == process)
-            {
-                if (i < nProcesses - 1)
-                    System.arraycopy(processes, i + 1, processes, i, nProcesses - (i + 1));
-                nProcesses--;
-                processes[nProcesses] = null;
-                return;
-            }
-        }
-    }
-
-    /**
-     * Remove all processes from the <TT>Sequence</TT> object.  The cut-down network
-     * will not be executed until the next time <TT>run()</TT> is invoked.
-     */
-    public synchronized void removeAllProcesses()
-    {
-        for (int i = 0; i < nProcesses; i++)
-            processes[i] = null;
-        nProcesses = 0;
-    }
-
-    /**
-     * Run the sequential composition of the processes registered with this
-     * <TT>Sequence</TT> object.
-     */
-    public void run()
-    {
-        for (int i = 0; i < nProcesses; i++)
-            processes[i].run();
-    }
-}
 
 }

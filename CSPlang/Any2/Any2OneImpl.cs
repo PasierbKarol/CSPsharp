@@ -64,7 +64,8 @@ namespace CSPlang
 
         }
 
-        public AltingChannelInput In() {
+        public AltingChannelInput In()
+        { 
             return new AltingChannelInputImpl(channel,0);
         }
 

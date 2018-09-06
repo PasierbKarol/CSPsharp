@@ -307,7 +307,7 @@ namespace CSPlang
          * ({@link #getSpuriousWakeUpCounts()}),
          * indicating the class and operation that suffered.
          * <p>
-         * <i>Note:</i> this field is not operative in the current JCSP release.
+         * <i>Note:</i> this field is not operative in the current JCSP Release.
          * Spurious wakeups on <tt>AltingBarrier</tt>s are handled correctly
          * -- just not recorded.
          * </p>

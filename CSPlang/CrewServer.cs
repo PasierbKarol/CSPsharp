@@ -37,95 +37,98 @@ namespace CSPlang
     class CrewServer : IamCSProcess
     {
 
-    public static readonly int READER = 0;
-    public static readonly int WRITER = 1;
+        public /*static*/ const int READER = 0;
+        public /*static*/ const int WRITER = 1;
 
-    private readonly AltingChannelInputInt request;
-    private readonly AltingChannelInputInt writerControl;
-    private readonly AltingChannelInputInt readerRelease;
+        private readonly AltingChannelInputInt request;
+        private readonly AltingChannelInputInt writerControl;
+        private readonly AltingChannelInputInt readerRelease;
 
-    ///TODO change this to use poisoning of the above channels, once poison is added
-    private readonly AltingChannelInputInt poison;
+        ///TODO change this to use poisoning of the above channels, once poison is added
+        private readonly AltingChannelInputInt poison;
 
-    public CrewServer(readonly AltingChannelInputInt request,
-    readonly AltingChannelInputInt writerControl,
-    readonly AltingChannelInputInt readerRelease,
-    readonly AltingChannelInputInt poison)
-    {
-        this.request = request;
-        this.writerControl = writerControl;
-        this.readerRelease = readerRelease;
-        this.poison = poison;
-    }
-
-    public void run()
-    {
-        int nReaders = 0;
-        readonly Alternative altMain =
-            new Alternative(new Guard[] { readerRelease, request, poison });
-        readonly int MAIN_READER_RELEASE = 0;
-        readonly int MAIN_REQUEST = 1;
-        readonly int MAIN_POISON = 2;
-        readonly Alternative altWriteComplete =
-            new Alternative(new Guard[] { writerControl, poison });
-        readonly int WC_WRITER_CONTROL = 0;
-        readonly int WC_POISON = 1;
-        readonly Alternative altReadComplete =
-            new Alternative(new Guard[] { readerRelease, poison });
-        readonly int RC_READER_RELEASE = 0;
-        readonly int RC_POISON = 1;
-        while (true)
+        public CrewServer(/*final*/ AltingChannelInputInt request,
+        /*final*/ AltingChannelInputInt writerControl,
+        /*final*/ AltingChannelInputInt readerRelease,
+        /*final*/ AltingChannelInputInt poison)
         {
-            // invariant : (nReaders is the number of current readers) and (there are no writers)
-            switch (altMain.priSelect())
+            this.request = request;
+            this.writerControl = writerControl;
+            this.readerRelease = readerRelease;
+            this.poison = poison;
+        }
+
+        public void run()
+        {
+            int nReaders = 0;
+            //const 
+            Alternative altMain =
+      new Alternative(new Guard[] { readerRelease, request, poison });
+            const int MAIN_READER_RELEASE = 0;
+            const int MAIN_REQUEST = 1;
+            const int MAIN_POISON = 2;
+            //const 
+            Alternative altWriteComplete =
+      new Alternative(new Guard[] { writerControl, poison });
+            const int WC_WRITER_CONTROL = 0;
+            const int WC_POISON = 1;
+            //const 
+            Alternative altReadComplete =
+      new Alternative(new Guard[] { readerRelease, poison });
+            const int RC_READER_RELEASE = 0;
+            const int RC_POISON = 1;
+            while (true)
             {
-                case MAIN_READER_RELEASE:
-                readerRelease.read();
-                nReaders--;
-                break;
-                case MAIN_REQUEST:
-                switch (request.read())
+                // invariant : (nReaders is the number of current readers) and (there are no writers)
+                switch (altMain.priSelect())
                 {
-                    case READER:
-                    nReaders++;
-                    break;
-                    case WRITER:
-                    int n = nReaders; // tmp
-                    for (int i = 0; i < n; i++)
-                    {
-                        switch (altReadComplete.priSelect())
-                        {
-                            case RC_READER_RELEASE:
-                            readerRelease.read();
-                            nReaders--; // tmp
-                            break;
-                            case RC_POISON:
-                            poison.read(); // let the readonlyizer complete
-                            return;
-                        }
-                    }
-
-                    nReaders = 0;
-                    writerControl.read(); // let writer start writing
-                    switch (altWriteComplete.priSelect())
-                    {
-                        case WC_WRITER_CONTROL:
-                        writerControl.read(); // let writer finish writing
+                    case MAIN_READER_RELEASE:
+                        readerRelease.read();
+                        nReaders--;
                         break;
-                        case WC_POISON:
-                        poison.read(); // let the readonlyizer complete
+                    case MAIN_REQUEST:
+                        switch (request.read())
+                        {
+                            case READER:
+                                nReaders++;
+                                break;
+                            case WRITER:
+                                int n = nReaders; // tmp
+                                for (int i = 0; i < n; i++)
+                                {
+                                    switch (altReadComplete.priSelect())
+                                    {
+                                        case RC_READER_RELEASE:
+                                            readerRelease.read();
+                                            nReaders--; // tmp
+                                            break;
+                                        case RC_POISON:
+                                            poison.read(); // let the /*final*/izer complete
+                                            return;
+                                    }
+                                }
+
+                                nReaders = 0;
+                                writerControl.read(); // let writer start writing
+                                switch (altWriteComplete.priSelect())
+                                {
+                                    case WC_WRITER_CONTROL:
+                                        writerControl.read(); // let writer finish writing
+                                        break;
+                                    case WC_POISON:
+                                        poison.read(); // let the /*final*/izer complete
+                                        return;
+                                }
+
+                                break;
+                        }
+
+                        break;
+                    case MAIN_POISON:
+                        poison.read(); // let the /*final*/izer complete
                         return;
-                    }
-
-                    break;
                 }
-
-                break;
-                case MAIN_POISON:
-                poison.read(); // let the readonlyizer complete
-                return;
             }
         }
     }
-}
 }

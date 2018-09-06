@@ -26,6 +26,9 @@
 //                                                                  //
 //////////////////////////////////////////////////////////////////////
 
+using System;
+using System.Threading;
+
 namespace CSPlang
 {
 
@@ -54,25 +57,25 @@ namespace CSPlang
     /** the process to be executed */
     private IamCSProcess process;
 
-/** the barrier at the end of a PAR */
-    private Barrier barrier;
+/** the cspBarrier at the end of a PAR */
+    private CSPBarrier _cspBarrier;
 
     private Boolean running = true;
 
-/** parking barrier for this thread */
-    private Barrier park = new Barrier(2);
+/** parking cspBarrier for this thread */
+    private CSPBarrier park = new CSPBarrier(2);
 
 /**
  * Construct a new ParThread.
  *
  * @param process the process to be executed
- * @param barrier the barrier for then end of the PAR
+ * @param cspBarrier the cspBarrier for then end of the PAR
  */
-    public ParThread(IamCSProcess process, Barrier barrier)
+    public ParThread(IamCSProcess process, CSPBarrier cspBarrier)
     {
         setDaemon(true);
         this.process = process;
-        this.barrier = barrier;
+        this._cspBarrier = cspBarrier;
         setName(process.ToString());
     }
 
@@ -80,12 +83,12 @@ namespace CSPlang
  * reset the ParThread.
  *
  * @param process the process to be executed
- * @param barrier the barrier for then end of the PAR
+ * @param cspBarrier the cspBarrier for then end of the PAR
  */
-    public void reset(IamCSProcess process, Barrier barrier)
+    public void reset(IamCSProcess process, CSPBarrier cspBarrier)
     {
         this.process = process;
-        this.barrier = barrier;
+        this._cspBarrier = cspBarrier;
         setName(process.ToString());
     }
 
@@ -127,7 +130,7 @@ namespace CSPlang
                     CSPParallel.uncaughtException("jcsp.lang.CSPParallel", e);
                 }
 
-                barrier.resign();
+                _cspBarrier.resign();
                 park.sync();
             }
         }

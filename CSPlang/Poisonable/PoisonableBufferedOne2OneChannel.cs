@@ -343,6 +343,7 @@ namespace CSPlang
             }
         }
 
+
         /**
          * Returns the <code>AltingChannelInput</code> to use for this channel.
          * As <code>BufferedOne2OneChannel</code> implements
@@ -404,6 +405,21 @@ namespace CSPlang
                     Monitor.PulseAll(rwMonitor);
                 }
             }
+        }
+
+        public bool writerEnable(Alternative alt)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool writerDisable()
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool writerPending()
+        {
+            throw new NotImplementedException();
         }
 
     }

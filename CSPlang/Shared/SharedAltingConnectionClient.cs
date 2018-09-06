@@ -49,55 +49,55 @@ namespace CSPlang.Shared
      */
     public class SharedAltingConnectionClient : AltingConnectionClientImpl, SharedConnectionClient
     {
-    private ChannelInput synchIn;
-    private ChannelOutput synchOut;
-    private ConnectionWithSharedAltingClient parent;
+        private ChannelInput synchIn;
+        private ChannelOutput synchOut;
+        private ConnectionWithSharedAltingClient parent;
 
-    protected SharedAltingConnectionClient(AltingChannelInput fromServer,
-        ChannelInput synchIn,
-        ChannelOutput openToServer,
-        ChannelOutput reqToServer,
-        SharedChannelOutput synchOut,
-        ChannelOutput backToClient,
-        ConnectionWithSharedAltingClient
-            parent)
-    {
-        super(fromServer, openToServer, reqToServer, backToClient);
-        this.synchIn = synchIn;
-        this.synchOut = synchOut;
-        this.parent = parent;
-    }
+        protected internal SharedAltingConnectionClient(AltingChannelInput fromServer,
+            ChannelInput synchIn,
+            ChannelOutput openToServer,
+            ChannelOutput reqToServer,
+            SharedChannelOutput synchOut,
+            ChannelOutput backToClient,
+            ConnectionWithSharedAltingClient
+                parent) : base(fromServer, openToServer, reqToServer, backToClient)
+        {
 
-    protected final void claim()
-    {
-        synchOut.write(null);
-    }
+            this.synchIn = synchIn;
+            this.synchOut = synchOut;
+            this.parent = parent;
+        }
 
-    protected final void release()
-    {
-        synchIn.read();
-    }
+        protected void claim()
+        {
+            synchOut.write(null);
+        }
 
-    /**
-     * <p>
-     * Returns a <code>SharedConnectionClient</code> object that is
-     * a duplicate of the object on which this method is called.
-     * </p>
-     * <p>
-     * This allows a process using a <code>SharedAltingConnectionClient</code>
-     * object to pass references to the connection client to multiple
-     * processes.
-     * </p>
-     * <p>
-     * The object returned can be cast into a
-     * <code>SharedConnectionClient</code>  object.
-     * </p>
-     *
-     * @return  a duplicate <code>SharedAltingConnectionClient</code> object.
-     */
-    public SharedConnectionClient duplicate()
-    {
-        return parent.client();
-    }
+        protected void release()
+        {
+            synchIn.read();
+        }
+
+        /**
+         * <p>
+         * Returns a <code>SharedConnectionClient</code> object that is
+         * a duplicate of the object on which this method is called.
+         * </p>
+         * <p>
+         * This allows a process using a <code>SharedAltingConnectionClient</code>
+         * object to pass references to the connection client to multiple
+         * processes.
+         * </p>
+         * <p>
+         * The object returned can be cast into a
+         * <code>SharedConnectionClient</code>  object.
+         * </p>
+         *
+         * @return  a duplicate <code>SharedAltingConnectionClient</code> object.
+         */
+        public SharedConnectionClient duplicate()
+        {
+            return parent.client();
+        }
     }
 }

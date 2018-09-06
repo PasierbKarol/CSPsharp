@@ -28,7 +28,14 @@
 
 
 
-/**
+
+
+using CSPlang.Any2;
+using CSPutil;
+
+namespace CSPlang
+{
+    /**
  * This implements an any-to-any integer channel with user-definable buffering,
  * safe for use by many writers and many readers.
  * <H2>Description</H2>
@@ -78,11 +85,6 @@
  * @author P.D.Austin
  * @author P.H.Welch
  */
-
-using CSPlang.Any2;
-
-namespace CSPlang
-{
     class BufferedAny2AnyChannelIntImpl : Any2AnyIntImpl
     {
         public BufferedAny2AnyChannelIntImpl(ChannelDataStoreInt data) : base(new BufferedOne2OneChannelIntImpl(data))

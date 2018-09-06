@@ -661,12 +661,12 @@ namespace CSPlang.Any2
         /**
     * This is used to synchronise the calling and accepting process.
     */
-        final private Any2OneChannelImpl c = new Any2OneChannelImpl();
+        private readonly Any2OneChannelImpl c = new Any2OneChannelImpl();
 
         /**
          * This is used to synchronise the calling and accepting process.
          */
-        final private One2OneChannelImpl d = new One2OneChannelImpl();
+        private readonly One2OneChannelImpl d = new One2OneChannelImpl();
 
         /**
          * This holds a reference to a <I>server</I> process so that a <I>client</I> may
@@ -676,7 +676,7 @@ namespace CSPlang.Any2
          * As shown in that sequence, it will need casting up to the relevant interface
          * supported by the specific CALL channel derived from this class.
          */
-        protected CSProcess server; // made available to the caller
+        protected IamCSProcess server; // made available to the caller
 
         /**
          * This may be set during the standard <A HREF="One2OneCallChannel.html#One2OneFooChannel">calling sequence</A> to record
@@ -700,7 +700,7 @@ namespace CSPlang.Any2
          *
          * @param server the <I>server</I> process receiving the CALL.
          */
-        public int accept(CSProcess server)
+        public int accept(IamCSProcess server)
         {
             // invoked by the callee
             this.server = server;
@@ -738,7 +738,7 @@ namespace CSPlang.Any2
         /**
          * This is one of the {@link Guard} methods needed by the {@link Alternative} class.
          */
-        boolean enable(Alternative alt)
+        Boolean enable(Alternative alt)
         {
             // ignore this!
             return c.readerEnable(alt);
@@ -747,7 +747,7 @@ namespace CSPlang.Any2
         /**
          * This is one of the {@link Guard} methods needed by the {@link Alternative} class.
          */
-        boolean disable()
+        Boolean disable()
         {
             // ignore this!
             return c.readerDisable();

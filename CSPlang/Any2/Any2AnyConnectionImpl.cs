@@ -26,6 +26,10 @@
 //                                                                  //
 //////////////////////////////////////////////////////////////////////
 
+using System;
+using CSPlang.Shared;
+using CSPutil;
+
 namespace CSPlang.Any2
 {
     /**
@@ -49,13 +53,12 @@ namespace CSPlang.Any2
          *
          * Constructor for One2OneConnectionImpl.
          */
-        public Any2AnyConnectionImpl()
+        public Any2AnyConnectionImpl() : base()
         {
-            super();
-            chanToServer = ConnectionServer.FACTORY.createOne2One(new Buffer(1));
-            chanFromServer = ConnectionServer.FACTORY.createOne2One(new Buffer(1));
-            chanClientSynch = ConnectionServer.FACTORY.createAny2One(new Buffer(1));
-            chanServerSynch = ConnectionServer.FACTORY.createAny2One(new Buffer(1));
+            chanToServer = ConnectionServer.FACTORY.createOne2One(new CSPBuffer(1));
+            chanFromServer = ConnectionServer.FACTORY.createOne2One(new CSPBuffer(1));
+            chanClientSynch = ConnectionServer.FACTORY.createAny2One(new CSPBuffer(1));
+            chanServerSynch = ConnectionServer.FACTORY.createAny2One(new CSPBuffer(1));
         }
 
         /**
@@ -70,12 +73,12 @@ namespace CSPlang.Any2
         public SharedAltingConnectionClient client()
         {
             return new SharedAltingConnectionClient(
-                    chanFromServer.in (),
-                    chanClientSynch.in (),
-                    chanToServer.out (),
-                    chanToServer.out (),
-                    chanClientSynch.out (),
-                    chanFromServer.out (),
+                    chanFromServer.In(),
+                    chanClientSynch.In(),
+                    chanToServer.Out(),
+                    chanToServer.Out(),
+                    chanClientSynch.Out(),
+                    chanFromServer.Out(),
                     this);
         }
 
@@ -91,10 +94,10 @@ namespace CSPlang.Any2
         public SharedConnectionServer server()
         {
             return new SharedConnectionServerImpl(
-                    chanToServer.in (),
-                    chanToServer.in (),
-                    chanServerSynch.in (),
-                    chanServerSynch.out (),
+                    chanToServer.In(),
+                    chanToServer.In(),
+                    chanServerSynch.In(),
+                    chanServerSynch.Out(),
                     this);
         }
 

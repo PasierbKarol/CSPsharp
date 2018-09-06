@@ -4,7 +4,7 @@ using System.Text;
 
 namespace CSPlang
 {
-    class AltingChannelInputImpl
+    public class AltingChannelInputImpl : AltingChannelInput
     {
 
         private ChannelInternals channel;
@@ -17,17 +17,17 @@ namespace CSPlang
         }
 
 
-        public Boolean pending()
+        public override Boolean pending()
         {
             return channel.readerPending();
         }
 
-        Boolean disable()
+        public override Boolean disable()
         {
             return channel.readerDisable();
         }
 
-        Boolean enable(Alternative alt)
+        public override Boolean enable(Alternative alt)
         {
             return channel.readerEnable(alt);
         }
@@ -54,5 +54,6 @@ namespace CSPlang
                 channel.readerPoison(strength);
             }
         }
+
     }
 }

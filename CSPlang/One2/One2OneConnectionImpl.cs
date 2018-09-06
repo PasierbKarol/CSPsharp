@@ -28,6 +28,7 @@
 
 using System;
 using CSPlang.Alting;
+using CSPutil;
 
 namespace CSPlang
 {
@@ -53,8 +54,8 @@ namespace CSPlang
     public One2OneConnectionImpl() : base()
     {
         
-        One2OneChannel chanToServer = ConnectionServer.FACTORY.createOne2One(new Buffer(1));
-        One2OneChannel chanFromServer = ConnectionServer.FACTORY.createOne2One(new Buffer(1));
+        One2OneChannel chanToServer = ConnectionServer.FACTORY.createOne2One(new CSPBuffer(1));
+        One2OneChannel chanFromServer = ConnectionServer.FACTORY.createOne2One(new CSPBuffer(1));
 
             //create the client and server objects
         connectionClient = new AltingConnectionClientImpl(chanFromServer.In(),

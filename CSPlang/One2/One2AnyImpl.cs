@@ -31,13 +31,13 @@ namespace CSPlang.One2
         public void endRead()
         {
             channel.endRead();
-            _readCspMutex.ReleaseMutex();
+            _readCspMutex.Release();
 
         }
 
         public Object read()
         {
-            _readCspMutex.claim();
+            _readCspMutex.Claim();
             //A poison exception might be thrown, hence the try/finally:		
             try
             {
@@ -45,7 +45,7 @@ namespace CSPlang.One2
             }
             finally
             {
-                _readCspMutex.ReleaseMutex();
+                _readCspMutex.Release();
             }
         }
 
@@ -70,14 +70,14 @@ namespace CSPlang.One2
 
         public void readerPoison(int strength)
         {
-            _readCspMutex.claim();
+            _readCspMutex.Claim();
             channel.readerPoison(strength);
-            _readCspMutex.ReleaseMutex();
+            _readCspMutex.Release();
         }
 
         public Object startRead()
         {
-            _readCspMutex.claim();
+            _readCspMutex.Claim();
             try
             {
                 return channel.startRead();
@@ -85,7 +85,7 @@ namespace CSPlang.One2
             catch (RuntimeException e)
             {
                 channel.endRead();
-                _readCspMutex.ReleaseMutex();
+                _readCspMutex.Release();
                 throw e;
             }
 

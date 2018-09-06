@@ -79,7 +79,7 @@ namespace CSPlang
 
     class One2AnyChannelIntImpl : One2AnyIntImpl
     {
-        One2AnyChannelIntImpl() : base(new One2OneChannelIntImpl())
+        internal One2AnyChannelIntImpl() : base(new One2OneChannelIntImpl())
         {
 
         }

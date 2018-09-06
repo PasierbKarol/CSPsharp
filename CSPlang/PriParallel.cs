@@ -26,6 +26,8 @@
 //                                                                  //
 //////////////////////////////////////////////////////////////////////
 
+using System.Threading;
+
 namespace CSPlang
 {
 
@@ -59,7 +61,7 @@ namespace CSPlang
      * The order of their adding is significant, with ealier processes
      * having higher priority.
      */
-    public PriParallel() : base(null, true)
+    public PriParallel() : base (null, true)
     {
         
     }

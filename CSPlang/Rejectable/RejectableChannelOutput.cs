@@ -47,6 +47,6 @@ namespace CSPlang
          * @param o an object to write over the channel.
          * @throws ChannelDataRejectedException if the reader rejects the data instead of reading it from the channel.
          */
-        void write(Object o) throws ChannelDataRejectedException;
+        void write(Object o);// throws ChannelDataRejectedException; //Nothing similar in C# - KP
     }
 }

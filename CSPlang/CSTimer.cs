@@ -28,6 +28,7 @@
 
 using System;
 using System.Threading;
+using CSPutil;
 
 namespace CSPlang
 {
@@ -167,7 +168,7 @@ namespace CSPlang
          */
         public long read()
         {
-            return System.currentTimeMillis();
+            return CSPTimeMillis.CurrentTimeMillis();
         }
 
         /**
@@ -177,11 +178,11 @@ namespace CSPlang
          */
         public void after(/*final*/ long msecs)
         {
-            /*final*/ long delay = msecs - System.currentTimeMillis();
+            /*final*/ long delay = msecs - CSPTimeMillis.CurrentTimeMillis();
             if (delay > 0)
                 try
                 {
-                    Thread.Sleep(delay);
+                    Thread.Sleep((int)delay);
                 }
                 catch (ThreadInterruptedException  e)
                 {
@@ -200,7 +201,7 @@ namespace CSPlang
             if (msecs > 0)
                 try
                 {
-                    Thread.Sleep(msecs);
+                    Thread.Sleep((int)msecs);
                 }
                 catch (ThreadInterruptedException  e)
                 {
@@ -216,13 +217,13 @@ namespace CSPlang
          */
         public override Boolean enable(Alternative alt)
         {
-            if ((msecs - System.currentTimeMillis()) <= Spurious.earlyTimeout)
+            if ((msecs - CSPTimeMillis.CurrentTimeMillis()) <= Spurious.earlyTimeout)
             {
                 return true;
             }
             else
             {
-                alt.setTimeout(msecs);
+                alt.setTimeout((int)msecs);
                 return false;
             }
         }
@@ -235,7 +236,7 @@ namespace CSPlang
             // final long now = System.currentTimeMillis ();
             // System.out.println ("*** CSTimer.disable: " + msecs + ", " + now);
             // return (msecs <= now);
-            return ((msecs - System.currentTimeMillis()) <= Spurious.earlyTimeout);
+            return ((msecs - CSPTimeMillis.CurrentTimeMillis()) <= Spurious.earlyTimeout);
             // WARNING: the above is an insufficient test to see if the timeout
             // has expired ... since Java wait-with-timeouts sometimes return
             // early!  See the implementation of Alternative for a work-around.

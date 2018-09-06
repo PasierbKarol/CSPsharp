@@ -2,8 +2,7 @@ using System;
 
 namespace CSPlang
 {
-
-    interface ChannelInternalsInt
+    public interface ChannelInternalsInt
     {
           int read();
           void write(int obj);

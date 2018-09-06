@@ -1,4 +1,5 @@
 using System;
+using CSPlang.Shared;
 
 namespace CSPlang
 {
@@ -11,7 +12,7 @@ namespace CSPlang
         /** The mutex on which readers must synchronize */
         private readonly CSPMutex readMutex = new CSPMutex();
 
-        One2AnyIntImpl(ChannelInternalsInt _channel)
+        protected One2AnyIntImpl(ChannelInternalsInt _channel)
         {
             channel = _channel;
         }
@@ -29,13 +30,13 @@ namespace CSPlang
         public void endRead()
         {
             channel.endRead();
-            readMutex.release();
+            readMutex.Release();
 
         }
 
         public int read()
         {
-            readMutex.claim();
+            readMutex.Claim();
             //A poison exception might be thrown, hence the try/finally:		
             try
             {
@@ -43,7 +44,7 @@ namespace CSPlang
             }
             finally
             {
-                readMutex.release();
+                readMutex.Release();
             }
         }
 
@@ -66,14 +67,14 @@ namespace CSPlang
 
         public void readerPoison(int strength)
         {
-            readMutex.claim();
+            readMutex.Claim();
             channel.readerPoison(strength);
-            readMutex.release();
+            readMutex.Release();
         }
 
         public int startRead()
         {
-            readMutex.claim();
+            readMutex.Claim();
             try
             {
                 return channel.startRead();
@@ -81,7 +82,7 @@ namespace CSPlang
             catch (RuntimeException e)
             {
                 channel.endRead();
-                readMutex.release();
+                readMutex.Release();
                 throw e;
             }
 

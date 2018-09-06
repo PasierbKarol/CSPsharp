@@ -29,6 +29,7 @@
 using System;
 using System.Threading;
 using CSPlang.Alting;
+using CSPutil;
 
 namespace CSPlang
 {
@@ -134,7 +135,7 @@ namespace CSPlang
                 empty = false;
                 try
                 {
-                    rwMonitor.wait();
+                    Monitor.Wait(rwMonitor);
                     while (!empty)
                     {
                         if (Spurious.logging)
@@ -142,7 +143,7 @@ namespace CSPlang
                             SpuriousLog.record(SpuriousLog.One2OneChannelIntRead);
                         }
 
-                        rwMonitor.wait();
+                        Monitor.Wait(rwMonitor);
                     }
                 }
                 catch (ThreadInterruptedException e)
@@ -158,7 +159,7 @@ namespace CSPlang
             }
 
             spuriousWakeUp = false;
-            rwMonitor.notify();
+            Monitor.Pulse(rwMonitor);
             return hold;
         }
     }
@@ -171,7 +172,7 @@ namespace CSPlang
                 empty = false;
                 try
                 {
-                    rwMonitor.wait();
+                    Monitor.Wait(rwMonitor);
                     while (!empty)
                     {
                         if (Spurious.logging)
@@ -179,7 +180,7 @@ namespace CSPlang
                             SpuriousLog.record(SpuriousLog.One2OneChannelRead);
                         }
 
-                        rwMonitor.wait();
+                        Monitor.Wait(rwMonitor);
                     }
                 }
                 catch (ThreadInterruptedException e)
@@ -201,7 +202,7 @@ namespace CSPlang
     {
         lock (rwMonitor) {
             spuriousWakeUp = false;
-            rwMonitor.notify();
+            Monitor.Pulse(rwMonitor);
         }
     }
 
@@ -225,12 +226,12 @@ namespace CSPlang
             else
             {
                 empty = true;
-                rwMonitor.notify();
+                Monitor.Pulse(rwMonitor);
             }
 
             try
             {
-                rwMonitor.wait();
+                Monitor.Wait(rwMonitor);
                 while (spuriousWakeUp)
                 {
                     if (Spurious.logging)
@@ -238,7 +239,7 @@ namespace CSPlang
                         SpuriousLog.record(SpuriousLog.One2OneChannelIntWrite);
                     }
 
-                    rwMonitor.wait();
+                    Monitor.Wait(rwMonitor);
                 }
 
                 spuriousWakeUp = true;

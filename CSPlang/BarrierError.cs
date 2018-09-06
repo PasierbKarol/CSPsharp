@@ -34,7 +34,7 @@ namespace CSPlang
 {
 
     /**
- * This is thrown for an illegal operation on an Barrier.
+ * This is thrown for an illegal operation on an CSPBarrier.
  *
  * <H2>Description</H2>
  * Currently, there is only one cause: more processes have resigned than were

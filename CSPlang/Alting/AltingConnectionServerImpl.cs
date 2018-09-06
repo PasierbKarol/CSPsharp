@@ -48,7 +48,7 @@ namespace CSPlang.Alting
      * on the mode of reply. From the <tt>OPEN</tt> or <tt>CLOSED</tt> state a further request can
      * occur.
      */
-        protected static readonly int SERVER_STATE_CLOSED = 1;
+        protected internal static readonly int SERVER_STATE_CLOSED = 1;
 
         /**
          * Server state. The server is initially <tt>CLOSED</tt> the first request will take it to the
@@ -82,7 +82,7 @@ namespace CSPlang.Alting
          * Constructs a new server instance. This must be called by a subclass which is responsible for
          * creating the channels.
          */
-        protected AltingConnectionServerImpl(AltingChannelInput openIn,
+        protected internal AltingConnectionServerImpl(AltingChannelInput openIn,
                                              AltingChannelInput furtherRequestIn) : base(openIn)
         {
             this.openIn = openIn;
@@ -217,7 +217,7 @@ namespace CSPlang.Alting
             }
         }
 
-        protected int getServerState()
+        protected internal int getServerState()
         {
             return currentServerState;
         }

@@ -13,7 +13,7 @@ namespace CSPlang
 
         public void reject()
         {
-            super.poison(Int32.MaxValue);
+            base.poison(Int32.MaxValue);
         }
     }
 }

@@ -74,7 +74,7 @@ namespace CSPlang
     /** Creates a new one */
     public InlineAlternative(Guard[] guards)
     {
-        this(guards, MODE_ARBITRARY);
+        this (guards, MODE_ARBITRARY);
     }
 
     /** Creates a new one */
@@ -83,9 +83,9 @@ namespace CSPlang
         
         guard = guards;
         selectMode = mode;
-        timers = new CSTimer[guards.length];
-        ialts = new InlineAlternative[guards.length];
-        for (int i = 0; i < guards.length; i++)
+        timers = new CSTimer[guards.Length];
+        ialts = new InlineAlternative[guards.Length];
+        for (int i = 0; i < guards.Length; i++)
             if (guards[i]
         instanceof CSTimer)
         timers[i] = (CSTimer) guards[i];
@@ -101,7 +101,7 @@ namespace CSPlang
         if (selectMode == MODE_FAIR)
         {
             favourite = selected + 1;
-            if (favourite == guard.length)
+            if (favourite == guard.Length)
                 favourite = 0;
         }
 
@@ -112,7 +112,7 @@ namespace CSPlang
      * Establishes a precondition array that will be used by default in calls to select(). This is useful when the ALT
      * is used as a guard within another ALT.
      */
-    public void setPreconditions(boolean[] precons)
+    public void setPreconditions(Boolean[] precons)
     {
         preconditions = precons;
     }
@@ -120,12 +120,12 @@ namespace CSPlang
     /**
      * Alters the precondition on a guard.
      */
-    public void setPreconditionByIndex(int index, boolean on)
+    public void setPreconditionByIndex(int index, Boolean on)
     {
         if (preconditions == null)
         {
-            preconditions = new boolean[guard.length];
-            for (int i = 0; i < preconditions.length; i++)
+            preconditions = new Boolean[guard.Length];
+            for (int i = 0; i < preconditions.Length; i++)
                 preconditions[i] = true;
         }
 
@@ -194,7 +194,7 @@ namespace CSPlang
     Boolean enable(Alternative alt)
     {
         timeoutIndex = -1;
-        for (int i = favourite; i < guard.length; i++)
+        for (int i = favourite; i < guard.Length; i++)
         {
             if ((preconditions == null) || (preconditions[i]))
             {
@@ -314,7 +314,7 @@ namespace CSPlang
                 }
             }
 
-            startIndex = guard.length - 1;
+            startIndex = guard.Length - 1;
         }
 
         for (int i = startIndex; i >= favourite; i--)

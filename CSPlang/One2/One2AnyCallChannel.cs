@@ -200,7 +200,7 @@ namespace CSPlang
          *
          * @param server the <I>server</I> process receiving the CALL.
          */
-        public synchronized int accept(IamCSProcess server)
+        public /*synchronized*/ int accept(IamCSProcess server)
         {
             this.server = server;
             c.read(); // ready to ACCEPT the CALL

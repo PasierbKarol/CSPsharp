@@ -8,7 +8,7 @@ namespace CSPlang
         private ChannelDataStore buffer;
         private int immunity;
 
-        PoisonableBufferedOne2AnyChannel(ChannelDataStore _data, int _immunity) : base(new PoisonableBufferedOne2OneChannel(_data, _immunity))
+        internal PoisonableBufferedOne2AnyChannel(ChannelDataStore _data, int _immunity) : base(new PoisonableBufferedOne2OneChannel(_data, _immunity))
         {
             
         }

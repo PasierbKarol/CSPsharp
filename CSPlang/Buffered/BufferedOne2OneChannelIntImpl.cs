@@ -27,6 +27,7 @@
 //////////////////////////////////////////////////////////////////////
 
 using System;
+using System.Threading;
 using CSPlang.Alting;
 using CSPutil;
 
@@ -74,7 +75,7 @@ namespace CSPlang
 
 	/** The ChannelDataStoreInt used to store the data for the channel */
 
-	private final ChannelDataStoreInt data;
+	private readonly ChannelDataStoreInt data;
 
 	/*************Methods from One2OneChannelInt******************************/
 
@@ -114,7 +115,7 @@ public ChannelOutputInt Out()
 	public BufferedOne2OneChannelIntImpl(ChannelDataStoreInt data)
 {
 	if (data == null)
-		throw new IllegalArgumentException
+		throw new ArgumentException 
 			("Null ChannelDataStoreInt given to channel constructor ...\n");
 	this.data = (ChannelDataStoreInt)data.clone();
 }
@@ -126,12 +127,12 @@ public ChannelOutputInt Out()
  */
 public int read()
 {
-	synchronized(rwMonitor) {
+	lock (rwMonitor) {
 		if (data.getState() == ChannelDataStoreInt.EMPTY)
 		{
 			try
 			{
-				rwMonitor.wait();
+				Monitor.Wait(rwMonitor);
 				while (data.getState() == ChannelDataStoreInt.EMPTY)
 				{
 					if (Spurious.logging)
@@ -139,30 +140,30 @@ public int read()
 						SpuriousLog.record(SpuriousLog.One2OneChannelIntXRead);
 					}
 
-					rwMonitor.wait();
+					Monitor.Wait(rwMonitor);
 				}
 			}
-			catch (InterruptedException e)
+			catch (ThreadInterruptedException e)
 			{
 				throw new ProcessInterruptedException(
-					"*** Thrown from One2OneChannelInt.read (int)\n" + e.toString()
+					"*** Thrown from One2OneChannelInt.read (int)\n" + e.ToString()
 				);
 			}
 		}
 
-		rwMonitor.notify();
+		Monitor.Pulse(rwMonitor);
 		return data.get();
 	}
 }
 
 public int startRead()
 {
-	synchronized(rwMonitor) {
+	lock(rwMonitor) {
 		if (data.getState() == ChannelDataStore.EMPTY)
 		{
 			try
 			{
-				rwMonitor.wait();
+				Monitor.Wait(rwMonitor);
 				while (data.getState() == ChannelDataStore.EMPTY)
 				{
 					if (Spurious.logging)
@@ -170,13 +171,13 @@ public int startRead()
 						SpuriousLog.record(SpuriousLog.One2OneChannelXRead);
 					}
 
-					rwMonitor.wait();
+					Monitor.Wait(rwMonitor);
 				}
 			}
-			catch (InterruptedException e)
+			catch (ThreadInterruptedException e)
 			{
 				throw new ProcessInterruptedException(
-					"*** Thrown from One2OneChannel.read (int)\n" + e.toString()
+					"*** Thrown from One2OneChannel.read (int)\n" + e.ToString()
 				);
 			}
 		}
@@ -187,9 +188,9 @@ public int startRead()
 
 public void endRead()
 {
-	synchronized(rwMonitor) {
+	lock(rwMonitor) {
 		data.endGet();
-		rwMonitor.notify();
+		Monitor.Pulse(rwMonitor);
 	}
 }
 
@@ -200,7 +201,7 @@ public void endRead()
  */
 public void write(int value)
 {
-	synchronized(rwMonitor) {
+	lock(rwMonitor) {
 		data.put(value);
 		if (alt != null)
 		{
@@ -208,14 +209,14 @@ public void write(int value)
 		}
 		else
 		{
-			rwMonitor.notify();
+			Monitor.Pulse(rwMonitor);
 		}
 
 		if (data.getState() == ChannelDataStoreInt.FULL)
 		{
 			try
 			{
-				rwMonitor.wait();
+				Monitor.Wait(rwMonitor);
 				while (data.getState() == ChannelDataStoreInt.FULL)
 				{
 					if (Spurious.logging)
@@ -223,13 +224,13 @@ public void write(int value)
 						SpuriousLog.record(SpuriousLog.One2OneChannelIntXWrite);
 					}
 
-					rwMonitor.wait();
+					Monitor.Wait(rwMonitor);
 				}
 			}
-			catch (InterruptedException e)
+			catch (ThreadInterruptedException e)
 			{
 				throw new ProcessInterruptedException(
-					"*** Thrown from One2OneChannelInt.write (int)\n" + e.toString()
+					"*** Thrown from One2OneChannelInt.write (int)\n" + e.ToString()
 				);
 			}
 		}
@@ -245,9 +246,9 @@ public void write(int value)
  * @param alt the Alternative class which will control the selection
  * @return true if the channel has data that can be read, else false
  */
-public boolean readerEnable(Alternative alt)
+public Boolean readerEnable(Alternative alt)
 {
-	synchronized(rwMonitor) {
+	lock(rwMonitor) {
 		if (data.getState() == ChannelDataStoreInt.EMPTY)
 		{
 			this.alt = alt;
@@ -268,9 +269,9 @@ public boolean readerEnable(Alternative alt)
  *
  * @return true if the channel has data that can be read, else false
  */
-public boolean readerDisable()
+public Boolean readerDisable()
 {
-	synchronized(rwMonitor) {
+	lock(rwMonitor) {
 		alt = null;
 		return data.getState() != ChannelDataStoreInt.EMPTY;
 	}
@@ -305,15 +306,15 @@ public boolean readerDisable()
  * </PRE>
  * where earlier would have had to have been declared:
  * <PRE>
- * final Alternative c_pending =
+ * readonly Alternative c_pending =
  *   new Alternative (new Guard[] {c, new Skip ()});
  * </PRE>
  *
  * @return state of the channel.
  */
-public boolean readerPending()
+public Boolean readerPending()
 {
-	synchronized(rwMonitor) {
+	lock(rwMonitor) {
 		return (data.getState() != ChannelDataStoreInt.EMPTY);
 	}
 }

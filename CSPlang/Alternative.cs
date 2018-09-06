@@ -30,6 +30,7 @@
 
 using System;
 using System.Threading;
+using CSPutil;
 
 namespace CSPlang
 {
@@ -567,18 +568,6 @@ namespace CSPlang
 	public class Alternative
 	{
 
-		private static readonly DateTime Jan1st1970 = new DateTime
-			(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
-
-		public static long CurrentTimeMillis()
-		{
-			return (long)(DateTime.UtcNow - Jan1st1970).TotalMilliseconds;
-		}
-
-
-		//======================================================= Karol's Code above. Taken form SO ============================
-
-
 		/** The monitor synchronizing the writers and alting reader  - K.P. */
 		//Apparently this has to be Monitor class to have required functionality - K.P.: https://stackoverflow.com/questions/209281/c-sharp-equivalent-to-javas-wait-and-notify 
 		protected Object altMonitor = new Object();
@@ -695,7 +684,7 @@ namespace CSPlang
 					{
 						if (timeout)
 						{
-							long delay = msecs - /*System.currentTimeMillis()*/ CurrentTimeMillis();
+							long delay = msecs - /*System.currentTimeMillis()*/ CSPTimeMillis.CurrentTimeMillis();
 							if (delay > Spurious.earlyTimeout)
 							{
 								Monitor.Wait(delay);
@@ -716,7 +705,7 @@ namespace CSPlang
 								*/
 								while (state == waiting)
 								{
-									delay = msecs - /*System.currentTimeMillis()*/ CurrentTimeMillis();
+									delay = msecs - /*System.currentTimeMillis()*/ CSPTimeMillis.CurrentTimeMillis();
 									if (delay > Spurious.earlyTimeout)
 									{
 										if (Spurious.logging)
@@ -786,7 +775,7 @@ namespace CSPlang
 					{
 						if (timeout)
 						{
-							long delay = msecs - /*System.currentTimeMillis()*/ CurrentTimeMillis();
+							long delay = msecs - /*System.currentTimeMillis()*/ CSPTimeMillis.CurrentTimeMillis();
 							// NOTE: below is code that demonstrates whether wait (delay)
 							// sometimes returns early!  Because this happens in some JVMs,
 							// we are forced into a workaround - see disableGuards ().
@@ -812,7 +801,7 @@ namespace CSPlang
 								*/
 								while (state == waiting)
 								{
-									delay = msecs - /*System.currentTimeMillis()*/ CurrentTimeMillis();
+									delay = msecs - /*System.currentTimeMillis()*/ CSPTimeMillis.CurrentTimeMillis();
 									if (delay > Spurious.earlyTimeout)
 									{
 										if (Spurious.logging)
@@ -1019,7 +1008,7 @@ namespace CSPlang
 		 * work-around for Java wait-with-timeouts sometimes returning early.
 		 * It is still in the flow of control of the ALTing process.
 		 */
-		void setTimeout(long msecs)
+		protected internal void setTimeout(long msecs)
 		{
 			if (timeout)
 			{
@@ -1059,16 +1048,16 @@ namespace CSPlang
 				switch (state)
 				{
 					case enabling:
-					state = ready;
-					break;
+						state = ready;
+						break;
 					case waiting:
-					state = ready;
-					Monitor.Pulse(altMonitor); //Originally it was altMonitor.Notify() - KP
+						state = ready;
+						Monitor.Pulse(altMonitor); //Originally it was altMonitor.Notify() - KP
 
 
-					break;
-					// case ready: case inactive:
-					// break
+						break;
+						// case ready: case inactive:
+						// break
 				}
 			}
 		}
@@ -1131,13 +1120,13 @@ namespace CSPlang
 					{
 						if (timeout)
 						{
-							long delay = msecs - /*System.currentTimeMillis()*/ CurrentTimeMillis();
+							long delay = msecs - /*System.currentTimeMillis()*/ CSPTimeMillis.CurrentTimeMillis();
 							if (delay > Spurious.earlyTimeout)
 							{
 								Monitor.Wait(delay);
 								while (state == waiting)
 								{
-									delay = msecs - /*System.currentTimeMillis()*/ CurrentTimeMillis();
+									delay = msecs - /*System.currentTimeMillis()*/ CSPTimeMillis.CurrentTimeMillis();
 									if (delay > Spurious.earlyTimeout)
 									{
 										if (Spurious.logging)
@@ -1219,13 +1208,13 @@ namespace CSPlang
 					{
 						if (timeout)
 						{
-							long delay = msecs - /*System.currentTimeMillis()*/ CurrentTimeMillis();
+							long delay = msecs - /*System.currentTimeMillis()*/ CSPTimeMillis.CurrentTimeMillis();
 							if (delay > Spurious.earlyTimeout)
 							{
 								Monitor.Wait(delay);
 								while (state == waiting)
 								{
-									delay = msecs - /*System.currentTimeMillis()*/ CurrentTimeMillis();
+									delay = msecs - /*System.currentTimeMillis()*/ CSPTimeMillis.CurrentTimeMillis();
 									if (delay > Spurious.earlyTimeout)
 									{
 										if (Spurious.logging)

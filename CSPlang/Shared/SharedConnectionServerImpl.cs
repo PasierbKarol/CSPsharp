@@ -40,51 +40,51 @@ namespace CSPlang.Shared
      */
     public class SharedConnectionServerImpl : SharedConnectionServer
     {
-    private AltingConnectionServerImpl connectionServerToUse;
+        private AltingConnectionServerImpl connectionServerToUse;
 
-    private ChannelInput synchIn;
-    private ChannelOutput synchOut;
-    private ConnectionWithSharedAltingServer parent;
+        private ChannelInput synchIn;
+        private ChannelOutput synchOut;
+        private ConnectionWithSharedAltingServer parent;
 
-    protected SharedConnectionServerImpl(AltingChannelInput openIn,
-        AltingChannelInput requestIn,
-        ChannelInput synchIn,
-        SharedChannelOutput synchOut,
-        ConnectionWithSharedAltingServer parent)
-    {
-        connectionServerToUse = new AltingConnectionServerImpl(openIn, requestIn);
-        this.synchOut = synchOut;
-        this.synchIn = synchIn;
-        this.parent = parent;
-    }
+        protected internal SharedConnectionServerImpl(AltingChannelInput openIn,
+            AltingChannelInput requestIn,
+            ChannelInput synchIn,
+            SharedChannelOutput synchOut,
+            ConnectionWithSharedAltingServer parent)
+        {
+            connectionServerToUse = new AltingConnectionServerImpl(openIn, requestIn);
+            this.synchOut = synchOut;
+            this.synchIn = synchIn;
+            this.parent = parent;
+        }
 
-    public Object request()
-    {
-        if (connectionServerToUse.getServerState() == AltingConnectionServerImpl.SERVER_STATE_CLOSED)
-            synchOut.write(null);
-        return connectionServerToUse.request();
-    }
+        public Object request()
+        {
+            if (connectionServerToUse.getServerState() == AltingConnectionServerImpl.SERVER_STATE_CLOSED)
+                synchOut.write(null);
+            return connectionServerToUse.request();
+        }
 
-    public void reply(Object data)
-    {
-        reply(data, false);
-    }
+        public void reply(Object data)
+        {
+            reply(data, false);
+        }
 
-    public void reply(Object data, Boolean close)
-    {
-        connectionServerToUse.reply(data, close);
-        if (connectionServerToUse.getServerState() == AltingConnectionServerImpl.SERVER_STATE_CLOSED)
-            synchIn.read();
-    }
+        public void reply(Object data, Boolean close)
+        {
+            connectionServerToUse.reply(data, close);
+            if (connectionServerToUse.getServerState() == AltingConnectionServerImpl.SERVER_STATE_CLOSED)
+                synchIn.read();
+        }
 
-    public void replyAndClose(Object data)
-    {
-        reply(data, true);
-    }
+        public void replyAndClose(Object data)
+        {
+            reply(data, true);
+        }
 
-    public SharedConnectionServer duplicate()
-    {
-        return parent.server();
-    }
+        public SharedConnectionServer duplicate()
+        {
+            return parent.server();
+        }
     }
 }

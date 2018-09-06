@@ -45,7 +45,7 @@ namespace CSPlang
          *
          * @return the <code>Object</code> sent by the client.
          */
-          Object request() throws IllegalStateException;
+          Object request(); // throws IllegalStateException; //No equivalent in C# - KP
 
         /**
          * <p>Sends some data back to the client after a request
@@ -59,7 +59,7 @@ namespace CSPlang
          *
          * @param	data	the data to send to the client.
          */
-          void reply(Object data) throws IllegalStateException;
+          void reply(Object data); // throws IllegalStateException; //No equivalent in C# - KP
 
 
         /**
@@ -75,7 +75,7 @@ namespace CSPlang
          *                iff the connection should be dropped after the reply
          *                has been sent.
          */
-          void reply(Object data, Boolean close);
+        void reply(Object data, Boolean close);
 
         /**
          * <p>Sends some data back to the client and closes the connection.</p>
@@ -86,6 +86,6 @@ namespace CSPlang
          *
          * @param data	the data to send back to client.
          */
-          void replyAndClose(Object data) throws IllegalStateException;
+          void replyAndClose(Object data); // throws IllegalStateException; //No equivalent in C# - KP
     }
 }

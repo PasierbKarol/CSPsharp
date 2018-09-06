@@ -31,7 +31,7 @@ namespace CSPlang
     /**
      * @author Jo Aldous
      */
-    abstract class AbstractConnectionImpl
+    public abstract class AbstractConnectionImpl
     {
         protected static readonly int CLIENT_STATE_CLOSED = 1;
         protected static readonly int CLIENT_STATE_OPEN = 2;

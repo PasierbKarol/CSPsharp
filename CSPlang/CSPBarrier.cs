@@ -66,7 +66,7 @@ namespace CSPlang
  * an exclusive read/write access discipline for all communicated objects) is deterministic
  * - its semantics are independent of scheduling.
  * <P>
- * For fixed barrier sets, {@link #Barrier(int) <R>construct</R>} each barrier initialised
+ * For fixed barrier sets, {@link #CSPBarrier(int) <R>construct</R>} each barrier initialised
  * to the number of processes to be associated with it and share it out amongst those processes.
  * <P>
  * For example, here is a fixed set of 10 processes synchronising on a shared barrier:
@@ -81,7 +81,7 @@ namespace CSPlang
  * <I></I>
  *     final int nPlayers = 10;
  * <I></I>
- *     final Barrier barrier = new Barrier (nPlayers);
+ *     final CSPBarrier barrier = new CSPBarrier (nPlayers);
  * <I></I>
  *     final Player[] players = new Player[nPlayers];
  *     for (int i = 0; i < players.length; i++) {
@@ -102,9 +102,9 @@ namespace CSPlang
  * public class Player implements CSProcess {
  * <I></I>
  *   private final int id, nPlayers;
- *   private final Barrier barrier;
+ *   private final CSPBarrier barrier;
  * <I></I>
- *   public Player (int id, int nPlayers, Barrier barrier) {
+ *   public Player (int id, int nPlayers, CSPBarrier barrier) {
  *     this.id = id;
  *     this.nPlayers = nPlayers;
  *     this.barrier = barrier;
@@ -176,7 +176,7 @@ namespace CSPlang
  * <I></I>
  *     final long seed = new CSTimer ().read ();
  * <I></I>
- *     final Barrier barrier = new Barrier (1);
+ *     final CSPBarrier barrier = new CSPBarrier (1);
  * <I></I>
  *     final TimeKeeper timeKeeper = new TimeKeeper (tick, barrier);
  * <I></I>
@@ -208,10 +208,10 @@ namespace CSPlang
  *   private final long seed;
  *   private final int maxWork;
  *   private final boolean rogue;
- *   private final Barrier barrier;
+ *   private final CSPBarrier barrier;
  * <I></I>
  *   public Worker (int id, long seed, int maxWork,
- *                  boolean rogue, Barrier barrier) {
+ *                  boolean rogue, CSPBarrier barrier) {
  *     this.id = id;
  *     this.seed = seed;
  *     this.maxWork = maxWork;
@@ -262,19 +262,19 @@ namespace CSPlang
  * on the barrier as well as the resignation.  This is crucial since, if the resigner were
  * the last process associated with a barrier not to have invoked a {@link #sync sync},
  * its resignation must <I>complete</I> the barrier (as though it had invoked a <TT>sync</TT>)
- * and release all the remaining associated processes.
+ * and Release all the remaining associated processes.
  * <P>
- * The <TT>TimeKeeper</TT> is passed its <TT>tick</TT> interval and the <TT>Barrier</TT>.
- * It is pre-enrolled with the <TT>Barrier</TT> and remains permanently associated:
+ * The <TT>TimeKeeper</TT> is passed its <TT>tick</TT> interval and the <TT>CSPBarrier</TT>.
+ * It is pre-enrolled with the <TT>CSPBarrier</TT> and remains permanently associated:
  * <PRE>
  * import jcsp.lang.*;
  * <I></I>
  * public class TimeKeeper implements CSProcess {
  * <I></I>
  *   private final long interval;
- *   private final Barrier barrier;
+ *   private final CSPBarrier barrier;
  * <I></I>
- *   public TimeKeeper (long interval, Barrier barrier) {
+ *   public TimeKeeper (long interval, CSPBarrier barrier) {
  *     this.interval = interval;
  *     this.barrier = barrier;
  *   }
@@ -354,7 +354,7 @@ namespace CSPlang
  * [<I>Note:</I> CSP synchronisation primitives can be implemented with much lighter
  * overheads.  For example,
  * the <A HREF="http://www.hensa.ac.uk/parallel/occam/projects/occam-for-all/kroc/">KRoC</A>
- * <B>occam</B> equivalent to this <TT>Barrier</TT>
+ * <B>occam</B> equivalent to this <TT>CSPBarrier</TT>
  * (its <A HREF="http://www.hensa.ac.uk/parallel/occam/projects/occam-for-all/hlps/">EVENT</A>)
  * has (sub-microsecond) unit time costs for <I>all</I> its operations, including
  * the <I>final</I> <TT>sync</TT>.  Future work on JCSP may look towards this standard.]
@@ -369,7 +369,7 @@ namespace CSPlang
 
 
     [Serializable]
-    public class Barrier
+    public class CSPBarrier
     {
         /**
    * The number of processes currently enrolled on this barrier.
@@ -395,7 +395,7 @@ namespace CSPlang
         /**
          * Construct a barrier initially associated with no processes.
          */
-        public Barrier()
+        public CSPBarrier()
         {
         }
 
@@ -411,7 +411,7 @@ namespace CSPlang
          * 
          * @throws IllegalArgumentException if <tt>nEnrolled</tt> < <tt>0</tt>.
          */
-        public Barrier(final int nEnrolled)
+        public CSPBarrier(final int nEnrolled)
         {
             if (nEnrolled < 0)
             {
@@ -421,7 +421,7 @@ namespace CSPlang
             }
             this.nEnrolled = nEnrolled;
             countDown = nEnrolled;
-            //System.out.println ("Barrier.constructor : " + nEnrolled + ", " + countDown);
+            //System.out.println ("CSPBarrier.constructor : " + nEnrolled + ", " + countDown);
         }
 
         /**
@@ -449,7 +449,7 @@ namespace CSPlang
                 this.nEnrolled = nEnrolled;
                 countDown = nEnrolled;
             }
-            //System.out.println ("Barrier.reset : " + nEnrolled + ", " + countDown);
+            //System.out.println ("CSPBarrier.reset : " + nEnrolled + ", " + countDown);
         }
 
         /**
@@ -461,7 +461,7 @@ namespace CSPlang
         {
             lock (barrierLock) {
                 countDown--;
-                //System.out.println ("Barrier.sync : " + nEnrolled + ", " + countDown);
+                //System.out.println ("CSPBarrier.sync : " + nEnrolled + ", " + countDown);
                 if (countDown > 0)
                 {
                     try
@@ -480,7 +480,7 @@ namespace CSPlang
                     catch (InterruptedException e)
                     {
                         throw new ProcessInterruptedException(
-                      "*** Thrown from Barrier.sync ()\n" + e.toString()
+                      "*** Thrown from CSPBarrier.sync ()\n" + e.toString()
                     );
                     }
                 }
@@ -488,7 +488,7 @@ namespace CSPlang
                 {
                     countDown = nEnrolled;
                     evenOddCycle = !evenOddCycle;         // to detect spurious wakeups  :(
-                                                          //System.out.println ("Barrier.sync : " + nEnrolled + ", " + countDown);
+                                                          //System.out.println ("CSPBarrier.sync : " + nEnrolled + ", " + countDown);
                     barrierLock.notifyAll();
                 }
             }
@@ -527,7 +527,7 @@ namespace CSPlang
                 nEnrolled++;
                 countDown++;
             }
-            //System.out.println ("Barrier.enroll : " + nEnrolled + ", " + countDown);
+            //System.out.println ("CSPBarrier.enroll : " + nEnrolled + ", " + countDown);
         }
 
         /**
@@ -558,12 +558,12 @@ namespace CSPlang
             lock (barrierLock) {
                 nEnrolled--;
                 countDown--;
-                //System.out.println ("Barrier.resign : " + nEnrolled + ", " + countDown);
+                //System.out.println ("CSPBarrier.resign : " + nEnrolled + ", " + countDown);
                 if (countDown == 0)
                 {
                     countDown = nEnrolled;
                     evenOddCycle = !evenOddCycle;         // to detect spurious wakeups  :(
-                                                          //System.out.println ("Barrier.resign : " + nEnrolled + ", " + countDown);
+                                                          //System.out.println ("CSPBarrier.resign : " + nEnrolled + ", " + countDown);
                     barrierLock.notifyAll();
                 }
                 else if (countDown < 0)

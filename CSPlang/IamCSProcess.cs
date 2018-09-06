@@ -263,7 +263,7 @@ namespace CSPlang
      *           long timeLeft = timeout - tim.read (); // time till next tick
      *           hold.read ();                          // clear the signal
      *           fire.write (HOLDING);                  // signal rocket
-     *           hold.read ();                          // wait for the release
+     *           hold.read ();                          // wait for the Release
      *           timeout = tim.read () + timeLeft;      // recompute next timeout
      *           fire.write (COUNTING);                 // signal rocket
      *         break;

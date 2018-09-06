@@ -32,7 +32,7 @@ using System.Threading;
 
 namespace CSPlang
 {
-    /**
+	/**
  * This implements a one-to-one object channel.
  * <H2>Description</H2>
  * <TT>One2OneChannelImpl</TT> implements a one-to-one object channel.  Multiple
@@ -72,7 +72,7 @@ namespace CSPlang
  */
 
 
-    [Serializable]
+	[Serializable]
 	internal class PoisonableOne2OneChannelImpl : One2OneChannel, ChannelInternals
 	{
 		/** The monitor synchronising reader and writer on this channel */

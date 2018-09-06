@@ -29,6 +29,7 @@
 
 
 using System;
+using System.Threading;
 
 namespace CSPlang
 {
@@ -39,7 +40,7 @@ namespace CSPlang
      * <A HREF="#constructor_summary">Shortcut to the Constructor and Method Summaries.</A>
      * 
      * <H2>Description</H2>
-     * A <I>bucket</I> is a non-deterministic cousin of a {@link Barrier}.  A bucket is
+     * A <I>bucket</I> is a non-deterministic cousin of a {@link CSPBarrier}.  A bucket is
      * somewhere to {@link #fallInto <TT>fallInto</TT>} when a process needs somewhere to park
      * itself.  There is no limit on the number of processes that can <TT>fallInto</TT>
      * a bucket - and all are blocked when they do.
@@ -72,7 +73,7 @@ namespace CSPlang
      * Currently, though, this is how they are implemented.
      * Beware that a <TT>notifyAll</TT> carries an <TT>O(n)</TT> overhead (where n is
      * the number of processes being notified), since each notified process must regain
-     * the monitor lock before it can exit the <TT>synchronized</TT> region.
+     * the monitor lock before it can exit the <TT>lock </TT> region.
      * Future JCSP implementations of <TT>Bucket</TT> will look to follow <B>occam</B> kernels
      * and reduce the overheads of both <TT>fallInto</TT> and <TT>flush</TT> to <TT>O(1)</TT>.
      * 
@@ -87,21 +88,21 @@ namespace CSPlang
      * <I></I>
      *   public static void main (String[] args) {
      * <I></I>
-     *     final int nWorkers = 10;
+     *     readonly int nWorkers = 10;
      * <I></I>
-     *     final int second = 1000;
+     *     readonly int second = 1000;
      *     // JCSP timer units are milliseconds
-     *     final int interval = 5*second;
-     *     final int maxWork = 10*second;
+     *     readonly int interval = 5*second;
+     *     readonly int maxWork = 10*second;
      * <I></I>
-     *     final long seed = new CSTimer ().read ();
+     *     readonly long seed = new CSTimer ().read ();
      *     // for the random number generators
      * <I></I>
-     *     final Bucket bucket = new Bucket ();
+     *     readonly Bucket bucket = new Bucket ();
      * <I></I>
-     *     final Flusher flusher = new Flusher (interval, bucket);
+     *     readonly Flusher flusher = new Flusher (interval, bucket);
      * <I></I>
-     *     final Worker[] workers = new Worker[nWorkers];
+     *     readonly Worker[] workers = new Worker[nWorkers];
      *     for (int i = 0; i < workers.length; i++) {
      *       workers[i] = new Worker (i, i + seed, maxWork, bucket);
      *     }
@@ -128,10 +129,10 @@ namespace CSPlang
      * <I></I>
      * public class Worker implements CSProcess {
      * <I></I>
-     *   private final int id;
-     *   private final long seed;
-     *   private final int maxWork;
-     *   private final Bucket bucket;
+     *   private readonly int id;
+     *   private readonly long seed;
+     *   private readonly int maxWork;
+     *   private readonly Bucket bucket;
      * <I></I>
      *   public Worker (int id, long seed, int maxWork, Bucket bucket) {
      *     this.id = id;
@@ -142,18 +143,18 @@ namespace CSPlang
      * <I></I>
      *   public void run () {
      * <I></I>
-     *     final Random random = new Random (seed);
+     *     readonly Random random = new Random (seed);
      *     // each process gets a different seed
      * <I></I>
-     *     final CSTimer tim = new CSTimer ();
-     *     final int second = 1000;
+     *     readonly CSTimer tim = new CSTimer ();
+     *     readonly int second = 1000;
      *     // JCSP timer units are milliseconds
      * <I></I>
-     *     final String working = "\t... Worker " + id
+     *     readonly String working = "\t... Worker " + id
      *                            + " working ...";
-     *     final String falling = "\t\t\t     ... Worker " + id
+     *     readonly String falling = "\t\t\t     ... Worker " + id
      *                            + " falling ...";
-     *     final String flushed = "\t\t\t\t\t\t  ... Worker "
+     *     readonly String flushed = "\t\t\t\t\t\t  ... Worker "
      *                            + id + " flushed ...";
      * <I></I>
      *     while (true) {
@@ -175,8 +176,8 @@ namespace CSPlang
      * <I></I>
      * public class Flusher implements CSProcess {
      * <I></I>
-     *   private final int interval;
-     *   private final Bucket bucket;
+     *   private readonly int interval;
+     *   private readonly Bucket bucket;
      * <I></I>
      *   public Flusher (int interval, Bucket bucket) {
      *     this.interval = interval;
@@ -185,13 +186,13 @@ namespace CSPlang
      * <I></I>
      *   public void run () {
      * <I></I>
-     *     final CSTimer tim = new CSTimer ();
+     *     readonly CSTimer tim = new CSTimer ();
      *     long timeout = tim.read () + interval;
      * <I></I>
      *     while (true) {
      *       tim.after (timeout);
      *       System.out.println ("*** Flusher: about to flush ...");
-     *       final int n = bucket.flush ();
+     *       readonly int n = bucket.flush ();
      *       System.out.println ("*** Flusher: number flushed = " + n);
      *       timeout += interval;
      *     }
@@ -214,20 +215,20 @@ namespace CSPlang
      * <I></I>
      *   public static void main (String[] args) {
      * <I></I>
-     *     final int minDingbat = 2;
-     *     final int maxDingbat = 10;
-     *     final int nDingbats = (maxDingbat - minDingbat) + 1;
+     *     readonly int minDingbat = 2;
+     *     readonly int maxDingbat = 10;
+     *     readonly int nDingbats = (maxDingbat - minDingbat) + 1;
      * <I></I>
-     *     final int nBuckets = 2*maxDingbat;
+     *     readonly int nBuckets = 2*maxDingbat;
      * <I></I>
-     *     final Bucket[] bucket = Bucket.create (nBuckets);
+     *     readonly Bucket[] bucket = Bucket.create (nBuckets);
      * <I></I>
-     *     final int second = 1000;
+     *     readonly int second = 1000;
      *     // JCSP timer units are milliseconds
-     *     final int tick = second;
-     *     final BucketKeeper bucketKeeper = new BucketKeeper (tick, bucket);
+     *     readonly int tick = second;
+     *     readonly BucketKeeper bucketKeeper = new BucketKeeper (tick, bucket);
      * <I></I>
-     *     final Dingbat[] dingbats = new Dingbat[nDingbats];
+     *     readonly Dingbat[] dingbats = new Dingbat[nDingbats];
      *     for (int i = 0; i < dingbats.length; i++) {
      *       dingbats[i] = new Dingbat (i + minDingbat, bucket);
      *     }
@@ -250,8 +251,8 @@ namespace CSPlang
      * <I></I>
      * class BucketKeeper implements CSProcess {
      * <I></I>
-     *   private final long interval;
-     *   private final Bucket[] bucket;
+     *   private readonly long interval;
+     *   private readonly Bucket[] bucket;
      * <I></I>
      *   public BucketKeeper (long interval, Bucket[] bucket) {
      *     this.interval = interval;
@@ -266,12 +267,12 @@ namespace CSPlang
      *       spacer[i] = spacer[i - 1] + "  ";
      *     }
      * <I></I>
-     *     final CSTimer tim = new CSTimer ();
+     *     readonly CSTimer tim = new CSTimer ();
      *     long timeout = tim.read ();
      *     int index = 0;
      * <I></I>
      *     while (true) {
-     *       final int n = bucket[index].flush ();
+     *       readonly int n = bucket[index].flush ();
      *       if (n == 0) {
      *         System.out.println (spacer[index] + "*** bucket " +
      *                             index + " was empty ...");
@@ -297,8 +298,8 @@ namespace CSPlang
      * <I></I>
      * public class Dingbat implements CSProcess {
      * <I></I>
-     *   private final int id;
-     *   private final Bucket[] bucket;
+     *   private readonly int id;
+     *   private readonly Bucket[] bucket;
      * <I></I>
      *   public Dingbat (int id, Bucket[] bucket) {
      *     this.id = id;
@@ -319,7 +320,7 @@ namespace CSPlang
      * <I></I>
      *     while (true) {
      *       logicalTime += id;
-     *       final int slot = logicalTime % bucket.length;
+     *       readonly int slot = logicalTime % bucket.length;
      *       // assume: id <= bucket.length
      *       bucket[slot].fallInto ();
      *       System.out.println (spacer[slot] + message + logicalTime);
@@ -360,7 +361,7 @@ namespace CSPlang
      * timeouts in the simulation itself.
      * </P>
      *
-     * @see jcsp.lang.Barrier
+     * @see jcsp.lang.CSPBarrier
      * 
      * @author P.H.Welch
      */
@@ -376,10 +377,10 @@ namespace CSPlang
         /**
          * The monitor lock used for synchronization
          */
-        private final Object bucketLock = new Object();
+        private readonly Object bucketLock = new Object();
 
         /**
-         * Barrier uses an even/odd flag because the barrier cannot sync without every process
+         * CSPBarrier uses an even/odd flag because the barrier cannot sync without every process
          * Bucket can happily keep working while old processes are waiting around, so a flag is not enough
          * Instead, a count must be used.  Theoretically this is unsafe, but the likelihood of the bucket
          * completing 4 *billion* cycles before the process wakes up is somewhat slim.
@@ -392,7 +393,7 @@ namespace CSPlang
          */
         public void fallInto()
         {
-            synchronized(bucketLock)
+            lock (bucketLock)
     
         {
                 nHolding++;
@@ -400,20 +401,20 @@ namespace CSPlang
                 try
                 {
                     int spuriousCycle = bucketCycle;
-                    bucketLock.wait();
+                    Monitor.Wait(bucketLock);
                     while (spuriousCycle == bucketCycle)
                     {
                         if (Spurious.logging)
                         {
                             SpuriousLog.record(SpuriousLog.BucketFallInto);
                         }
-                        bucketLock.wait();
+                        Monitor.Wait(bucketLock);
                     }
                 }
-                catch (InterruptedException e)
+                catch (ThreadInterruptedException e)
                 {
                     throw new ProcessInterruptedException("*** Thrown from Bucket.fallInto ()\n"
-                                             + e.toString());
+                                             + e.ToString());
                 }
             }
         }
@@ -426,14 +427,14 @@ namespace CSPlang
          */
         public int flush()
         {
-            synchronized(bucketLock)
+            lock (bucketLock)
       
       {
                 // System.out.println ("Bucket.flush : " + nHolding);
-                final int tmp = nHolding;
+                /*final*/ int tmp = nHolding;
                 nHolding = 0;
                 bucketCycle += 1;
-                bucketLock.notifyAll();
+                Monitor.PulseAll(bucketLock);
                 return tmp;
             }
         }
@@ -448,7 +449,7 @@ namespace CSPlang
          */
         public int holding()
         {
-            synchronized(bucketLock)
+            lock (bucketLock)
       
       {
                 return nHolding;

@@ -51,7 +51,7 @@ namespace CSPlang
  * <p>
  * If a process wishes to commit to this barrier (i.e. not offer it as a choice
  * in an {@link Alternative}), it may {@link #sync sync} on it.
- * However, if all parties only do this, a <i>non-alting</i> {@link Barrier}
+ * However, if all parties only do this, a <i>non-alting</i> {@link CSPBarrier}
  * would be more efficient.
  * A further shortcut (over using an {@link Alternative}) is provided
  * to {@link #poll(long) poll} this barrier for completion.
@@ -747,7 +747,7 @@ namespace CSPlang
  * <p>
  * 
  *
- * @see jcsp.lang.Barrier
+ * @see jcsp.lang.CSPBarrier
  * @see jcsp.lang.Alternative
  * <p>
  * 
@@ -1320,7 +1320,7 @@ namespace CSPlang
          *     groupCommit.select ();
          * </PRE>
          * If this is the only method of synchronisation performed by all parties
-         * to this barrier, a <i>non-alting</i> {@link Barrier} would be more efficient.
+         * to this barrier, a <i>non-alting</i> {@link CSPBarrier} would be more efficient.
          * </p>
          * <p>
          * <i>Important note:</i> following a <code>select</code>, <code>priSelect</code> or

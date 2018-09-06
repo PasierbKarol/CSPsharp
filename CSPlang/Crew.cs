@@ -26,6 +26,9 @@
 //                                                                  //
 //////////////////////////////////////////////////////////////////////
 
+using System;
+using CSPlang.Any2;
+
 namespace CSPlang
 {
 
@@ -78,14 +81,14 @@ namespace CSPlang
      * <A NAME="Access">
      * Each process holding a reference to <TT>resource</TT> must also be given a reference
      * to <TT>resourceCrew</TT>.  Invocations of <I>reader</I> methods must be sandwiched
-     * between a claim and release of the <I>reader</I> lock within <TT>resourceCrew</TT>:
+     * between a Claim and Release of the <I>reader</I> lock within <TT>resourceCrew</TT>:
      * <PRE>
      *   resourceCrew.startRead(); // this will block until no writer is present
      *   ...                       // invoke reader methods of resource
      *   resourceCrew.endRead();   // releases this reader's lock on resource
      * </PRE>
      * Invocations of <I>writer</I> methods must be sandwiched
-     * between a claim and release of the <I>writer</I> lock within <TT>resourceCrew</TT>:
+     * between a Claim and Release of the <I>writer</I> lock within <TT>resourceCrew</TT>:
      * <PRE>
      *   resourceCrew.startWrite(); // this will block until no reader
      *                              // or writer is present
@@ -108,12 +111,12 @@ namespace CSPlang
      * the resource-using part of either of the above <A HREF="#Access">access sequences</A>,
      * the corresponding <TT>Crew</TT> lock would not be released.
      * To protect ourselves from this, embed the access sequence within
-     * a <TT>try</TT>-<TT>finally</TT> clause - for example:
+     * a <TT>try</TT>-<TT>readonlyly</TT> clause - for example:
      * <PRE>
      *   try {
      *     resourceCrew.startRead(); // this will block until no writer is present
      *     ...                       // invoke reader methods of resource
-     *   } finally {
+     *   } readonlyly {
      *     resourceCrew.endRead();   // releases this reader's lock on resource
      *   }
      * </PRE>
@@ -124,13 +127,13 @@ namespace CSPlang
      *                                // or writer is present
      *     ...                        // invoke writer (or reader)
      *                                // methods of resource
-     *   } finally {
+     *   } readonlyly {
      *     resourceCrew.endWrite ();  // releases this writer's lock on resource
      *   }
      * </PRE>
      * Now, the lock will always be released whether the reader/writer section exits normally
      * or exceptionally.  This asymmetric pattern is not very pretty, but is a classic
-     * application of the <TT>try</TT>-<TT>finally</TT> facility.
+     * application of the <TT>try</TT>-<TT>readonlyly</TT> facility.
      *
      * <H3><A NAME="Binding">Binding the Shared Resource to its CREW Lock</H3>
      * In JCSP, shared references may be passed to processes through constructors, through
@@ -183,7 +186,7 @@ namespace CSPlang
      * <PRE>
      * class ResourceCrew extends Resource {
      * <I></I>
-     *   private final Crew crew = new Crew ();
+     *   private readonly Crew crew = new Crew ();
      * <I></I>
      *   public Thing readerMethod (...) {
      *     crew.startRead ();      // this will block until no writer is present
@@ -320,16 +323,16 @@ namespace CSPlang
      * <I></I>
      * class CrewServer implements CSProcess {      // this is not a public class
      * <I></I>
-     *   public static final int READER = 0;
-     *   public static final int WRITER = 1;
+     *   public static readonly int READER = 0;
+     *   public static readonly int WRITER = 1;
      * <I></I>
-     *   private final AltingChannelInputInt request;
-     *   private final ChannelInputInt writerControl;
-     *   private final AltingChannelInputInt readerRelease;
+     *   private readonly AltingChannelInputInt request;
+     *   private readonly ChannelInputInt writerControl;
+     *   private readonly AltingChannelInputInt readerRelease;
      * <I></I>
-     *   public CrewServer (final AltingChannelInputInt request,
-     *                      final ChannelInputInt writerControl,
-     *                      final AltingChannelInputInt readerRelease) {
+     *   public CrewServer (readonly AltingChannelInputInt request,
+     *                      readonly ChannelInputInt writerControl,
+     *                      readonly AltingChannelInputInt readerRelease) {
      *     this.request = request;
      *     this.writerControl = writerControl;
      *     this.readerRelease = readerRelease;
@@ -338,8 +341,8 @@ namespace CSPlang
      *   public void run () {
      *     int nReaders = 0;
      *     Guard[] c = {readerRelease, request};
-     *     final int READER_RELEASE = 0;
-     *     final int REQUEST = 1;
+     *     readonly int READER_RELEASE = 0;
+     *     readonly int REQUEST = 1;
      *     Alternative alt = new Alternative (c);
      *     while (true) {
      *       // invariant : (nReaders is the number of current readers) and
@@ -396,22 +399,22 @@ namespace CSPlang
 
     public class Crew
     {
-        private final Any2OneChannelIntImpl request = new Any2OneChannelIntImpl();
-        private final One2OneChannelIntImpl writerControl = new One2OneChannelIntImpl();
-        private final Any2OneChannelIntImpl readerRelease = new Any2OneChannelIntImpl();
+        private readonly Any2OneChannelIntImpl request = new Any2OneChannelIntImpl();
+        private readonly One2OneChannelIntImpl writerControl = new One2OneChannelIntImpl();
+        private readonly Any2OneChannelIntImpl readerRelease = new Any2OneChannelIntImpl();
 
         ///TODO make this poison the existing channels, once poison is added
-        private final Any2OneChannelIntImpl poison = new Any2OneChannelIntImpl();
+        private readonly Any2OneChannelIntImpl poison = new Any2OneChannelIntImpl();
 
-        private final ProcessManager manager =
-            new ProcessManager(new CrewServer(request.in (), writerControl.in (), readerRelease.in (), poison.in ()));
+        private readonly ProcessManager manager =
+            new ProcessManager(new CrewServer(request.In(), writerControl.In(), readerRelease.In(), poison.In()));
 
-    private final Object shared;
+        private readonly Object shared;
 
-    /**
-     * Construct a lock for CREW-guarded operations on a shared resource.
-     */
-    public Crew()
+        /**
+         * Construct a lock for CREW-guarded operations on a shared resource.
+         */
+        public Crew()
         {
             manager.start();
             shared = null;
@@ -430,12 +433,18 @@ namespace CSPlang
         }
 
         /**
-         * Finalize method added to terminate the process that it spawned. The spawned process holds no references
-         * to this object so this object will eventually fall out of scope and gets finalized.
+         * readonlyize method added to terminate the process that it spawned. The spawned process holds no references
+         * to this object so this object will eventually fall out of scope and gets readonlyized.
          */
-        protected void finalize() throws Throwable
+        protected void readonlyize() //throws Throwable
         {
-            poison.write(0);
+            try
+            {
+                poison.write(0);
+            }
+            catch (Exception e)
+            {
+            }
     }
 
     /**

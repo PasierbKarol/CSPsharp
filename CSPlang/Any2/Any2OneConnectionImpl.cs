@@ -31,6 +31,7 @@ using System.Collections.Generic;
 using System.Text;
 using CSPlang.Alting;
 using CSPlang.Shared;
+using CSPutil;
 
 namespace CSPlang.Any2
 {
@@ -57,9 +58,9 @@ namespace CSPlang.Any2
          */
         public Any2OneConnectionImpl() : base()
         {
-            chanToServer = ConnectionServer.FACTORY.createOne2One(new Buffer(1));
-            chanFromServer = ConnectionServer.FACTORY.createOne2One(new Buffer(1));
-            chanSynch = ConnectionServer.FACTORY.createAny2One(new Buffer(1));
+            chanToServer = ConnectionServer.FACTORY.createOne2One(new CSPBuffer(1));
+            chanFromServer = ConnectionServer.FACTORY.createOne2One(new CSPBuffer(1));
+            chanSynch = ConnectionServer.FACTORY.createAny2One(new CSPBuffer(1));
             //create the server object - client object created when accessed
             connectionServer = new AltingConnectionServerImpl(chanToServer.In(), chanToServer.In());
         }
@@ -77,7 +78,7 @@ namespace CSPlang.Any2
             chanToServer.Out(),
             chanToServer.Out(),
             chanSynch.Out(),
-            chanFromServer.Out),
+            chanFromServer.Out(),
             this);
         }
 
