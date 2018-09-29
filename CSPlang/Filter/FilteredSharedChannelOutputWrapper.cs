@@ -26,19 +26,94 @@
 //                                                                  //
 //////////////////////////////////////////////////////////////////////
 
+using System;
+using CSPlang.Shared;
+
+
 namespace CSPutil
 {
 
     /**
-     * Interface for an output channel end that supports filtering operations and can be shared by multiple
-     * concurrent processes.
-     *
-     * @see jcsp.lang.SharedChannelOutput
-     * @see jcsp.util.filter.WriteFiltered
+     * This is wrapper for a <code>SharedChannelOutput</code> that adds
+     * write filtering. Instances of this class can be safely used by
+     * multiple concurrent processes.
      *
      *
      */
-    public interface FilteredSharedChannelOutput : SharedChannelOutput, FilteredChannelOutput
+    public class FilteredSharedChannelOutputWrapper : FilteredChannelOutputWrapper, FilteredSharedChannelOutput
     {
+
+    /**
+     * The synchronization object to protect the writers from each other when they read data or update
+     * the write filters.
+     */
+    private Object synchObject;
+
+    /**
+     * Constructs a new wrapper for the given channel output end.
+     *
+     * @param out the existing channel end.
+     */
+    public FilteredSharedChannelOutputWrapper(SharedChannelOutput Out) : base (Out)
+    {
+        
+        synchObject = new Object();
     }
+
+    public void write(Object data)
+    {
+        lock (synchObject)
+        {
+            base.write(data);
+        }
+    }
+
+    public void addWriteFilter(Filter filter)
+    {
+        lock (synchObject)
+        {
+            base.addWriteFilter(filter);
+        }
+    }
+
+    public void addWriteFilter(Filter filter, int index)
+    {
+        lock (synchObject)
+        {
+            base.addWriteFilter(filter, index);
+        }
+    }
+
+    public void removeWriteFilter(Filter filter)
+    {
+        lock (synchObject)
+        {
+            base.removeWriteFilter(filter);
+        }
+    }
+
+    public void removeWriteFilter(int index)
+    {
+        lock (synchObject)
+        {
+            base.removeWriteFilter(index);
+        }
+    }
+
+    public Filter getWriteFilter(int index)
+    {
+        lock (synchObject)
+        {
+            return base.getWriteFilter(index);
+        }
+    }
+
+    public int getWriteFilterCount()
+    {
+        lock (synchObject)
+        {
+            return base.getWriteFilterCount();
+        }
+    }
+}
 }

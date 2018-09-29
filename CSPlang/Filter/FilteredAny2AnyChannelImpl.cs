@@ -26,84 +26,59 @@
 //                                                                  //
 //////////////////////////////////////////////////////////////////////
 
-using System;
+using CSPlang.Any2;
+using CSPlang.Shared;
 
 namespace CSPutil
 {
 
     /**
-     * Implements an <code>AltingChannelInput</code> channel end that also supports read filters.
-     *
-     * @see jcsp.lang.AltingChannelInput
-     * @see jcsp.util.filter.ReadFiltered
+     * This wraps up an Any2AnyChannel object so that its
+     * input and output ends are separate objects. Both ends of the channel
+     * have filtering enabled.
      *
      *
      */
-    public class FilteredAltingChannelInput:  AltingChannelInputWrapper, FilteredChannelInput
+    class FilteredAny2AnyChannelImpl : FilteredAny2AnyChannel
     {
-    /**
-     * Holds the filters installed for the read end of this channel.
-     */
-    private FilterHolder filters = null;
+        /**
+         * The input end of the channel.
+         */
+        private FilteredSharedChannelInput _In;
 
-    /**
-     * Constructs a new channel end that supports filtering by wrapping up an existing channel end.
-     *
-     * @param altingChannelInput the existing channel end.
-     */
-    FilteredAltingChannelInput(AltingChannelInput altingChannelInput) : base (altingChannelInput)
-    {
-        
-    }
+        /**
+         * The output end of the channel.
+         */
+        private FilteredSharedChannelOutput _Out;
 
-    public Object read()
-    {
-        Object toFilter = super.read();
-        for (int i = 0; filters != null && i < filters.getFilterCount(); i++)
-            toFilter = filters.getFilter(i).filter(toFilter);
-        return toFilter;
-    }
+        /**
+         * Constructs a new filtered channel object based on an existing channel.
+         */
+        internal FilteredAny2AnyChannelImpl(Any2AnyChannel chan)
+        {
+            _In = new FilteredSharedChannelInputWrapper(chan.In());
+            _Out = new FilteredSharedChannelOutputWrapper(chan.Out());
 
-    public void addReadFilter(Filter filter)
-    {
-        if (filters == null)
-            filters = new FilterHolder();
-        filters.addFilter(filter);
-    }
+        }
 
-    public void addReadFilter(Filter filter, int index)
-    {
-        if (filters == null)
-            filters = new FilterHolder();
-        filters.addFilter(filter, index);
-    }
+        public SharedChannelInput In()
+        {
+            return _In;
+        }
 
-    public void removeReadFilter(Filter filter)
-    {
-        if (filters == null)
-            filters = new FilterHolder();
-        filters.removeFilter(filter);
-    }
+        public SharedChannelOutput Out()
+        {
+            return _Out;
+        }
 
-    public void removeReadFilter(int index)
-    {
-        if (filters == null)
-            filters = new FilterHolder();
-        filters.removeFilter(index);
-    }
+        public ReadFiltered inFilter()
+        {
+            return _In;
+        }
 
-    public Filter getReadFilter(int index)
-    {
-        if (filters == null)
-            filters = new FilterHolder();
-        return filters.getFilter(index);
-    }
-
-    public int getReadFilterCount()
-    {
-        if (filters == null)
-            return 0;
-        return filters.getFilterCount();
-    }
+        public WriteFiltered outFilter()
+        {
+            return _Out;
+        }
     }
 }

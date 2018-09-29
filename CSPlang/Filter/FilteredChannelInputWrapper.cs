@@ -26,59 +26,82 @@
 //                                                                  //
 //////////////////////////////////////////////////////////////////////
 
+using System;
+using CSPlang;
+
 namespace CSPutil
 {
 
     /**
-     * Implements an <code>One2Any</code> channel that supports filtering at each end.
-     *
-     * @see jcsp.lang.One2AnyChannel
-     * @see jcsp.util.filter.ReadFiltered
-     * @see jcsp.util.filter.WriteFiltered
+     * Wrapper for an input channel end to include read filtering functionality.
      *
      *
      */
-    class FilteredOne2AnyChannelImpl : FilteredOne2AnyChannel
+    public class FilteredChannelInputWrapper:  ChannelInputWrapper, FilteredChannelInput
     {
     /**
-     * The filtered input end of the channel.
+     * Set of read filters installed.
      */
-    private FilteredSharedChannelInput In;
+    private FilterHolder filters = null;
 
     /**
-     * The filtered output end of the channel.
-     */
-    private FilteredChannelOutput Out;
-
-    /**
-     * Constructs a new filtered channel from an existing channel.
+     * Constructs a new <code>FilteredChannelInputWrapper</code> around the existing channel end.
      *
-     * @param chan the existing channel.
+     * @param in channel end to create the wrapper around.
      */
-    public FilteredOne2AnyChannelImpl(One2AnyChannel chan)
+    internal FilteredChannelInputWrapper(ChannelInput In) : base (In)
     {
-        In = new FilteredSharedChannelInputWrapper(chan.In());
-        Out = new FilteredChannelOutputWrapper(chan.Out());
+        
     }
 
-    public SharedChannelInput In()
+    public Object read()
     {
-        return In;
+        Object toFilter = base.read();
+        for (int i = 0; filters != null && i < filters.getFilterCount(); i++)
+            toFilter = filters.getFilter(i).filter(toFilter);
+        return toFilter;
     }
 
-    public ChannelOutput Out()
+    public void addReadFilter(Filter filter)
     {
-        return Out;
+        if (filters == null)
+            filters = new FilterHolder();
+        filters.addFilter(filter);
     }
 
-    public ReadFiltered inFilter()
+    public void addReadFilter(Filter filter, int index)
     {
-        return In;
+        if (filters == null)
+            filters = new FilterHolder();
+        filters.addFilter(filter, index);
     }
 
-    public WriteFiltered outFilter()
+    public void removeReadFilter(Filter filter)
     {
-        return Out;
+        if (filters == null)
+            filters = new FilterHolder();
+        filters.removeFilter(filter);
+    }
+
+    public void removeReadFilter(int index)
+    {
+        if (filters == null)
+            filters = new FilterHolder();
+        filters.removeFilter(index);
+    }
+
+    public Filter getReadFilter(int index)
+    {
+        if (filters == null)
+            filters = new FilterHolder();
+        return filters.getFilter(index);
+    }
+
+    public int getReadFilterCount()
+    {
+        if (filters == null)
+            return 0;
+        return filters.getFilterCount();
     }
     }
 }

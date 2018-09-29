@@ -54,8 +54,8 @@ namespace CSPlang
     public One2OneConnectionImpl() : base()
     {
         
-        One2OneChannel chanToServer = ConnectionServer.FACTORY.createOne2One(new CSPBuffer(1));
-        One2OneChannel chanFromServer = ConnectionServer.FACTORY.createOne2One(new CSPBuffer(1));
+        One2OneChannel chanToServer = StandardChannelFactory.getDefaultInstance().createOne2One(new CSPBuffer(1));
+        One2OneChannel chanFromServer = StandardChannelFactory.getDefaultInstance().createOne2One(new CSPBuffer(1));
 
             //create the client and server objects
         connectionClient = new AltingConnectionClientImpl(chanFromServer.In(),

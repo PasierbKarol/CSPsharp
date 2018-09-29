@@ -26,84 +26,86 @@
 //                                                                  //
 //////////////////////////////////////////////////////////////////////
 
+using CSPlang;
+using CSPlang.Shared;
+
 namespace CSPutil
 {
 
     /**
-     * Static factory for creating channel end wrappers that support filtering.
+     * <p>Factory for creating filtered channel ends around existing channel ends.</p>
+     *
+     * <p>An instance of this class can be created and used, or alternatively the static factory
+     * <code>FilteredChannelEnd</code> may be more convenient.</p>
      *
      *
      */
-    public class FilteredChannelEnd
+    public class FilteredChannelEndFactory
     {
         /**
-         * The default factory for creating the channel ends.
+         * Constructs a new <code>FilteredChannelEndFactory</code>.
          */
-        private static final FilteredChannelEndFactory factory = new FilteredChannelEndFactory();
-
-        /**
-         * Private constructor to prevent any instances of this static factory from being created.
-         */
-        private FilteredChannelEnd()
+        public FilteredChannelEndFactory() : base ()
         {
-            // Noone's creating one of these
+            
         }
 
         /**
-         * Creates a new filtered input channel end around an existing input channel end. The channel end
+         * Creates a new filtered channel input end around an existing channel end. The created channel end
          * can be used as a guard in an <code>Alternative</code>.
          *
-         * @param in the existing channel end to create a filtered form of.
-         * @return the new channel end with filtering ability.
+         * @param in the existing channel end.
+         * @return the created channel end.
          */
-        public static FilteredAltingChannelInput createFiltered(AltingChannelInput In)
+        public FilteredAltingChannelInput createFiltered(AltingChannelInput In)
         {
-            return factory.createFiltered(In);
+            return new FilteredAltingChannelInput(In);
         }
 
         /**
-         * Creates a new filtered input channel end around an existing input channel end.
+         * Creates a new filtered channel input end around an existing channel end.
          *
-         * @param in the existing channel end to create a filtered form of.
-         * @return the new channel end with filtering ability.
+         * @param in the existing channel end.
+         * @return the created channel end.
          */
-        public static FilteredChannelInput createFiltered(ChannelInput In)
+        public FilteredChannelInput createFiltered(ChannelInput In)
         {
-            return factory.createFiltered(In);
+            return new FilteredChannelInputWrapper(In);
         }
 
         /**
-         * Creates a new filtered input channel end around an existing input channel end that can be
-         * shared by multiple processes.
+         * Creates a new filtered channel input end around an existing channel end. The created channel end
+         * can be shared by multiple processes.
          *
-         * @param in the existing channel end to create a filtered form of,
-         * @return the new channel end with filtering ability.
+         * @param in the existing channel end.
+         * @return the created channel end.
          */
-        public static FilteredSharedChannelInput createFiltered(SharedChannelInput In)
+        public FilteredSharedChannelInput createFiltered(SharedChannelInput In)
         {
-            return factory.createFiltered(In);
+            return new FilteredSharedChannelInputWrapper(In);
         }
 
         /**
-         * Creates a new filtered output channel end around an existing output channel end.
+         * Creates a new filtered channel output end around an existing channel end.
          *
-         * @param out the existing channel end to create a filtered form of.
+         * @param out the existing channel end.
+         * @return the created channel end.
          */
-        public static FilteredChannelOutput createFiltered(ChannelOutput Out)
+        public FilteredChannelOutput createFiltered(ChannelOutput Out)
         {
-            return factory.createFiltered(Out);
+            return new FilteredChannelOutputWrapper(Out);
         }
 
         /**
-         * Creates a new filtered output channel end around an existing output channel end that can be
-         * shared by multiple processes.
+         * Creates a new filtered channel output end around an existing channel end. The created channel end
+         * can be shared by multiple processes.
          *
-         * @param out the existing channel end to create a filtered form of.
-         * @return the new channel end with filtering ability.
+         * @param out the existing channel end.
+         * @return the created channel end.
          */
-        public static FilteredSharedChannelOutput createFiltered(SharedChannelOutput Out)
+        public FilteredSharedChannelOutput createFiltered(SharedChannelOutput Out)
         {
-            return factory.createFiltered(Out);
+            return new FilteredSharedChannelOutputWrapper(Out);
         }
     }
 }

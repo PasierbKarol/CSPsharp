@@ -26,56 +26,26 @@
 //                                                                  //
 //////////////////////////////////////////////////////////////////////
 
+using CSPlang;
+
 namespace CSPutil
 {
 
     /**
-     * This wraps up an Any2AnyChannel object so that its
-     * input and output ends are separate objects. Both ends of the channel
-     * have filtering enabled.
+     * Interface for an <code>Any2Any</code> channel that supports both read and write filters.
      *
      *
      */
-    class FilteredAny2AnyChannelImpl : FilteredAny2AnyChannel
+    public interface FilteredOne2AnyChannel : One2AnyChannel
     {
-        /**
-         * The input end of the channel.
-         */
-        private FilteredSharedChannelInput In;
+    /**
+     * Returns the control interface to manipulate the read filters.
+     */
+    ReadFiltered inFilter();
 
-        /**
-         * The output end of the channel.
-         */
-        private FilteredSharedChannelOutput Out;
-
-        /**
-         * Constructs a new filtered channel object based on an existing channel.
-         */
-        FilteredAny2AnyChannelImpl(Any2AnyChannel chan)
-        {
-            In = new FilteredSharedChannelInputWrapper(chan.In());
-            Out = new FilteredSharedChannelOutputWrapper(chan.Out());
-
-        }
-
-        public SharedChannelInput In()
-        {
-            return In;
-        }
-
-        public SharedChannelOutput Out()
-        {
-            return Out;
-        }
-
-        public ReadFiltered inFilter()
-        {
-            return In;
-        }
-
-        public WriteFiltered outFilter()
-        {
-            return Out;
-        }
+    /**
+     * Returns the control interface to manipulate the write filters.
+     */
+    WriteFiltered outFilter();
     }
 }

@@ -57,127 +57,142 @@ namespace CSPutil
     [Serializable]
     public class CSPBuffer : ChannelDataStore
     {
-    /** The storage for the buffered Objects */
-    private readonly Object[] buffer;
 
-    /** The number of Objects stored in the CSPBuffer */
-    private int counter = 0;
 
-    /** The index of the oldest element (when counter > 0) */
-    private int firstIndex = 0;
+        /** The storage for the buffered Objects */
+        private readonly Object[] buffer;
 
-    /** The index of the next free element (when counter < buffer.Length) */
-    private int lastIndex = 0;
+        /** The number of Objects stored in the CSPBuffer */
+        private int counter = 0;
 
-    /**
-     * Construct a new <TT>CSPBuffer</TT> with the specified size.
-     *
-     * @param size the number of <TT>Object</TT>s the <TT>CSPBuffer</TT> can store.
-     * @throws BufferSizeError if <TT>size</TT> is negative.  Note: no action
-     * should be taken to <TT>try</TT>/<TT>catch</TT> this exception
-     * - application code generating it is in error and needs correcting.
-     */
-    public CSPBuffer(int size)
-    {
-        if (size < 0)
-            throw new BufferSizeError("\n*** Attempt to create a buffered channel with negative capacity");
-        buffer = new Object[size + 1]; // the extra one is a subtlety needed by
-        // the current channel algorithms.
-    }
+        /** The index of the oldest element (when counter > 0) */
+        private int firstIndex = 0;
 
-    /**
-     * Returns the oldest <TT>Object</TT> from the <TT>CSPBuffer</TT> and removes it.
-     * <P>
-     * <I>Pre-condition</I>: <TT>getState</TT> must not currently return <TT>EMPTY</TT>.
-     *
-     * @return the oldest <TT>Object</TT> from the <TT>CSPBuffer</TT>
-     */
-    public Object get()
-    {
-        Object value = buffer[firstIndex];
-        buffer[firstIndex] = null;
-        firstIndex = (firstIndex + 1) % buffer.Length;
-        counter--;
-        return value;
-    }
+        /** The index of the next free element (when counter < buffer.Length) */
+        private int lastIndex = 0;
 
-    /**
-     * Returns the oldest object from the buffer but does not remove it.
-     * 
-     * <I>Pre-condition</I>: <TT>getState</TT> must not currently return <TT>EMPTY</TT>.
-     *
-     * @return the oldest <TT>Object</TT> from the <TT>CSPBuffer</TT>
-     */
-    public Object startGet()
-    {
-        return buffer[firstIndex];
-    }
-
-    /**
-     * Removes the oldest object from the buffer.     
-     */
-    public void endGet()
-    {
-        buffer[firstIndex] = null;
-        firstIndex = (firstIndex + 1) % buffer.Length;
-        counter--;
-    }
-
-    /**
-     * Puts a new <TT>Object</TT> into the <TT>CSPBuffer</TT>.
-     * <P>
-     * <I>Pre-condition</I>: <TT>getState</TT> must not currently return <TT>FULL</TT>.
-     *
-     * @param value the <TT>Object</TT> to put into the <TT>CSPBuffer</TT>
-     */
-    public void put(Object value)
-    {
-        buffer[lastIndex] = value;
-        lastIndex = (lastIndex + 1) % buffer.Length;
-        counter++;
-    }
-
-    /**
-     * Returns the current state of the <TT>CSPBuffer</TT>.
-     *
-     * @return the current state of the <TT>CSPBuffer</TT> (<TT>EMPTY</TT>,
-     * <TT>NONEMPTYFULL</TT> or <TT>FULL</TT>)
-     */
-    public int getState()
-    {
-        if (counter == 0)
-            return EMPTY;
-        else if (counter == buffer.Length)
-            return FULL;
-        else
-            return NONEMPTYFULL;
-    }
-
-    /**
-     * Returns a new (and <TT>EMPTY</TT>) <TT>CSPBuffer</TT> with the same
-     * creation parameters as this one.
-     * <P>
-     * <I>Note: Only the size and structure of the </I><TT>CSPBuffer</TT><I> is
-     * cloned, not any stored data.</I>
-     *
-     * @return the cloned instance of this <TT>CSPBuffer</TT>
-     */
-    public Object clone()
-    {
-        return new CSPBuffer(buffer.Length - 1);
-    }
-
-    public void removeAll()
-    {
-        counter = 0;
-        firstIndex = 0;
-        lastIndex = 0;
-
-        for (int i = 0; i < buffer.Length; i++)
+        /**
+         * Construct a new <TT>CSPBuffer</TT> with the specified size.
+         *
+         * @param size the number of <TT>Object</TT>s the <TT>CSPBuffer</TT> can store.
+         * @throws BufferSizeError if <TT>size</TT> is negative.  Note: no action
+         * should be taken to <TT>try</TT>/<TT>catch</TT> this exception
+         * - application code generating it is in error and needs correcting.
+         */
+        public CSPBuffer(int size)
         {
-            //Null the objects so they can be garbage collected:
-            buffer[i] = null;
+            if (size < 0)
+                throw new BufferSizeError("\n*** Attempt to create a buffered channel with negative capacity");
+            buffer = new Object[size + 1]; // the extra one is a subtlety needed by
+                                           // the current channel algorithms.
         }
-    }
+
+        /**
+         * Returns the oldest <TT>Object</TT> from the <TT>CSPBuffer</TT> and removes it.
+         * <P>
+         * <I>Pre-condition</I>: <TT>getState</TT> must not currently return <TT>EMPTY</TT>.
+         *
+         * @return the oldest <TT>Object</TT> from the <TT>CSPBuffer</TT>
+         */
+        public Object get()
+        {
+            Object value = buffer[firstIndex];
+            buffer[firstIndex] = null;
+            firstIndex = (firstIndex + 1) % buffer.Length;
+            counter--;
+            return value;
+        }
+
+        /**
+         * Returns the oldest object from the buffer but does not remove it.
+         * 
+         * <I>Pre-condition</I>: <TT>getState</TT> must not currently return <TT>EMPTY</TT>.
+         *
+         * @return the oldest <TT>Object</TT> from the <TT>CSPBuffer</TT>
+         */
+        public Object startGet()
+        {
+            return buffer[firstIndex];
+        }
+
+        /**
+         * Removes the oldest object from the buffer.     
+         */
+        public void endGet()
+        {
+            buffer[firstIndex] = null;
+            firstIndex = (firstIndex + 1) % buffer.Length;
+            counter--;
+        }
+
+
+        /**
+         * Puts a new <TT>Object</TT> into the <TT>CSPBuffer</TT>.
+         * <P>
+         * <I>Pre-condition</I>: <TT>getState</TT> must not currently return <TT>FULL</TT>.
+         *
+         * @param value the <TT>Object</TT> to put into the <TT>CSPBuffer</TT>
+         */
+        public void put(Object value)
+        {
+            buffer[lastIndex] = value;
+            lastIndex = (lastIndex + 1) % buffer.Length;
+            counter++;
+        }
+
+        /**
+         * Returns the current state of the <TT>CSPBuffer</TT>.
+         *
+         * @return the current state of the <TT>CSPBuffer</TT> (<TT>EMPTY</TT>,
+         * <TT>NONEMPTYFULL</TT> or <TT>FULL</TT>)
+         */
+        public int getState()
+        {
+            if (counter == 0)
+            {
+                return ChannelDataStoreState.EMPTY;
+            }
+            if (counter == buffer.Length)
+            {
+                return ChannelDataStoreState.FULL;
+            }
+
+            return ChannelDataStoreState.NONEMPTYFULL;
+
+        }
+
+        /**
+         * Returns a new (and <TT>EMPTY</TT>) <TT>CSPBuffer</TT> with the same
+         * creation parameters as this one.
+         * <P>
+         * <I>Note: Only the size and structure of the </I><TT>CSPBuffer</TT><I> is
+         * cloned, not any stored data.</I>
+         *
+         * @return the cloned instance of this <TT>CSPBuffer</TT>
+         */
+        public object clone()
+        {
+            return new CSPBuffer(buffer.Length - 1);
+        }
+
+
+        public void removeAll()
+        {
+            counter = 0;
+            firstIndex = 0;
+            lastIndex = 0;
+
+            for (int i = 0; i < buffer.Length; i++)
+            {
+                //Null the objects so they can be garbage collected:
+                buffer[i] = null;
+            }
+        }
+
+
+        public object Clone()
+        {
+            return new CSPBuffer(buffer.Length - 1);
+        }
     }
 }

@@ -26,55 +26,58 @@
 //                                                                  //
 //////////////////////////////////////////////////////////////////////
 
+using CSPlang;
+using CSPlang.Any2;
+using CSPlang.Shared;
+
 namespace CSPutil
 {
-
     /**
-     * Implements a <code>One2One</code> channel that supports filtering at each end.
+     * This wraps up an Any2OneChannel object so that its
+     * input and output ends are separate objects. Both ends of the channel
+     * have filtering enabled.
      *
      *
      */
-    class FilteredOne2OneChannelImpl : FilteredOne2OneChannel
+    class FilteredAny2OneChannelImpl : FilteredAny2OneChannel
     {
     /**
-     * The filtered input end of the channel.
+     * The input end of the channel.
      */
-    private FilteredAltingChannelInput In;
+    private FilteredAltingChannelInput _In;
 
     /**
-     * The filtered output end of the channel.
+     * The output end of the channel.
      */
-    private FilteredChannelOutput Out;
+    private FilteredSharedChannelOutput _Out;
 
     /**
-     * Constructs a new filtered channel based on an existing channel.
-     *
-     * @param chan the existing channel.
+     * Constructs a new filtered channel over the top of an existing channel.
      */
-    public FilteredOne2OneChannelImpl(One2OneChannel chan)
+    public FilteredAny2OneChannelImpl(Any2OneChannel chan)
     {
-        In = new FilteredAltingChannelInput(chan.In());
-        Out = new FilteredChannelOutputWrapper(chan.Out());
+        _In = new FilteredAltingChannelInput(chan.In());
+        _Out = new FilteredSharedChannelOutputWrapper(chan.Out());
     }
 
     public AltingChannelInput In()
     {
-        return In;
+        return _In;
     }
 
-    public ChannelOutput Out()
+public SharedChannelOutput Out()
     {
-        return Out;
+        return _Out;
     }
 
     public ReadFiltered inFilter()
-    {
-        return In;
-    }
+{
+    return _In;
+}
 
-    public WriteFiltered outFilter()
-    {
-        return Out;
-    }
+public WriteFiltered outFilter()
+{
+    return _Out;
+}
     }
 }

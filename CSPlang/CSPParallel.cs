@@ -27,6 +27,7 @@
 //////////////////////////////////////////////////////////////////////
 
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Security;
 using System.Threading;
@@ -103,7 +104,7 @@ namespace CSPlang
      *             System.out.println ("\n\t\tNumbers\t\tSquares\t\tFibonacci\n");
      *             while (true) {
      *               int[] data = (int[]) b.in ().read ();
-     *               for (int i = 0; i < data.length; i++) {
+     *               for (int i = 0; i < data.Length; i++) {
      *                 System.out.print ("\t\t" + data[i]);
      *               }
      *               System.out.println ();
@@ -177,20 +178,20 @@ namespace CSPlang
      * <I></I>
      *   public void run () {
      * <I></I>
-     *     final ProcessReadInt[] inputProcess = new ProcessReadInt[in.length];
-     *     for (int i = 0; i < in.length; i++) {
+     *     final ProcessReadInt[] inputProcess = new ProcessReadInt[in.Length];
+     *     for (int i = 0; i < in.Length; i++) {
      *       inputProcess[i] = new ProcessReadInt (in[i]);
      *     }
      * <I></I>
      *     CSPParallel parInput = new CSPParallel (inputProcess);
      * <I></I>
-     *     int[][] data = new int[2][in.length];               // double-buffer
+     *     int[][] data = new int[2][in.Length];               // double-buffer
      *     int index = 0;                                      // initial buffer index
      * <I></I>
      *     while (true) {
      *       parInput.run ();
      *       int[] buffer = data[index];                       // grab a buffer
-     *       for (int i = 0; i < in.length; i++) {
+     *       for (int i = 0; i < in.Length; i++) {
      *         buffer[i] = inputProcess[i].value;
      *       }
      *       out.write (buffer);
@@ -233,6 +234,7 @@ namespace CSPlang
 
     public class CSPParallel : IamCSProcess
     {
+        private static byte _byte = Byte.MinValue;
         /**
          * Monitor for internal synchronisation.
          */
@@ -250,11 +252,11 @@ namespace CSPlang
         /** The number of threads created so far by this <TT>CSPParallel</TT> */
         private int nThreads = 0;
 
-        // invariant : (0 <= nProcesses <= processes.length)
-        // invariant : (0 <= nThreads <= parThreads.length)
+        // invariant : (0 <= nProcesses <= processes.Length)
+        // invariant : (0 <= nThreads <= parThreads.Length)
 
         /** Used to synchronise the termination of processes in each run of <TT>CSPParallel</TT> */
-        private CSPBarrier _cspBarrier = new CSPBarrier();
+        private CSPBarrier barrier = new CSPBarrier();
 
         private Boolean priority;
 
@@ -263,7 +265,8 @@ namespace CSPlang
         /**
          * The threads created by <I>all</I> <TT>CSPParallel</TT> and {@link ProcessManager} objects.
          */
-        private static readonly Set allParThreads = Collections.synchronizedSet(new HashSet<>());
+        //private static readonly HashSet<Thread> allParThreads = Collections.lock Set(new HashSet<Thread>());
+        private static /*readonly*/ ConcurrentDictionary<byte, ParThread> allParThreads = new ConcurrentDictionary<byte, ParThread>();
 
         /**
          * Indicates that the <TT>destroy()</TT> method has already been called.
@@ -275,465 +278,496 @@ namespace CSPlang
          *
          * @param newThread the thread to be added to the collection.
          */
-        static void addToAllParThreads(final Thread newThread) throws InterruptedException
+        public static void addToAllParThreads(/*final*/ ParThread newThread) //throws InterruptedException
         {
-            synchronized (allParThreads)
-        {
-        if (destroyCalled)
-            throw new InterruptedException("CSPParallel.destroy() has been called");
-        allParThreads.add(newThread);
-    }
-}
-
-/**
- * Removes the thread object from the <code>allParThreads</code> collection.
- */
-static void removeFromAllParThreads(final Thread oldThread)
-{
-    synchronized(allParThreads)
-        {
-        allParThreads.remove(oldThread);
-    }
-}
-
-/**
- * Stops all threads created by <I>all</I> <TT>CSPParallel</TT> and {@link ProcessManager} objects. No new threads can be
- * created until the <TT>resetDestroy</TT> method gets called.
- */
-public static void destroy()
-{
-    synchronized(allParThreads)
-        {
-        if (!destroyCalled)
-        {
-            System.out.println("*** jcsp.lang.CSPParallel: stopping " +
-                               allParThreads.size() + " threads");
-            for (Iterator i = allParThreads.iterator(); i.hasNext();)
+            try
             {
-                final Thread t = (Thread)i.next();
-                try
+                lock (allParThreads)
                 {
-                    t.interrupt();
-                }
-                catch (SecurityException e)
-                {
-                    System.out.println("*** jcsp.lang.CSPParallel: couldn't stop thread " +
-                                       t + " - security exception");
+                    if (destroyCalled)
+                        throw new ThreadInterruptedException("CSPParallel.destroy() has been called");
+                    //allParThreads.add(newThread);
+                    allParThreads.TryAdd(_byte, newThread);
                 }
             }
-            destroyCalled = true;
-        }
-    }
-}
-
-/**
- * Cancels a call to <TT>destroy</TT> allowing the JCSP system to be reused. This is provided to that <TT>destroy</TT>
- * can be called from an Applet's termination method, but the Applet can be restarted later.
- */
-public static void resetDestroy()
-{
-    synchronized(allParThreads)
-        {
-        destroyCalled = false;
-    }
-}
-
-/**
- * Construct a new <TT>CSPParallel</TT> object initially without any processes.
- */
-public Parallel()
-{
-    this(null, false);
-}
-
-/**
- * Construct a new <TT>CSPParallel</TT> object initially without any processes.
- * If the priority parameter has the value true, priorities higher in
- * the process list will be given a higher priority.
- *
- * @param priority indicates that different priorities should be given to processes.
- */
-Parallel(Boolean priority) // package visibilty
-{
-    this(null, priority);
-}
-
-/**
- * Construct a new <TT>CSPParallel</TT> object with the processes specified.
- *
- * @param processes The processes to be executed in parallel
- */
-public Parallel(IamCSProcess[] processes)
-{
-    this(processes, false);
-}
-
-/**
- * Construct a new <TT>CSPParallel</TT> object with the processes specified.
- * If the priority parameter has the value true, priorities higher in
- * the process list will be given a higher priority.
- *
- * @param processes the processes to be executed in parallel
- * @param priority indicates that different priorities should be given to processes.
- */
-Parallel(IamCSProcess[] processes, Boolean priority)  // package visibilty
-{
-    if (processes != null)
-    {
-        nProcesses = processes.length;
-        this.processes = new IamCSProcess[nProcesses];
-        System.arraycopy(processes, 0, this.processes, 0, nProcesses);
-        parThreads = new ParThread[nProcesses];
-    }
-    else
-    {
-        nProcesses = 0;
-        this.processes = new IamCSProcess[0];
-        parThreads = new ParThread[0];
-    }
-    processesChanged = true;
-    this.priority = priority;
-}
-
-/**
- * Add the process to the <TT>CSPParallel</TT> object.  The extended network
- * will be executed the next time <TT>run()</TT> is invoked.
- *
- * @param process the IamCSProcess to be added
- */
-public void addProcess(IamCSProcess process)
-{
-    synchronized(sync)
-        {
-        if (process != null)
-        {
-            final int targetProcesses = nProcesses + 1;
-            if (targetProcesses > processes.length)
+            catch (ThreadInterruptedException)
             {
-                final IamCSProcess[] tmp = processes;
-                processes = new IamCSProcess[2 * targetProcesses];
-                System.arraycopy(tmp, 0, processes, 0, nProcesses);
+
+                throw;
             }
-            processes[nProcesses] = process;
-            nProcesses = targetProcesses;
-            processesChanged = true;
         }
-    }
-}
 
-/**
- * Add the array of processes to the <TT>CSPParallel</TT> object.
- * The extended network will be executed the next time
- * <TT>run()</TT> is invoked.
- *
- * @param processes the IamCSProcesses to be added
- */
-public void addProcess(IamCSProcess[] newProcesses)
-{
-    synchronized(sync)
+        /**
+         * Removes the thread object from the <code>allParThreads</code> collection.
+         */
+        public static void removeFromAllParThreads(/*final*/ ParThread oldThread)
         {
-        if (processes != null)
-        {
-            final int extra = newProcesses.length;
-            final int targetProcesses = nProcesses + extra;
-            if (targetProcesses > processes.length)
+            lock (allParThreads)
             {
-                final IamCSProcess[] tmp = processes;
-                processes = new IamCSProcess[2 * targetProcesses];
-                System.arraycopy(tmp, 0, processes, 0, nProcesses);
+                allParThreads.TryRemove(_byte, out oldThread);
             }
-            System.arraycopy(newProcesses, 0, processes, nProcesses, extra);
-            nProcesses = targetProcesses;
-            processesChanged = true;
         }
-    }
-}
 
-/**
- * Insert another process to the pri-parallel object at the specifed
- * index.  The point of insertion is significant because the ordering of
- * process components determines the priorities.  The extended network
- * will be executed the next time run() is invoked.
- * <P>
- * @param process the process to be inserted
- * @param index the index at which to insert the process
- */
-void insertProcessAt(IamCSProcess process, int index)
-{
-    synchronized(sync)
+        /**
+         * Stops all threads created by <I>all</I> <TT>CSPParallel</TT> and {@link ProcessManager} objects. No new threads can be
+         * created until the <TT>resetDestroy</TT> method gets called.
+         */
+        public static void destroy()
         {
-        if (index >= nProcesses + 1)
-            throw new ArrayIndexOutOfBoundsException(index + " > " + (nProcesses + 1));
-        if (process != null)
-        {
-            final int targetProcesses = nProcesses + 1;
-            if (targetProcesses > processes.length)
+            lock (allParThreads)
             {
-                final IamCSProcess[] tmp = processes;
-                processes = new IamCSProcess[2 * targetProcesses];
-                System.arraycopy(tmp, 0, processes, 0, index);
-                System.arraycopy(tmp, index, processes, index + 1, nProcesses - index);
+                if (!destroyCalled)
+                {
+                    Console.WriteLine("*** jcsp.lang.CSPParallel: stopping " +
+                                       allParThreads.Count + " threads");
+                    //allParThreads.Size() + " threads");
+                    for (var i = allParThreads.GetEnumerator(); i.MoveNext();)
+                    {
+                        /*final*/
+                        ParThread t = i.Current.Value;
+                        try
+                        {
+                            t.Interrupt();
+                        }
+                        catch (SecurityException e)
+                        {
+                            Console.WriteLine("*** jcsp.lang.CSPParallel: couldn't stop thread " +
+                                               t + " - security exception");
+                        }
+                    }
+                    destroyCalled = true;
+                }
+            }
+        }
+
+        /**
+         * Cancels a call to <TT>destroy</TT> allowing the JCSP system to be reused. This is provided to that <TT>destroy</TT>
+         * can be called from an Applet's termination method, but the Applet can be restarted later.
+         */
+        public static void resetDestroy()
+        {
+            lock (allParThreads)
+            {
+                destroyCalled = false;
+            }
+        }
+
+        /**
+         * Construct a new <TT>CSPParallel</TT> object initially without any processes.
+         */
+        public CSPParallel() : this(null, false)
+        {
+
+        }
+
+        /**
+         * Construct a new <TT>CSPParallel</TT> object initially without any processes.
+         * If the priority parameter has the value true, priorities higher in
+         * the process list will be given a higher priority.
+         *
+         * @param priority indicates that different priorities should be given to processes.
+         */
+        public CSPParallel (Boolean priority) : this(null, priority) // package visibilty
+        {
+
+        }
+
+        /**
+         * Construct a new <TT>CSPParallel</TT> object with the processes specified.
+         *
+         * @param processes The processes to be executed in parallel
+         */
+        public CSPParallel(IamCSProcess[] processes) : this(processes, false)
+        {
+
+        }
+
+        /**
+         * Construct a new <TT>CSPParallel</TT> object with the processes specified.
+         * If the priority parameter has the value true, priorities higher in
+         * the process list will be given a higher priority.
+         *
+         * @param processes the processes to be executed in parallel
+         * @param priority indicates that different priorities should be given to processes.
+         */
+        internal CSPParallel(IamCSProcess[] processes, Boolean priority)  // package visibilty
+        {
+            if (processes != null)
+            {
+                nProcesses = processes.Length;
+                this.processes = new IamCSProcess[nProcesses];
+                Array.Copy(processes, 0, this.processes, 0, nProcesses);
+                parThreads = new ParThread[nProcesses];
             }
             else
             {
-                if (index < nProcesses)
-                    System.arraycopy(processes, index, processes, index + 1,
-                                     nProcesses - index);
+                nProcesses = 0;
+                this.processes = new IamCSProcess[0];
+                parThreads = new ParThread[0];
             }
-            processes[index] = process;
-            nProcesses = targetProcesses;
             processesChanged = true;
+            this.priority = priority;
         }
-    }
-}
 
-/**
- * Remove the process from the <TT>CSPParallel</TT> object.  The cut-down network
- * will not be executed until the next time <TT>run()</TT> is invoked.
- *
- * @param process the IamCSProcess to be removed
- */
-public void removeProcess(IamCSProcess process)
-{
-    synchronized(sync)
+        /**
+         * Add the process to the <TT>CSPParallel</TT> object.  The extended network
+         * will be executed the next time <TT>run()</TT> is invoked.
+         *
+         * @param process the IamCSProcess to be added
+         */
+        public void addProcess(IamCSProcess process)
         {
-        for (int i = 0; i < nProcesses; i++)
-        {
-            if (processes[i] == process)
+            lock (sync)
             {
-                if (i < nProcesses - 1)
-                    System.arraycopy(processes, i + 1, processes, i,
-                                     nProcesses - (i + 1));
-                nProcesses--;
-                processes[nProcesses] = null;
+                if (process != null)
+                {
+                    /*final*/
+                    int targetProcesses = nProcesses + 1;
+                    if (targetProcesses > processes.Length)
+                    {
+                        /*final*/
+                        IamCSProcess[] tmp = processes;
+                        processes = new IamCSProcess[2 * targetProcesses];
+                        Array.Copy(tmp, 0, processes, 0, nProcesses);
+                    }
+                    processes[nProcesses] = process;
+                    nProcesses = targetProcesses;
+                    processesChanged = true;
+                }
+            }
+        }
+
+        /**
+         * Add the array of processes to the <TT>CSPParallel</TT> object.
+         * The extended network will be executed the next time
+         * <TT>run()</TT> is invoked.
+         *
+         * @param processes the IamCSProcesses to be added
+         */
+        public void addProcess(IamCSProcess[] newProcesses)
+        {
+            lock (sync)
+            {
+                if (processes != null)
+                {
+                    /*final*/
+                    int extra = newProcesses.Length;
+                    /*final*/
+                    int targetProcesses = nProcesses + extra;
+                    if (targetProcesses > processes.Length)
+                    {
+                        /*final*/
+                        IamCSProcess[] tmp = processes;
+                        processes = new IamCSProcess[2 * targetProcesses];
+                        Array.Copy(tmp, 0, processes, 0, nProcesses);
+                    }
+                    Array.Copy(newProcesses, 0, processes, nProcesses, extra);
+                    nProcesses = targetProcesses;
+                    processesChanged = true;
+                }
+            }
+        }
+
+        /**
+         * Insert another process to the pri-parallel object at the specifed
+         * index.  The point of insertion is significant because the ordering of
+         * process components determines the priorities.  The extended network
+         * will be executed the next time run() is invoked.
+         * <P>
+         * @param process the process to be inserted
+         * @param index the index at which to insert the process
+         */
+        internal void insertProcessAt(IamCSProcess process, int index)
+        {
+            lock (sync)
+            {
+                if (index >= nProcesses + 1)
+                    throw new IndexOutOfRangeException(index + " > " + (nProcesses + 1));
+                if (process != null)
+                {
+                    /*final*/
+                    int targetProcesses = nProcesses + 1;
+                    if (targetProcesses > processes.Length)
+                    {
+                        /*final*/
+                        IamCSProcess[] tmp = processes;
+                        processes = new IamCSProcess[2 * targetProcesses];
+                        Array.Copy(tmp, 0, processes, 0, index);
+                        Array.Copy(tmp, index, processes, index + 1, nProcesses - index);
+                    }
+                    else
+                    {
+                        if (index < nProcesses)
+                            Array.Copy(processes, index, processes, index + 1,
+                                             nProcesses - index);
+                    }
+                    processes[index] = process;
+                    nProcesses = targetProcesses;
+                    processesChanged = true;
+                }
+            }
+        }
+
+        /**
+         * Remove the process from the <TT>CSPParallel</TT> object.  The cut-down network
+         * will not be executed until the next time <TT>run()</TT> is invoked.
+         *
+         * @param process the IamCSProcess to be removed
+         */
+        public void removeProcess(IamCSProcess process)
+        {
+            lock (sync)
+            {
+                for (int i = 0; i < nProcesses; i++)
+                {
+                    if (processes[i] == process)
+                    {
+                        if (i < nProcesses - 1)
+                            Array.Copy(processes, i + 1, processes, i,
+                                             nProcesses - (i + 1));
+                        nProcesses--;
+                        processes[nProcesses] = null;
+                        processesChanged = true;
+                        return;
+                    }
+                }
+            }
+        }
+
+        /**
+         * Remove all processes from the <TT>CSPParallel</TT> object.  The cut-down network
+         * will not be executed until the next time <TT>run()</TT> is invoked.
+         */
+        public void removeAllProcesses()
+        {
+            lock (sync)
+            {
+                for (int i = 0; i < nProcesses; i++)
+                {
+                    processes[i] = null;
+                }
+                nProcesses = 0;
                 processesChanged = true;
-                return;
             }
         }
-    }
-}
 
-/**
- * Remove all processes from the <TT>CSPParallel</TT> object.  The cut-down network
- * will not be executed until the next time <TT>run()</TT> is invoked.
- */
-public void removeAllProcesses()
-{
-    synchronized(sync) {
-        for (int i = 0; i < nProcesses; i++)
+        /**
+         * System finalizer. When this object falls out of scope it will Release all of the threads that it
+         * has allocated.
+         */
+        protected void finalize() //throws Throwable
         {
-            processes[i] = null;
-        }
-        nProcesses = 0;
-        processesChanged = true;
-    }
-}
-
-/**
- * System finalizer. When this object falls out of scope it will Release all of the threads that it
- * has allocated.
- */
-protected void finalize() throws Throwable
-{
-    releaseAllThreads();
-}
-
-/**
- * Release all threads saved by the <TT>CSPParallel</TT> object for future runs -
- * the threads all terminate and Release their associated workspaces.
- * This should only be executed when the <TT>CSPParallel</TT> object is not running.
- * If this <TT>CSPParallel</TT> object is run again, the necessary threads will be
- * recreated.
- */
-public void releaseAllThreads()
-{
-    synchronized(sync) {
-        for (int i = 0; i < nThreads; i++)
-        {
-            parThreads[i].terminate();
-            parThreads[i] = null;
-        }
-        nThreads = 0;
-        processesChanged = true;
-    }
-}
-
-/**
- * @return the number of processes currently registered.
- */
-public synchronized int getNumberProcesses()
-{
-    return nProcesses;
-}
-
-/**
- * Run the parallel composition of the processes registered with this
- * <TT>CSPParallel</TT> object.  It terminates when, and only when, all its component
- * processes terminate.
- * </P>
- * <P><I>Implementation note: In its first </I>run<I>, only
- * (numProcesses - 1) Threads are created to run the processes --
- * the last process is executed in the invoking Thread.
- * Sunsequent </I>run<I>s reuse these Threads (so the overhead
- * of thread creation happens only once).</I></P>
- */
-public void run()
-{
-    if (nProcesses > 0)
-    {
-
-        IamCSProcess myProcess;
-
-        int currentPriority = 0;
-        int maxPriority = 0;
-        if (priority)
-        {
-            Thread thread = Thread.currentThread();
-            currentPriority = thread.getPriority();
-            maxPriority =
-                    Math.min(
-                            currentPriority + nProcesses - 1,
-                            Math.min(Thread.MAX_PRIORITY,
-                                     thread.getThreadGroup().getMaxPriority()));
+            releaseAllThreads();
         }
 
-        synchronized(sync) {
-            barrier.reset(nProcesses);
-            myProcess = processes[nProcesses - 1];
-            if (processesChanged)
+        /**
+         * Release all threads saved by the <TT>CSPParallel</TT> object for future runs -
+         * the threads all terminate and Release their associated workspaces.
+         * This should only be executed when the <TT>CSPParallel</TT> object is not running.
+         * If this <TT>CSPParallel</TT> object is run again, the necessary threads will be
+         * recreated.
+         */
+        public void releaseAllThreads()
+        {
+            lock (sync)
             {
-                if (nThreads < nProcesses - 1)
-                {
-                    if (parThreads.length < nProcesses - 1)
-                    {
-                        final ParThread[] tmp = parThreads;
-                        parThreads = new ParThread[processes.length];
-                        System.arraycopy(tmp, 0, parThreads, 0, nThreads);
-                    }
-                    for (int i = 0; i < nThreads; i++)
-                    {
-                        parThreads[i].reset(processes[i], barrier);
-                        if (priority)
-                        {
-                            parThreads[i].setPriority(Math.max(
-                                    currentPriority, maxPriority - i));
-                        }
-                        parThreads[i].release();
-                    }
-                    for (int i = nThreads; i < nProcesses - 1; i++)
-                    {
-                        parThreads[i] = new ParThread(processes[i], barrier);
-                        if (priority)
-                        {
-                            parThreads[i].setPriority(Math.max(
-                                    currentPriority, maxPriority - i));
-                        }
-                        parThreads[i].start();
-                    }
-                    nThreads = nProcesses - 1;
-                }
-                else
-                {
-                    for (int i = 0; i < nProcesses - 1; i++)
-                    {
-                        parThreads[i].reset(processes[i], barrier);
-                        if (priority)
-                        {
-                            parThreads[i].setPriority(Math.max(
-                                    currentPriority, maxPriority - i));
-                        }
-                        parThreads[i].release();
-                    }
-                }
-                processesChanged = false;
-            }
-            else
-            {
-                for (int i = 0; i < nProcesses - 1; i++)
-                {
-                    if (priority)
-                    {
-                        parThreads[i].setPriority(Math.max(currentPriority,
-                                maxPriority - i));
-                    }
-                    parThreads[i].release();
-                }
-            }
-        }
-
-        try
-        {
-            myProcess.run();
-        }
-        catch (ProcessInterruptedException e)
-        {
-            // If this was raised then we must propogate the interrupt signal to other processes
-            synchronized(sync) {
                 for (int i = 0; i < nThreads; i++)
                 {
-                    try
-                    {
-                        parThreads[i].interrupt();
-                    }
-                    catch (Throwable t)
-                    {
-                        System.out.println(
-                                "*** jcsp.lang.Parallel: couldn't stop thread "
-                                + t
-                                + " - security exception");
-                    }
+                    parThreads[i].terminate();
+                    parThreads[i] = null;
                 }
+                nThreads = 0;
+                processesChanged = true;
             }
         }
-        catch (Throwable e)
+
+        /**
+         * @return the number of processes currently registered.
+         */
+        public /*synchronized*/  int getNumberProcesses()
         {
-            uncaughtException("jcsp.lang.Parallel", e);
+            return nProcesses;
         }
 
-        barrier.sync();
+        /**
+         * Run the parallel composition of the processes registered with this
+         * <TT>CSPParallel</TT> object.  It terminates when, and only when, all its component
+         * processes terminate.
+         * </P>
+         * <P><I>Implementation note: In its first </I>run<I>, only
+         * (numProcesses - 1) Threads are created to run the processes --
+         * the last process is executed in the invoking Thread.
+         * Sunsequent </I>run<I>s reuse these Threads (so the overhead
+         * of thread creation happens only once).</I></P>
+         */
+        public void run()
+        {
+            if (nProcesses > 0)
+            {
 
-    }
-}
+                IamCSProcess myProcess;
 
-/**
- * TRUE iff uncaught exceptions are to be displayed.
- */
-private static Boolean displayExceptions = true;
+                //int currentPriority = 0;
+                ThreadPriority currentPriority = 0;
+                int maxPriority = 0;
+                if (priority)
+                {
 
-/**
- * TRUE iff uncaught errors are to the displayed.
- */
-private static Boolean displayErrors = true;
+                    Thread thread = Thread.CurrentThread;
+                    currentPriority = thread.Priority;
+                    maxPriority =
+                            Math.Min(
+                                    (byte)currentPriority + nProcesses - 1,
+                                    Math.Min((byte)ThreadPriority.Highest,
+                                    //thread.getThreadGroup().getMaxPriority())
+                                    (byte)thread.Priority)
+                                );
+                }
 
-/**
- * Enables or disables the display of Exceptions uncaught by a IamCSProcess running within a CSPParallel or under a
- * ProcessManager object.
- */
-public static void setUncaughtExceptionDisplay(final Boolean enable)
-{
-    displayExceptions = enable;
-}
+                lock (sync)
+                {
+                    barrier.reset(nProcesses);
+                    myProcess = processes[nProcesses - 1];
+                    if (processesChanged)
+                    {
+                        if (nThreads < nProcesses - 1)
+                        {
+                            if (parThreads.Length < nProcesses - 1)
+                            {
+                                /*final*/ ParThread[] tmp = parThreads;
+                                parThreads = new ParThread[processes.Length];
+                                Array.Copy(tmp, 0, parThreads, 0, nThreads);
+                            }
+                            for (int i = 0; i < nThreads; i++)
+                            {
+                                parThreads[i].reset(processes[i], barrier);
+                                if (priority)
+                                {
+                                    //parThreads[i].setPriority(Math.max(
+                                    //        currentPriority, maxPriority - i));
+                                    parThreads[i].setPriority(Math.Max((byte)currentPriority, maxPriority - i));
+                                }
+                                parThreads[i].release();
+                            }
+                            for (int i = nThreads; i < nProcesses - 1; i++)
+                            {
+                                parThreads[i] = new ParThread(processes[i], barrier);
+                                
+                                if (priority)
+                                {
+                                    parThreads[i].setPriority(Math.Max(
+                                            (byte)currentPriority, maxPriority - i));
+                                }
+                                parThreads[i].Start();
+                            }
+                            nThreads = nProcesses - 1;
+                        }
+                        else
+                        {
+                            for (int i = 0; i < nProcesses - 1; i++)
+                            {
+                                parThreads[i].reset(processes[i], barrier);
+                                if (priority)
+                                {
+                                    parThreads[i].setPriority(Math.Max(
+                                            (byte)currentPriority, maxPriority - i));
+                                }
+                                parThreads[i].release();
+                            }
+                        }
+                        processesChanged = false;
+                    }
+                    else
+                    {
+                        for (int i = 0; i < nProcesses - 1; i++)
+                        {
+                            if (priority)
+                            {
+                                parThreads[i].setPriority(Math.Max((byte)currentPriority,
+                                        maxPriority - i));
+                            }
+                            parThreads[i].release();
+                        }
+                    }
+                }
 
-/**
- * Enables or disables the display or Errors uncaught by a IamCSProcess running within a CSPParallel or under a
- * ProcessManager object.
- */
-public static void setUncaughtErrorDisplay(final Boolean enable)
-{
-    displayErrors = enable;
-}
+                try
+                {
+                    myProcess.run();
+                }
+                catch (ProcessInterruptedException e)
+                {
+                    // If this was raised then we must propogate the interrupt signal to other processes
+                    lock (sync)
+                    {
+                        for (int i = 0; i < nThreads; i++)
+                        {
+                            try
+                            {
+                                parThreads[i].Interrupt();
+                            }
+                            catch (Exception t)
+                            {
+                                Console.WriteLine(
+                                        "*** jcsp.lang.Parallel: couldn't stop thread "
+                                        + t
+                                        + " - security exception");
+                            }
+                        }
+                    }
+                }
+                catch (Exception e)
+                {
+                    uncaughtException("jcsp.lang.Parallel", e);
+                }
 
-static void uncaughtException(final String caller, final Throwable t)
-{
-    if (((t instanceof Error) && displayErrors) ||
-        ((t instanceof Exception) && displayExceptions)) {
-        synchronized(System.err) {
-            System.err.println("\n*** " + caller +
-                    ": A process threw the following exception :");
-            t.printStackTrace();
-            System.err.println();
+                barrier.sync();
+
+            }
+        }
+
+        /**
+         * TRUE iff uncaught exceptions are to be displayed.
+         */
+        private static Boolean displayExceptions = true;
+
+        /**
+         * TRUE iff uncaught errors are to the displayed.
+         */
+        private static Boolean displayErrors = true;
+
+        /**
+         * Enables or disables the display of Exceptions uncaught by a IamCSProcess running within a CSPParallel or under a
+         * ProcessManager object.
+         */
+        public static void setUncaughtExceptionDisplay(/*final*/ Boolean enable)
+        {
+            displayExceptions = enable;
+        }
+
+        /**
+         * Enables or disables the display or Errors uncaught by a IamCSProcess running within a CSPParallel or under a
+         * ProcessManager object.
+         */
+        public static void setUncaughtErrorDisplay(/*final*/ Boolean enable)
+        {
+            displayErrors = enable;
+        }
+
+        public static void uncaughtException(/*final*/ String caller, /*final*/ Exception t)
+        {
+            //if (((t is Exception) && displayErrors) ||((t is Exception) && displayExceptions))
+            //{
+                
+            //    lock (System.err)
+            //    {
+            //        System.err.println("\n*** " + caller +
+            //                ": A process threw the following exception :");
+            //        t.printStackTrace();
+            //        System.err.println();
+            //    }
+            //}
+            Console.WriteLine(t.ToString());
         }
     }
-}
-}
 }

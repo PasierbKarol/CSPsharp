@@ -58,9 +58,9 @@ namespace CSPlang.Any2
          */
         public Any2OneConnectionImpl() : base()
         {
-            chanToServer = ConnectionServer.FACTORY.createOne2One(new CSPBuffer(1));
-            chanFromServer = ConnectionServer.FACTORY.createOne2One(new CSPBuffer(1));
-            chanSynch = ConnectionServer.FACTORY.createAny2One(new CSPBuffer(1));
+            chanToServer = StandardChannelFactory.getDefaultInstance().createOne2One(new CSPBuffer(1));
+            chanFromServer = StandardChannelFactory.getDefaultInstance().createOne2One(new CSPBuffer(1));
+            chanSynch = StandardChannelFactory.getDefaultInstance().createAny2One(new CSPBuffer(1));
             //create the server object - client object created when accessed
             connectionServer = new AltingConnectionServerImpl(chanToServer.In(), chanToServer.In());
         }

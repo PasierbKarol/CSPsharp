@@ -26,6 +26,8 @@
 //                                                                  //
 //////////////////////////////////////////////////////////////////////
 
+using System;
+
 namespace CSPutil
 {
 
@@ -50,9 +52,9 @@ namespace CSPutil
         /**
          * Constructs a new <code>FilterHolder</code> with an intial capacity of 2.
          */
-        FilterHolder()
+        internal FilterHolder() : this(2)
         {
-            this(2);
+            
         }
 
         /**
@@ -60,7 +62,7 @@ namespace CSPutil
          *
          * @param initialSize the initial size for the array.
          */
-        FilterHolder(int initialSize)
+        internal FilterHolder(int initialSize)
         {
             filters = new Filter[initialSize];
         }
@@ -94,7 +96,7 @@ namespace CSPutil
             {
                 makeSpace();
                 //shift all elements from specifed index and above along one
-                System.arraycopy(filters, index, filters, index + 1, count - index);
+                Array.Copy(filters, index, filters, index + 1, count - index);
                 filters[index] = filter;
                 count++;
             }
@@ -109,15 +111,15 @@ namespace CSPutil
         public void removeFilter(Filter filter)
         {
             if (filter == null)
-                throw new IllegalArgumentException("filter parameter cannot be null");
+                throw new ArgumentException("filter parameter cannot be null");
             for (int i = 0; i < count; i++)
-                if (filters[i].equals(filter))
+                if (filters[i].Equals(filter))
                 {
                     removeFilter(i);
                     return;
                 }
 
-            throw new IllegalArgumentException("supplied filter not installed.");
+            throw new ArgumentException("supplied filter not installed.");
         }
 
         /**
@@ -127,21 +129,28 @@ namespace CSPutil
          */
         public void removeFilter(int index)
         {
-            if (index > (count - 1) || index < 0)
-                throw new IndexOutOfBoundsException("Invalid filter index.");
-            filters[index] = null;
-            //if filter not the last item in the array
-            //then need to shift all elements after the
-            //specified filter
-            if (index < filters.length - 1)
+            try
             {
-                System.arraycopy(filters, index + 1, filters, index, count - index - 1);
-                count--;
+                if (index > (count - 1) || index < 0)
+                    //throw new IndexOutOfBoundsException("Invalid filter index.");
+                    filters[index] = null;
+                //if filter not the last item in the array
+                //then need to shift all elements after the
+                //specified filter
+                if (index < filters.Length - 1)
+                {
+                    Array.Copy(filters, index + 1, filters, index, count - index - 1);
+                    count--;
+                }
+                else
+                {
+                    count--;
+                    compact();
+                }
             }
-            else
+            catch (IndexOutOfRangeException e)
             {
-                count--;
-                compact();
+                //throw new IndexOutOfRangeException("Invalid filter index.");
             }
         }
 
@@ -168,10 +177,10 @@ namespace CSPutil
         private void makeSpace()
         {
             //if array of filters is full - double size
-            if (count == filters.length)
+            if (count == filters.Length)
             {
                 Filter[] filters = new Filter[count * 2];
-                System.arraycopy(this.filters, 0, filters, 0, this.filters.length);
+                Array.Copy(this.filters, 0, filters, 0, this.filters.Length);
                 this.filters = filters;
             }
         }
@@ -182,11 +191,11 @@ namespace CSPutil
         private void compact()
         {
             int newSize = count + 1;
-            if (count < (filters.length / 4) && newSize < filters.length)
+            if (count < (filters.Length / 4) && newSize < filters.Length)
             {
                 //create a new array which
                 Filter[] filters = new Filter[newSize];
-                System.arraycopy(this.filters, 0, filters, 0, count);
+                Array.Copy(this.filters, 0, filters, 0, count);
                 this.filters = filters;
             }
         }

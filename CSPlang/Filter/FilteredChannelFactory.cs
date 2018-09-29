@@ -26,6 +26,9 @@
 //                                                                  //
 //////////////////////////////////////////////////////////////////////
 
+using CSPlang;
+using CSPlang.Any2;
+
 namespace CSPutil
 {
 
@@ -80,9 +83,9 @@ namespace CSPutil
      * @param readFilters optional read filters to install in new channels.
      * @param writeFilters optional write filters to install in new channels.
      */
-    public FilteredChannelFactory(Filter[] readFilters, Filter[] writeFilters)
+    public FilteredChannelFactory(Filter[] readFilters, Filter[] writeFilters) : this()
     {
-        this();
+        
         this.readFilters = readFilters;
         this.writeFilters = writeFilters;
     }

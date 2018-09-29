@@ -91,7 +91,7 @@ namespace CSPlang
             if (data == null)
                 throw new ArgumentException
                         ("Null ChannelDataStore given to channel constructor ...\n");
-            this.data = (ChannelDataStore)data.clone();
+            this.data = (ChannelDataStore)data.Clone();
             immunity = _immunity;
         }
 
@@ -110,7 +110,7 @@ namespace CSPlang
             lock (rwMonitor)
             {
 
-                if (data.getState() == ChannelDataStore.EMPTY)
+                if (data.getState() == ChannelDataStoreState.EMPTY)
                 {
                     //Reader only sees poison if buffer is empty:
                     if (isPoisoned())
@@ -121,7 +121,7 @@ namespace CSPlang
                     try
                     {
                         Monitor.Wait(rwMonitor);
-                        while (data.getState() == ChannelDataStore.EMPTY && !isPoisoned())
+                        while (data.getState() == ChannelDataStoreState.EMPTY && !isPoisoned())
                         {
                             if (Spurious.logging)
                             {
@@ -153,7 +153,7 @@ namespace CSPlang
             lock (rwMonitor)
             {
 
-                if (data.getState() == ChannelDataStore.EMPTY)
+                if (data.getState() == ChannelDataStoreState.EMPTY)
                 {
                     //    	Reader only sees poison if buffer is empty:
                     if (isPoisoned())
@@ -163,7 +163,7 @@ namespace CSPlang
                     try
                     {
                         Monitor.Wait(rwMonitor);
-                        while (data.getState() == ChannelDataStore.EMPTY && !isPoisoned())
+                        while (data.getState() == ChannelDataStoreState.EMPTY && !isPoisoned())
                         {
                             if (Spurious.logging)
                             {
@@ -223,12 +223,12 @@ namespace CSPlang
                 {
                     Monitor.Pulse(rwMonitor);
                 }
-                if (data.getState() == ChannelDataStore.FULL)
+                if (data.getState() == ChannelDataStoreState.FULL)
                 {
                     try
                     {
                         Monitor.Wait(rwMonitor);
-                        while (data.getState() == ChannelDataStore.FULL && !isPoisoned())
+                        while (data.getState() == ChannelDataStoreState.FULL && !isPoisoned())
                         {
                             if (Spurious.logging)
                             {
@@ -271,7 +271,7 @@ namespace CSPlang
                     //the buffer has data in it
                     return true;
                 }
-                else if (data.getState() == ChannelDataStore.EMPTY)
+                else if (data.getState() == ChannelDataStoreState.EMPTY)
                 {
                     this.alt = alt;
                     return false;
@@ -296,7 +296,7 @@ namespace CSPlang
             lock (rwMonitor)
             {
                 alt = null;
-                return data.getState() != ChannelDataStore.EMPTY || isPoisoned();
+                return data.getState() != ChannelDataStoreState.EMPTY || isPoisoned();
             }
         }
 
@@ -339,7 +339,7 @@ namespace CSPlang
         {
             lock (rwMonitor)
             {
-                return (data.getState() != ChannelDataStore.EMPTY) || isPoisoned();
+                return (data.getState() != ChannelDataStoreState.EMPTY) || isPoisoned();
             }
         }
 

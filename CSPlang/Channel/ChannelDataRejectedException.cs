@@ -35,7 +35,7 @@ namespace CSPlang
      *
      *
      */
-    class ChannelDataRejectedException : RuntimeException
+    public class ChannelDataRejectedException : RuntimeException
     {
     }
 }

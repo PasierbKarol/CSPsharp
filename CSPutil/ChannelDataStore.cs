@@ -75,18 +75,20 @@ namespace CSPutil
         /** Indicates that the <TT>ChannelDataStore</TT> is empty
      * -- it can accept only a <TT>put</TT>.
      */
-        readonly static int EMPTY = 0;
+        //readonly static int EMPTY = 0;
 
-        /**
-         * Indicates that the <TT>ChannelDataStore</TT> is neither empty nor full
-         * -- it can accept either a <TT>put</TT> or a <TT>get</TT> call.
-         */
-        readonly static int NONEMPTYFULL = 1;
+        ///**
+        // * Indicates that the <TT>ChannelDataStore</TT> is neither empty nor full
+        // * -- it can accept either a <TT>put</TT> or a <TT>get</TT> call.
+        // */
+        //readonly static int NONEMPTYFULL = 1;
 
-        /** Indicates that the <TT>ChannelDataStore</TT> is full
-         * -- it can accept only a <TT>get</TT>.
-         */
-        readonly static int FULL = 2;
+        ///** Indicates that the <TT>ChannelDataStore</TT> is full
+        // * -- it can accept only a <TT>get</TT>.
+        // */
+        //readonly static int FULL = 2;
+
+        //ChannelDataStoreState StoreStates;
 
         /**
          * Returns the current state of the <TT>ChannelDataStore</TT>.
@@ -94,7 +96,7 @@ namespace CSPutil
          * @return the current state of the <TT>ChannelDataStore</TT> (<TT>EMPTY</TT>,
          * <TT>NONEMPTYFULL</TT> or <TT>FULL</TT>)
          */
-        abstract int getState();
+        /*abstract*/ int getState();
 
         /**
          * Puts a new <TT>Object</TT> into the <TT>ChannelDataStore</TT>.
@@ -103,7 +105,7 @@ namespace CSPutil
          *
          * @param value the <TT>Object</TT> to put into the <TT>ChannelDataStore</TT>
          */
-        abstract void put(Object value);
+        /*abstract*/ void put(Object value);
 
         /**
          * Returns an <TT>Object</TT> from the <TT>ChannelDataStore</TT>.
@@ -112,7 +114,7 @@ namespace CSPutil
          *
          * @return an <TT>Object</TT> from the <TT>ChannelDataStore</TT>
          */
-        abstract Object get();
+        /*abstract*/ Object get();
 
         /**
          * Begins an extended read on the buffer, returning the data for the extended read
@@ -132,7 +134,7 @@ namespace CSPutil
          * 
          * @return The object to be read from the channel at the beginning of the extended rendezvous 
          */
-        abstract Object startGet();
+        /*abstract*/ Object startGet();
 
         /**
          * Ends an extended read on the buffer.
@@ -143,7 +145,7 @@ namespace CSPutil
          *
          * @see endGet
          */
-        abstract void endGet();
+        /*abstract*/ void endGet();
 
 
         /**
@@ -155,13 +157,13 @@ namespace CSPutil
          *
          * @return the cloned instance of this <TT>ChannelDataStore</TT>.
          */
-        abstract Object clone();
+        /*abstract*/ Object Clone();
 
         /**
          * Deletes all items in the buffer, leaving it empty. 
          *
          */
 
-        abstract void removeAll();
+        /*abstract*/ void removeAll();
     }
 }

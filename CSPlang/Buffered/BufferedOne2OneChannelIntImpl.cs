@@ -117,7 +117,7 @@ public ChannelOutputInt Out()
 	if (data == null)
 		throw new ArgumentException 
 			("Null ChannelDataStoreInt given to channel constructor ...\n");
-	this.data = (ChannelDataStoreInt)data.clone();
+	this.data = (ChannelDataStoreInt)data.Clone();
 }
 
 /**
@@ -128,12 +128,12 @@ public ChannelOutputInt Out()
 public int read()
 {
 	lock (rwMonitor) {
-		if (data.getState() == ChannelDataStoreInt.EMPTY)
+		if (data.getState() == ChannelDataStoreState.EMPTY)
 		{
 			try
 			{
 				Monitor.Wait(rwMonitor);
-				while (data.getState() == ChannelDataStoreInt.EMPTY)
+				while (data.getState() == ChannelDataStoreState.EMPTY)
 				{
 					if (Spurious.logging)
 					{
@@ -159,12 +159,12 @@ public int read()
 public int startRead()
 {
 	lock(rwMonitor) {
-		if (data.getState() == ChannelDataStore.EMPTY)
+		if (data.getState() == ChannelDataStoreState.EMPTY)
 		{
 			try
 			{
 				Monitor.Wait(rwMonitor);
-				while (data.getState() == ChannelDataStore.EMPTY)
+				while (data.getState() == ChannelDataStoreState.EMPTY)
 				{
 					if (Spurious.logging)
 					{
@@ -212,12 +212,12 @@ public void write(int value)
 			Monitor.Pulse(rwMonitor);
 		}
 
-		if (data.getState() == ChannelDataStoreInt.FULL)
+		if (data.getState() == ChannelDataStoreState.FULL)
 		{
 			try
 			{
 				Monitor.Wait(rwMonitor);
-				while (data.getState() == ChannelDataStoreInt.FULL)
+				while (data.getState() == ChannelDataStoreState.FULL)
 				{
 					if (Spurious.logging)
 					{
@@ -249,7 +249,7 @@ public void write(int value)
 public Boolean readerEnable(Alternative alt)
 {
 	lock(rwMonitor) {
-		if (data.getState() == ChannelDataStoreInt.EMPTY)
+		if (data.getState() == ChannelDataStoreState.EMPTY)
 		{
 			this.alt = alt;
 			return false;
@@ -273,7 +273,7 @@ public Boolean readerDisable()
 {
 	lock(rwMonitor) {
 		alt = null;
-		return data.getState() != ChannelDataStoreInt.EMPTY;
+		return data.getState() != ChannelDataStoreState.EMPTY;
 	}
 }
 
@@ -315,7 +315,7 @@ public Boolean readerDisable()
 public Boolean readerPending()
 {
 	lock(rwMonitor) {
-		return (data.getState() != ChannelDataStoreInt.EMPTY);
+		return (data.getState() != ChannelDataStoreState.EMPTY);
 	}
 }
 

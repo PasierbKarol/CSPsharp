@@ -399,12 +399,12 @@ namespace CSPlang
 
     public class Crew
     {
-        private readonly Any2OneChannelIntImpl request = new Any2OneChannelIntImpl();
-        private readonly One2OneChannelIntImpl writerControl = new One2OneChannelIntImpl();
-        private readonly Any2OneChannelIntImpl readerRelease = new Any2OneChannelIntImpl();
+        private static readonly Any2OneChannelIntImpl request = new Any2OneChannelIntImpl();
+        private static readonly One2OneChannelIntImpl writerControl = new One2OneChannelIntImpl();
+        private static readonly Any2OneChannelIntImpl readerRelease = new Any2OneChannelIntImpl();
 
         ///TODO make this poison the existing channels, once poison is added
-        private readonly Any2OneChannelIntImpl poison = new Any2OneChannelIntImpl();
+        private static readonly Any2OneChannelIntImpl poison = new Any2OneChannelIntImpl();
 
         private readonly ProcessManager manager =
             new ProcessManager(new CrewServer(request.In(), writerControl.In(), readerRelease.In(), poison.In()));

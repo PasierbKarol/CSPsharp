@@ -26,15 +26,21 @@
 //                                                                  //
 //////////////////////////////////////////////////////////////////////
 
+using CSPlang.Shared;
+
 namespace CSPutil
 {
 
     /**
-     * Interface for a channel output end that supports write filtering operations.
+     * Interface for an output channel end that supports filtering operations and can be shared by multiple
+     * concurrent processes.
+     *
+     * @see jcsp.lang.SharedChannelOutput
+     * @see jcsp.util.filter.WriteFiltered
      *
      *
      */
-    public interface FilteredChannelOutput : ChannelOutput, WriteFiltered
+    public interface FilteredSharedChannelOutput : SharedChannelOutput, FilteredChannelOutput
     {
     }
 }

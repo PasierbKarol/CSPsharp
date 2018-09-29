@@ -29,6 +29,7 @@
 
 
 using System;
+using System.Threading;
 
 namespace CSPlang
 {
@@ -411,11 +412,11 @@ namespace CSPlang
          * 
          * @throws IllegalArgumentException if <tt>nEnrolled</tt> < <tt>0</tt>.
          */
-        public CSPBarrier(final int nEnrolled)
+        public CSPBarrier(/*final*/ int nEnrolled)
         {
             if (nEnrolled < 0)
             {
-                throw new IllegalArgumentException(
+                throw new ArgumentException(
                   "*** Attempt to set a negative enrollment on a barrier\n"
                 );
             }
@@ -437,11 +438,11 @@ namespace CSPlang
          * 
          * @throws IllegalArgumentException if <tt>nEnrolled</tt> < <tt>0</tt>.
          */
-        public void reset(final int nEnrolled)
+        public void reset(/*final*/ int nEnrolled)
         {
             if (nEnrolled < 0)
             {
-                throw new IllegalArgumentException(
+                throw new ArgumentException(
                   "*** Attempt to set a negative enrollment on a barrier\n"
                 );
             }
@@ -467,20 +468,20 @@ namespace CSPlang
                     try
                     {
                         Boolean spuriousCycle = evenOddCycle;
-                        barrierLock.wait();
+                        Monitor.Wait(barrierLock);
                         while (spuriousCycle == evenOddCycle)
                         {
                             if (Spurious.logging)
                             {
                                 SpuriousLog.record(SpuriousLog.BarrierSync);
                             }
-                            barrierLock.wait();
+                            Monitor.Wait(barrierLock);
                         }
                     }
-                    catch (InterruptedException e)
+                    catch (ThreadInterruptedException e)
                     {
                         throw new ProcessInterruptedException(
-                      "*** Thrown from CSPBarrier.sync ()\n" + e.toString()
+                      "*** Thrown from CSPBarrier.sync ()\n" + e.ToString()
                     );
                     }
                 }
@@ -489,7 +490,7 @@ namespace CSPlang
                     countDown = nEnrolled;
                     evenOddCycle = !evenOddCycle;         // to detect spurious wakeups  :(
                                                           //System.out.println ("CSPBarrier.sync : " + nEnrolled + ", " + countDown);
-                    barrierLock.notifyAll();
+                    Monitor.PulseAll(barrierLock);
                 }
             }
         }
@@ -564,7 +565,7 @@ namespace CSPlang
                     countDown = nEnrolled;
                     evenOddCycle = !evenOddCycle;         // to detect spurious wakeups  :(
                                                           //System.out.println ("CSPBarrier.resign : " + nEnrolled + ", " + countDown);
-                    barrierLock.notifyAll();
+                    Monitor.PulseAll(barrierLock);
                 }
                 else if (countDown < 0)
                 {

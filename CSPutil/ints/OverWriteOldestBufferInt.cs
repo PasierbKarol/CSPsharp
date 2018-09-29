@@ -59,7 +59,7 @@ namespace CSPutil
     public class OverWriteOldestBufferInt : ChannelDataStoreInt 
     {
     /** The storage for the buffered ints */
-    private final int[] buffer;
+    private readonly int[] buffer;
 
     /** The number of ints stored in the CSPBuffer */
     private int counter = 0;
@@ -182,9 +182,9 @@ namespace CSPutil
     public int getState()
     {
         if (counter == 0)
-            return EMPTY;
+            return ChannelDataStoreState.EMPTY;
         else
-            return NONEMPTYFULL;
+            return ChannelDataStoreState.NONEMPTYFULL;
     }
 
     /**
@@ -196,7 +196,7 @@ namespace CSPutil
      *
      * @return the cloned instance of this <TT>OverWriteOldestBufferInt</TT>.
      */
-    public Object clone()
+    public Object Clone()
     {
         return new OverWriteOldestBufferInt(buffer.Length);
     }

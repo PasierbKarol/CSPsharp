@@ -26,6 +26,7 @@
 //                                                                  //
 //////////////////////////////////////////////////////////////////////
 
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -153,172 +154,177 @@ namespace CSPlang
 
     public class ProcessManager : IamCSProcess
     {
-    /**
-     * The maximum priority value for running a process.
-     */
-    public static readonly int PRIORITY_MAX = Thread.MAX_PRIORITY;
+        /**
+         * The maximum priority value for running a process.
+         */
+        public static readonly int PRIORITY_MAX = 5;
 
-/**
- * The normal priority value for running a process.
- */
-    public static readonly int PRIORITY_NORM = Thread.NORM_PRIORITY;
+        /**
+         * The normal priority value for running a process.
+         */
+        public static readonly int PRIORITY_NORM = 3;
 
-/**
- * The minimum priority value for running a process.
- */
-    public static readonly int PRIORITY_MIN = Thread.MIN_PRIORITY;
+        /**
+         * The minimum priority value for running a process.
+         */
+        public static readonly int PRIORITY_MIN = 0;
 
 
-/** The IamCSProcess to be executed by this ProcessManager */
-    private readonly IamCSProcess process;
+        /** The IamCSProcess to be executed by this ProcessManager */
+        private readonly IamCSProcess process;
 
-    /** The thread supporting the IamCSProcess being executed by this ProcessManager */
-    private Thread thread;
+        /** The thread supporting the IamCSProcess being executed by this ProcessManager */
+        private ParThread thread;
 
-/**
- * @param <TT>proc</TT> the {@link IamCSProcess} to be executed by this ProcessManager
- */
-    public ProcessManager(IamCSProcess proc)
-    {
-        this.process = proc;
-        thread = new Thread()
+        /**
+         * @param <TT>process</TT> the {@link IamCSProcess} to be executed by this ProcessManager
+         */
+        public ProcessManager(IamCSProcess process)
+        {
+            this.process = process;
+            thread = new ParThread();
+            //    {
+
+            //        public void run()
+            //        {
+            //        try
+            //        {
+            //        Parallel.addToAllParThreads(this);
+            //        process.run();
+            //    }
+            //    catch (Exception e)
+            //{
+            //    CSPParallel.uncaughtException("jcsp.lang.ProcessManager", e);
+            //}
+            //finally
+            //{
+            //    CSPParallel.removeFromAllParThreads(this);
+            //}
+            //}
+            //};
+            //thread.setDaemon(true);
+            thread.run();
+
+
+
+            thread.IsBackground = true;
+        }
+
+        //}}}
+
+        //{{{ public void start ()
+        /**
+         * Start the managed process (but keep running ourselves).
+         */
+        public void start()
+        {
+            thread.Start();
+        }
+
+        /**
+         * Start the managed process at a specified priority
+         * (but keep running ourselves). The priority of the
+         * <code>ProcessManager</code> that this is called upon
+         * will remain at the specified priority once the process
+         * has terminated.
+         *
+         * The priority should be specified as an <code>int</code> between
+         * <code>PRIORITY_MIN<code> and <code>PRIORITY_MAX<code>.
+         *
+         * @param priority   the priority at which to start the process.
+         */
+        public void start(int priority)
+        {
+            thread.setPriority(priority);
+            start();
+        }
+
+        /**
+         * Stop (permanently) the managed process.
+         * 
+         * This method now calls interrupt(), which will not always stop the process.
+         * 
+         * @deprecated
+         */
+        public void stop()
+        {
+            interrupt();
+        }
+
+        /**
+         * Interrupt the managed process.  This will usually cause the process to throw a 
+         * {@link ProcessInterruptedException}, which will likely halt the process.
+         */
+        public void interrupt()
+        {
+            thread.Interrupt();
+        }
+
+        /**
+         * Join the managed process (that is wait for it to terminate).
+         */
+        public void join()
+        {
+            try
             {
-
-                public void run()
-                {
-                try
-                {
-                Parallel.addToAllParThreads(this);
-                process.run();
+                thread.Join();
             }
-            catch (Throwable e)
+            catch (ThreadInterruptedException e)
+            {
+                throw new ProcessInterruptedException("Joining process " + process);
+            }
+        }
+
+        /**
+         * <p>
+         * Run the managed process (that is start it and wait for it to terminate).
+         * This will adjust the priority of the calling process to the priority of
+         * this <code>ProcessManager</code> and then return the priority to the
+         * previous value once the managed process has terminated.
+         * </p>
+         *
+         * <p>
+         * The managed process can be run at the caller's priority simply by directly
+         * calling the <code>IamCSProcess</code> object's <code>run()</code> method.
+         * </p>
+         */
+        public void run()
         {
-            CSPParallel.uncaughtException("jcsp.lang.ProcessManager", e);
+            ThreadPriority oldPriority = Thread.CurrentThread.Priority;
+            Thread.CurrentThread.Priority = (ThreadPriority) thread.Priority;
+            process.run();
+            Thread.CurrentThread.Priority = oldPriority;
         }
-        finally
+
+        /**
+         * <p>
+         * Public mutator for setting the <code>ProcessManager</code> object's
+         * process' priority.
+         * </p>
+         * <p>
+         * The priority should be specified as an <code>int</code> between
+         * <code>PRIORITY_MIN<code> and <code>PRIORITY_MAX<code>.
+         * </p>
+         *
+         * @param  the priority to use.
+         */
+        public void setPriority(int priority)
         {
-            CSPParallel.removeFromAllParThreads(this);
+            thread.setPriority(priority);
         }
-        }
-        };
-        thread.setDaemon(true);
-    }
 
-    //}}}
-
-    //{{{ public void start ()
-    /**
-     * Start the managed process (but keep running ourselves).
-     */
-    public void start()
-    {
-        thread.start();
-    }
-
-/**
- * Start the managed process at a specified priority
- * (but keep running ourselves). The priority of the
- * <code>ProcessManager</code> that this is called upon
- * will remain at the specified priority once the process
- * has terminated.
- *
- * The priority should be specified as an <code>int</code> between
- * <code>PRIORITY_MIN<code> and <code>PRIORITY_MAX<code>.
- *
- * @param priority   the priority at which to start the process.
- */
-    public void start(int priority)
-    {
-        thread.setPriority(priority);
-        start();
-    }
-
-/**
- * Stop (permanently) the managed process.
- * 
- * This method now calls interrupt(), which will not always stop the process.
- * 
- * @deprecated
- */
-    public void stop()
-    {
-        interrupt();
-    }
-
-/**
- * Interrupt the managed process.  This will usually cause the process to throw a 
- * {@link ProcessInterruptedException}, which will likely halt the process.
- */
-    public void interrupt()
-    {
-        thread.interrupt();
-    }
-
-/**
- * Join the managed process (that is wait for it to terminate).
- */
-    public void join()
-    {
-        try
+        /**
+         * <p>
+         * Public accessor for obtaining the <code>ProcessManager</code> object's
+         * process' priority.
+         * </p>
+         *
+         * @return the priority at which the <code>ProcessManager</code> object's
+         *          process will be run.
+         */
+        public int getPriority()
         {
-            thread.join();
+            return thread.Priority;
         }
-        catch (ThreadInterruptedException e)
-        {
-            throw new ProcessInterruptedException("Joining process " + process);
-        }
-    }
-
-/**
- * <p>
- * Run the managed process (that is start it and wait for it to terminate).
- * This will adjust the priority of the calling process to the priority of
- * this <code>ProcessManager</code> and then return the priority to the
- * previous value once the managed process has terminated.
- * </p>
- *
- * <p>
- * The managed process can be run at the caller's priority simply by directly
- * calling the <code>IamCSProcess</code> object's <code>run()</code> method.
- * </p>
- */
-    public void run()
-    {
-        int oldPriority = Thread.currentThread().getPriority();
-        Thread.currentThread().setPriority(thread.getPriority());
-        process.run();
-        Thread.currentThread().setPriority(oldPriority);
-    }
-
-/**
- * <p>
- * Public mutator for setting the <code>ProcessManager</code> object's
- * process' priority.
- * </p>
- * <p>
- * The priority should be specified as an <code>int</code> between
- * <code>PRIORITY_MIN<code> and <code>PRIORITY_MAX<code>.
- * </p>
- *
- * @param  the priority to use.
- */
-    public void setPriority(int priority)
-    {
-        thread.setPriority(priority);
-    }
-
-/**
- * <p>
- * Public accessor for obtaining the <code>ProcessManager</code> object's
- * process' priority.
- * </p>
- *
- * @return the priority at which the <code>ProcessManager</code> object's
- *          process will be run.
- */
-    public int getPriority()
-    {
-        return thread.getPriority();
-    }
     }
 }

@@ -26,49 +26,31 @@
 //                                                                  //
 //////////////////////////////////////////////////////////////////////
 
-using System;
+using CSPlang.Any2;
 
 namespace CSPutil
 {
 
     /**
-     * This filter will throw a <code>PoisonException</code>
-     * when <code>filter(Object)</code> is called. This can be
-     * used to prevent a channel from being written to or read from.
+     * Interface for an Any2Any channel that has support for filtering at both ends.
+     *
+     * @see jcsp.lang.Any2AnyChannel
+     * @see jcsp.util.filter.ReadFiltered
+     * @see jcsp.util.filter.WriteFiltered
      *
      *
      */
-    public class PoisonFilter : Filter
+    public interface FilteredAny2AnyChannel : Any2AnyChannel
     {
-    /**
-     * The message to be placed in the <code>PoisonException</code> raised.
-     */
-    private String message;
+        /**
+         * Returns an interface for configuring read filters on the channel.
+         */
+        ReadFiltered inFilter();
 
-    /**
-     * Default message.
-     */
-    private static String defaultMessage = "Channel end has been poisoned.";
+        /**
+         * Returns an interface for configuring write filters on the channel.
+         */
+        WriteFiltered outFilter();
 
-    /**
-     * Constructs a new filter with the default message.
-     */
-    public PoisonFilter()
-    {
-        this(defaultMessage);
-    }
-
-    /**
-     * Constructs a new filter with a specific message.
-     */
-    public PoisonFilter(String message)
-    {
-        this.message = message;
-    }
-
-    public Object filter(Object obj)
-    {
-        throw new PoisonFilterException(this.message);
-    }
     }
 }

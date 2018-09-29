@@ -63,7 +63,7 @@ namespace CSPutil
     public class InfiniteBufferInt : ChannelDataStoreInt
     {
     /** The default size of the buffer */
-    private static final int DEFAULT_SIZE = 8;
+    private static readonly int DEFAULT_SIZE = 8;
 
     /** The initial size of the buffer */
     private int initialSize;
@@ -83,9 +83,9 @@ namespace CSPutil
     /**
      * Construct a new <TT>InfiniteBufferInt</TT> with the default size (of 8).
      */
-    public InfiniteBufferInt()
-    {
-        this(DEFAULT_SIZE);
+    public InfiniteBufferInt() : this(DEFAULT_SIZE)
+        {
+        
     }
 
     /**
@@ -156,8 +156,8 @@ namespace CSPutil
         {
             int[] temp = buffer;
             buffer = new int[buffer.Length * 2];
-            System.arraycopy(temp, firstIndex, buffer, 0, temp.Length - firstIndex);
-            System.arraycopy(temp, 0, buffer, temp.Length - firstIndex, firstIndex);
+            Array.Copy(temp, firstIndex, buffer, 0, temp.Length - firstIndex);
+            Array.Copy(temp, 0, buffer, temp.Length - firstIndex, firstIndex);
             firstIndex = 0;
             lastIndex = temp.Length;
         }
@@ -176,9 +176,9 @@ namespace CSPutil
     public int getState()
     {
         if (counter == 0)
-            return EMPTY;
+            return ChannelDataStoreState.EMPTY;
         else
-            return NONEMPTYFULL;
+            return ChannelDataStoreState.NONEMPTYFULL;
     }
 
     /**
@@ -190,7 +190,7 @@ namespace CSPutil
      *
      * @return the cloned instance of this <TT>InfiniteBufferInt</TT>.
      */
-    public Object clone()
+    public Object Clone()
     {
         return new InfiniteBufferInt(initialSize);
     }

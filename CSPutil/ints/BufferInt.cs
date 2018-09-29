@@ -149,15 +149,15 @@ namespace CSPutil
     {
         if (counter == 0)
         {
-            return EMPTY;
+            return ChannelDataStoreState.EMPTY;
         }
         else if (counter == buffer.Length)
         {
-            return FULL;
+            return ChannelDataStoreState.FULL;
         }
         else
         {
-            return NONEMPTYFULL;
+            return ChannelDataStoreState.NONEMPTYFULL;
         }
     }
 
@@ -170,7 +170,7 @@ namespace CSPutil
      *
      * @return the cloned instance of this <TT>BufferInt</TT>
      */
-    public Object clone()
+    public Object Clone()
     {
         return new BufferInt(buffer.Length - 1);
     }

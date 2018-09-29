@@ -176,9 +176,9 @@ namespace CSPutil
     public int getState()
     {
         if (counter == 0)
-            return EMPTY;
+            return ChannelDataStoreState.EMPTY;
         else
-            return NONEMPTYFULL;
+            return ChannelDataStoreState.NONEMPTYFULL;
     }
 
     /**
@@ -190,7 +190,7 @@ namespace CSPutil
      *
      * @return the cloned instance of this <TT>OverWritingBuffer</TT>.
      */
-    public Object clone()
+    public Object Clone()
     {
         return new OverWritingBuffer(buffer.Length);
     }

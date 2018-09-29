@@ -26,91 +26,30 @@
 //                                                                  //
 //////////////////////////////////////////////////////////////////////
 
-using System;
+using CSPlang;
 
 namespace CSPutil
 {
 
     /**
-     * This is wrapper for a <code>SharedChannelInput</code> that adds
-     * read filtering. Instances of this class can be safely used by
-     * multiple concurrent processes.
+     * Interface for a <code>One2One</code> channel that supports filtering operations at each end.
+     *
+     * @see jcsp.lang.One2OneChannel
+     * @see jcsp.util.filter.ReadFiltered
+     * @see jcsp.util.filter.WriteFiltered
      *
      *
      */
-    public class FilteredSharedChannelInputWrapper : FilteredChannelInputWrapper, FilteredSharedChannelInput
+    public interface FilteredOne2OneChannel : One2OneChannel
     {
-    /**
-     * The object used for synchronization by the methods here to protect the readers from each other
-     * when manipulating the filters and reading data.
-     */
-    private Object synchObject;
+        /**
+         * Returns the control interface for configuring the read filters on the channel.
+         */
+        ReadFiltered inFilter();
 
-    /**
-     * Constructs a new wrapper for the given channel input end.
-     *
-     * @param in the existing channel end.
-     */
-    public FilteredSharedChannelInputWrapper(SharedChannelInput In) : base(In)
-    {
-        
-        synchObject = new Object();
-    }
-
-    public Object read()
-    {
-        synchronized(synchObject)
-        {
-            return super.read();
-        }
-    }
-
-    public void addReadFilter(Filter filter)
-    {
-        synchronized(synchObject)
-        {
-            super.addReadFilter(filter);
-        }
-    }
-
-    public void addReadFilter(Filter filter, int index)
-    {
-        synchronized(synchObject)
-        {
-            super.addReadFilter(filter, index);
-        }
-    }
-
-    public void removeReadFilter(Filter filter)
-    {
-        synchronized(synchObject)
-        {
-            super.removeReadFilter(filter);
-        }
-    }
-
-    public void removeReadFilter(int index)
-    {
-        synchronized(synchObject)
-        {
-            super.removeReadFilter(index);
-        }
-    }
-
-    public Filter getReadFilter(int index)
-    {
-        synchronized(synchObject)
-        {
-            return super.getReadFilter(index);
-        }
-    }
-
-    public int getReadFilterCount()
-    {
-        synchronized(synchObject)
-        {
-            return super.getReadFilterCount();
-        }
-    }
+        /**
+         * Returns the control interface for configuring the write filters on the channel.
+         */
+        WriteFiltered outFilter();
     }
 }

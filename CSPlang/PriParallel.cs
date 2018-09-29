@@ -90,7 +90,7 @@ namespace CSPlang
  */
     public void insertProcessAt(IamCSProcess process, int index)
     {
-        base .insertProcessAt(process, index);
+        base.insertProcessAt(process, index);
     }
 
 /**
@@ -100,7 +100,7 @@ namespace CSPlang
  */
     public static int getPriority()
     {
-        return Thread.currentThread().getPriority();
+        return (int)Thread.CurrentThread.Priority;
     }
 
 /**
@@ -120,7 +120,7 @@ namespace CSPlang
  */
     public static void setPriority(int newPriority)
     {
-        Thread.currentThread().setPriority(newPriority);
+        Thread.CurrentThread.Priority = (ThreadPriority)newPriority;
     }
     }
 }

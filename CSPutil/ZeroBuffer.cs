@@ -62,7 +62,7 @@ namespace CSPutil
     public class ZeroBuffer : ChannelDataStore
     {
         /** The current state */
-        private int state = EMPTY;
+        private int state = ChannelDataStoreState.EMPTY;
 
         /** The Object */
         private Object value;
@@ -76,7 +76,7 @@ namespace CSPutil
          */
         public Object get()
         {
-            state = EMPTY;
+            state = ChannelDataStoreState.EMPTY;
             Object o = value;
             value = null;
             return o;
@@ -101,7 +101,7 @@ namespace CSPutil
         public void endGet()
         {
             value = null;
-            state = EMPTY;
+            state = ChannelDataStoreState.EMPTY;
         }
 
         /**
@@ -113,7 +113,7 @@ namespace CSPutil
          */
         public void put(Object value)
         {
-            state = FULL;
+            state = ChannelDataStoreState.FULL;
             this.value = value;
         }
 
@@ -137,14 +137,14 @@ namespace CSPutil
          *
          * @return the cloned instance of this <TT>ZeroBuffer</TT>.
          */
-        public Object clone()
+        public Object Clone()
         {
             return new ZeroBuffer();
         }
 
         public void removeAll()
         {
-            state = EMPTY;
+            state = ChannelDataStoreState.EMPTY;
             value = null;
         }
     }

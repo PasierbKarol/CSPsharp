@@ -26,18 +26,30 @@
 //                                                                  //
 //////////////////////////////////////////////////////////////////////
 
+using CSPlang.Any2;
+
 namespace CSPutil
 {
 
     /**
-     * Interface for a channel input end that supports filtering and can be shared by multiple processes.
+     * Interface for an Any2One channel that supports filtering operations at each end.
      *
-     * @see jcsp.lang.SharedChannelInput
+     * @see jcsp.lang.Any2OneChannel
      * @see jcsp.util.filter.ReadFiltered
+     * @see jcsp.util.filter.WriteFiltered
      *
      *
      */
-    public interface FilteredSharedChannelInput : SharedChannelInput, FilteredChannelInput
+    public interface FilteredAny2OneChannel : Any2OneChannel
     {
+    /**
+     * Returns an interface for configuring read filters on the channel.
+     */
+    ReadFiltered inFilter();
+
+    /**
+     * Returns an interface for configuring write filters on the channel.
+     */
+    WriteFiltered outFilter();
     }
 }

@@ -22,7 +22,7 @@ namespace CSPlang
 
     //Class taken from Java - KP
     [Serializable]
-    internal class RuntimeException : Exception
+    public class RuntimeException : Exception
     {
         static readonly long serialVersionUID = -7034897190745766939L; //Should it be really here? - KP
 

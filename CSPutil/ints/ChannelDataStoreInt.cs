@@ -71,24 +71,23 @@ namespace CSPutil
 
     //}}}
 
-    
-    public interface ChannelDataStoreInt : Cloneable {
+    public interface ChannelDataStoreInt : ICloneable {
 
-    /** Indicates that the <TT>ChannelDataStoreInt</TT> is empty
-     * -- it can accept only a <TT>put</TT>.
-     */
-    public readonly static int EMPTY = 0;
+    ///** Indicates that the <TT>ChannelDataStoreInt</TT> is empty
+    // * -- it can accept only a <TT>put</TT>.
+    // */
+    //public readonly static int EMPTY = 0;
 
-    /**
-     * Indicates that the <TT>ChannelDataStoreInt</TT> is neither empty nor full
-     * -- it can accept either a <TT>put</TT> or a <TT>get</TT> call.
-     */
-    public readonly static int NONEMPTYFULL = 1;
+    ///**
+    // * Indicates that the <TT>ChannelDataStoreInt</TT> is neither empty nor full
+    // * -- it can accept either a <TT>put</TT> or a <TT>get</TT> call.
+    // */
+    //public readonly static int NONEMPTYFULL = 1;
 
-    /** Indicates that the <TT>ChannelDataStoreInt</TT> is full
-     * -- it can accept only a <TT>get</TT>.
-     */
-    public readonly static int FULL = 2;
+    ///** Indicates that the <TT>ChannelDataStoreInt</TT> is full
+    // * -- it can accept only a <TT>get</TT>.
+    // */
+    //public readonly static int FULL = 2;
 
     /**
      * Returns the current state of the <TT>ChannelDataStoreInt</TT>.
@@ -96,7 +95,7 @@ namespace CSPutil
      * @return the current state of the <TT>ChannelDataStoreInt</TT> (<TT>EMPTY</TT>,
      * <TT>NONEMPTYFULL</TT> or <TT>FULL</TT>)
      */
-    public abstract int getState();
+    /*public abstract*/ int getState();
 
     /**
      * Puts a new <TT>int</TT> into the <TT>ChannelDataStoreInt</TT>.
@@ -105,7 +104,7 @@ namespace CSPutil
      *
      * @param value the <TT>int</TT> to put into the <TT>ChannelDataStoreInt</TT>
      */
-    public abstract void put(int value);
+    /*public abstract*/ void put(int value);
 
     /**
      * Returns an <TT>int</TT> from the <TT>ChannelDataStoreInt</TT>.
@@ -114,7 +113,7 @@ namespace CSPutil
      *
      * @return an <TT>int</TT> from the <TT>ChannelDataStoreInt</TT>
      */
-    public abstract int get();
+    /*public abstract*/ int get();
 
     /**
      * Begins an extended read on the buffer, returning the data for the extended read
@@ -134,7 +133,7 @@ namespace CSPutil
      * 
      * @return The int to be read from the channel at the beginning of the extended rendezvous 
      */
-    public abstract int startGet();
+    /*public abstract*/ int startGet();
 
     /**
      * Ends an extended read on the buffer.
@@ -145,7 +144,7 @@ namespace CSPutil
      *
      * @see endGet
      */
-    public abstract void endGet();
+    /*public abstract*/ void endGet();
 
     /**
      * Returns a new (and <TT>EMPTY</TT>) <TT>ChannelDataStoreInt</TT> with the same
@@ -156,9 +155,9 @@ namespace CSPutil
      *
      * @return the cloned instance of this <TT>ChannelDataStoreInt</TT>.
      */
-    public abstract Object clone();
+    /*public abstract*/ Object Clone();
 
 
-    public abstract void removeAll();
+    /*public abstract*/ void removeAll();
     }
 }

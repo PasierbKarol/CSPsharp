@@ -26,28 +26,49 @@
 //                                                                  //
 //////////////////////////////////////////////////////////////////////
 
+using System;
+
 namespace CSPutil
 {
 
     /**
-     * Interface for a <code>One2One</code> channel that supports filtering operations at each end.
-     *
-     * @see jcsp.lang.One2OneChannel
-     * @see jcsp.util.filter.ReadFiltered
-     * @see jcsp.util.filter.WriteFiltered
+     * This filter will throw a <code>PoisonException</code>
+     * when <code>filter(Object)</code> is called. This can be
+     * used to prevent a channel from being written to or read from.
      *
      *
      */
-    public interface FilteredOne2OneChannel : One2OneChannel
+    public class PoisonFilter : Filter
     {
-        /**
-         * Returns the control interface for configuring the read filters on the channel.
-         */
-        ReadFiltered inFilter();
+    /**
+     * The message to be placed in the <code>PoisonException</code> raised.
+     */
+    private String message;
 
-        /**
-         * Returns the control interface for configuring the write filters on the channel.
-         */
-        WriteFiltered outFilter();
+    /**
+     * Default message.
+     */
+    private static String defaultMessage = "Channel end has been poisoned.";
+
+    /**
+     * Constructs a new filter with the default message.
+     */
+    public PoisonFilter() : this (defaultMessage)
+        {
+        
+    }
+
+    /**
+     * Constructs a new filter with a specific message.
+     */
+    public PoisonFilter(String message)
+    {
+        this.message = message;
+    }
+
+    public Object filter(Object obj)
+    {
+        throw new PoisonFilterException(this.message);
+    }
     }
 }

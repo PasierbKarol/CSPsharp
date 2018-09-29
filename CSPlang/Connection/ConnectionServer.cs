@@ -31,7 +31,7 @@ namespace CSPlang
         /**
      * The factory for creating channels within servers.
      */
-        static StandardChannelFactory FACTORY = new StandardChannelFactory();
+        //static StandardChannelFactory FACTORY = new StandardChannelFactory();
 
         /**
          * <p>Receives a request from a client. This will block until the client

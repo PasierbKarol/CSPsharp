@@ -27,35 +27,40 @@
 //////////////////////////////////////////////////////////////////////
 
 using System;
+using CSPlang;
+using CSPlang.Alting;
 
 namespace CSPutil
 {
 
     /**
-     * Wrapper for an input channel end to include read filtering functionality.
+     * Implements an <code>AltingChannelInput</code> channel end that also supports read filters.
+     *
+     * @see jcsp.lang.AltingChannelInput
+     * @see jcsp.util.filter.ReadFiltered
      *
      *
      */
-    class FilteredChannelInputWrapper:  ChannelInputWrapper, FilteredChannelInput
+    public class FilteredAltingChannelInput:  AltingChannelInputWrapper, FilteredChannelInput
     {
     /**
-     * Set of read filters installed.
+     * Holds the filters installed for the read end of this channel.
      */
     private FilterHolder filters = null;
 
     /**
-     * Constructs a new <code>FilteredChannelInputWrapper</code> around the existing channel end.
+     * Constructs a new channel end that supports filtering by wrapping up an existing channel end.
      *
-     * @param in channel end to create the wrapper around.
+     * @param altingChannelInput the existing channel end.
      */
-    FilteredChannelInputWrapper(ChannelInput In) : base (In)
+    internal FilteredAltingChannelInput(AltingChannelInput altingChannelInput) : base (altingChannelInput)
     {
         
     }
 
     public Object read()
     {
-        Object toFilter = super.read();
+        Object toFilter = base.read();
         for (int i = 0; filters != null && i < filters.getFilterCount(); i++)
             toFilter = filters.getFilter(i).filter(toFilter);
         return toFilter;

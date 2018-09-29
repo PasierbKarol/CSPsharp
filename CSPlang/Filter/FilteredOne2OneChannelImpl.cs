@@ -26,80 +26,57 @@
 //                                                                  //
 //////////////////////////////////////////////////////////////////////
 
-using System;
+using CSPlang;
 
 namespace CSPutil
 {
 
     /**
-     * Wrapper for an output channel end to include write filtering ability.
+     * Implements a <code>One2One</code> channel that supports filtering at each end.
      *
      *
      */
-    class FilteredChannelOutputWrapper: ChannelOutputWrapper,  FilteredChannelOutput
+    class FilteredOne2OneChannelImpl : FilteredOne2OneChannel
     {
     /**
-     * Set of write filters installed.
+     * The filtered input end of the channel.
      */
-    private FilterHolder filters = null;
+    private FilteredAltingChannelInput _In;
 
     /**
-     * Constructs a new <code>FilteredChannelOutputWrapper</code> around the given output channel end.
-     *
-     * @param out the existing output channel.
+     * The filtered output end of the channel.
      */
-    public FilteredChannelOutputWrapper(ChannelOutput Out) : base (Out)
+    private FilteredChannelOutput _Out;
+
+    /**
+     * Constructs a new filtered channel based on an existing channel.
+     *
+     * @param chan the existing channel.
+     */
+    public FilteredOne2OneChannelImpl(One2OneChannel chan)
     {
-       
+        _In = new FilteredAltingChannelInput(chan.In());
+        _Out = new FilteredChannelOutputWrapper(chan.Out());
     }
 
-    public void write(Object data)
+    public AltingChannelInput In()
     {
-        for (int i = 0; filters != null && i < filters.getFilterCount(); i++)
-            data = filters.getFilter(i).filter(data);
-        super.write(data);
+        return _In;
     }
 
-    public void addWriteFilter(Filter filter)
+    public ChannelOutput Out()
     {
-        if (filters == null)
-            filters = new FilterHolder();
-        filters.addFilter(filter);
+        return _Out;
     }
 
-    public void addWriteFilter(Filter filter, int index)
+    public ReadFiltered inFilter()
     {
-        if (filters == null)
-            filters = new FilterHolder();
-        filters.addFilter(filter, index);
+        return _In;
     }
 
-    public void removeWriteFilter(Filter filter)
+    public WriteFiltered outFilter()
     {
-        if (filters == null)
-            filters = new FilterHolder();
-        filters.removeFilter(filter);
-    }
-
-    public void removeWriteFilter(int index)
-    {
-        if (filters == null)
-            filters = new FilterHolder();
-        filters.removeFilter(index);
-    }
-
-    public Filter getWriteFilter(int index)
-    {
-        if (filters == null)
-            filters = new FilterHolder();
-        return filters.getFilter(index);
-    }
-
-    public int getWriteFilterCount()
-    {
-        if (filters == null)
-            return 0;
-        return filters.getFilterCount();
+        return _Out;
     }
     }
 }

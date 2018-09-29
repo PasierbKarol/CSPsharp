@@ -4,7 +4,7 @@ using System.Runtime.Serialization;
 namespace CSPlang
 {
     [Serializable]
-    internal class PoisonException : ChannelDataRejectedException
+    public class PoisonException : ChannelDataRejectedException
     {
         private int strength;
 

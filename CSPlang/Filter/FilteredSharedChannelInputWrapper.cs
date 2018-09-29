@@ -26,54 +26,92 @@
 //                                                                  //
 //////////////////////////////////////////////////////////////////////
 
+using System;
+using CSPlang.Shared;
+
 namespace CSPutil
 {
+
     /**
-     * This wraps up an Any2OneChannel object so that its
-     * input and output ends are separate objects. Both ends of the channel
-     * have filtering enabled.
+     * This is wrapper for a <code>SharedChannelInput</code> that adds
+     * read filtering. Instances of this class can be safely used by
+     * multiple concurrent processes.
      *
      *
      */
-    class FilteredAny2OneChannelImpl : FilteredAny2OneChannel
+    public class FilteredSharedChannelInputWrapper : FilteredChannelInputWrapper, FilteredSharedChannelInput
     {
     /**
-     * The input end of the channel.
+     * The object used for synchronization by the methods here to protect the readers from each other
+     * when manipulating the filters and reading data.
      */
-    private FilteredAltingChannelInput In;
+    private Object synchObject;
 
     /**
-     * The output end of the channel.
+     * Constructs a new wrapper for the given channel input end.
+     *
+     * @param in the existing channel end.
      */
-    private FilteredSharedChannelOutput Out;
-
-    /**
-     * Constructs a new filtered channel over the top of an existing channel.
-     */
-    public FilteredAny2OneChannelImpl(Any2OneChannel chan)
+    public FilteredSharedChannelInputWrapper(SharedChannelInput In) : base(In)
     {
-        In = new FilteredAltingChannelInput(chan.In());
-        Out = new FilteredSharedChannelOutputWrapper(chan.Out());
+        
+        synchObject = new Object();
     }
 
-    public AltingChannelInput In()
+    public Object read()
     {
-        return In;
+        lock (synchObject)
+        {
+            return base.read();
+        }
     }
 
-public SharedChannelOutput Out()
+    public void addReadFilter(Filter filter)
     {
-        return Out;
+        lock (synchObject)
+        {
+            base.addReadFilter(filter);
+        }
     }
 
-    public ReadFiltered inFilter()
-{
-    return In;
-}
+    public void addReadFilter(Filter filter, int index)
+    {
+        lock (synchObject)
+        {
+            base.addReadFilter(filter, index);
+        }
+    }
 
-public WriteFiltered outFilter()
-{
-    return Out;
-}
+    public void removeReadFilter(Filter filter)
+    {
+        lock (synchObject)
+        {
+            base.removeReadFilter(filter);
+        }
+    }
+
+    public void removeReadFilter(int index)
+    {
+        lock (synchObject)
+        {
+            base.removeReadFilter(index);
+        }
+    }
+
+    public Filter getReadFilter(int index)
+    {
+        lock (synchObject)
+        {
+            return base.getReadFilter(index);
+        }
+    }
+
+    public int getReadFilterCount()
+    {
+        lock (synchObject)
+        {
+            return base.getReadFilterCount();
+        }
+    }
     }
 }

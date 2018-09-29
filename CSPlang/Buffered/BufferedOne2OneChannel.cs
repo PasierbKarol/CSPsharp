@@ -83,7 +83,7 @@ namespace CSPlang
             if (data == null)
                 throw new ArgumentException
                         ("Null ChannelDataStore given to channel constructor ...\n");
-            this.data = (ChannelDataStore)data.clone();
+            this.data = (ChannelDataStore)data.Clone();
         }
 
         /**
@@ -96,12 +96,12 @@ namespace CSPlang
             /*synchronized*/
             lock (rwMonitor)
             {
-                if (data.getState() == ChannelDataStore.EMPTY)
+                if (data.getState() == ChannelDataStoreState.EMPTY)
                 {
                     try
                     {
                         Monitor.Wait(rwMonitor);
-                        while (data.getState() == ChannelDataStore.EMPTY)
+                        while (data.getState() == ChannelDataStoreState.EMPTY)
                         {
                             if (Spurious.logging)
                             {
@@ -127,12 +127,12 @@ namespace CSPlang
             /*synchronized*/
             lock (rwMonitor)
             {
-                if (data.getState() == ChannelDataStore.EMPTY)
+                if (data.getState() == ChannelDataStoreState.EMPTY)
                 {
                     try
                     {
                         Monitor.Wait(rwMonitor);
-                        while (data.getState() == ChannelDataStore.EMPTY)
+                        while (data.getState() == ChannelDataStoreState.EMPTY)
                         {
                             if (Spurious.logging)
                             {
@@ -182,12 +182,12 @@ namespace CSPlang
                 {
                     Monitor.Pulse(rwMonitor);
                 }
-                if (data.getState() == ChannelDataStore.FULL)
+                if (data.getState() == ChannelDataStoreState.FULL)
                 {
                     try
                     {
                         Monitor.Wait(rwMonitor);
-                        while (data.getState() == ChannelDataStore.FULL)
+                        while (data.getState() == ChannelDataStoreState.FULL)
                         {
                             if (Spurious.logging)
                             {
@@ -220,7 +220,7 @@ namespace CSPlang
             /*synchronized*/
             lock (rwMonitor)
             {
-                if (data.getState() == ChannelDataStore.EMPTY)
+                if (data.getState() == ChannelDataStoreState.EMPTY)
                 {
                     this.alt = alt;
                     return false;
@@ -246,7 +246,7 @@ namespace CSPlang
             lock (rwMonitor)
             {
                 alt = null;
-                return data.getState() != ChannelDataStore.EMPTY;
+                return data.getState() != ChannelDataStoreState.EMPTY;
             }
         }
 
@@ -290,7 +290,7 @@ namespace CSPlang
             /*synchronized*/
             lock (rwMonitor)
             {
-                return (data.getState() != ChannelDataStore.EMPTY);
+                return (data.getState() != ChannelDataStoreState.EMPTY);
             }
         }
 

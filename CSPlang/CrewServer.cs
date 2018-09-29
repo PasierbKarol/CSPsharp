@@ -62,19 +62,16 @@ namespace CSPlang
         {
             int nReaders = 0;
             //const 
-            Alternative altMain =
-      new Alternative(new Guard[] { readerRelease, request, poison });
+            Alternative altMain = new Alternative(new Guard[] { readerRelease, request, poison });
             const int MAIN_READER_RELEASE = 0;
             const int MAIN_REQUEST = 1;
             const int MAIN_POISON = 2;
             //const 
-            Alternative altWriteComplete =
-      new Alternative(new Guard[] { writerControl, poison });
+            Alternative altWriteComplete = new Alternative(new Guard[] { writerControl, poison });
             const int WC_WRITER_CONTROL = 0;
             const int WC_POISON = 1;
             //const 
-            Alternative altReadComplete =
-      new Alternative(new Guard[] { readerRelease, poison });
+            Alternative altReadComplete = new Alternative(new Guard[] { readerRelease, poison });
             const int RC_READER_RELEASE = 0;
             const int RC_POISON = 1;
             while (true)
