@@ -71,7 +71,7 @@ namespace CSPlang
 
         public ParThread()
         {
-            _thread = new Thread(new ThreadStart(this.run));
+            _thread = new Thread(run);
 
         }
 
