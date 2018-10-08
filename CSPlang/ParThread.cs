@@ -122,7 +122,7 @@ namespace CSPlang
          * @param process the process to be executed
          * @param cspBarrier the cspBarrier for then end of the PAR
          */
-        public ParThread(IamCSProcess process, CSPBarrier cspBarrier)
+        public ParThread(IamCSProcess process, CSPBarrier cspBarrier) : this() //Added call to main constructor to run a thread - KP
         {
             //setDaemon(true);
             this.IsBackground = true;

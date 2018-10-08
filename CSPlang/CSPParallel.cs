@@ -697,7 +697,7 @@ namespace CSPlang
                 }
                 catch (ProcessInterruptedException e)
                 {
-                    // If this was raised then we must propogate the interrupt signal to other processes
+                    // If this was raised then we must propagate the interrupt signal to other processes
                     lock (sync)
                     {
                         for (int i = 0; i < nThreads; i++)
