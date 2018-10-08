@@ -106,7 +106,7 @@ namespace CSPlang.Alting
 		 *
 		 * @return the object read from the channel
 		 */
-		public Object read()
+		public override Object read()
 		{
 			return channel.read();
 		}
@@ -117,7 +117,7 @@ namespace CSPlang.Alting
 		 * @see ChannelInput.beginExtRead
 		 * @return The object read from the channel
 		 */
-		public Object startRead()
+		public override Object startRead()
 		{
 			return channel.startRead();
 		}
@@ -127,7 +127,7 @@ namespace CSPlang.Alting
 		 * 
 		 * @see ChannelInput.endExtRead
 		 */
-		public void endRead()
+		public override void endRead()
 		{
 			channel.endRead();
 		}
@@ -173,7 +173,7 @@ namespace CSPlang.Alting
 			return channel.disable();
 		}
 
-		public void poison(int strength)
+		public override void poison(int strength)
 		{
 			channel.poison(strength);
 		}

@@ -86,7 +86,7 @@ namespace CSPlang
 
     public abstract class AltingChannelInput : Guard, ChannelInput
     {
-        // nothing alse to add ... except ...
+        // nothing else to add ... except ...
 
         /**
          * Returns whether there is data pending on this channel.
@@ -97,24 +97,15 @@ namespace CSPlang
          * @return state of the channel.
          */
         public abstract Boolean pending();
-        public void poison(int strength)
-        {
-            throw new NotImplementedException();
-        }
 
-        public object read()
-        {
-            throw new NotImplementedException();
-        }
 
-        public object startRead()
-        {
-            throw new NotImplementedException();
-        }
+        public abstract void poison(int strength);
 
-        public void endRead()
-        {
-            throw new NotImplementedException();
-        }
+        public abstract object read();
+
+
+        public abstract object startRead();
+
+        public abstract void endRead();
     }
 }

@@ -32,22 +32,22 @@ namespace CSPlang
             return channel.readerEnable(alt);
         }
 
-        public void endRead()
+        public override void endRead()
         {
             channel.endRead();
         }
 
-        public Object read()
+        public override Object read()
         {
             return channel.read();
         }
 
-        public Object startRead()
+        public override Object startRead()
         {
             return channel.startRead();
         }
 
-        public void poison(int strength)
+        public override void poison(int strength)
         {
             if (strength > immunity)
             {
