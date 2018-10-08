@@ -21,7 +21,7 @@ namespace ConsumerProducer
             while (i > 0)
             {
                 i = (int)inChannel.read();
-                Console.WriteLine("The input was " + i);
+                Console.WriteLine("\nThe input was " + i);
             }
             Console.WriteLine("Finished!");
         }

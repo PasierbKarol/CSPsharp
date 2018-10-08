@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 
 namespace CSPlang
@@ -39,6 +40,8 @@ namespace CSPlang
 
         public override Object read()
         {
+            Debug.WriteLine("Reading channel ", "Karol");
+
             return channel.read();
         }
 

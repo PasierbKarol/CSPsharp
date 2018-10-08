@@ -29,6 +29,7 @@
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Security;
 using System.Threading;
 
@@ -626,6 +627,7 @@ namespace CSPlang
 
                 lock (sync)
                 {
+                    Debug.WriteLine("Resettin g barrier in CSPParallel" , "KAROL");
                     barrier.reset(nProcesses);
                     myProcess = processes[nProcesses - 1];
                     if (processesChanged)
@@ -640,6 +642,8 @@ namespace CSPlang
                             }
                             for (int i = 0; i < nThreads; i++)
                             {
+                                Debug.WriteLine("Resetting processes and barrier in CSPParallel", "KAROL");
+
                                 parThreads[i].reset(processes[i], barrier);
                                 if (priority)
                                 {
@@ -651,6 +655,8 @@ namespace CSPlang
                             }
                             for (int i = nThreads; i < nProcesses - 1; i++)
                             {
+                                Debug.WriteLine("Creating thread and barrier in CSPParallel", "KAROL");
+
                                 parThreads[i] = new ParThread(processes[i], barrier);
                                 
                                 if (priority)
@@ -666,6 +672,8 @@ namespace CSPlang
                         {
                             for (int i = 0; i < nProcesses - 1; i++)
                             {
+                                Debug.WriteLine("Resetting processes and barrier in CSPParallel", "KAROL");
+
                                 parThreads[i].reset(processes[i], barrier);
                                 if (priority)
                                 {
@@ -720,7 +728,7 @@ namespace CSPlang
                 {
                     uncaughtException("jcsp.lang.Parallel", e);
                 }
-
+                Debug.WriteLine("Synchronizing barrier in CSPParallel","KAROL");
                 barrier.sync();
 
             }

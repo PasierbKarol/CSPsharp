@@ -27,6 +27,7 @@
 //////////////////////////////////////////////////////////////////////
 
 
+using System.Diagnostics;
 using CSPlang.Any2;
 using CSPlang.One2;
 using CSPlang.Shared;
@@ -473,6 +474,7 @@ namespace CSPlang
 
         public static One2OneChannel one2one()
         {
+            Debug.WriteLine("Creating channel ","Karol");
             return new One2OneChannelImpl();
         }
 

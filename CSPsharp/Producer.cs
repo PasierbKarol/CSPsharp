@@ -20,7 +20,7 @@ namespace ConsumerProducer
 
             while (i > 0)
             {
-                Console.Write("Enter next number (-100, 100):\t");
+                Console.Write("\nEnter next number (-100, 100):\t");
                 i = Console.Read();
                 outChannel.write(i);
             }
