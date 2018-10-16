@@ -27,6 +27,7 @@
 //////////////////////////////////////////////////////////////////////
 
 using System;
+using System.Diagnostics;
 using System.Threading;
 using CSPlang.Alting;
 using CSPutil;
@@ -129,7 +130,8 @@ namespace CSPlang
      */
     public int read()
     {
-        lock (rwMonitor) {
+        Debug.WriteLine("Int read hold is " + hold);
+            lock (rwMonitor) {
             if (empty)
             {
                 empty = false;
@@ -213,6 +215,8 @@ namespace CSPlang
      */
     public void write(int value)
     {
+        Debug.WriteLine("Int write is " + value);
+        Debug.WriteLine("Int write hold is " + hold);
         lock (rwMonitor) {
             hold = value;
             if (empty)

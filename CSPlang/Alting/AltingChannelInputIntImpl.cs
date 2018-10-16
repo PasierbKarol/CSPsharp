@@ -31,22 +31,22 @@ namespace CSPlang.Alting
             return channel.readerEnable(alt);
         }
 
-        public void endRead()
+        public override void endRead()
         {
             channel.endRead();
         }
 
-        public int read()
+        public override int read()
         {
             return channel.read();
         }
 
-        public int startRead()
+        public override int startRead()
         {
             return channel.startRead();
         }
 
-        public void poison(int strength)
+        public override void poison(int strength)
         {
             if (strength > immunity)
             {

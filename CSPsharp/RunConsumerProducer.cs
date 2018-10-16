@@ -10,7 +10,7 @@ namespace ConsumerProducer
     {
         static void Main(string[] args)
         {
-            var connect = Channel.one2one();
+            var connect = Channel.one2oneInt();
             IamCSProcess[] processList = {new Producer(connect.Out()), new Consumer(connect.In())};
 
             new CSPParallel(processList).run();

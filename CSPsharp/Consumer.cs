@@ -7,9 +7,9 @@ namespace ConsumerProducer
 {
     public class Consumer : IamCSProcess
     {
-        ChannelInput inChannel;
+        ChannelInputInt inChannel;
 
-        public Consumer(ChannelInput inChannel)
+        public Consumer(ChannelInputInt inChannel)
         {
             this.inChannel = inChannel;
         }

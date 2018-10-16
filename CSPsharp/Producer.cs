@@ -7,9 +7,9 @@ namespace ConsumerProducer
 {
     public class Producer : IamCSProcess
     {
-        ChannelOutput outChannel;
+        ChannelOutputInt outChannel;
 
-        public Producer(ChannelOutput outChannel)
+        public Producer(ChannelOutputInt outChannel)
         {
             this.outChannel = outChannel;
         }
@@ -21,8 +21,17 @@ namespace ConsumerProducer
             while (i > 0)
             {
                 Console.Write("\nEnter next number (-100, 100):\t");
-                i = Console.Read();
-                outChannel.write(i);
+                string input = Console.ReadLine();
+
+                if (!int.TryParse(input, out i))
+                {
+                    Console.WriteLine("You have entered invalid number");
+                    continue;                }
+                else
+                {
+
+                    outChannel.write(i);
+                }
             }
         }
     }
