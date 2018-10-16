@@ -37,7 +37,7 @@ namespace CSPlang
 {
 
     /**
-     * This process constructor taks an array of <TT>IamCSProcess</TT>es
+     * This process constructor task an array of <TT>IamCSProcess</TT>es
      * and returns a <TT>IamCSProcess</TT> that is the parallel composition of
      * its process arguments.
      * <P>

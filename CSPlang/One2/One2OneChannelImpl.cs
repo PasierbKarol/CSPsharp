@@ -88,7 +88,7 @@ namespace CSPlang
         private Boolean empty = true;
 
         /** The Alternative class that controls the selection */
-        private Alternative alt;
+        private Alternative alternative;
 
         /** Flag to deal with a spurious wakeup during a write */
         private Boolean spuriousWakeUp = true;
@@ -143,9 +143,9 @@ namespace CSPlang
                 if (empty)
                 {
                     empty = false;
-                    if (alt != null)
+                    if (alternative != null)
                     {
-                        alt.schedule();
+                        alternative.schedule();
                     }
                 }
                 else
@@ -273,7 +273,7 @@ namespace CSPlang
          * <P>
          * <I>Note: this method should only be called by the Alternative class</I>
          *
-         * @param alt the Alternative class which will control the selection
+         * @param alternative the Alternative class which will control the selection
          * @return true if the channel has data that can be read, else false
          */
 
@@ -284,7 +284,7 @@ namespace CSPlang
             {
                 if (empty)
                 {
-                    this.alt = alt;
+                    this.alternative = alt;
                     return false;
                 }
                 else
@@ -307,7 +307,7 @@ namespace CSPlang
             /*synchronized*/
             lock (rwMonitor)
             {
-                alt = null;
+                alternative = null;
                 return !empty;
             }
         }
