@@ -15,6 +15,16 @@ namespace ScalingDevice
         ChannelOutput injector;
 
 
+        public Controller(long testInterval, long computeInterval, int addition, ChannelInput factor, ChannelOutput suspend, ChannelOutput injector)
+        {
+            this.testInterval = testInterval;
+            this.computeInterval = computeInterval;
+            this.addition = addition;
+            this.factor = factor;
+            this.suspend = suspend;
+            this.injector = injector;
+        }
+
         public void run()
         {
             int currentFactor = 0;

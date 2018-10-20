@@ -16,7 +16,16 @@ namespace ScalingDevice
         ChannelInput suspend;
         ChannelInput injector;
 
-
+        public Scale( ChannelInput inChannel,ChannelOutput outChannel, ChannelOutput factor, ChannelInput suspend, ChannelInput injector,int multiplier, int scaling)
+        {
+            this.outChannel = outChannel;
+            this.factor = factor;
+            this.inChannel = inChannel;
+            this.suspend = suspend;
+            this.injector = injector;
+            this.multiplier = multiplier;
+            this.scaling = scaling;
+        }
 
         public void run()
         {
