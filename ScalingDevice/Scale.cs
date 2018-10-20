@@ -37,8 +37,11 @@ namespace ScalingDevice
             const int SUSPENDED_INJECT = 0;
             const int SUSPENDED_IN = 1;
             var timer = new CSTimer();
-            var normalAlt = new ALT( [suspend, timer, inChannel]);
-            var suspendedAlt = new ALT( [injector, inChannel]);
+            Guard[] guardsNormal = {suspend as Guard, timer, inChannel as Guard};
+            Guard[] guardsSuspended = {injector as Guard, inChannel as Guard};
+            List<IamCSProcess> processes = new List<IamCSProcess>{};
+            var normalAlt = new Alternative(guardsNormal);
+            var suspendedAlt = new Alternative(guardsSuspended);
             var timeout = timer.read() + DOUBLE_INTERVAL;
             timer.setAlarm(timeout);
             int inValue;
@@ -62,7 +65,7 @@ namespace ScalingDevice
 
                                 case SUSPENDED_INJECT:
                                     scaling = (int)injector.read();   //this is the resume signal as well;
-                                    Console.WriteLine("Injected scaling is $scaling");
+                                    Console.WriteLine("Injected scaling is " + scaling);
                                     suspended = false;
                                     timeout = timer.read() + DOUBLE_INTERVAL;
                                     timer.setAlarm(timeout);
@@ -85,7 +88,7 @@ namespace ScalingDevice
                         timeout = timer.read() + DOUBLE_INTERVAL;
                         timer.setAlarm(timeout);
                         scaling = scaling * multiplier;
-                        Console.WriteLine("Normal Timer: new scaling is $scaling");
+                        Console.WriteLine("Normal Timer: new scaling is " + scaling);
                         break;
 
 

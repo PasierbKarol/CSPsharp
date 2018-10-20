@@ -37,7 +37,7 @@ namespace ScalingDevice
             injector: newScale.Out ());
 
             GPrint gPrint =  new GPrint(inChannel: scaledData.In (),
-            heading: "Original      Scaled",
+            heading: "Original Scaled",
             delay: 0);
 
             IamCSProcess[] network = {num, fixedDelay, scale, controller, gPrint};

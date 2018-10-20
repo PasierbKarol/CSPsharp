@@ -29,6 +29,7 @@
 
 
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using CSPutil;
 
@@ -1391,5 +1392,9 @@ namespace CSPlang
 			}
 		}
 
+	    public object this[List<IamCSProcess> processes]
+	    {
+	        get { throw new NotImplementedException(); }
+	    }
 	}
 }
