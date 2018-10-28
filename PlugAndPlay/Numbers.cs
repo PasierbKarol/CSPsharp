@@ -5,11 +5,11 @@ namespace PlugAndPlay
 {
     public class Numbers : IamCSProcess
     {
-    private ChannelOutput Out;
+    private ChannelOutput outChannel;
   
-    public Numbers(ChannelOutput Out)
+    public Numbers(ChannelOutput outChannel)
     {
-        this.Out = Out;
+        this.outChannel = outChannel;
     }
 
 
@@ -23,7 +23,7 @@ namespace PlugAndPlay
 
         new CSPParallel(
                 new IamCSProcess[] {
-                    new Delta2(a.In(), b.Out(), Out),
+                    new Delta2(a.In(), b.Out(), outChannel),
                     new Successor(b.In(), c.Out()),
                     new Prefix(0, c.In(), a.Out()) })
             .run();

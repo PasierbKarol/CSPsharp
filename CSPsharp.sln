@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27130.2026
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsumerProducer", "CSPsharp\ConsumerProducer.csproj", "{D8D34E7C-21D1-4E07-BF66-32480675E2C3}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CSPlang", "CSPlang\CSPlang.csproj", "{ECCAD330-EEC9-4EE3-BD71-0652D2F37070}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CSPutil", "CSPutil\CSPutil.csproj", "{B64C8AFF-FE44-479A-9DB1-C5F0DEC982CE}"
@@ -13,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CsharpGroovyCSP", "CsharpGr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ScalingDevice", "ScalingDevice\ScalingDevice.csproj", "{25E8CE17-6950-4B4C-B946-3D56FE4CBEE6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlugAndPlay", "PlugAndPlay\PlugAndPlay.csproj", "{A99A1C1F-EB2E-45E1-9621-80CB1C708C26}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PlugAndPlay", "PlugAndPlay\PlugAndPlay.csproj", "{A99A1C1F-EB2E-45E1-9621-80CB1C708C26}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,10 +19,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{D8D34E7C-21D1-4E07-BF66-32480675E2C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D8D34E7C-21D1-4E07-BF66-32480675E2C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D8D34E7C-21D1-4E07-BF66-32480675E2C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D8D34E7C-21D1-4E07-BF66-32480675E2C3}.Release|Any CPU.Build.0 = Release|Any CPU
 		{ECCAD330-EEC9-4EE3-BD71-0652D2F37070}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{ECCAD330-EEC9-4EE3-BD71-0652D2F37070}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ECCAD330-EEC9-4EE3-BD71-0652D2F37070}.Release|Any CPU.ActiveCfg = Release|Any CPU

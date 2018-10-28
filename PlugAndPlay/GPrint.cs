@@ -18,6 +18,12 @@ namespace PlugAndPlay
             this.delay = delay;
         }
 
+        public GPrint(ChannelInput inChannel, string heading)
+        {
+            this.inChannel = inChannel;
+            this.heading = heading;
+        }
+
         public void run()
         {
             CSTimer timer = new CSTimer();
