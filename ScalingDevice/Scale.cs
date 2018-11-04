@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 using CSPlang;
 
@@ -31,19 +32,27 @@ namespace ScalingDevice
         {
             int SECOND = 1000;
             int DOUBLE_INTERVAL = 5 * SECOND;
+
             const int NORMAL_SUSPEND = 0;
             const int NORMAL_TIMER = 1;
             const int NORMAL_IN = 2;
             const int SUSPENDED_INJECT = 0;
             const int SUSPENDED_IN = 1;
+
             var timer = new CSTimer();
             Guard[] guardsNormal = {suspend as Guard, timer, inChannel as Guard};
             Guard[] guardsSuspended = {injector as Guard, inChannel as Guard};
+
             List<IamCSProcess> processes = new List<IamCSProcess>{};
+
             var normalAlt = new Alternative(guardsNormal);
             var suspendedAlt = new Alternative(guardsSuspended);
             var timeout = timer.read() + DOUBLE_INTERVAL;
+
             timer.setAlarm(timeout);
+            Debug.WriteLine("Scale: timeout " + timeout);
+
+
             int inValue;
             ScaledData result;
 
@@ -74,6 +83,7 @@ namespace ScalingDevice
 
                                 case SUSPENDED_IN:
                                     inValue = (int)inChannel.read();
+                                    Debug.WriteLine("In Value is " + inValue);
                                     result = new ScaledData();
                                     result.original = inValue;
                                     result.scaled = inValue;

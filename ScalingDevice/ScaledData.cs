@@ -13,7 +13,7 @@ namespace ScalingDevice
 
         public String toString()
         {
-            string s = " " + original + "\t\t" + scaled;
+            string s = " " + original.ToString() + "\t\t" + scaled.ToString();
 
             return s;
         }

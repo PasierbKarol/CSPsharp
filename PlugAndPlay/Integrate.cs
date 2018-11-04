@@ -106,9 +106,9 @@ namespace PlugAndPlay
 
             new CSPParallel(new IamCSProcess[]
             {
-            new Delta2(a.In(), Out, b.Out()),
-            new Prefix(0, b.In(), c.Out()),
-            new Plus(In, c.In(), a.Out())
+                new Prefix(0, b.In(), c.Out()), 
+                new Delta2(a.In(), Out, b.Out()),
+                new Plus(In, c.In(), a.Out())
             }).run();
         }
     }

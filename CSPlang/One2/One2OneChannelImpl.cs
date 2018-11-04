@@ -106,7 +106,7 @@ namespace CSPlang
          */
         public AltingChannelInput In()
         {
-            Debug.WriteLine("Getting channel input ", "Karol");
+            //Debug.WriteLine("Getting channel input ", "Karol");
 
             return new AltingChannelInputImpl(this, 0);
         }
@@ -122,7 +122,7 @@ namespace CSPlang
          */
         public ChannelOutput Out()
         {
-            Debug.WriteLine("Getting channel output", "Karol");
+            //Debug.WriteLine("Getting channel output", "Karol");
 
             return new ChannelOutputImpl(this, 0);
         }

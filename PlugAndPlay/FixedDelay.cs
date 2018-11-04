@@ -27,6 +27,7 @@
 //////////////////////////////////////////////////////////////////////
 
 using System;
+using System.Diagnostics;
 using CSPlang;
 
 namespace PlugAndPlay
@@ -108,6 +109,7 @@ namespace PlugAndPlay
             while (true)
             {
                 Object o = In.read();
+                //Debug.WriteLine("Fixed delay sleeping for " + delayTime);
                 tim.sleep(delayTime);
                 Out.write(o);
             }

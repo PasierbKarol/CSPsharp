@@ -31,14 +31,14 @@ namespace ScalingDevice
 
             Controller controller =  new Controller(testInterval: 11000,
                 computeInterval: 3000,
-                addition: -1,
+                addition: 1,
                 factor: oldScale.In (),
             suspend: pause.Out (),
             injector: newScale.Out ());
 
             GPrint gPrint =  new GPrint(inChannel: scaledData.In (),
             heading: "Original Scaled",
-            delay: 0);
+            delay: 1000);
 
             IamCSProcess[] network = {num, fixedDelay, scale, controller, gPrint};
 

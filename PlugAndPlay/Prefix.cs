@@ -27,6 +27,7 @@
 //////////////////////////////////////////////////////////////////////
 
 using System;
+using System.Diagnostics;
 using CSPlang;
 
 namespace PlugAndPlay
@@ -71,37 +72,39 @@ namespace PlugAndPlay
      */
     public sealed class Prefix : IamCSProcess
     {
-    /** The input Channel */
-    private ChannelInput In;
+        /** The input Channel */
+        private ChannelInput In;
 
-    /** The output Channel */
-    private ChannelOutput Out;
+        /** The output Channel */
+        private ChannelOutput Out;
 
-    /** The initial Object to be sent down the Channel. */
-    private Object o;
+        /** The initial Object to be sent down the Channel. */
+        private Object o;
 
-    /**
-     * Construct a new Prefix process with the input Channel in and the
-     * output Channel out.
-     *
-     * @param o the initial Object to be sent down the Channel.
-     * @param in the input Channel
-     * @param out the output Channel
-     */
-    public Prefix(Object o, ChannelInput In, ChannelOutput Out)
-    {
-        this.In = In;
-        this.Out = Out;
-        this.o = o;
-    }
+        /**
+         * Construct a new Prefix process with the input Channel in and the
+         * output Channel out.
+         *
+         * @param o the initial Object to be sent down the Channel.
+         * @param in the input Channel
+         * @param out the output Channel
+         */
+        public Prefix(Object o, ChannelInput In, ChannelOutput Out)
+        {
+            this.In = In;
+            this.Out = Out;
+            this.o = o;
+        }
 
-    /**
-     * The main body of this process.
-     */
-    public void run()
-    {
-        Out.write(o);
-        new Identity(In, Out).run();
-    }
+        /**
+         * The main body of this process.
+         */
+        public void run()
+        {
+            Out.write(o);
+            //Debug.WriteLine("Prefix  object is " + o.ToString());
+
+            new Identity(In, Out).run();
+        }
     }
 }

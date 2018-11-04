@@ -130,7 +130,7 @@ namespace CSPlang
      */
     public int read()
     {
-        Debug.WriteLine("Int read hold is " + hold);
+        //Debug.WriteLine("Int read hold is " + hold);
             lock (rwMonitor) {
             if (empty)
             {
@@ -215,8 +215,8 @@ namespace CSPlang
      */
     public void write(int value)
     {
-        Debug.WriteLine("Int write is " + value);
-        Debug.WriteLine("Int write hold is " + hold);
+        //Debug.WriteLine("Int write is " + value);
+       // Debug.WriteLine("Int write hold is " + hold);
         lock (rwMonitor) {
             hold = value;
             if (empty)

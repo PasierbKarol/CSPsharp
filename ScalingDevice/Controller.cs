@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 using CSPlang;
 
@@ -31,15 +32,27 @@ namespace ScalingDevice
             var timer = new CSTimer();
             var timeout = timer.read();
 
+            Console.WriteLine("Controller: current factor " + currentFactor);
+            Console.WriteLine("Controller: test interval" + testInterval);
+            Console.WriteLine("Controller: compute intervcal " + computeInterval);
+            Console.WriteLine("Controller: timeout " + timeout);
+
             while (true)
             {
                 timeout = timeout + testInterval;
                 timer.after(timeout);
+                Debug.WriteLine("Controller splept " + timeout);
                 suspend.write(0);
                 currentFactor = (int)factor.read();
+                Debug.WriteLine("Controller currentFactor " + currentFactor);
                 currentFactor = currentFactor + addition;
+                Debug.WriteLine("Controller currentFactor + addition " + currentFactor);
                 timer.sleep(computeInterval);
+                Debug.WriteLine("Controller splept " + computeInterval);
+
                 injector.write(currentFactor);
+                Debug.WriteLine("Controller wrote to Injector ");
+
             }
         }
     }

@@ -16,7 +16,7 @@ namespace CSPlang
 
         public void write(Object _object)
         {
-            Debug.WriteLine("Writing channel output " + _object.ToString(), "Karol");
+            //Debug.WriteLine("Writing channel output " + _object.ToString(), "Karol");
 
             channel.write(_object);
 

@@ -415,7 +415,7 @@ namespace CSPlang
          */
         public CSPBarrier(/*final*/ int nEnrolled)
         {
-            Debug.WriteLine("Called CSPBarrier from ParThread", "KAROL");
+            //Debug.WriteLine("Called CSPBarrier from ParThread", "KAROL");
             if (nEnrolled < 0)
             {
                 throw new ArgumentException(
@@ -424,7 +424,7 @@ namespace CSPlang
             }
             this.nEnrolled = nEnrolled;
             countDown = nEnrolled;
-           Debug.WriteLine("CSPBarrier.constructor : " + nEnrolled + ", " + countDown, "KAROL");
+           //Debug.WriteLine("CSPBarrier.constructor : " + nEnrolled + ", " + countDown, "KAROL");
         }
 
         /**
@@ -452,7 +452,7 @@ namespace CSPlang
                 this.nEnrolled = nEnrolled;
                 countDown = nEnrolled;
             }
-            Debug.WriteLine("CSPBarrier.reset : " + nEnrolled + ", " + countDown, "KAROL");
+            //Debug.WriteLine("CSPBarrier.reset : " + nEnrolled + ", " + countDown, "KAROL");
         }
 
         /**
@@ -462,7 +462,7 @@ namespace CSPlang
          */
         public void sync()
         {
-            Debug.WriteLine("Before locking Barrier", "KAROL");
+            //Debug.WriteLine("Before locking Barrier", "KAROL");
             lock (barrierLock) {
                 countDown--;
                 //System.out.println ("CSPBarrier.sync : " + nEnrolled + ", " + countDown);
@@ -493,7 +493,7 @@ namespace CSPlang
                     countDown = nEnrolled;
                     evenOddCycle = !evenOddCycle;         // to detect spurious wakeups  :(
 
-                    Debug.WriteLine("CSPBarrier.sync : " + nEnrolled + ", " + countDown, "KAROL");
+                    //Debug.WriteLine("CSPBarrier.sync : " + nEnrolled + ", " + countDown, "KAROL");
                     Monitor.PulseAll(barrierLock);
                 }
             }
@@ -563,7 +563,7 @@ namespace CSPlang
             lock (barrierLock) {
                 nEnrolled--;
                 countDown--;
-                Debug.WriteLine("CSPBarrier.resign : " + nEnrolled + ", " + countDown, "KAROL");
+                //Debug.WriteLine("CSPBarrier.resign : " + nEnrolled + ", " + countDown, "KAROL");
                 if (countDown == 0)
                 {
                     countDown = nEnrolled;

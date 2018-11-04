@@ -40,7 +40,7 @@ namespace CSPlang
 
         public override Object read()
         {
-            Debug.WriteLine("Reading channel ", "Karol");
+            //Debug.WriteLine("Reading channel ", "Karol");
 
             return channel.read();
         }

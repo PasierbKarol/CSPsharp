@@ -29,10 +29,11 @@ namespace PlugAndPlay
             CSTimer timer = new CSTimer();
             while (true)
             {
+                //Console.WriteLine("Inside GPrint timer");
                 if (this.delay !=0)
                 {
                     timer.after(delay);
-                    Console.WriteLine(heading.Split(' ')[0] + " \t" + heading.Split(' ')[1]);
+                    Console.WriteLine(heading.Split(' ')[0] + " \t" + inChannel.read());
                 }
             }
         

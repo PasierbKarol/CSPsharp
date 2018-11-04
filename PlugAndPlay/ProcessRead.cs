@@ -27,19 +27,25 @@
 //////////////////////////////////////////////////////////////////////
 
 using System;
-using System.Diagnostics;
 using CSPlang;
 
 namespace PlugAndPlay
 {
-
     /**
-     * Adds <I>one</I> to each <TT>Integer</TT> in the stream flowing through.
+     * Reads one <TT>Object</TT> from its input channel.
      * <H2>Process Diagram</H2>
-     * <p><img src="doc-files\Successor1.gif"></p>
+     * <p><img src="doc-files\ProcessRead1.gif"></p>
      * <H2>Description</H2>
-     * <TT>Successor</TT> increments each Integer that flows through it.
+     * <TT>ProcessRead</TT> is a process that performs a single read
+     * from its <TT>in</TT> channel and then terminates.  It stores
+     * the read <TT>Object</TT> in the public <TT>value</TT> field of
+     * this process (which is safe to examine <I>after</I> the process
+     * has terminated and <I>before</I> it is next run).
      * <P>
+     * <TT>ProcessRead</TT> declaration, construction and use should normally
+     * be localised within a single method -- so we feel no embarassment about
+     * its public field.  Its only (envisaged) purpose is as described in
+     * the example below.
      * <H2>Channel Protocols</H2>
      * <TABLE BORDER="2">
      *   <TR>
@@ -47,76 +53,61 @@ namespace PlugAndPlay
      *   </TR>
      *   <TR>
      *     <TH>in</TH>
-     *     <TD>java.lang.Number</TD>
+     *     <TD>java.lang.Object</TD>
      *     <TD>
-     *       The Channel can accept data from any subclass of Number.   All values
-     *       will be converted to ints.
-     *     </TD>
-     *   </TR>
-     *   <TR>
-     *     <TH COLSPAN="3">Output Channels</TH>
-     *   </TR>
-     *   <TR>
-     *     <TH>out</TH>
-     *     <TD>java.lang.Integer</TD>
-     *     <TD>
-     *       The output will always be of type Integer.
+     *       The in Channel can accept data of any Class.
      *     </TD>
      *   </TR>
      * </TABLE>
-     * <P>
      * <H2>Example</H2>
-     * The following example shows how to use the Successor process in a small program.
-     * The program also uses some of the other building block processes. The
-     * program generates a sequence of numbers and adds one to them and prints
-     * this on the screen.
-     *
+     * <TT>ProcessRead</TT> is designed to simplify <I>reading in parallel</I>
+     * from channels.  Make as many instances as there
+     * are channels, binding each instance to a different channel,
+     * together with a {@link jcsp.lang.Parallel} object in which to run them:
      * <PRE>
-     * import jcsp.lang.*;
-     * import jcsp.util.*;
-     * <I></I>
-     * public class SuccessorExample {
-     * <I></I>
-     *   public static void main (String[] argv) {
-     * <I></I>
-     *     One2OneChannel a = Channel.createOne2One ();
-     *     One2OneChannel b = Channel.createOne2One ();
-     * <I></I>
-     *     new Parallel (
-     *       new CSProcess[] {
-     *         new Numbers (a.out ()),
-     *         new Successor (a.in (), b.out ()),
-     *         new Printer (b.in ())
-     *       }
-     *     ).run ();
-     * <I></I>
-     *   }
-     * <I></I>
-     * }
+     *   ChannelInput in0, in1;
+     *   .
+     *   .
+     *   .
+     *   ProcessRead read0 = new ProcessRead (in0);
+     *   ProcessRead read1 = new ProcessRead (in1);
+     *   CSProcess parRead01 = new Parallel (new CSProcess[] {in0, in1});
      * </PRE>
+     * The above is best done <I>once</I>, before any looping over the
+     * parallel read commences.  A parallel read can now be performed
+     * at any time (and any number of times) by executing:
+     * <PRE>
+     *     parRead01.run ();
+     * </PRE>
+     * This terminates when, and only when, both reads have completed --
+     * the events may occur in <I>any</I> order.  The values read may then
+     * be found in <TT>read0.value</TT> and <TT>read1.value</TT>, where they
+     * may be safely accessed up until the time that <TT>parRead01</TT> is run again.
+     *
+     * @see jcsp.lang.Parallel
+     * @see jcsp.plugNplay.ProcessWrite
+     * @see jcsp.plugNplay.ints.ProcessReadInt
+     * @see jcsp.plugNplay.ints.ProcessWriteInt
      *
      * @author P.D.Austin
      */
 
-    public sealed class Successor : IamCSProcess
+    public class ProcessRead : IamCSProcess
     {
-        /** The input Channel */
-        private readonly ChannelInput In;
+        /** The <TT>Object</TT> read from the channel */
+        public Object value;
 
-        /** The output Channel */
-        private readonly ChannelOutput Out;
+        /** The channel from which to read */
+        private ChannelInput inChannel;
 
         /**
-         * Construct a new Successor process with the input Channel in and the
-         * output Channel out.
+         * Construct a new <TT>ProcessRead</TT>.
          *
-         * @param in the input Channel.
-         * @param out the output Channel.
+         * @param in the channel from which to read
          */
-        public Successor(/*final*/ ChannelInput In, /*final*/ ChannelOutput Out)
+        public ProcessRead(ChannelInput inChannel)
         {
-            this.In = In;
-            this.Out = Out;
+            this.inChannel = inChannel;
         }
 
         /**
@@ -124,13 +115,7 @@ namespace PlugAndPlay
          */
         public void run()
         {
-            while (true)
-            {
-                /*final*/
-                int i = Int32.Parse(In.read().ToString());
-                Out.write(i + 1);
-                //Debug.WriteLine("Successor wrote " +  (i +1));
-            }
+            value = inChannel.read();
         }
     }
 }
