@@ -168,7 +168,7 @@ namespace CSPlang
          */
         public long read()
         {
-            return CSPTimeMillis.CurrentTimeMillis();
+            return 0;//CSPTimeMillis.CurrentTimeMillis();
         }
 
         /**
@@ -178,7 +178,7 @@ namespace CSPlang
          */
         public void after(/*final*/ long msecs)
         {
-            /*final*/ long delay = msecs - CSPTimeMillis.CurrentTimeMillis();
+            /*final*/ long delay = msecs;// - DateTime.Now.Millisecond; //CSPTimeMillis.CurrentTimeMillis();
             if (delay > 0)
                 try
                 {

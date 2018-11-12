@@ -9,12 +9,15 @@ namespace CSPutil
 
         public static long CurrentTimeMillis()
         {
-            return (long)(DateTime.UtcNow - Jan1st1970).TotalMilliseconds;
+            //long test = (long)(DateTime.UtcNow - Jan1st1970).TotalMilliseconds;
+            long test = (long)DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+            return test;
         }
 
         public static int CurrentTimeMillisInt()
         {
-            return (int)(DateTime.UtcNow - Jan1st1970).TotalMilliseconds;
+            int test = (int)(DateTime.UtcNow - Jan1st1970).TotalMilliseconds;
+            return test;
         }
     }
 }
