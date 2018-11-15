@@ -184,10 +184,10 @@ namespace PlugAndPlay
     {
 
         /** The frame for the buttons */
-        private readonly ActiveClosingFrame activeClosingFrame;
+        //private readonly ActiveClosingFrame activeClosingFrame;
 
         /** The buttons */
-        private readonly ActiveButton[] button;
+        //private readonly ActiveButton[] button;
 
         /**
          * Construct a framed button array process.
@@ -245,43 +245,43 @@ namespace PlugAndPlay
 
             // OK - now build ...
 
-            activeClosingFrame = new ActiveClosingFrame(title);
-            /*final*/ ActiveFrame activeFrame = activeClosingFrame.getActiveFrame();
+        //    activeClosingFrame = new ActiveClosingFrame(title);
+        //    /*final*/ ActiveFrame activeFrame = activeClosingFrame.getActiveFrame();
 
-            button = new ActiveButton[nButtons];
-            for (int i = 0; i < nButtons; i++)
-            {
-                button[i] = new ActiveButton(configure[i],  channelEvent[i]);
-            }
+        //    button = new ActiveButton[nButtons];
+        //    for (int i = 0; i < nButtons; i++)
+        //    {
+        //        button[i] = new ActiveButton(configure[i],  channelEvent[i]);
+        //    }
 
-            activeFrame.setSize(pixAcross, pixDown);
-            if (horizontal)
-            {
-                activeFrame.setLayout(new GridLayout(1, nButtons));
-            }
-            else
-            {
-                activeFrame.setLayout(new GridLayout(nButtons, 1));
-            }
+        //    activeFrame.setSize(pixAcross, pixDown);
+        //    if (horizontal)
+        //    {
+        //        activeFrame.setLayout(new GridLayout(1, nButtons));
+        //    }
+        //    else
+        //    {
+        //        activeFrame.setLayout(new GridLayout(nButtons, 1));
+        //    }
 
-            for (int i = 0; i < button.Length; i++)
-            {
-                activeFrame.add(button[i]);
-            }
+        //    for (int i = 0; i < button.Length; i++)
+        //    {
+        //        activeFrame.add(button[i]);
+        //    }
 
-            activeFrame.setVisible(true);
+        //    activeFrame.setVisible(true);
 
         }
 
         public void run()
         {
-            new CSPParallel(
-                new IamCSProcess[]
-                {
-                    activeClosingFrame,
-                    new CSPParallel(button)
-                }
-            ).run();
+            //new CSPParallel(
+            //    new IamCSProcess[]
+            //    {
+            //        activeClosingFrame,
+            //        new CSPParallel(button)
+            //    }
+            //).run();
         }
 
     }
