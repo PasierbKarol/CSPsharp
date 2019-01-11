@@ -29,8 +29,8 @@ namespace ScalingDevice
             multiplier: 2,
             scaling: 2);
 
-            Controller controller =  new Controller(testInterval: 11000,
-                computeInterval: 3000,
+            Controller controller =  new Controller(testInterval: 7000,
+                computeInterval: 11000,
                 addition: 1,
                 factor: oldScale.In (),
             suspend: pause.Out (),

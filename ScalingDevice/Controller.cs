@@ -9,7 +9,7 @@ namespace ScalingDevice
     class Controller : IamCSProcess
     {
         long testInterval = 11000;
-        long computeInterval = 2000;
+        long computeInterval = 7000;
         int addition = 1;
         ChannelInput factor;
         ChannelOutput suspend;
@@ -32,26 +32,20 @@ namespace ScalingDevice
             var timer = new CSTimer();
             var timeout = timer.read();
 
-            Console.WriteLine("Controller: current factor " + currentFactor);
-            Console.WriteLine("Controller: test interval" + testInterval);
-            Console.WriteLine("Controller: compute intervcal " + computeInterval);
-            Console.WriteLine("Controller: timeout " + timeout);
-
             while (true)
             {
                 timeout = timeout + testInterval;
+                Debug.WriteLine("Controller timeout sent to after " + timeout);
                 timer.after(timeout);
-                Debug.WriteLine("Controller splept " + timeout);
                 suspend.write(0);
                 currentFactor = (int)factor.read();
-                Debug.WriteLine("Controller currentFactor " + currentFactor);
+                
                 currentFactor = currentFactor + addition;
-                Debug.WriteLine("Controller currentFactor + addition " + currentFactor);
+               // Debug.WriteLine("Controller currentFactor + addition " + currentFactor);
                 timer.sleep(computeInterval);
-                Debug.WriteLine("Controller splept " + computeInterval);
 
                 injector.write(currentFactor);
-                Debug.WriteLine("Controller wrote to Injector ");
+                //Debug.WriteLine("Controller wrote to Injector ");
 
             }
         }

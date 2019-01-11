@@ -27,6 +27,7 @@
 //////////////////////////////////////////////////////////////////////
 
 using System;
+using System.Diagnostics;
 using System.Threading;
 using CSPutil;
 
@@ -156,7 +157,7 @@ namespace CSPlang
          * @deprecated Use {@link #setAlarm(long)} - this name caused confusion with
          * the idea of setting the current time (a concept that is not supported).
          */
-        public void set(/*final*/ long msecs)
+        public void setAbsoluteTimeout(/*final*/ long msecs)
         {
             this.msecs = msecs;
         }
@@ -168,7 +169,7 @@ namespace CSPlang
          */
         public long read()
         {
-            return 0;//CSPTimeMillis.CurrentTimeMillis();
+            return CSPTimeMillis.CurrentTimeMillis();
         }
 
         /**
@@ -176,12 +177,16 @@ namespace CSPlang
          *
          * @param msecs the absolute time awaited.  Note: if this time has already been reached, this returns straight away.
          */
-        public void after(/*final*/ long msecs)
+        public void after(/*final*/ long msecsReceived)
         {
-            /*final*/ long delay = msecs;// - DateTime.Now.Millisecond; //CSPTimeMillis.CurrentTimeMillis();
+            Debug.WriteLine("After value received before sleep is " + msecsReceived);
+            long timeRead = CSPTimeMillis.CurrentTimeMillis();
+            /*final*/ long delay = msecsReceived - timeRead;
+            Debug.WriteLine("After delay before sleep is " + delay);
             if (delay > 0)
                 try
                 {
+                    Debug.WriteLine("After delay for sleep is " + delay);
                     Thread.Sleep((int)delay);
                 }
                 catch (ThreadInterruptedException  e)
@@ -201,6 +206,7 @@ namespace CSPlang
             if (msecs > 0)
                 try
                 {
+                    //Debug.WriteLine("SCTimer sleep Sleeping for " + msecs);
                     Thread.Sleep((int)msecs);
                 }
                 catch (ThreadInterruptedException  e)
@@ -217,6 +223,8 @@ namespace CSPlang
          */
         public override Boolean enable(Alternative alt)
         {
+            //Debug.WriteLine("CSTimer enable guard time is " + (msecs - CSPTimeMillis.CurrentTimeMillis()));
+
             if ((msecs - CSPTimeMillis.CurrentTimeMillis()) <= Spurious.earlyTimeout)
             {
                 return true;

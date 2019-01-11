@@ -7,14 +7,14 @@ namespace PlugAndPlay
     public sealed class Delta2 : IamCSProcess
     {
         private ChannelInput In;
-        private ChannelOutput Out0;
-        private ChannelOutput Out1;
+        private ChannelOutput out1;
+        private ChannelOutput out2;
 
-        public Delta2(ChannelInput In, ChannelOutput out0, ChannelOutput out1)
+        public Delta2(ChannelInput In, ChannelOutput Out1, ChannelOutput Out2)
         {
             this.In = In;
-            this.Out0 = out0;
-            this.Out1 = out1;
+            this.out1 = Out1;
+            this.out2 = Out2;
         }
 
 
@@ -22,7 +22,7 @@ namespace PlugAndPlay
 
         public void run()
         {
-            ProcessWrite[] parWrite = { new ProcessWrite(Out0), new ProcessWrite(Out1) };
+            ProcessWrite[] parWrite = { new ProcessWrite(out1), new ProcessWrite(out2) };
             CSPParallel par = new CSPParallel(parWrite);
             while (true)
             {

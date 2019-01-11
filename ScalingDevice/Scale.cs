@@ -41,9 +41,7 @@ namespace ScalingDevice
 
             var timer = new CSTimer();
             Guard[] guardsNormal = {suspend as Guard, timer, inChannel as Guard};
-            Guard[] guardsSuspended = {injector as Guard, inChannel as Guard};
-
-            List<IamCSProcess> processes = new List<IamCSProcess>{};
+            Guard[] guardsSuspended = {injector as Guard, inChannel as Guard};            
 
             var normalAlt = new Alternative(guardsNormal);
             var suspendedAlt = new Alternative(guardsSuspended);
@@ -58,6 +56,7 @@ namespace ScalingDevice
 
             while (true)
             {
+                //Debug.WriteLine("Scaling is " + scaling);
                 switch (normalAlt.priSelect())
                 {
 
@@ -78,16 +77,16 @@ namespace ScalingDevice
                                     suspended = false;
                                     timeout = timer.read() + DOUBLE_INTERVAL;
                                     timer.setAlarm(timeout);
+                                    Debug.WriteLine("Scale suspended inject timeout " + timeout);
                                     break;
                 
 
                                 case SUSPENDED_IN:
                                     inValue = (int)inChannel.read();
-                                    Debug.WriteLine("In Value is " + inValue);
                                     result = new ScaledData();
-                                    result.original = inValue;
-                                    result.scaled = inValue;
-                                    outChannel.write(result);
+                                    result.Original = inValue;
+                                    result.Scaled = inValue;
+                                    outChannel.write(result.ToString());
                                     break;
                             }  // end-switch
                         } //end-while
@@ -105,9 +104,9 @@ namespace ScalingDevice
                     case NORMAL_IN:
                         inValue = (int)inChannel.read();
                         result = new ScaledData();
-                        result.original = inValue;
-                        result.scaled = inValue * scaling;
-                        outChannel.write(result);
+                        result.Original = inValue;
+                        result.Scaled = inValue * scaling;
+                        outChannel.write(result.ToString());
                         break;
 
 

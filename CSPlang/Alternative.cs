@@ -30,6 +30,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading;
 using CSPutil;
 
@@ -686,6 +687,7 @@ namespace CSPlang
 						if (timeout)
 						{
 							long delay = msecs - /*System.currentTimeMillis()*/ CSPTimeMillis.CurrentTimeMillis();
+							Debug.WriteLine("Alternative pri select delay for sleep is " + delay);
 							if (delay > Spurious.earlyTimeout)
 							{
 								Monitor.Wait(delay);
@@ -707,6 +709,8 @@ namespace CSPlang
 								while (state == waiting)
 								{
 									delay = msecs - /*System.currentTimeMillis()*/ CSPTimeMillis.CurrentTimeMillis();
+									Debug.WriteLine("Alternative pri select delay for sleep is " + delay);
+
 									if (delay > Spurious.earlyTimeout)
 									{
 										if (Spurious.logging)
@@ -1122,12 +1126,16 @@ namespace CSPlang
 						if (timeout)
 						{
 							long delay = msecs - /*System.currentTimeMillis()*/ CSPTimeMillis.CurrentTimeMillis();
+							Debug.WriteLine("Alternative pri select precon delay for sleep is " + delay);
+
 							if (delay > Spurious.earlyTimeout)
 							{
 								Monitor.Wait(delay);
 								while (state == waiting)
 								{
 									delay = msecs - /*System.currentTimeMillis()*/ CSPTimeMillis.CurrentTimeMillis();
+									Debug.WriteLine("Alternative pri select orecon delay for sleep is " + delay);
+
 									if (delay > Spurious.earlyTimeout)
 									{
 										if (Spurious.logging)
@@ -1392,9 +1400,9 @@ namespace CSPlang
 			}
 		}
 
-	    public object this[List<IamCSProcess> processes]
-	    {
-	        get { throw new NotImplementedException(); }
-	    }
+		public object this[List<IamCSProcess> processes]
+		{
+			get { throw new NotImplementedException(); }
+		}
 	}
 }
