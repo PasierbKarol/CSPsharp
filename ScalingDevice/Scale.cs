@@ -40,7 +40,7 @@ namespace ScalingDevice
             const int SUSPENDED_IN = 1;
 
             var timer = new CSTimer();
-            Guard[] guardsNormal = {suspend as Guard, timer, inChannel as Guard};
+            Guard[] guardsNormal = {suspend as Guard, timer as Guard, inChannel as Guard};
             Guard[] guardsSuspended = {injector as Guard, inChannel as Guard};            
 
             var normalAlt = new Alternative(guardsNormal);
@@ -48,15 +48,12 @@ namespace ScalingDevice
             var timeout = timer.read() + DOUBLE_INTERVAL;
 
             timer.setAlarm(timeout);
-            Debug.WriteLine("Scale: timeout " + timeout);
-
 
             int inValue;
             ScaledData result;
 
             while (true)
             {
-                //Debug.WriteLine("Scaling is " + scaling);
                 switch (normalAlt.priSelect())
                 {
 
@@ -64,7 +61,7 @@ namespace ScalingDevice
                         suspend.read();         // its a signal, no data content;
                         factor.write(scaling);   //reply with current value of scaling;
                         bool suspended = true;
-                        Console.WriteLine("Suspended");
+                        Console.WriteLine("\n\tSuspended");
                         while (suspended)
                         {
 
@@ -73,11 +70,10 @@ namespace ScalingDevice
 
                                 case SUSPENDED_INJECT:
                                     scaling = (int)injector.read();   //this is the resume signal as well;
-                                    Console.WriteLine("Injected scaling is " + scaling);
+                                    Console.WriteLine("\n\tInjected scaling is " + scaling);
                                     suspended = false;
                                     timeout = timer.read() + DOUBLE_INTERVAL;
                                     timer.setAlarm(timeout);
-                                    Debug.WriteLine("Scale suspended inject timeout " + timeout);
                                     break;
                 
 
@@ -97,7 +93,7 @@ namespace ScalingDevice
                         timeout = timer.read() + DOUBLE_INTERVAL;
                         timer.setAlarm(timeout);
                         scaling = scaling * multiplier;
-                        Console.WriteLine("Normal Timer: new scaling is " + scaling);
+                        Console.WriteLine("\n\tNormal Timer: new scaling is " + scaling);
                         break;
 
 
@@ -108,8 +104,6 @@ namespace ScalingDevice
                         result.Scaled = inValue * scaling;
                         outChannel.write(result.ToString());
                         break;
-
-
                 } //end-switch
             }
         }

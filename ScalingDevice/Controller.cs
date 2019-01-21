@@ -35,18 +35,14 @@ namespace ScalingDevice
             while (true)
             {
                 timeout = timeout + testInterval;
-                Debug.WriteLine("Controller timeout sent to after " + timeout);
                 timer.after(timeout);
                 suspend.write(0);
                 currentFactor = (int)factor.read();
                 
                 currentFactor = currentFactor + addition;
-               // Debug.WriteLine("Controller currentFactor + addition " + currentFactor);
                 timer.sleep(computeInterval);
 
                 injector.write(currentFactor);
-                //Debug.WriteLine("Controller wrote to Injector ");
-
             }
         }
     }

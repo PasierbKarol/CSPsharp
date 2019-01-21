@@ -27,7 +27,6 @@
 //////////////////////////////////////////////////////////////////////
 
 
-
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -569,7 +568,6 @@ namespace CSPlang
 
 	public class Alternative
 	{
-
 		/** The monitor synchronizing the writers and alting reader  - K.P. */
 		//Apparently this has to be Monitor class to have required functionality - K.P.: https://stackoverflow.com/questions/209281/c-sharp-equivalent-to-javas-wait-and-notify 
 		protected Object altMonitor = new Object();
@@ -588,11 +586,11 @@ namespace CSPlang
 		private readonly Guard[] guard;
 
 		/** The index of the guard with highest priority for the next select. */
-		private int favourite = 0;  // invariant: 0 <= favourite < guard.Length
+		private int favourite = 0; // invariant: 0 <= favourite < guard.Length
 
 		/** The index of the selected guard. */
-		private int selected;       // after the enable/disable sequence :
-									//    0 <= selected < guard.Length
+		private int selected; // after the enable/disable sequence :
+		//    0 <= selected < guard.Length
 
 		private readonly int NONE_SELECTED = -1;
 
@@ -648,6 +646,7 @@ namespace CSPlang
 					return;
 				}
 			}
+
 			barrierPresent = false;
 		}
 
@@ -658,7 +657,7 @@ namespace CSPlang
 		 */
 		public /*sealed*/ int select()
 		{
-			return fairSelect();  // a legal implementation of arbitrary choice!
+			return fairSelect(); // a legal implementation of arbitrary choice!
 		}
 
 		/**
@@ -666,7 +665,7 @@ namespace CSPlang
 		 * until one of the guards becomes ready.  If more than one is ready,
 		 * the one with the lowest index is selected.
 		 */
-		public /*readonly*/  int priSelect()
+		public /*readonly*/ int priSelect()
 		{
 			// if (barrierPresent) {
 			//   throw new AlternativeError (
@@ -684,75 +683,23 @@ namespace CSPlang
 					state = waiting;
 					try
 					{
-						if (timeout)
+						Monitor.Wait(altMonitor);
+						while (state == waiting)
 						{
-							long delay = msecs - /*System.currentTimeMillis()*/ CSPTimeMillis.CurrentTimeMillis();
-							Debug.WriteLine("Alternative pri select delay for sleep is " + delay);
-							if (delay > Spurious.earlyTimeout)
-							{
-								Monitor.Wait(delay);
-								/*
-										  while ((state == waiting) &&
-												 ((delay = (msecs - System.currentTimeMillis ()))
-											  > Spurious.earlyTimeout)) {
-												if (Spurious.logging) {
-											  SpuriousLog.record (SpuriousLog.AlternativeSelectWithTimeout);
-											}
-											Monitor.wait (delay);
-										  }
-										  if ((state == waiting) && (delay > 0)) {
-											if (Spurious.logging) {
-											  SpuriousLog.incEarlyTimeouts ();
-											}
-											  }
-								*/
-								while (state == waiting)
-								{
-									delay = msecs - /*System.currentTimeMillis()*/ CSPTimeMillis.CurrentTimeMillis();
-									Debug.WriteLine("Alternative pri select delay for sleep is " + delay);
-
-									if (delay > Spurious.earlyTimeout)
-									{
-										if (Spurious.logging)
-										{
-											SpuriousLog.record(SpuriousLog.AlternativeSelectWithTimeout);
-										}
-										Monitor.Wait(delay);
-									}
-									else
-									{
-										if ((delay > 0) && (Spurious.logging))
-										{
-											SpuriousLog.incEarlyTimeouts();
-										}
-										break;
-									}
-								}
-								// System.out.println (state + " [" + delay + "]");
-							}
-						}
-						else
-						{
-							Monitor.Wait(altMonitor); //Guessing what should be here. Originall it was altMonitor.wait () - KP
-							while (state == waiting)
-							{
-								if (Spurious.logging)
-								{
-									SpuriousLog.record(SpuriousLog.AlternativeSelect);
-								}
-								Monitor.Wait(altMonitor); //Guessing what should be here. Was empty
-							}
+							Monitor.Wait(altMonitor);
 						}
 					}
-					catch (/*InterruptedException*/  ThreadInterruptedException e)
+					catch ( /*InterruptedException*/ ThreadInterruptedException e)
 					{
 						throw new ProcessInterruptedException(
-					  "*** Thrown from Alternative.priSelect ()\n" + e.ToString()
-					);
+							"*** Thrown from Alternative.priSelect ()\n" + e.ToString()
+						);
 					}
+
 					state = ready;
 				}
 			}
+
 			disableGuards();
 			state = inactive;
 			timeout = false;
@@ -766,7 +713,7 @@ namespace CSPlang
 		 * ready.  <I>Implementation note: the last guard serviced has the lowest
 		 * priority next time around.</I>
 		 */
-		public /*readonly*/  int fairSelect()
+		public /*readonly*/ int fairSelect()
 		{
 			state = enabling;
 			enableGuards();
@@ -813,6 +760,7 @@ namespace CSPlang
 										{
 											SpuriousLog.record(SpuriousLog.AlternativeSelectWithTimeout);
 										}
+
 										Monitor.Wait(delay);
 									}
 									else
@@ -821,10 +769,12 @@ namespace CSPlang
 										{
 											SpuriousLog.incEarlyTimeouts();
 										}
+
 										break;
 									}
 								}
 							}
+
 							//   long then = System.currentTimeMillis ();
 							//   System.out.println ("*** fairSelect: " + msecs +
 							//                       ", " + now + ", " + delay +
@@ -839,19 +789,22 @@ namespace CSPlang
 								{
 									SpuriousLog.record(SpuriousLog.AlternativeSelect);
 								}
+
 								Monitor.Wait(altMonitor); //Guessing what should be here. Was empty
 							}
 						}
 					}
-					catch (/*InterruptedException*/  ThreadInterruptedException e)
+					catch ( /*InterruptedException*/ ThreadInterruptedException e)
 					{
 						throw new ProcessInterruptedException(
-					  "*** Thrown from Alternative.fairSelect/select ()\n" + e.ToString()
-					);
+							"*** Thrown from Alternative.fairSelect/select ()\n" + e.ToString()
+						);
 					}
+
 					state = ready;
 				}
 			}
+
 			disableGuards();
 			state = inactive;
 			favourite = selected + 1;
@@ -866,13 +819,14 @@ namespace CSPlang
 		 * it sets selected to the ready guard's index, state to ready and returns.
 		 * Otherwise, it sets selected to NONE_SELECTED and returns.
 		 */
-		private /*readonly*/  void enableGuards()
+		private /*readonly*/ void enableGuards()
 		{
 			if (barrierPresent)
 			{
 				// System.out.println ("ENABLE barrier(s) present ...");
 				AltingBarrierCoordinate.startEnable();
 			}
+
 			barrierSelected = NONE_SELECTED;
 			for (enableIndex = favourite; enableIndex < guard.Length; enableIndex++)
 			{
@@ -895,15 +849,18 @@ namespace CSPlang
 						// System.out.println ("ENABLE " + enableIndex + " NON-BARRIER SUCCEED");
 						AltingBarrierCoordinate.finishEnable();
 					}
+
 					return;
 				} // else {
-				  // if (guard[enableIndex] instanceof AltingChannelInput) {
-				  //   System.out.println ("CHANNEL ENABLE " + enableIndex + " FAIL");
-				  // } else {
-				  //   System.out.println ("ENABLE " + enableIndex + " FAIL");
-				  // }
-				  // }
+
+				// if (guard[enableIndex] instanceof AltingChannelInput) {
+				//   System.out.println ("CHANNEL ENABLE " + enableIndex + " FAIL");
+				// } else {
+				//   System.out.println ("ENABLE " + enableIndex + " FAIL");
+				// }
+				// }
 			}
+
 			for (enableIndex = 0; enableIndex < favourite; enableIndex++)
 			{
 				if (guard[enableIndex].enable(this))
@@ -925,15 +882,18 @@ namespace CSPlang
 						// System.out.println ("ENABLE " + enableIndex + " NON-BARRIER SUCCEED");
 						AltingBarrierCoordinate.finishEnable();
 					}
+
 					return;
 				} // else {
-				  // if (guard[enableIndex] instanceof AltingChannelInput) {
-				  //   System.out.println ("CHANNEL ENABLE " + enableIndex + " FAIL");
-				  // } else {
-				  //   System.out.println ("ENABLE " + enableIndex + " FAIL");
-				  // }
-				  // }
+
+				// if (guard[enableIndex] instanceof AltingChannelInput) {
+				//   System.out.println ("CHANNEL ENABLE " + enableIndex + " FAIL");
+				// } else {
+				//   System.out.println ("ENABLE " + enableIndex + " FAIL");
+				// }
+				// }
 			}
+
 			// System.out.println ("ENABLE ALL FAIL");
 			selected = NONE_SELECTED;
 			if (barrierPresent)
@@ -949,8 +909,13 @@ namespace CSPlang
 		private void disableGuards()
 		{
 			if (selected != favourite)
-			{    // else there is nothing to disable
-				int startIndex = (selected == NONE_SELECTED) ? favourite - 1 : selected - 1;
+			{
+				// else there is nothing to disable
+				int favouriteLessOne = favourite - 1;
+				int selectedLessOne = selected - 1;
+				bool noneSelected = selected == NONE_SELECTED;
+
+				int startIndex = noneSelected ? favouriteLessOne : selectedLessOne;
 				if (startIndex < favourite)
 				{
 					for (int i = startIndex; i >= 0; i--)
@@ -963,17 +928,20 @@ namespace CSPlang
 								if (barrierSelected != NONE_SELECTED)
 								{
 									throw new JCSP_InternalError(
-								  "*** Second AltingBarrier completed in ALT sequence: " +
-								  barrierSelected + " and " + i
-								);
+										"*** Second AltingBarrier completed in ALT sequence: " +
+										barrierSelected + " and " + i
+									);
 								}
+
 								barrierSelected = selected;
 								barrierTrigger = false;
 							}
 						}
 					}
+
 					startIndex = guard.Length - 1;
 				}
+
 				for (int i = startIndex; i >= favourite; i--)
 				{
 					if (guard[i].disable())
@@ -984,15 +952,17 @@ namespace CSPlang
 							if (barrierSelected != NONE_SELECTED)
 							{
 								throw new JCSP_InternalError(
-								  "\n*** Second AltingBarrier completed in ALT sequence: " +
-							  barrierSelected + " and " + i
+									"\n*** Second AltingBarrier completed in ALT sequence: " +
+									barrierSelected + " and " + i
 								);
 							}
+
 							barrierSelected = selected;
 							barrierTrigger = false;
 						}
 					}
 				}
+
 				if (selected == NONE_SELECTED)
 				{
 					// System.out.println ("disableGuards: NONE_SELECTED ==> " + timeIndex);
@@ -1001,10 +971,12 @@ namespace CSPlang
 					selected = timeIndex;
 				}
 			}
+
 			if (barrierSelected != NONE_SELECTED)
-			{        // We must choose a barrier sync
-				selected = barrierSelected;                  // if one is ready - so that all
-				AltingBarrierCoordinate.finishDisable();    // parties make the same choice.
+			{
+				// We must choose a barrier sync
+				selected = barrierSelected; // if one is ready - so that all
+				AltingBarrierCoordinate.finishDisable(); // parties make the same choice.
 			}
 		}
 
@@ -1017,15 +989,19 @@ namespace CSPlang
 		{
 			if (timeout)
 			{
+				Debug.WriteLine("Timeout is true ");
+				//new timeout is less than the current
 				if (msecs < this.msecs)
 				{
 					this.msecs = msecs;
 					timeIndex = enableIndex;
+					Debug.WriteLine("Timeout is true and timeIndex equals enableIndex");
 				}
 			}
-			else
+			else //setup a new timeout
 			{
 				timeout = true;
+				//Debug.WriteLine("Timeout was just SET to true and timeIndex equals enableIndex");
 				this.msecs = msecs;
 				timeIndex = enableIndex;
 			}
@@ -1061,16 +1037,14 @@ namespace CSPlang
 
 
 						break;
-						// case ready: case inactive:
-						// break
+					// case ready: case inactive:
+					// break
 				}
 			}
 		}
 
 
 		/////////////////// The pre-conditioned versions of select ///////////////////
-
-
 		/**
 		 * Returns the index of one of the ready guards whose <code>preCondition</code>
 		 * index is true. The method will block until one of these guards becomes
@@ -1082,9 +1056,9 @@ namespace CSPlang
 		 *
 		 * @param preCondition the guards from which to select
 		 */
-		public /*readonly*/  int select(Boolean[] preCondition)
+		public /*readonly*/ int select(Boolean[] preCondition)
 		{
-			return fairSelect(preCondition);  // a legal implementation of arbitrary choice!
+			return fairSelect(preCondition); // a legal implementation of arbitrary choice!
 		}
 
 		/**
@@ -1098,7 +1072,7 @@ namespace CSPlang
 		 *
 		 * @param preCondition the guards from which to select
 		 */
-		public /*readonly*/  int priSelect(Boolean[] preCondition)
+		public /*readonly*/ int priSelect(Boolean[] preCondition)
 		{
 			// if (barrierPresent) {
 			//   throw new AlternativeError (
@@ -1108,10 +1082,11 @@ namespace CSPlang
 			if (preCondition.Length != guard.Length)
 			{
 				throw new /*IllegalArgumentException*/ ArgumentException(
-				  "*** jcsp.lang.Alternative.select called with a preCondition array\n" +
-				  "*** whose Length does not match its guard array"
+					"*** jcsp.lang.Alternative.select called with a preCondition array\n" +
+					"*** whose Length does not match its guard array"
 				);
 			}
+
 			state = enabling;
 			favourite = 0;
 			enableGuards(preCondition);
@@ -1142,6 +1117,7 @@ namespace CSPlang
 										{
 											SpuriousLog.record(SpuriousLog.AlternativeSelectWithTimeout);
 										}
+
 										Monitor.Wait(delay);
 									}
 									else
@@ -1150,6 +1126,7 @@ namespace CSPlang
 										{
 											SpuriousLog.incEarlyTimeouts();
 										}
+
 										break;
 									}
 								}
@@ -1164,19 +1141,22 @@ namespace CSPlang
 								{
 									SpuriousLog.record(SpuriousLog.AlternativeSelect);
 								}
+
 								Monitor.Wait(altMonitor); //Guessing what should be here. Was empty
 							}
 						}
 					}
-					catch (/*InterruptedException*/  ThreadInterruptedException e)
+					catch ( /*InterruptedException*/ ThreadInterruptedException e)
 					{
 						throw new ProcessInterruptedException(
-					  "*** Thrown from Alternative.priSelect (Boolean[])\n" + e.ToString()
-					);
+							"*** Thrown from Alternative.priSelect (Boolean[])\n" + e.ToString()
+						);
 					}
+
 					state = ready;
 				}
 			}
+
 			disableGuards(preCondition);
 			state = inactive;
 			timeout = false;
@@ -1196,15 +1176,16 @@ namespace CSPlang
 		 *
 		 * @param preCondition the guards from which to select
 		 */
-		public /*readonly*/  int fairSelect(Boolean[] preCondition)
+		public /*readonly*/ int fairSelect(Boolean[] preCondition)
 		{
 			if (preCondition.Length != guard.Length)
 			{
 				throw new /*IllegalArgumentException*/ ArgumentException(
-				  "*** jcsp.lang.Alternative.select called with a preCondition array\n" +
-				  "*** whose Length does not match its guard array"
+					"*** jcsp.lang.Alternative.select called with a preCondition array\n" +
+					"*** whose Length does not match its guard array"
 				);
 			}
+
 			state = enabling;
 			enableGuards(preCondition);
 			/*synchronized*/
@@ -1230,6 +1211,7 @@ namespace CSPlang
 										{
 											SpuriousLog.record(SpuriousLog.AlternativeSelectWithTimeout);
 										}
+
 										Monitor.Wait(delay);
 									}
 									else
@@ -1238,6 +1220,7 @@ namespace CSPlang
 										{
 											SpuriousLog.incEarlyTimeouts();
 										}
+
 										break;
 									}
 								}
@@ -1252,19 +1235,22 @@ namespace CSPlang
 								{
 									SpuriousLog.record(SpuriousLog.AlternativeSelect);
 								}
+
 								Monitor.Wait(altMonitor); //Guessing what should be here. Was empty
 							}
 						}
 					}
-					catch (/*InterruptedException*/  ThreadInterruptedException e)
+					catch ( /*InterruptedException*/ ThreadInterruptedException e)
 					{
 						throw new ProcessInterruptedException(
-					  "*** Thrown from Alternative.fairSelect/select (Boolean[])\n" + e.ToString()
+							"*** Thrown from Alternative.fairSelect/select (Boolean[])\n" + e.ToString()
 						);
 					}
+
 					state = ready;
 				}
 			}
+
 			disableGuards(preCondition);
 			state = inactive;
 			favourite = selected + 1;
@@ -1283,12 +1269,13 @@ namespace CSPlang
 		 *
 		 * @return true if and only if one of the guards is ready
 		 */
-		private /*readonly*/  void enableGuards(Boolean[] preCondition)
+		private /*readonly*/ void enableGuards(Boolean[] preCondition)
 		{
 			if (barrierPresent)
 			{
 				AltingBarrierCoordinate.startEnable();
 			}
+
 			barrierSelected = NONE_SELECTED;
 			for (enableIndex = favourite; enableIndex < guard.Length; enableIndex++)
 			{
@@ -1305,9 +1292,11 @@ namespace CSPlang
 					{
 						AltingBarrierCoordinate.finishEnable();
 					}
+
 					return;
 				}
 			}
+
 			for (enableIndex = 0; enableIndex < favourite; enableIndex++)
 			{
 				if (preCondition[enableIndex] && guard[enableIndex].enable(this))
@@ -1323,9 +1312,11 @@ namespace CSPlang
 					{
 						AltingBarrierCoordinate.finishEnable();
 					}
+
 					return;
 				}
 			}
+
 			selected = NONE_SELECTED;
 			if (barrierPresent)
 			{
@@ -1341,7 +1332,8 @@ namespace CSPlang
 		private void disableGuards(Boolean[] preCondition)
 		{
 			if (selected != favourite)
-			{    // else there is nothing to disable
+			{
+				// else there is nothing to disable
 				int startIndex = (selected == NONE_SELECTED) ? favourite - 1 : selected - 1;
 				if (startIndex < favourite)
 				{
@@ -1355,17 +1347,20 @@ namespace CSPlang
 								if (barrierSelected != NONE_SELECTED)
 								{
 									throw new JCSP_InternalError(
-								  "*** Second AltingBarrier completed in ALT sequence: " +
-								  barrierSelected + " and " + i
-								);
+										"*** Second AltingBarrier completed in ALT sequence: " +
+										barrierSelected + " and " + i
+									);
 								}
+
 								barrierSelected = selected;
 								barrierTrigger = false;
 							}
 						}
 					}
+
 					startIndex = guard.Length - 1;
 				}
+
 				for (int i = startIndex; i >= favourite; i--)
 				{
 					if (preCondition[i] && guard[i].disable())
@@ -1376,15 +1371,17 @@ namespace CSPlang
 							if (barrierSelected != NONE_SELECTED)
 							{
 								throw new JCSP_InternalError(
-								  "*** Second AltingBarrier completed in ALT sequence: " +
-							  barrierSelected + " and " + i
+									"*** Second AltingBarrier completed in ALT sequence: " +
+									barrierSelected + " and " + i
 								);
 							}
+
 							barrierSelected = selected;
 							barrierTrigger = false;
 						}
 					}
 				}
+
 				if (selected == NONE_SELECTED)
 				{
 					// System.out.println ("disableGuards: NONE_SELECTED ==> " + timeIndex);
@@ -1393,10 +1390,12 @@ namespace CSPlang
 					selected = timeIndex;
 				}
 			}
+
 			if (barrierSelected != NONE_SELECTED)
-			{        // We must choose a barrier sync
-				selected = barrierSelected;                  // if one is ready - so that all
-				AltingBarrierCoordinate.finishDisable();    // parties make the same choice.
+			{
+				// We must choose a barrier sync
+				selected = barrierSelected; // if one is ready - so that all
+				AltingBarrierCoordinate.finishDisable(); // parties make the same choice.
 			}
 		}
 

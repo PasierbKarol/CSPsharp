@@ -112,7 +112,6 @@ namespace CSPlang
  * @author P.H.Welch
  */
 
-
     public class CSTimer : Guard
     {
         /**
@@ -179,14 +178,11 @@ namespace CSPlang
          */
         public void after(/*final*/ long msecsReceived)
         {
-            Debug.WriteLine("After value received before sleep is " + msecsReceived);
             long timeRead = CSPTimeMillis.CurrentTimeMillis();
             /*final*/ long delay = msecsReceived - timeRead;
-            Debug.WriteLine("After delay before sleep is " + delay);
             if (delay > 0)
                 try
                 {
-                    Debug.WriteLine("After delay for sleep is " + delay);
                     Thread.Sleep((int)delay);
                 }
                 catch (ThreadInterruptedException  e)
@@ -206,7 +202,6 @@ namespace CSPlang
             if (msecs > 0)
                 try
                 {
-                    //Debug.WriteLine("SCTimer sleep Sleeping for " + msecs);
                     Thread.Sleep((int)msecs);
                 }
                 catch (ThreadInterruptedException  e)
@@ -223,9 +218,7 @@ namespace CSPlang
          */
         public override Boolean enable(Alternative alt)
         {
-            //Debug.WriteLine("CSTimer enable guard time is " + (msecs - CSPTimeMillis.CurrentTimeMillis()));
-
-            if ((msecs - CSPTimeMillis.CurrentTimeMillis()) <= Spurious.earlyTimeout)
+            if (CSPTimeMillis.CurrentTimeMillis() > msecs)
             {
                 return true;
             }
@@ -241,10 +234,7 @@ namespace CSPlang
          */
         public override Boolean disable()
         {
-            // final long now = System.currentTimeMillis ();
-            // System.out.println ("*** CSTimer.disable: " + msecs + ", " + now);
-            // return (msecs <= now);
-            return ((msecs - CSPTimeMillis.CurrentTimeMillis()) <= Spurious.earlyTimeout);
+            return (CSPTimeMillis.CurrentTimeMillis() > msecs);
             // WARNING: the above is an insufficient test to see if the timeout
             // has expired ... since Java wait-with-timeouts sometimes return
             // early!  See the implementation of Alternative for a work-around.
