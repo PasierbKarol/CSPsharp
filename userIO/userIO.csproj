@@ -4,4 +4,10 @@
     <TargetFramework>netcoreapp2.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Reference Include="CSPlang">
+      <HintPath>..\CSPlang\bin\Debug\netcoreapp2.0\CSPlang.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>
