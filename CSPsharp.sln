@@ -13,7 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PlugAndPlay", "PlugAndPlay\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CSPawt", "CSPawt\CSPawt.csproj", "{44F468EC-43F9-44FC-87D1-7819B3DCA48B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "userIO", "userIO\userIO.csproj", "{2A48D094-D00D-4010-AD4A-CDE87609D706}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "userIO", "userIO\userIO.csproj", "{2A48D094-D00D-4010-AD4A-CDE87609D706}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dining Philosophers", "Dining Philosophers\Dining Philosophers.csproj", "{588780A9-61FD-4A36-B2B2-DF9A3998A79B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{2A48D094-D00D-4010-AD4A-CDE87609D706}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2A48D094-D00D-4010-AD4A-CDE87609D706}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2A48D094-D00D-4010-AD4A-CDE87609D706}.Release|Any CPU.Build.0 = Release|Any CPU
+		{588780A9-61FD-4A36-B2B2-DF9A3998A79B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{588780A9-61FD-4A36-B2B2-DF9A3998A79B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{588780A9-61FD-4A36-B2B2-DF9A3998A79B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{588780A9-61FD-4A36-B2B2-DF9A3998A79B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -140,6 +140,7 @@ namespace CSPlang
          * @param process the process to be executed
          * @param cspBarrier the cspBarrier for then end of the PAR
          */
+
         public void reset(IamCSProcess process, CSPBarrier cspBarrier)
         {
             this.process = process;

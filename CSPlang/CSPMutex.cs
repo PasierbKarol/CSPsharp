@@ -14,17 +14,16 @@ namespace CSPlang
     class CSPMutex
     {
         private Boolean claimed = false;
-        private CSPMutex mutexToLock; //Added this variable to be used for the Monitor - KP
 
         public void Claim()
         {
-            lock (mutexToLock)
-            { //changed this to mutexToLock - KP
+            lock (this)
+            { 
                 while (claimed)
                 {
                     try
                     {
-                        Monitor.Wait(mutexToLock);
+                        Monitor.Wait(this);
                     }
                     catch (ThreadInterruptedException e)
                     {
@@ -40,10 +39,10 @@ namespace CSPlang
 
         public void Release()
         {
-            lock (mutexToLock)
-            { //changed this to mutexToLock - KP
+            lock (this)
+            {
                 claimed = false;
-                Monitor.Pulse(mutexToLock);
+                Monitor.Pulse(this);
             }
         }
     }

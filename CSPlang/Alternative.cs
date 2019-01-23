@@ -725,74 +725,74 @@ namespace CSPlang
 					state = waiting;
 					try
 					{
-						if (timeout)
-						{
-							long delay = msecs - /*System.currentTimeMillis()*/ CSPTimeMillis.CurrentTimeMillis();
-							// NOTE: below is code that demonstrates whether wait (delay)
-							// sometimes returns early!  Because this happens in some JVMs,
-							// we are forced into a workaround - see disableGuards ().
-							//   long now = System.currentTimeMillis ();
-							//   long delay = msecs - now;
-							if (delay > Spurious.earlyTimeout)
-							{
-								Monitor.Wait(delay);
-								/*
-										  while ((state == waiting) &&
-												 ((delay = msecs - System.currentTimeMillis ())
-											  > Spurious.earlyTimeout)) {
-												if (Spurious.logging) {
-											  SpuriousLog.record (SpuriousLog.AlternativeSelectWithTimeout);
-											}
-											Monitor.wait (delay);
-										  }
-										  if ((state == waiting) && (delay > 0)) {
-											if (Spurious.logging) {
-											  SpuriousLog.incEarlyTimeouts ();
-											}
-											  }
-								*/
-								while (state == waiting)
-								{
-									delay = msecs - /*System.currentTimeMillis()*/ CSPTimeMillis.CurrentTimeMillis();
-									if (delay > Spurious.earlyTimeout)
-									{
-										if (Spurious.logging)
-										{
-											SpuriousLog.record(SpuriousLog.AlternativeSelectWithTimeout);
-										}
+						//if (timeout)
+						//{
+						//	long delay = msecs - CSPTimeMillis.CurrentTimeMillis();
+						//	// NOTE: below is code that demonstrates whether wait (delay)
+						//	// sometimes returns early!  Because this happens in some JVMs,
+						//	// we are forced into a workaround - see disableGuards ().
+						//	//   long now = System.currentTimeMillis ();
+						//	//   long delay = msecs - now;
+						//	if (delay > Spurious.earlyTimeout)
+						//	{
+						//		Monitor.Wait(delay);
+						//		/*
+						//				  while ((state == waiting) &&
+						//						 ((delay = msecs - System.currentTimeMillis ())
+						//					  > Spurious.earlyTimeout)) {
+						//						if (Spurious.logging) {
+						//					  SpuriousLog.record (SpuriousLog.AlternativeSelectWithTimeout);
+						//					}
+						//					Monitor.wait (delay);
+						//				  }
+						//				  if ((state == waiting) && (delay > 0)) {
+						//					if (Spurious.logging) {
+						//					  SpuriousLog.incEarlyTimeouts ();
+						//					}
+						//					  }
+						//		*/
+						//		while (state == waiting)
+						//		{
+						//			delay = msecs - /*System.currentTimeMillis()*/ CSPTimeMillis.CurrentTimeMillis();
+						//			if (delay > Spurious.earlyTimeout)
+						//			{
+						//				if (Spurious.logging)
+						//				{
+						//					SpuriousLog.record(SpuriousLog.AlternativeSelectWithTimeout);
+						//				}
 
-										Monitor.Wait(delay);
-									}
-									else
-									{
-										if ((delay > 0) && (Spurious.logging))
-										{
-											SpuriousLog.incEarlyTimeouts();
-										}
+						//				Monitor.Wait(delay);
+						//			}
+						//			else
+						//			{
+						//				if ((delay > 0) && (Spurious.logging))
+						//				{
+						//					SpuriousLog.incEarlyTimeouts();
+						//				}
 
-										break;
-									}
-								}
-							}
+						//				break;
+						//			}
+						//		}
+						//	}
 
-							//   long then = System.currentTimeMillis ();
-							//   System.out.println ("*** fairSelect: " + msecs +
-							//                       ", " + now + ", " + delay +
-							//                       ", " + then);
-						}
-						else
-						{
+						//	//   long then = System.currentTimeMillis ();
+						//	//   System.out.println ("*** fairSelect: " + msecs +
+						//	//                       ", " + now + ", " + delay +
+						//	//                       ", " + then);
+						//}
+						//else
+						//{
 							Monitor.Wait(altMonitor); //Guessing what should be here. Was empty
 							while (state == waiting)
 							{
-								if (Spurious.logging)
-								{
-									SpuriousLog.record(SpuriousLog.AlternativeSelect);
-								}
+							//	if (Spurious.logging)
+							//	{
+							//		SpuriousLog.record(SpuriousLog.AlternativeSelect);
+							//	}
 
 								Monitor.Wait(altMonitor); //Guessing what should be here. Was empty
 							}
-						}
+						//}
 					}
 					catch ( /*InterruptedException*/ ThreadInterruptedException e)
 					{
