@@ -46,8 +46,8 @@ namespace TestingUtilities
 
         public static void Main(String[] args)
         {
-            int nChannels = 8;
-            int nWritersPerChannel = 8;
+            int nChannels = 50;
+            int nWritersPerChannel = 100;
 
             //Any2OneChannel[] c = Channel.any2oneArray (nChannels, new OverWriteOldestBuffer (1));
             Any2OneChannel[] c = Channel.any2oneArray(nChannels);

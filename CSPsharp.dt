@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<DevTrackerData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" SolutionTotalEditTime="PT10H25M12.7572241S" SolutionTotalViewTime="PT14H14M34.6447367S" SolutionTotalDebugTime="PT1H43M30.8156003S">
+<DevTrackerData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" SolutionTotalEditTime="PT10H34M18.5769807S" SolutionTotalViewTime="PT14H31M52.2242426S" SolutionTotalDebugTime="PT1H48M30.7476199S">
   <FileVersion>
     <Major>1</Major>
     <Minor>0</Minor>
@@ -7,264 +7,160 @@
   <SolutionFolder>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp</SolutionFolder>
   <SessionTimeList />
   <LastSessionTimeList>
-    <DevTrackerDataItem ViewActiveTime="PT1.6626932S" EditActiveTime="PT0S">
+    <DevTrackerDataItem ViewActiveTime="PT1M35.7033632S" EditActiveTime="PT0S">
       <ModifiedDate>0001-01-01T00:00:00</ModifiedDate>
       <EditedCount>0</EditedCount>
       <ViewedCount>1</ViewedCount>
       <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CSPlang\Alternative.cs</Item>
       <ItemType>ProjectItem</ItemType>
       <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CSPlang\CSPlang.csproj</ProjectName>
-      <CreatedDate>2019-01-23T11:24:22.3277855+00:00</CreatedDate>
+      <CreatedDate>2019-01-24T12:01:32.3262761+00:00</CreatedDate>
       <ViewedBy>Karol</ViewedBy>
     </DevTrackerDataItem>
-    <DevTrackerDataItem ViewActiveTime="PT7.5606011S" EditActiveTime="PT0S">
+    <DevTrackerDataItem ViewActiveTime="PT3.3117738S" EditActiveTime="PT0S">
       <ModifiedDate>0001-01-01T00:00:00</ModifiedDate>
       <EditedCount>0</EditedCount>
       <ViewedCount>1</ViewedCount>
-      <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CSPlang\Channel\ChannelOutputImpl.cs</Item>
+      <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CSPlang\AlternativeError.cs</Item>
       <ItemType>ProjectItem</ItemType>
       <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CSPlang\CSPlang.csproj</ProjectName>
-      <CreatedDate>2019-01-23T12:13:29.8736434+00:00</CreatedDate>
+      <CreatedDate>2019-01-24T12:01:34.9750074+00:00</CreatedDate>
       <ViewedBy>Karol</ViewedBy>
     </DevTrackerDataItem>
-    <DevTrackerDataItem ViewActiveTime="PT1M25.7678502S" EditActiveTime="PT10.6317592S">
-      <ModifiedDate>2019-01-23T11:35:12.032031+00:00</ModifiedDate>
-      <ModifiedBy>Karol</ModifiedBy>
-      <EditedCount>1</EditedCount>
+    <DevTrackerDataItem ViewActiveTime="PT27.6562821S" EditActiveTime="PT0S">
+      <ModifiedDate>0001-01-01T00:00:00</ModifiedDate>
+      <EditedCount>0</EditedCount>
       <ViewedCount>1</ViewedCount>
-      <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\Dining Philosophers\Chef.cs</Item>
-      <ItemType>ProjectItem</ItemType>
-      <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\Dining Philosophers\Dining Philosophers.csproj</ProjectName>
-      <CreatedDate>2019-01-23T11:34:48.9991744+00:00</CreatedDate>
-      <ViewedBy>Karol</ViewedBy>
-    </DevTrackerDataItem>
-    <DevTrackerDataItem ViewActiveTime="PT1M10.6553029S" EditActiveTime="PT25.061844S">
-      <ModifiedDate>2019-01-23T12:37:33.6836087+00:00</ModifiedDate>
-      <ModifiedBy>Karol</ModifiedBy>
-      <EditedCount>1</EditedCount>
-      <ViewedCount>1</ViewedCount>
-      <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CSPlang\CSPMutex.cs</Item>
+      <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CSPlang\Alting\AltingBarrier.cs</Item>
       <ItemType>ProjectItem</ItemType>
       <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CSPlang\CSPlang.csproj</ProjectName>
-      <CreatedDate>2019-01-23T12:10:39.2228568+00:00</CreatedDate>
+      <CreatedDate>2019-01-24T13:15:20.9475522+00:00</CreatedDate>
       <ViewedBy>Karol</ViewedBy>
     </DevTrackerDataItem>
-    <DevTrackerDataItem ViewActiveTime="PT2M6.1374688S" EditActiveTime="PT0S">
+    <DevTrackerDataItem ViewActiveTime="PT2M18.749856S" EditActiveTime="PT0S">
       <ModifiedDate>0001-01-01T00:00:00</ModifiedDate>
       <EditedCount>0</EditedCount>
       <ViewedCount>1</ViewedCount>
       <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CSPlang\CSPParallel.cs</Item>
       <ItemType>ProjectItem</ItemType>
       <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CSPlang\CSPlang.csproj</ProjectName>
-      <CreatedDate>2019-01-23T11:26:13.7306418+00:00</CreatedDate>
+      <CreatedDate>2019-01-24T14:40:58.3752555+00:00</CreatedDate>
       <ViewedBy>Karol</ViewedBy>
     </DevTrackerDataItem>
-    <DevTrackerDataItem ViewActiveTime="PT0.2263948S" EditActiveTime="PT0S">
+    <DevTrackerDataItem ViewActiveTime="PT7.77631S" EditActiveTime="PT0S">
       <ModifiedDate>0001-01-01T00:00:00</ModifiedDate>
       <EditedCount>0</EditedCount>
       <ViewedCount>1</ViewedCount>
       <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CSPlang\CSTimer.cs</Item>
       <ItemType>ProjectItem</ItemType>
       <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CSPlang\CSPlang.csproj</ProjectName>
-      <CreatedDate>2019-01-23T11:24:23.9914764+00:00</CreatedDate>
+      <CreatedDate>2019-01-24T12:01:29.0027074+00:00</CreatedDate>
       <ViewedBy>Karol</ViewedBy>
     </DevTrackerDataItem>
-    <DevTrackerDataItem ViewActiveTime="PT2M53.5097733S" EditActiveTime="PT0S">
+    <DevTrackerDataItem ViewActiveTime="PT4M59.9310218S" EditActiveTime="PT0S">
       <ModifiedDate>0001-01-01T00:00:00</ModifiedDate>
       <EditedCount>0</EditedCount>
       <ViewedCount>1</ViewedCount>
       <Item>Debug Mode</Item>
       <ItemType>DebugModeItem</ItemType>
       <ProjectName />
-      <CreatedDate>2019-01-23T11:31:42.1907794+00:00</CreatedDate>
+      <CreatedDate>2019-01-24T14:36:01.5351967+00:00</CreatedDate>
       <ViewedBy>Karol</ViewedBy>
     </DevTrackerDataItem>
-    <DevTrackerDataItem ViewActiveTime="PT2M2.1520271S" EditActiveTime="PT1M57.2021553S">
-      <ModifiedDate>2019-01-23T13:14:10.4568754+00:00</ModifiedDate>
+    <DevTrackerDataItem ViewActiveTime="PT32.9438405S" EditActiveTime="PT0S">
+      <ModifiedDate>0001-01-01T00:00:00</ModifiedDate>
+      <EditedCount>0</EditedCount>
+      <ViewedCount>1</ViewedCount>
+      <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\TestingUtilities\Program.cs</Item>
+      <ItemType>ProjectItem</ItemType>
+      <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\TestingUtilities\TestingUtilities.csproj</ProjectName>
+      <CreatedDate>2019-01-24T13:30:30.2515283+00:00</CreatedDate>
+      <ViewedBy>Karol</ViewedBy>
+    </DevTrackerDataItem>
+    <DevTrackerDataItem ViewActiveTime="PT2M33.4684484S" EditActiveTime="PT2M20.6215697S">
+      <ModifiedDate>2019-01-24T14:35:53.5172049+00:00</ModifiedDate>
       <ModifiedBy>Karol</ModifiedBy>
       <EditedCount>1</EditedCount>
       <ViewedCount>1</ViewedCount>
-      <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\Dining Philosophers\GConsole.cs</Item>
+      <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\TestingUtilities\StressedAlt.cs</Item>
       <ItemType>ProjectItem</ItemType>
-      <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\Dining Philosophers\Dining Philosophers.csproj</ProjectName>
-      <CreatedDate>2019-01-23T11:35:22.5879483+00:00</CreatedDate>
+      <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\TestingUtilities\TestingUtilities.csproj</ProjectName>
+      <CreatedDate>2019-01-24T13:31:04.2826044+00:00</CreatedDate>
       <ViewedBy>Karol</ViewedBy>
     </DevTrackerDataItem>
-    <DevTrackerDataItem ViewActiveTime="PT15.734388S" EditActiveTime="PT0S">
-      <ModifiedDate>0001-01-01T00:00:00</ModifiedDate>
-      <EditedCount>0</EditedCount>
-      <ViewedCount>1</ViewedCount>
-      <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CSPlang\IamCSProcess.cs</Item>
-      <ItemType>ProjectItem</ItemType>
-      <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CSPlang\CSPlang.csproj</ProjectName>
-      <CreatedDate>2019-01-23T11:24:03.0608541+00:00</CreatedDate>
-      <ViewedBy>Karol</ViewedBy>
-    </DevTrackerDataItem>
-    <DevTrackerDataItem ViewActiveTime="PT33.6277519S" EditActiveTime="PT0S">
-      <ModifiedDate>0001-01-01T00:00:00</ModifiedDate>
-      <EditedCount>0</EditedCount>
-      <ViewedCount>1</ViewedCount>
-      <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\Dining Philosophers\Kitchen.cs</Item>
-      <ItemType>ProjectItem</ItemType>
-      <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\Dining Philosophers\Dining Philosophers.csproj</ProjectName>
-      <CreatedDate>2019-01-23T11:35:19.6489315+00:00</CreatedDate>
-      <ViewedBy>Karol</ViewedBy>
-    </DevTrackerDataItem>
-    <DevTrackerDataItem ViewActiveTime="PT20.3599481S" EditActiveTime="PT2M12.6196973S">
-      <ModifiedDate>2019-01-23T13:15:02.661712+00:00</ModifiedDate>
+    <DevTrackerDataItem ViewActiveTime="PT1M11.7626726S" EditActiveTime="PT9.7938399S">
+      <ModifiedDate>2019-01-24T15:46:21.1524403+00:00</ModifiedDate>
       <ModifiedBy>Karol</ModifiedBy>
       <EditedCount>1</EditedCount>
       <ViewedCount>1</ViewedCount>
-      <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\PhilosopherWindow\MainWindow.xaml</Item>
+      <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\StressedAltTesting\StressedAlt.cs</Item>
       <ItemType>ProjectItem</ItemType>
-      <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\PhilosopherWindow\PhilosopherWindow.csproj</ProjectName>
-      <CreatedDate>2019-01-23T13:04:51.5069152+00:00</CreatedDate>
+      <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\StressedAltTesting\StressedAltTesting.csproj</ProjectName>
+      <CreatedDate>2019-01-24T15:38:08.572258+00:00</CreatedDate>
       <ViewedBy>Karol</ViewedBy>
     </DevTrackerDataItem>
-    <DevTrackerDataItem ViewActiveTime="PT22.9870485S" EditActiveTime="PT4M13.3651042S">
-      <ModifiedDate>2019-01-23T13:18:12.6603643+00:00</ModifiedDate>
+    <DevTrackerDataItem ViewActiveTime="PT4.5928573S" EditActiveTime="PT21.9796342S">
+      <ModifiedDate>2019-01-24T13:38:43.158806+00:00</ModifiedDate>
       <ModifiedBy>Karol</ModifiedBy>
       <EditedCount>1</EditedCount>
       <ViewedCount>1</ViewedCount>
-      <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\PhilosopherWindow\MainWindow.xaml.cs</Item>
+      <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\TestingUtilities\StressedPacket.cs</Item>
       <ItemType>ProjectItem</ItemType>
-      <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\PhilosopherWindow\PhilosopherWindow.csproj</ProjectName>
-      <CreatedDate>2019-01-23T13:04:50.9551818+00:00</CreatedDate>
+      <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\TestingUtilities\TestingUtilities.csproj</ProjectName>
+      <CreatedDate>2019-01-24T13:37:58.7892593+00:00</CreatedDate>
       <ViewedBy>Karol</ViewedBy>
     </DevTrackerDataItem>
-    <DevTrackerDataItem ViewActiveTime="PT1M0.1349333S" EditActiveTime="PT0S">
+    <DevTrackerDataItem ViewActiveTime="PT19.5886946S" EditActiveTime="PT0S">
       <ModifiedDate>0001-01-01T00:00:00</ModifiedDate>
       <EditedCount>0</EditedCount>
       <ViewedCount>1</ViewedCount>
-      <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CSPlang\One2\One2AnyChannel.cs</Item>
+      <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\StressedAltTesting\StressedPacket.cs</Item>
       <ItemType>ProjectItem</ItemType>
-      <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CSPlang\CSPlang.csproj</ProjectName>
-      <CreatedDate>2019-01-23T12:15:43.2343797+00:00</CreatedDate>
+      <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\StressedAltTesting\StressedAltTesting.csproj</ProjectName>
+      <CreatedDate>2019-01-24T15:06:04.3647756+00:00</CreatedDate>
       <ViewedBy>Karol</ViewedBy>
     </DevTrackerDataItem>
-    <DevTrackerDataItem ViewActiveTime="PT1M18.13195S" EditActiveTime="PT0S">
-      <ModifiedDate>0001-01-01T00:00:00</ModifiedDate>
-      <EditedCount>0</EditedCount>
-      <ViewedCount>1</ViewedCount>
-      <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CSPlang\One2\One2AnyImpl.cs</Item>
-      <ItemType>ProjectItem</ItemType>
-      <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CSPlang\CSPlang.csproj</ProjectName>
-      <CreatedDate>2019-01-23T12:10:57.9012093+00:00</CreatedDate>
-      <ViewedBy>Karol</ViewedBy>
-    </DevTrackerDataItem>
-    <DevTrackerDataItem ViewActiveTime="PT2M41.8844698S" EditActiveTime="PT0S">
-      <ModifiedDate>0001-01-01T00:00:00</ModifiedDate>
-      <EditedCount>0</EditedCount>
-      <ViewedCount>1</ViewedCount>
-      <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CSPlang\ParThread.cs</Item>
-      <ItemType>ProjectItem</ItemType>
-      <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CSPlang\CSPlang.csproj</ProjectName>
-      <CreatedDate>2019-01-23T11:24:33.7115737+00:00</CreatedDate>
-      <ViewedBy>Karol</ViewedBy>
-    </DevTrackerDataItem>
-    <DevTrackerDataItem ViewActiveTime="PT46.0909965S" EditActiveTime="PT9.9315796S">
-      <ModifiedDate>2019-01-23T11:35:43.4297118+00:00</ModifiedDate>
+    <DevTrackerDataItem ViewActiveTime="PT2M38.510332S" EditActiveTime="PT4M32.5882652S">
+      <ModifiedDate>2019-01-24T14:48:58.5097838+00:00</ModifiedDate>
       <ModifiedBy>Karol</ModifiedBy>
       <EditedCount>1</EditedCount>
       <ViewedCount>1</ViewedCount>
-      <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\Dining Philosophers\Philosopher.cs</Item>
+      <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\TestingUtilities\StressedReader.cs</Item>
       <ItemType>ProjectItem</ItemType>
-      <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\Dining Philosophers\Dining Philosophers.csproj</ProjectName>
-      <CreatedDate>2019-01-23T11:35:28.3441336+00:00</CreatedDate>
+      <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\TestingUtilities\TestingUtilities.csproj</ProjectName>
+      <CreatedDate>2019-01-24T13:39:01.6577555+00:00</CreatedDate>
       <ViewedBy>Karol</ViewedBy>
     </DevTrackerDataItem>
-    <DevTrackerDataItem ViewActiveTime="PT1M0.2680346S" EditActiveTime="PT52.3284331S">
-      <ModifiedDate>2019-01-23T12:46:40.1073939+00:00</ModifiedDate>
+    <DevTrackerDataItem ViewActiveTime="PT3M38.0716993S" EditActiveTime="PT1.1583635S">
+      <ModifiedDate>2019-01-24T15:46:56.0187006+00:00</ModifiedDate>
       <ModifiedBy>Karol</ModifiedBy>
       <EditedCount>1</EditedCount>
       <ViewedCount>1</ViewedCount>
-      <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\Dining Philosophers\PhilosopherBehaviour.cs</Item>
+      <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\StressedAltTesting\StressedReader.cs</Item>
       <ItemType>ProjectItem</ItemType>
-      <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\Dining Philosophers\Dining Philosophers.csproj</ProjectName>
-      <CreatedDate>2019-01-23T11:35:45.8377838+00:00</CreatedDate>
+      <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\StressedAltTesting\StressedAltTesting.csproj</ProjectName>
+      <CreatedDate>2019-01-24T15:06:07.5038839+00:00</CreatedDate>
       <ViewedBy>Karol</ViewedBy>
     </DevTrackerDataItem>
-    <DevTrackerDataItem ViewActiveTime="PT9.4907094S" EditActiveTime="PT0S">
-      <ModifiedDate>0001-01-01T00:00:00</ModifiedDate>
-      <EditedCount>0</EditedCount>
-      <ViewedCount>1</ViewedCount>
-      <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\PlugAndPlay\Printer.cs</Item>
-      <ItemType>ProjectItem</ItemType>
-      <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\PlugAndPlay\PlugAndPlay.csproj</ProjectName>
-      <CreatedDate>2019-01-23T11:24:24.2188686+00:00</CreatedDate>
-      <ViewedBy>Karol</ViewedBy>
-    </DevTrackerDataItem>
-    <DevTrackerDataItem ViewActiveTime="PT37.6624968S" EditActiveTime="PT38.6225023S">
-      <ModifiedDate>2019-01-23T11:36:40.313137+00:00</ModifiedDate>
+    <DevTrackerDataItem ViewActiveTime="PT34.9166982S" EditActiveTime="PT1M39.6770918S">
+      <ModifiedDate>2019-01-24T13:37:45.36758+00:00</ModifiedDate>
       <ModifiedBy>Karol</ModifiedBy>
       <EditedCount>1</EditedCount>
       <ViewedCount>1</ViewedCount>
-      <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\Dining Philosophers\QueuingCanteen.cs</Item>
+      <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\TestingUtilities\StressedWriter.cs</Item>
       <ItemType>ProjectItem</ItemType>
-      <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\Dining Philosophers\Dining Philosophers.csproj</ProjectName>
-      <CreatedDate>2019-01-23T11:35:50.7823668+00:00</CreatedDate>
+      <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\TestingUtilities\TestingUtilities.csproj</ProjectName>
+      <CreatedDate>2019-01-24T13:36:01.9828209+00:00</CreatedDate>
       <ViewedBy>Karol</ViewedBy>
     </DevTrackerDataItem>
-    <DevTrackerDataItem ViewActiveTime="PT25.6743977S" EditActiveTime="PT0S">
+    <DevTrackerDataItem ViewActiveTime="PT1M10.5237043S" EditActiveTime="PT0S">
       <ModifiedDate>0001-01-01T00:00:00</ModifiedDate>
       <EditedCount>0</EditedCount>
       <ViewedCount>1</ViewedCount>
-      <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\Dining Philosophers\QueuingServery.cs</Item>
+      <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\StressedAltTesting\StressedWriter.cs</Item>
       <ItemType>ProjectItem</ItemType>
-      <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\Dining Philosophers\Dining Philosophers.csproj</ProjectName>
-      <CreatedDate>2019-01-23T11:36:45.4662425+00:00</CreatedDate>
-      <ViewedBy>Karol</ViewedBy>
-    </DevTrackerDataItem>
-    <DevTrackerDataItem ViewActiveTime="PT24.7850027S" EditActiveTime="PT0S">
-      <ModifiedDate>0001-01-01T00:00:00</ModifiedDate>
-      <EditedCount>0</EditedCount>
-      <ViewedCount>1</ViewedCount>
-      <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\PlugAndPlay\Regular.cs</Item>
-      <ItemType>ProjectItem</ItemType>
-      <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\PlugAndPlay\PlugAndPlay.csproj</ProjectName>
-      <CreatedDate>2019-01-23T11:23:41.8054013+00:00</CreatedDate>
-      <ViewedBy>Karol</ViewedBy>
-    </DevTrackerDataItem>
-    <DevTrackerDataItem ViewActiveTime="PT3M23.6987462S" EditActiveTime="PT49.8971108S">
-      <ModifiedDate>2019-01-23T12:47:14.9184634+00:00</ModifiedDate>
-      <ModifiedBy>Karol</ModifiedBy>
-      <EditedCount>1</EditedCount>
-      <ViewedCount>1</ViewedCount>
-      <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\Dining Philosophers\RunQueuingCollege.cs</Item>
-      <ItemType>ProjectItem</ItemType>
-      <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\Dining Philosophers\Dining Philosophers.csproj</ProjectName>
-      <CreatedDate>2019-01-23T11:31:54.1747983+00:00</CreatedDate>
-      <ViewedBy>Karol</ViewedBy>
-    </DevTrackerDataItem>
-    <DevTrackerDataItem ViewActiveTime="PT29.3690618S" EditActiveTime="PT0S">
-      <ModifiedDate>0001-01-01T00:00:00</ModifiedDate>
-      <EditedCount>0</EditedCount>
-      <ViewedCount>1</ViewedCount>
-      <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CSPlang\Shared\SharedChannelInput.cs</Item>
-      <ItemType>ProjectItem</ItemType>
-      <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CSPlang\CSPlang.csproj</ProjectName>
-      <CreatedDate>2019-01-23T12:11:13.2244249+00:00</CreatedDate>
-      <ViewedBy>Karol</ViewedBy>
-    </DevTrackerDataItem>
-    <DevTrackerDataItem ViewActiveTime="PT1M32.747823S" EditActiveTime="PT0S">
-      <ModifiedDate>0001-01-01T00:00:00</ModifiedDate>
-      <EditedCount>0</EditedCount>
-      <ViewedCount>1</ViewedCount>
-      <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CSPlang\Shared\SharedChannelInputImpl.cs</Item>
-      <ItemType>ProjectItem</ItemType>
-      <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CSPlang\CSPlang.csproj</ProjectName>
-      <CreatedDate>2019-01-23T12:11:20.3946308+00:00</CreatedDate>
-      <ViewedBy>Karol</ViewedBy>
-    </DevTrackerDataItem>
-    <DevTrackerDataItem ViewActiveTime="PT2.2936471S" EditActiveTime="PT4M42.7056495S">
-      <ModifiedDate>2019-01-23T13:18:12.6294463+00:00</ModifiedDate>
-      <ModifiedBy>Karol</ModifiedBy>
-      <EditedCount>1</EditedCount>
-      <ViewedCount>1</ViewedCount>
-      <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\PhilosopherWindow\WindowSetup.cs</Item>
-      <ItemType>ProjectItem</ItemType>
-      <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\PhilosopherWindow\PhilosopherWindow.csproj</ProjectName>
-      <CreatedDate>2019-01-23T13:11:48.6704689+00:00</CreatedDate>
+      <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\StressedAltTesting\StressedAltTesting.csproj</ProjectName>
+      <CreatedDate>2019-01-24T15:38:40.4988303+00:00</CreatedDate>
       <ViewedBy>Karol</ViewedBy>
     </DevTrackerDataItem>
   </LastSessionTimeList>
@@ -334,22 +230,22 @@
       <CreatedDate>2018-10-20T17:59:44.4138437+01:00</CreatedDate>
       <ViewedBy>Karol</ViewedBy>
     </DevTrackerDataItem>
-    <DevTrackerDataItem ViewActiveTime="PT1H4M30.5360773S" EditActiveTime="PT48M3.2060858S">
+    <DevTrackerDataItem ViewActiveTime="PT1H6M6.2394405S" EditActiveTime="PT48M3.2060858S">
       <ModifiedDate>2019-01-21T18:19:13.8030832+00:00</ModifiedDate>
       <ModifiedBy>Karol</ModifiedBy>
       <EditedCount>12</EditedCount>
-      <ViewedCount>18</ViewedCount>
+      <ViewedCount>19</ViewedCount>
       <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CSPlang\Alternative.cs</Item>
       <ItemType>ProjectItem</ItemType>
       <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CSPlang\CSPlang.csproj</ProjectName>
       <CreatedDate>2018-07-28T14:47:44.4546055+01:00</CreatedDate>
       <ViewedBy>Karol</ViewedBy>
     </DevTrackerDataItem>
-    <DevTrackerDataItem ViewActiveTime="PT47.6828938S" EditActiveTime="PT59.5572332S">
+    <DevTrackerDataItem ViewActiveTime="PT50.9946676S" EditActiveTime="PT59.5572332S">
       <ModifiedDate>2018-08-12T11:07:22.2323958+01:00</ModifiedDate>
       <ModifiedBy>Karol</ModifiedBy>
       <EditedCount>1</EditedCount>
-      <ViewedCount>2</ViewedCount>
+      <ViewedCount>3</ViewedCount>
       <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CSPlang\AlternativeError.cs</Item>
       <ItemType>ProjectItem</ItemType>
       <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CSPlang\CSPlang.csproj</ProjectName>
@@ -367,11 +263,11 @@
       <CreatedDate>2018-07-28T15:11:50.4424522+01:00</CreatedDate>
       <ViewedBy>Karol</ViewedBy>
     </DevTrackerDataItem>
-    <DevTrackerDataItem ViewActiveTime="PT10M58.5356872S" EditActiveTime="PT11M54.7756697S">
+    <DevTrackerDataItem ViewActiveTime="PT11M26.1919693S" EditActiveTime="PT11M54.7756697S">
       <ModifiedDate>2018-08-12T11:07:52.6747349+01:00</ModifiedDate>
       <ModifiedBy>Karol</ModifiedBy>
       <EditedCount>3</EditedCount>
-      <ViewedCount>9</ViewedCount>
+      <ViewedCount>10</ViewedCount>
       <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CSPlang\Alting\AltingBarrier.cs</Item>
       <ItemType>ProjectItem</ItemType>
       <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CSPlang\CSPlang.csproj</ProjectName>
@@ -1733,11 +1629,11 @@
       <CreatedDate>2018-08-12T10:08:44.9515631+01:00</CreatedDate>
       <ViewedBy>Karol</ViewedBy>
     </DevTrackerDataItem>
-    <DevTrackerDataItem ViewActiveTime="PT30M46.4503256S" EditActiveTime="PT58M42.8069119S">
+    <DevTrackerDataItem ViewActiveTime="PT33M5.2001816S" EditActiveTime="PT58M42.8069119S">
       <ModifiedDate>2018-11-04T15:43:17.6391824+00:00</ModifiedDate>
       <ModifiedBy>Karol</ModifiedBy>
       <EditedCount>5</EditedCount>
-      <ViewedCount>14</ViewedCount>
+      <ViewedCount>15</ViewedCount>
       <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CSPlang\CSPParallel.cs</Item>
       <ItemType>ProjectItem</ItemType>
       <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CSPlang\CSPlang.csproj</ProjectName>
@@ -1765,21 +1661,21 @@
       <CreatedDate>2018-09-06T21:52:01.8677405+01:00</CreatedDate>
       <ViewedBy>Karol</ViewedBy>
     </DevTrackerDataItem>
-    <DevTrackerDataItem ViewActiveTime="PT1H1M1.5158307S" EditActiveTime="PT29M17.8210171S">
+    <DevTrackerDataItem ViewActiveTime="PT1H1M9.2921407S" EditActiveTime="PT29M17.8210171S">
       <ModifiedDate>2019-01-18T19:30:12.5925427+00:00</ModifiedDate>
       <ModifiedBy>Karol</ModifiedBy>
       <EditedCount>11</EditedCount>
-      <ViewedCount>15</ViewedCount>
+      <ViewedCount>16</ViewedCount>
       <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CSPlang\CSTimer.cs</Item>
       <ItemType>ProjectItem</ItemType>
       <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CSPlang\CSPlang.csproj</ProjectName>
       <CreatedDate>2018-07-28T15:26:19.9099355+01:00</CreatedDate>
       <ViewedBy>Karol</ViewedBy>
     </DevTrackerDataItem>
-    <DevTrackerDataItem ViewActiveTime="PT1H43M30.8156004S" EditActiveTime="PT5M19.1250764S">
+    <DevTrackerDataItem ViewActiveTime="PT1H48M30.7466222S" EditActiveTime="PT5M19.1250764S">
       <ModifiedDate>0001-01-01T00:00:00</ModifiedDate>
       <EditedCount>3</EditedCount>
-      <ViewedCount>16</ViewedCount>
+      <ViewedCount>17</ViewedCount>
       <Item>Debug Mode</Item>
       <ItemType>DebugModeItem</ItemType>
       <ProjectName />
@@ -3350,6 +3246,16 @@
       <CreatedDate>2019-01-21T11:01:49.385583+00:00</CreatedDate>
       <ViewedBy>Karol</ViewedBy>
     </DevTrackerDataItem>
+    <DevTrackerDataItem ViewActiveTime="PT32.9438405S" EditActiveTime="PT0S">
+      <ModifiedDate>0001-01-01T00:00:00</ModifiedDate>
+      <EditedCount>0</EditedCount>
+      <ViewedCount>1</ViewedCount>
+      <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\TestingUtilities\Program.cs</Item>
+      <ItemType>ProjectItem</ItemType>
+      <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\TestingUtilities\TestingUtilities.csproj</ProjectName>
+      <CreatedDate>2019-01-24T13:30:30.2515283+00:00</CreatedDate>
+      <ViewedBy>Karol</ViewedBy>
+    </DevTrackerDataItem>
     <DevTrackerDataItem ViewActiveTime="PT37.6624968S" EditActiveTime="PT38.6225023S">
       <ModifiedDate>2019-01-23T11:36:40.313137+00:00</ModifiedDate>
       <ModifiedBy>Karol</ModifiedBy>
@@ -3872,6 +3778,92 @@
       <CreatedDate>2018-08-12T09:15:57.2573237+01:00</CreatedDate>
       <ViewedBy>Karol</ViewedBy>
     </DevTrackerDataItem>
+    <DevTrackerDataItem ViewActiveTime="PT2M33.4684484S" EditActiveTime="PT2M20.6215697S">
+      <ModifiedDate>2019-01-24T14:35:53.5172049+00:00</ModifiedDate>
+      <ModifiedBy>Karol</ModifiedBy>
+      <EditedCount>1</EditedCount>
+      <ViewedCount>1</ViewedCount>
+      <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\TestingUtilities\StressedAlt.cs</Item>
+      <ItemType>ProjectItem</ItemType>
+      <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\TestingUtilities\TestingUtilities.csproj</ProjectName>
+      <CreatedDate>2019-01-24T13:31:04.2826044+00:00</CreatedDate>
+      <ViewedBy>Karol</ViewedBy>
+    </DevTrackerDataItem>
+    <DevTrackerDataItem ViewActiveTime="PT1M11.7626726S" EditActiveTime="PT9.7938399S">
+      <ModifiedDate>2019-01-24T15:46:21.1524403+00:00</ModifiedDate>
+      <ModifiedBy>Karol</ModifiedBy>
+      <EditedCount>1</EditedCount>
+      <ViewedCount>1</ViewedCount>
+      <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\StressedAltTesting\StressedAlt.cs</Item>
+      <ItemType>ProjectItem</ItemType>
+      <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\StressedAltTesting\StressedAltTesting.csproj</ProjectName>
+      <CreatedDate>2019-01-24T15:38:08.572258+00:00</CreatedDate>
+      <ViewedBy>Karol</ViewedBy>
+    </DevTrackerDataItem>
+    <DevTrackerDataItem ViewActiveTime="PT4.5928573S" EditActiveTime="PT21.9796342S">
+      <ModifiedDate>2019-01-24T13:38:43.158806+00:00</ModifiedDate>
+      <ModifiedBy>Karol</ModifiedBy>
+      <EditedCount>1</EditedCount>
+      <ViewedCount>1</ViewedCount>
+      <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\TestingUtilities\StressedPacket.cs</Item>
+      <ItemType>ProjectItem</ItemType>
+      <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\TestingUtilities\TestingUtilities.csproj</ProjectName>
+      <CreatedDate>2019-01-24T13:37:58.7892593+00:00</CreatedDate>
+      <ViewedBy>Karol</ViewedBy>
+    </DevTrackerDataItem>
+    <DevTrackerDataItem ViewActiveTime="PT19.5886946S" EditActiveTime="PT0S">
+      <ModifiedDate>0001-01-01T00:00:00</ModifiedDate>
+      <EditedCount>0</EditedCount>
+      <ViewedCount>1</ViewedCount>
+      <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\StressedAltTesting\StressedPacket.cs</Item>
+      <ItemType>ProjectItem</ItemType>
+      <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\StressedAltTesting\StressedAltTesting.csproj</ProjectName>
+      <CreatedDate>2019-01-24T15:06:04.3647756+00:00</CreatedDate>
+      <ViewedBy>Karol</ViewedBy>
+    </DevTrackerDataItem>
+    <DevTrackerDataItem ViewActiveTime="PT2M38.510332S" EditActiveTime="PT4M32.5882652S">
+      <ModifiedDate>2019-01-24T14:48:58.5097838+00:00</ModifiedDate>
+      <ModifiedBy>Karol</ModifiedBy>
+      <EditedCount>1</EditedCount>
+      <ViewedCount>1</ViewedCount>
+      <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\TestingUtilities\StressedReader.cs</Item>
+      <ItemType>ProjectItem</ItemType>
+      <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\TestingUtilities\TestingUtilities.csproj</ProjectName>
+      <CreatedDate>2019-01-24T13:39:01.6577555+00:00</CreatedDate>
+      <ViewedBy>Karol</ViewedBy>
+    </DevTrackerDataItem>
+    <DevTrackerDataItem ViewActiveTime="PT3M38.0716993S" EditActiveTime="PT1.1583635S">
+      <ModifiedDate>2019-01-24T15:46:56.0187006+00:00</ModifiedDate>
+      <ModifiedBy>Karol</ModifiedBy>
+      <EditedCount>1</EditedCount>
+      <ViewedCount>1</ViewedCount>
+      <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\StressedAltTesting\StressedReader.cs</Item>
+      <ItemType>ProjectItem</ItemType>
+      <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\StressedAltTesting\StressedAltTesting.csproj</ProjectName>
+      <CreatedDate>2019-01-24T15:06:07.5038839+00:00</CreatedDate>
+      <ViewedBy>Karol</ViewedBy>
+    </DevTrackerDataItem>
+    <DevTrackerDataItem ViewActiveTime="PT34.9166982S" EditActiveTime="PT1M39.6770918S">
+      <ModifiedDate>2019-01-24T13:37:45.36758+00:00</ModifiedDate>
+      <ModifiedBy>Karol</ModifiedBy>
+      <EditedCount>1</EditedCount>
+      <ViewedCount>1</ViewedCount>
+      <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\TestingUtilities\StressedWriter.cs</Item>
+      <ItemType>ProjectItem</ItemType>
+      <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\TestingUtilities\TestingUtilities.csproj</ProjectName>
+      <CreatedDate>2019-01-24T13:36:01.9828209+00:00</CreatedDate>
+      <ViewedBy>Karol</ViewedBy>
+    </DevTrackerDataItem>
+    <DevTrackerDataItem ViewActiveTime="PT1M10.5237043S" EditActiveTime="PT0S">
+      <ModifiedDate>0001-01-01T00:00:00</ModifiedDate>
+      <EditedCount>0</EditedCount>
+      <ViewedCount>1</ViewedCount>
+      <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\StressedAltTesting\StressedWriter.cs</Item>
+      <ItemType>ProjectItem</ItemType>
+      <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\StressedAltTesting\StressedAltTesting.csproj</ProjectName>
+      <CreatedDate>2019-01-24T15:38:40.4988303+00:00</CreatedDate>
+      <ViewedBy>Karol</ViewedBy>
+    </DevTrackerDataItem>
     <DevTrackerDataItem ViewActiveTime="PT12M57.4456272S" EditActiveTime="PT3M34.3944363S">
       <ModifiedDate>2018-11-04T15:58:56.0091192+00:00</ModifiedDate>
       <ModifiedBy>Karol</ModifiedBy>
@@ -3981,6 +3973,162 @@
     </DevTrackerDataItem>
   </TotalTimeList>
   <HistoryTimeList>
+    <DevTrackerDataItem ViewActiveTime="PT1M10.5237043S" EditActiveTime="PT0S">
+      <ModifiedDate>0001-01-01T00:00:00</ModifiedDate>
+      <EditedCount>0</EditedCount>
+      <ViewedCount>1</ViewedCount>
+      <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\StressedAltTesting\StressedWriter.cs</Item>
+      <ItemType>ProjectItem</ItemType>
+      <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\StressedAltTesting\StressedAltTesting.csproj</ProjectName>
+      <CreatedDate>2019-01-24T15:38:40.4988303+00:00</CreatedDate>
+      <ViewedBy>Karol</ViewedBy>
+    </DevTrackerDataItem>
+    <DevTrackerDataItem ViewActiveTime="PT1M11.7626726S" EditActiveTime="PT9.7938399S">
+      <ModifiedDate>2019-01-24T15:46:21.1524403+00:00</ModifiedDate>
+      <ModifiedBy>Karol</ModifiedBy>
+      <EditedCount>1</EditedCount>
+      <ViewedCount>1</ViewedCount>
+      <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\StressedAltTesting\StressedAlt.cs</Item>
+      <ItemType>ProjectItem</ItemType>
+      <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\StressedAltTesting\StressedAltTesting.csproj</ProjectName>
+      <CreatedDate>2019-01-24T15:38:08.572258+00:00</CreatedDate>
+      <ViewedBy>Karol</ViewedBy>
+    </DevTrackerDataItem>
+    <DevTrackerDataItem ViewActiveTime="PT3M38.0716993S" EditActiveTime="PT1.1583635S">
+      <ModifiedDate>2019-01-24T15:46:56.0187006+00:00</ModifiedDate>
+      <ModifiedBy>Karol</ModifiedBy>
+      <EditedCount>1</EditedCount>
+      <ViewedCount>1</ViewedCount>
+      <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\StressedAltTesting\StressedReader.cs</Item>
+      <ItemType>ProjectItem</ItemType>
+      <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\StressedAltTesting\StressedAltTesting.csproj</ProjectName>
+      <CreatedDate>2019-01-24T15:06:07.5038839+00:00</CreatedDate>
+      <ViewedBy>Karol</ViewedBy>
+    </DevTrackerDataItem>
+    <DevTrackerDataItem ViewActiveTime="PT19.5886946S" EditActiveTime="PT0S">
+      <ModifiedDate>0001-01-01T00:00:00</ModifiedDate>
+      <EditedCount>0</EditedCount>
+      <ViewedCount>1</ViewedCount>
+      <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\StressedAltTesting\StressedPacket.cs</Item>
+      <ItemType>ProjectItem</ItemType>
+      <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\StressedAltTesting\StressedAltTesting.csproj</ProjectName>
+      <CreatedDate>2019-01-24T15:06:04.3647756+00:00</CreatedDate>
+      <ViewedBy>Karol</ViewedBy>
+    </DevTrackerDataItem>
+    <DevTrackerDataItem ViewActiveTime="PT2M18.749856S" EditActiveTime="PT0S">
+      <ModifiedDate>0001-01-01T00:00:00</ModifiedDate>
+      <EditedCount>0</EditedCount>
+      <ViewedCount>1</ViewedCount>
+      <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CSPlang\CSPParallel.cs</Item>
+      <ItemType>ProjectItem</ItemType>
+      <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CSPlang\CSPlang.csproj</ProjectName>
+      <CreatedDate>2019-01-24T14:40:58.3752555+00:00</CreatedDate>
+      <ViewedBy>Karol</ViewedBy>
+    </DevTrackerDataItem>
+    <DevTrackerDataItem ViewActiveTime="PT4M59.9310218S" EditActiveTime="PT0S">
+      <ModifiedDate>0001-01-01T00:00:00</ModifiedDate>
+      <EditedCount>0</EditedCount>
+      <ViewedCount>1</ViewedCount>
+      <Item>Debug Mode</Item>
+      <ItemType>DebugModeItem</ItemType>
+      <ProjectName />
+      <CreatedDate>2019-01-24T14:36:01.5351967+00:00</CreatedDate>
+      <ViewedBy>Karol</ViewedBy>
+    </DevTrackerDataItem>
+    <DevTrackerDataItem ViewActiveTime="PT2M38.510332S" EditActiveTime="PT4M32.5882652S">
+      <ModifiedDate>2019-01-24T14:48:58.5097838+00:00</ModifiedDate>
+      <ModifiedBy>Karol</ModifiedBy>
+      <EditedCount>1</EditedCount>
+      <ViewedCount>1</ViewedCount>
+      <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\TestingUtilities\StressedReader.cs</Item>
+      <ItemType>ProjectItem</ItemType>
+      <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\TestingUtilities\TestingUtilities.csproj</ProjectName>
+      <CreatedDate>2019-01-24T13:39:01.6577555+00:00</CreatedDate>
+      <ViewedBy>Karol</ViewedBy>
+    </DevTrackerDataItem>
+    <DevTrackerDataItem ViewActiveTime="PT4.5928573S" EditActiveTime="PT21.9796342S">
+      <ModifiedDate>2019-01-24T13:38:43.158806+00:00</ModifiedDate>
+      <ModifiedBy>Karol</ModifiedBy>
+      <EditedCount>1</EditedCount>
+      <ViewedCount>1</ViewedCount>
+      <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\TestingUtilities\StressedPacket.cs</Item>
+      <ItemType>ProjectItem</ItemType>
+      <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\TestingUtilities\TestingUtilities.csproj</ProjectName>
+      <CreatedDate>2019-01-24T13:37:58.7892593+00:00</CreatedDate>
+      <ViewedBy>Karol</ViewedBy>
+    </DevTrackerDataItem>
+    <DevTrackerDataItem ViewActiveTime="PT34.9166982S" EditActiveTime="PT1M39.6770918S">
+      <ModifiedDate>2019-01-24T13:37:45.36758+00:00</ModifiedDate>
+      <ModifiedBy>Karol</ModifiedBy>
+      <EditedCount>1</EditedCount>
+      <ViewedCount>1</ViewedCount>
+      <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\TestingUtilities\StressedWriter.cs</Item>
+      <ItemType>ProjectItem</ItemType>
+      <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\TestingUtilities\TestingUtilities.csproj</ProjectName>
+      <CreatedDate>2019-01-24T13:36:01.9828209+00:00</CreatedDate>
+      <ViewedBy>Karol</ViewedBy>
+    </DevTrackerDataItem>
+    <DevTrackerDataItem ViewActiveTime="PT2M33.4684484S" EditActiveTime="PT2M20.6215697S">
+      <ModifiedDate>2019-01-24T14:35:53.5172049+00:00</ModifiedDate>
+      <ModifiedBy>Karol</ModifiedBy>
+      <EditedCount>1</EditedCount>
+      <ViewedCount>1</ViewedCount>
+      <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\TestingUtilities\StressedAlt.cs</Item>
+      <ItemType>ProjectItem</ItemType>
+      <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\TestingUtilities\TestingUtilities.csproj</ProjectName>
+      <CreatedDate>2019-01-24T13:31:04.2826044+00:00</CreatedDate>
+      <ViewedBy>Karol</ViewedBy>
+    </DevTrackerDataItem>
+    <DevTrackerDataItem ViewActiveTime="PT32.9438405S" EditActiveTime="PT0S">
+      <ModifiedDate>0001-01-01T00:00:00</ModifiedDate>
+      <EditedCount>0</EditedCount>
+      <ViewedCount>1</ViewedCount>
+      <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\TestingUtilities\Program.cs</Item>
+      <ItemType>ProjectItem</ItemType>
+      <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\TestingUtilities\TestingUtilities.csproj</ProjectName>
+      <CreatedDate>2019-01-24T13:30:30.2515283+00:00</CreatedDate>
+      <ViewedBy>Karol</ViewedBy>
+    </DevTrackerDataItem>
+    <DevTrackerDataItem ViewActiveTime="PT27.6562821S" EditActiveTime="PT0S">
+      <ModifiedDate>0001-01-01T00:00:00</ModifiedDate>
+      <EditedCount>0</EditedCount>
+      <ViewedCount>1</ViewedCount>
+      <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CSPlang\Alting\AltingBarrier.cs</Item>
+      <ItemType>ProjectItem</ItemType>
+      <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CSPlang\CSPlang.csproj</ProjectName>
+      <CreatedDate>2019-01-24T13:15:20.9475522+00:00</CreatedDate>
+      <ViewedBy>Karol</ViewedBy>
+    </DevTrackerDataItem>
+    <DevTrackerDataItem ViewActiveTime="PT3.3117738S" EditActiveTime="PT0S">
+      <ModifiedDate>0001-01-01T00:00:00</ModifiedDate>
+      <EditedCount>0</EditedCount>
+      <ViewedCount>1</ViewedCount>
+      <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CSPlang\AlternativeError.cs</Item>
+      <ItemType>ProjectItem</ItemType>
+      <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CSPlang\CSPlang.csproj</ProjectName>
+      <CreatedDate>2019-01-24T12:01:34.9750074+00:00</CreatedDate>
+      <ViewedBy>Karol</ViewedBy>
+    </DevTrackerDataItem>
+    <DevTrackerDataItem ViewActiveTime="PT1M35.7033632S" EditActiveTime="PT0S">
+      <ModifiedDate>0001-01-01T00:00:00</ModifiedDate>
+      <EditedCount>0</EditedCount>
+      <ViewedCount>1</ViewedCount>
+      <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CSPlang\Alternative.cs</Item>
+      <ItemType>ProjectItem</ItemType>
+      <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CSPlang\CSPlang.csproj</ProjectName>
+      <CreatedDate>2019-01-24T12:01:32.3262761+00:00</CreatedDate>
+      <ViewedBy>Karol</ViewedBy>
+    </DevTrackerDataItem>
+    <DevTrackerDataItem ViewActiveTime="PT7.77631S" EditActiveTime="PT0S">
+      <ModifiedDate>0001-01-01T00:00:00</ModifiedDate>
+      <EditedCount>0</EditedCount>
+      <ViewedCount>1</ViewedCount>
+      <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CSPlang\CSTimer.cs</Item>
+      <ItemType>ProjectItem</ItemType>
+      <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CSPlang\CSPlang.csproj</ProjectName>
+      <CreatedDate>2019-01-24T12:01:29.0027074+00:00</CreatedDate>
+      <ViewedBy>Karol</ViewedBy>
+    </DevTrackerDataItem>
     <DevTrackerDataItem ViewActiveTime="PT2.2936471S" EditActiveTime="PT4M42.7056495S">
       <ModifiedDate>2019-01-23T13:18:12.6294463+00:00</ModifiedDate>
       <ModifiedBy>Karol</ModifiedBy>

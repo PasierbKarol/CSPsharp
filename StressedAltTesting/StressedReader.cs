@@ -43,30 +43,30 @@ namespace TestingUtilities
         {
             const int seconds = 1000;
             const int initialWait = 5;
-            Console.WriteLine("\nWait (" + initialWait +
-                                " seconds) for all the writers to get going ...");
-            CSTimer tim = new CSTimer();
-            long timeout = tim.read() + (initialWait * seconds);
-            tim.after(timeout);
-            Console.WriteLine("OK - that should be long enough ...\n");
+            //Console.WriteLine("\nWait (" + initialWait +
+            //                    " seconds) for all the writers to get going ...");
+            //CSTimer tim = new CSTimer();
+            //long timeout = tim.read() + (initialWait * seconds);
+            //tim.after(timeout);
+            //Console.WriteLine("OK - that should be long enough ...\n");
             int[][] n = new int[c.Length][];
             for (int i = 0; i < n.Length; i++)
             {
                 n[i] = new int[nWritersPerChannel];
             }
 
-            for (int channel = 0; channel < c.Length; channel++)
-            {
-                for (int i = 0; i < nWritersPerChannel; i++)
-                {
-                    StressedPacket stressedPacket = (StressedPacket)c[channel].read();
-                    n[channel][stressedPacket.writer] = stressedPacket.n;
-                    for (int chan = 0; chan < channel; chan++) Console.Write("  ");
-                    Console.WriteLine("channel " + channel +
-                                        " writer " + stressedPacket.writer +
-                                        " read " + stressedPacket.n);
-                }
-            }
+            //for (int channel = 0; channel < c.Length; channel++)
+            //{
+            //    for (int i = 0; i < nWritersPerChannel; i++)
+            //    {
+            //        StressedPacket stressedPacket = (StressedPacket)c[channel].read();
+            //        n[channel][stressedPacket.writer] = stressedPacket.n;
+            //        for (int chan = 0; chan < channel; chan++) Console.Write("  ");
+            //        Console.WriteLine("channel " + channel +
+            //                            " writer " + stressedPacket.writer +
+            //                            " read " + stressedPacket.n);
+            //    }
+            //}
             Alternative alt = new Alternative(c);
             int counter = 0, tock = 0;
             while (true)
