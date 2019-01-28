@@ -137,7 +137,6 @@ namespace PlugAndPlay
                     printStream.Write(In.read());
                     printStream.Write(postfix);
                     printStream.Flush();
-
                 }
             }
             catch (PoisonException p)

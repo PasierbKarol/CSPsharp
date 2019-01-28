@@ -30,9 +30,9 @@ namespace PlugAndPlay
             while (true)
             {
                 //Console.WriteLine("Inside GPrint timer");
-                if (this.delay !=0)
+                if (delay !=0)
                 {
-                    timer.after(delay);
+                    timer.after(timer.read() + delay);
                     Console.WriteLine(heading.Split(' ')[0] + " \t" + inChannel.read());
                 }
             }

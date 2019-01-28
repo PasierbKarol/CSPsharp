@@ -26,7 +26,7 @@ namespace CommsTimeSymetricTesting
 {
     public class Program
     {
-        public static void Main(string[] args)
+        static void Main(string[] args)
         {
             Console.WriteLine("");
             Console.WriteLine("Test of communication between JCSP processes");
@@ -36,25 +36,23 @@ namespace CommsTimeSymetricTesting
             Console.WriteLine("This version uses *symmetric* channels");
             Console.WriteLine();
 
-            SpuriousLog.start();
-
             int nIterations = 10000;
             Console.WriteLine(nIterations + " iterations per timing ...\n");
 
-            One2OneChannelSymmetricInt a = Channel.one2oneSymmetricInt();
-            One2OneChannelSymmetricInt b = Channel.one2oneSymmetricInt();
-            One2OneChannelSymmetricInt c = Channel.one2oneSymmetricInt();
-            One2OneChannelSymmetricInt d = Channel.one2oneSymmetricInt();
+            //One2OneChannelSymmetricInt a = Channel.one2oneSymmetricInt();
+            //One2OneChannelSymmetricInt b = Channel.one2oneSymmetricInt();
+            //One2OneChannelSymmetricInt c = Channel.one2oneSymmetricInt();
+            //One2OneChannelSymmetricInt d = Channel.one2oneSymmetricInt();
 
 
-            new Parallel(
-                new CSProcess[] {
-                    new PrefixInt (0, c.in(), a.out()),
-                    new Delta2Int (a.in(), d.out(), b.out()),
-                    new SuccessorInt (b.in(), c.out()),
-                    new Consume (nIterations, d.in())
-                }
-            ).run();
+            //new Parallel(
+            //    new CSProcess[] {
+            //        new PrefixInt (0, c.in(), a.out()),
+            //        new Delta2Int (a.in(), d.out(), b.out()),
+            //        new SuccessorInt (b.in(), c.out()),
+            //        new Consume (nIterations, d.in())
+            //    }
+            //).run();
 
 
             Console.WriteLine("\n\n\nOnly gets here if all above parallel processes fail ...\n\n\n");
