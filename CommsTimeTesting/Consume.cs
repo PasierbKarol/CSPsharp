@@ -20,6 +20,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using CSPlang;
 using CSPutil;
@@ -54,7 +55,10 @@ namespace CommsTimeTesting
 
             Console.WriteLine("1000 cycles completed ... timing now starting ...");
 
-            while (true)
+            var csv = new StringBuilder();
+
+            int repeatTimes = 1000;
+            while (repeatTimes > 0)
             {
                 long t0 = CSPTimeMillis.CurrentTimeMillis();
                 for (int i = 0; i < nLoops; i++)
@@ -65,15 +69,23 @@ namespace CommsTimeTesting
 
                 Console.WriteLine("last number received = " + x);
                 long microseconds = (t1 - t0) * 1000;
-                long timePerLoop_us = (microseconds / ((long)nLoops));
-                Console.WriteLine("   " + timePerLoop_us + " microseconds / iteration");
-                timePerLoop_us = (microseconds / ((long)(4 * nLoops)));
-                Console.WriteLine("   " + timePerLoop_us + " microseconds / communication");
-                timePerLoop_us = (microseconds / ((long)(8 * nLoops)));
-                Console.WriteLine("   " + timePerLoop_us + " microseconds / context switch");
+                long iterations = (microseconds / ((long)nLoops));
+                string first = " microseconds / iteration";
+                Console.WriteLine(iterations + first);
+                long communication = (microseconds / ((long)(4 * nLoops)));
+                string second = " microseconds / communication";
+                Console.WriteLine(communication + second);
+                long contextSwitch = (microseconds / ((long)(8 * nLoops)));
+                string third = " microseconds / context switch";
+                Console.WriteLine(contextSwitch + third);
+                var newLine = string.Format("{0},{1},{2},{3},{4},{5}", iterations, first, communication, second, contextSwitch, third);
+                csv.AppendLine(newLine);
 
+
+                repeatTimes--;
             }
-
+            File.WriteAllText(@"d:\\test.csv", csv.ToString());
+            Console.WriteLine("Finished");
         }
     }
 }

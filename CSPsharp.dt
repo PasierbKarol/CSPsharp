@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<DevTrackerData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" SolutionTotalEditTime="PT10H48M14.3583021S" SolutionTotalViewTime="PT14H46M0.1274694S" SolutionTotalDebugTime="PT1H49M30.3476637S">
+<DevTrackerData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" SolutionTotalEditTime="PT11H35M6.7172218S" SolutionTotalViewTime="PT16H9M8.1355498S" SolutionTotalDebugTime="PT2H1M58.4544761S">
   <FileVersion>
     <Major>1</Major>
     <Minor>0</Minor>
@@ -7,286 +7,24 @@
   <SolutionFolder>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp</SolutionFolder>
   <SessionTimeList />
   <LastSessionTimeList>
-    <DevTrackerDataItem ViewActiveTime="PT0.2520504S" EditActiveTime="PT0S">
+    <DevTrackerDataItem ViewActiveTime="PT14.5957894S" EditActiveTime="PT0S">
       <ModifiedDate>0001-01-01T00:00:00</ModifiedDate>
       <EditedCount>0</EditedCount>
-      <ViewedCount>1</ViewedCount>
-      <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CSPlang\Alternative.cs</Item>
-      <ItemType>ProjectItem</ItemType>
-      <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CSPlang\CSPlang.csproj</ProjectName>
-      <CreatedDate>2019-01-25T10:45:52.7412721+00:00</CreatedDate>
-      <ViewedBy>Karol</ViewedBy>
-    </DevTrackerDataItem>
-    <DevTrackerDataItem ViewActiveTime="PT34.6615459S" EditActiveTime="PT0S">
-      <ModifiedDate>0001-01-01T00:00:00</ModifiedDate>
-      <EditedCount>0</EditedCount>
-      <ViewedCount>1</ViewedCount>
-      <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CSPlang\Alting\AltingBarrier.cs</Item>
-      <ItemType>ProjectItem</ItemType>
-      <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CSPlang\CSPlang.csproj</ProjectName>
-      <CreatedDate>2019-01-25T12:25:59.0583675+00:00</CreatedDate>
-      <ViewedBy>Karol</ViewedBy>
-    </DevTrackerDataItem>
-    <DevTrackerDataItem ViewActiveTime="PT22.3297996S" EditActiveTime="PT0S">
-      <ModifiedDate>0001-01-01T00:00:00</ModifiedDate>
-      <EditedCount>0</EditedCount>
-      <ViewedCount>1</ViewedCount>
-      <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CSPlang\Alting\AltingBarrierBase.cs</Item>
-      <ItemType>ProjectItem</ItemType>
-      <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CSPlang\CSPlang.csproj</ProjectName>
-      <CreatedDate>2019-01-25T12:29:52.7056567+00:00</CreatedDate>
-      <ViewedBy>Karol</ViewedBy>
-    </DevTrackerDataItem>
-    <DevTrackerDataItem ViewActiveTime="PT15.8604627S" EditActiveTime="PT0S">
-      <ModifiedDate>0001-01-01T00:00:00</ModifiedDate>
-      <EditedCount>0</EditedCount>
-      <ViewedCount>1</ViewedCount>
-      <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CSPlang\Alting\AltingChannelInputInt.cs</Item>
-      <ItemType>ProjectItem</ItemType>
-      <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CSPlang\CSPlang.csproj</ProjectName>
-      <CreatedDate>2019-01-25T11:05:21.3846581+00:00</CreatedDate>
-      <ViewedBy>Karol</ViewedBy>
-    </DevTrackerDataItem>
-    <DevTrackerDataItem ViewActiveTime="PT9.4942217S" EditActiveTime="PT0S">
-      <ModifiedDate>0001-01-01T00:00:00</ModifiedDate>
-      <EditedCount>0</EditedCount>
-      <ViewedCount>1</ViewedCount>
-      <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CSPlang\Alting\AltingChannelInputIntImpl.cs</Item>
-      <ItemType>ProjectItem</ItemType>
-      <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CSPlang\CSPlang.csproj</ProjectName>
-      <CreatedDate>2019-01-25T11:05:35.8185406+00:00</CreatedDate>
-      <ViewedBy>Karol</ViewedBy>
-    </DevTrackerDataItem>
-    <DevTrackerDataItem ViewActiveTime="PT7.0632858S" EditActiveTime="PT0S">
-      <ModifiedDate>0001-01-01T00:00:00</ModifiedDate>
-      <EditedCount>0</EditedCount>
-      <ViewedCount>1</ViewedCount>
-      <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CSPlang\Channel\ChannelInternalsInt.cs</Item>
-      <ItemType>ProjectItem</ItemType>
-      <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CSPlang\CSPlang.csproj</ProjectName>
-      <CreatedDate>2019-01-25T11:05:44.1901367+00:00</CreatedDate>
-      <ViewedBy>Karol</ViewedBy>
-    </DevTrackerDataItem>
-    <DevTrackerDataItem ViewActiveTime="PT14.2927125S" EditActiveTime="PT0S">
-      <ModifiedDate>0001-01-01T00:00:00</ModifiedDate>
-      <EditedCount>0</EditedCount>
-      <ViewedCount>1</ViewedCount>
-      <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\PlugAndPlay\Class1.cs</Item>
-      <ItemType>ProjectItem</ItemType>
-      <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\PlugAndPlay\PlugAndPlay.csproj</ProjectName>
-      <CreatedDate>2019-01-25T11:00:04.192245+00:00</CreatedDate>
-      <ViewedBy>Karol</ViewedBy>
-    </DevTrackerDataItem>
-    <DevTrackerDataItem ViewActiveTime="PT12.4850023S" EditActiveTime="PT0S">
-      <ModifiedDate>0001-01-01T00:00:00</ModifiedDate>
-      <EditedCount>0</EditedCount>
-      <ViewedCount>1</ViewedCount>
-      <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\PlugAndPlay\Ints\Class1.cs</Item>
-      <ItemType>ProjectItem</ItemType>
-      <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\PlugAndPlay\PlugAndPlay.csproj</ProjectName>
-      <CreatedDate>2019-01-25T11:00:18.487949+00:00</CreatedDate>
-      <ViewedBy>Karol</ViewedBy>
-    </DevTrackerDataItem>
-    <DevTrackerDataItem ViewActiveTime="PT25.6464422S" EditActiveTime="PT4.5462352S">
-      <ModifiedDate>2019-01-25T10:49:34.4844087+00:00</ModifiedDate>
-      <ModifiedBy>Karol</ModifiedBy>
-      <EditedCount>1</EditedCount>
-      <ViewedCount>1</ViewedCount>
-      <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CommsTimeTesting\CommsTimeSymmetric.cs</Item>
-      <ItemType>ProjectItem</ItemType>
-      <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CommsTimeTesting\CommsTimeTesting.csproj</ProjectName>
-      <CreatedDate>2019-01-25T10:49:22.1087818+00:00</CreatedDate>
-      <ViewedBy>Karol</ViewedBy>
-    </DevTrackerDataItem>
-    <DevTrackerDataItem ViewActiveTime="PT2M3.9020174S" EditActiveTime="PT2M29.6671939S">
-      <ModifiedDate>2019-01-25T11:09:10.9797462+00:00</ModifiedDate>
-      <ModifiedBy>Karol</ModifiedBy>
-      <EditedCount>1</EditedCount>
-      <ViewedCount>1</ViewedCount>
-      <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CommsTimeTesting\CommsTimeTesting.cs</Item>
-      <ItemType>ProjectItem</ItemType>
-      <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CommsTimeTesting\CommsTimeTesting.csproj</ProjectName>
-      <CreatedDate>2019-01-25T10:46:39.1478669+00:00</CreatedDate>
-      <ViewedBy>Karol</ViewedBy>
-    </DevTrackerDataItem>
-    <DevTrackerDataItem ViewActiveTime="PT1M32.3976217S" EditActiveTime="PT4M21.9306639S">
-      <ModifiedDate>2019-01-25T12:04:52.4740526+00:00</ModifiedDate>
-      <ModifiedBy>Karol</ModifiedBy>
-      <EditedCount>1</EditedCount>
       <ViewedCount>1</ViewedCount>
       <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CommsTimeTesting\Consume.cs</Item>
       <ItemType>ProjectItem</ItemType>
       <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CommsTimeTesting\CommsTimeTesting.csproj</ProjectName>
-      <CreatedDate>2019-01-25T10:52:47.1012564+00:00</CreatedDate>
+      <CreatedDate>2019-01-31T12:15:06.8581981+00:00</CreatedDate>
       <ViewedBy>Karol</ViewedBy>
     </DevTrackerDataItem>
-    <DevTrackerDataItem ViewActiveTime="PT10.8426884S" EditActiveTime="PT0S">
+    <DevTrackerDataItem ViewActiveTime="PT41.4577168S" EditActiveTime="PT0S">
       <ModifiedDate>0001-01-01T00:00:00</ModifiedDate>
       <EditedCount>0</EditedCount>
       <ViewedCount>1</ViewedCount>
-      <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CSPlang\CSPBarrier.cs</Item>
+      <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CSPlang\CSTimer.cs</Item>
       <ItemType>ProjectItem</ItemType>
       <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CSPlang\CSPlang.csproj</ProjectName>
-      <CreatedDate>2019-01-25T12:53:57.880257+00:00</CreatedDate>
-      <ViewedBy>Karol</ViewedBy>
-    </DevTrackerDataItem>
-    <DevTrackerDataItem ViewActiveTime="PT59.6010415S" EditActiveTime="PT0S">
-      <ModifiedDate>0001-01-01T00:00:00</ModifiedDate>
-      <EditedCount>0</EditedCount>
-      <ViewedCount>1</ViewedCount>
-      <Item>Debug Mode</Item>
-      <ItemType>DebugModeItem</ItemType>
-      <ProjectName />
-      <CreatedDate>2019-01-25T10:43:58.4215775+00:00</CreatedDate>
-      <ViewedBy>Karol</ViewedBy>
-    </DevTrackerDataItem>
-    <DevTrackerDataItem ViewActiveTime="PT10.7975856S" EditActiveTime="PT1M25.0084046S">
-      <ModifiedDate>2019-01-25T11:09:06.6182448+00:00</ModifiedDate>
-      <ModifiedBy>Karol</ModifiedBy>
-      <EditedCount>1</EditedCount>
-      <ViewedCount>1</ViewedCount>
-      <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\PlugAndPlay\Ints\Delta2Int.cs</Item>
-      <ItemType>ProjectItem</ItemType>
-      <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\PlugAndPlay\PlugAndPlay.csproj</ProjectName>
-      <CreatedDate>2019-01-25T11:06:18.434637+00:00</CreatedDate>
-      <ViewedBy>Karol</ViewedBy>
-    </DevTrackerDataItem>
-    <DevTrackerDataItem ViewActiveTime="PT27.3221367S" EditActiveTime="PT5.477774S">
-      <ModifiedDate>2019-01-25T11:03:44.0850765+00:00</ModifiedDate>
-      <ModifiedBy>Karol</ModifiedBy>
-      <EditedCount>1</EditedCount>
-      <ViewedCount>1</ViewedCount>
-      <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\PlugAndPlay\Identity.cs</Item>
-      <ItemType>ProjectItem</ItemType>
-      <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\PlugAndPlay\PlugAndPlay.csproj</ProjectName>
-      <CreatedDate>2019-01-25T11:02:01.7965009+00:00</CreatedDate>
-      <ViewedBy>Karol</ViewedBy>
-    </DevTrackerDataItem>
-    <DevTrackerDataItem ViewActiveTime="PT18.9015236S" EditActiveTime="PT1M1.3748578S">
-      <ModifiedDate>2019-01-25T11:04:27.6119975+00:00</ModifiedDate>
-      <ModifiedBy>Karol</ModifiedBy>
-      <EditedCount>1</EditedCount>
-      <ViewedCount>1</ViewedCount>
-      <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\PlugAndPlay\Ints\IdentityInt.cs</Item>
-      <ItemType>ProjectItem</ItemType>
-      <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\PlugAndPlay\PlugAndPlay.csproj</ProjectName>
-      <CreatedDate>2019-01-25T11:02:42.3769803+00:00</CreatedDate>
-      <ViewedBy>Karol</ViewedBy>
-    </DevTrackerDataItem>
-    <DevTrackerDataItem ViewActiveTime="PT11.0455741S" EditActiveTime="PT0S">
-      <ModifiedDate>0001-01-01T00:00:00</ModifiedDate>
-      <EditedCount>0</EditedCount>
-      <ViewedCount>1</ViewedCount>
-      <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CSPlang\One2\One2OneChannelInt.cs</Item>
-      <ItemType>ProjectItem</ItemType>
-      <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CSPlang\CSPlang.csproj</ProjectName>
-      <CreatedDate>2019-01-25T11:05:11.304699+00:00</CreatedDate>
-      <ViewedBy>Karol</ViewedBy>
-    </DevTrackerDataItem>
-    <DevTrackerDataItem ViewActiveTime="PT34.5992721S" EditActiveTime="PT0S">
-      <ModifiedDate>0001-01-01T00:00:00</ModifiedDate>
-      <EditedCount>0</EditedCount>
-      <ViewedCount>1</ViewedCount>
-      <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\PlugAndPlay\Prefix.cs</Item>
-      <ItemType>ProjectItem</ItemType>
-      <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\PlugAndPlay\PlugAndPlay.csproj</ProjectName>
-      <CreatedDate>2019-01-25T10:56:11.3699493+00:00</CreatedDate>
-      <ViewedBy>Karol</ViewedBy>
-    </DevTrackerDataItem>
-    <DevTrackerDataItem ViewActiveTime="PT1M1.8596103S" EditActiveTime="PT2M16.0312771S">
-      <ModifiedDate>2019-01-25T11:07:43.1494927+00:00</ModifiedDate>
-      <ModifiedBy>Karol</ModifiedBy>
-      <EditedCount>1</EditedCount>
-      <ViewedCount>1</ViewedCount>
-      <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\PlugAndPlay\Ints\PrefixInt.cs</Item>
-      <ItemType>ProjectItem</ItemType>
-      <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\PlugAndPlay\PlugAndPlay.csproj</ProjectName>
-      <CreatedDate>2019-01-25T10:58:57.7273272+00:00</CreatedDate>
-      <ViewedBy>Karol</ViewedBy>
-    </DevTrackerDataItem>
-    <DevTrackerDataItem ViewActiveTime="PT8.6615366S" EditActiveTime="PT27.4511587S">
-      <ModifiedDate>2019-01-25T11:09:01.1882372+00:00</ModifiedDate>
-      <ModifiedBy>Karol</ModifiedBy>
-      <EditedCount>1</EditedCount>
-      <ViewedCount>1</ViewedCount>
-      <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\PlugAndPlay\Ints\ProcessWriteInt.cs</Item>
-      <ItemType>ProjectItem</ItemType>
-      <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\PlugAndPlay\PlugAndPlay.csproj</ProjectName>
-      <CreatedDate>2019-01-25T11:08:14.3213941+00:00</CreatedDate>
-      <ViewedBy>Karol</ViewedBy>
-    </DevTrackerDataItem>
-    <DevTrackerDataItem ViewActiveTime="PT13.7776209S" EditActiveTime="PT11.3511485S">
-      <ModifiedDate>0001-01-01T00:00:00</ModifiedDate>
-      <EditedCount>1</EditedCount>
-      <ViewedCount>1</ViewedCount>
-      <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CommsTimeTesting\Program.cs</Item>
-      <ItemType>ProjectItem</ItemType>
-      <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CommsTimeTesting\CommsTimeTesting.csproj</ProjectName>
-      <CreatedDate>2019-01-25T10:45:48.0136898+00:00</CreatedDate>
-      <ViewedBy>Karol</ViewedBy>
-    </DevTrackerDataItem>
-    <DevTrackerDataItem ViewActiveTime="PT25.92193S" EditActiveTime="PT51.5031868S">
-      <ModifiedDate>2019-01-25T10:51:42.4237317+00:00</ModifiedDate>
-      <ModifiedBy>Karol</ModifiedBy>
-      <EditedCount>1</EditedCount>
-      <ViewedCount>1</ViewedCount>
-      <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CommsTimeSymetricTesting\Program.cs</Item>
-      <ItemType>ProjectItem</ItemType>
-      <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CommsTimeSymetricTesting\CommsTimeSymetricTesting.csproj</ProjectName>
-      <CreatedDate>2019-01-25T10:50:18.8252235+00:00</CreatedDate>
-      <ViewedBy>Karol</ViewedBy>
-    </DevTrackerDataItem>
-    <DevTrackerDataItem ViewActiveTime="PT1M26.8111352S" EditActiveTime="PT5.5055743S">
-      <ModifiedDate>2019-01-25T10:44:51.4864618+00:00</ModifiedDate>
-      <ModifiedBy>Karol</ModifiedBy>
-      <EditedCount>1</EditedCount>
-      <ViewedCount>1</ViewedCount>
-      <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\StressedAltTesting\StressedAlt.cs</Item>
-      <ItemType>ProjectItem</ItemType>
-      <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\StressedAltTesting\StressedAltTesting.csproj</ProjectName>
-      <CreatedDate>2019-01-25T10:42:54.9368711+00:00</CreatedDate>
-      <ViewedBy>Karol</ViewedBy>
-    </DevTrackerDataItem>
-    <DevTrackerDataItem ViewActiveTime="PT4.9154955S" EditActiveTime="PT0S">
-      <ModifiedDate>0001-01-01T00:00:00</ModifiedDate>
-      <EditedCount>0</EditedCount>
-      <ViewedCount>1</ViewedCount>
-      <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\StressedAltTesting\StressedPacket.cs</Item>
-      <ItemType>ProjectItem</ItemType>
-      <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\StressedAltTesting\StressedAltTesting.csproj</ProjectName>
-      <CreatedDate>2019-01-25T10:45:52.9943198+00:00</CreatedDate>
-      <ViewedBy>Karol</ViewedBy>
-    </DevTrackerDataItem>
-    <DevTrackerDataItem ViewActiveTime="PT2M41.7884519S" EditActiveTime="PT1.2632008S">
-      <ModifiedDate>2019-01-25T10:44:28.6166664+00:00</ModifiedDate>
-      <ModifiedBy>Karol</ModifiedBy>
-      <EditedCount>1</EditedCount>
-      <ViewedCount>1</ViewedCount>
-      <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\StressedAltTesting\StressedReader.cs</Item>
-      <ItemType>ProjectItem</ItemType>
-      <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\StressedAltTesting\StressedAltTesting.csproj</ProjectName>
-      <CreatedDate>2019-01-25T10:39:39.3909002+00:00</CreatedDate>
-      <ViewedBy>Karol</ViewedBy>
-    </DevTrackerDataItem>
-    <DevTrackerDataItem ViewActiveTime="PT0.2783013S" EditActiveTime="PT0S">
-      <ModifiedDate>0001-01-01T00:00:00</ModifiedDate>
-      <EditedCount>0</EditedCount>
-      <ViewedCount>1</ViewedCount>
-      <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\StressedAltTesting\StressedWriter.cs</Item>
-      <ItemType>ProjectItem</ItemType>
-      <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\StressedAltTesting\StressedAltTesting.csproj</ProjectName>
-      <CreatedDate>2019-01-25T10:45:52.4609761+00:00</CreatedDate>
-      <ViewedBy>Karol</ViewedBy>
-    </DevTrackerDataItem>
-    <DevTrackerDataItem ViewActiveTime="PT11.9922158S" EditActiveTime="PT34.6726355S">
-      <ModifiedDate>2019-01-25T11:10:10.7687048+00:00</ModifiedDate>
-      <ModifiedBy>Karol</ModifiedBy>
-      <EditedCount>1</EditedCount>
-      <ViewedCount>1</ViewedCount>
-      <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\PlugAndPlay\Ints\SuccessorInt.cs</Item>
-      <ItemType>ProjectItem</ItemType>
-      <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\PlugAndPlay\PlugAndPlay.csproj</ProjectName>
-      <CreatedDate>2019-01-25T11:09:12.9812998+00:00</CreatedDate>
+      <CreatedDate>2019-01-31T12:15:21.4559819+00:00</CreatedDate>
       <ViewedBy>Karol</ViewedBy>
     </DevTrackerDataItem>
   </LastSessionTimeList>
@@ -356,11 +94,11 @@
       <CreatedDate>2018-10-20T17:59:44.4138437+01:00</CreatedDate>
       <ViewedBy>Karol</ViewedBy>
     </DevTrackerDataItem>
-    <DevTrackerDataItem ViewActiveTime="PT1H6M6.4914909S" EditActiveTime="PT48M3.2060858S">
+    <DevTrackerDataItem ViewActiveTime="PT1H6M31.3871728S" EditActiveTime="PT48M3.2060858S">
       <ModifiedDate>2019-01-21T18:19:13.8030832+00:00</ModifiedDate>
       <ModifiedBy>Karol</ModifiedBy>
       <EditedCount>12</EditedCount>
-      <ViewedCount>20</ViewedCount>
+      <ViewedCount>21</ViewedCount>
       <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CSPlang\Alternative.cs</Item>
       <ItemType>ProjectItem</ItemType>
       <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CSPlang\CSPlang.csproj</ProjectName>
@@ -389,11 +127,11 @@
       <CreatedDate>2018-07-28T15:11:50.4424522+01:00</CreatedDate>
       <ViewedBy>Karol</ViewedBy>
     </DevTrackerDataItem>
-    <DevTrackerDataItem ViewActiveTime="PT12M0.8535152S" EditActiveTime="PT11M54.7756697S">
+    <DevTrackerDataItem ViewActiveTime="PT12M37.959642S" EditActiveTime="PT11M54.7756697S">
       <ModifiedDate>2018-08-12T11:07:52.6747349+01:00</ModifiedDate>
       <ModifiedBy>Karol</ModifiedBy>
       <EditedCount>3</EditedCount>
-      <ViewedCount>11</ViewedCount>
+      <ViewedCount>13</ViewedCount>
       <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CSPlang\Alting\AltingBarrier.cs</Item>
       <ItemType>ProjectItem</ItemType>
       <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CSPlang\CSPlang.csproj</ProjectName>
@@ -411,11 +149,11 @@
       <CreatedDate>2018-07-28T15:28:34.1140867+01:00</CreatedDate>
       <ViewedBy>Karol</ViewedBy>
     </DevTrackerDataItem>
-    <DevTrackerDataItem ViewActiveTime="PT8M11.0523039S" EditActiveTime="PT2M30.1491536S">
+    <DevTrackerDataItem ViewActiveTime="PT8M11.3095934S" EditActiveTime="PT2M30.1491536S">
       <ModifiedDate>2018-08-12T11:08:19.1298275+01:00</ModifiedDate>
       <ModifiedBy>Karol</ModifiedBy>
       <EditedCount>3</EditedCount>
-      <ViewedCount>9</ViewedCount>
+      <ViewedCount>10</ViewedCount>
       <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CSPlang\Alting\AltingBarrierBase.cs</Item>
       <ItemType>ProjectItem</ItemType>
       <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CSPlang\CSPlang.csproj</ProjectName>
@@ -433,11 +171,11 @@
       <CreatedDate>2018-07-28T15:14:45.8990709+01:00</CreatedDate>
       <ViewedBy>Karol</ViewedBy>
     </DevTrackerDataItem>
-    <DevTrackerDataItem ViewActiveTime="PT1M50.7013567S" EditActiveTime="PT2M24.724878S">
+    <DevTrackerDataItem ViewActiveTime="PT1M56.9142179S" EditActiveTime="PT2M24.724878S">
       <ModifiedDate>2018-08-12T11:08:52.6978949+01:00</ModifiedDate>
       <ModifiedBy>Karol</ModifiedBy>
       <EditedCount>3</EditedCount>
-      <ViewedCount>4</ViewedCount>
+      <ViewedCount>5</ViewedCount>
       <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CSPlang\Alting\AltingBarrierCoordinate.cs</Item>
       <ItemType>ProjectItem</ItemType>
       <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CSPlang\CSPlang.csproj</ProjectName>
@@ -453,6 +191,38 @@
       <ItemType>ProjectItem</ItemType>
       <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CSPlang\CSPlang.csproj</ProjectName>
       <CreatedDate>2018-07-29T13:16:35.2479911+01:00</CreatedDate>
+      <ViewedBy>Karol</ViewedBy>
+    </DevTrackerDataItem>
+    <DevTrackerDataItem ViewActiveTime="PT13M46.2339435S" EditActiveTime="PT12M37.0451419S">
+      <ModifiedDate>2019-01-30T16:20:23.0500657+00:00</ModifiedDate>
+      <ModifiedBy>Karol</ModifiedBy>
+      <EditedCount>1</EditedCount>
+      <ViewedCount>1</ViewedCount>
+      <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\AltingBarrierTesting\AltingBarrierExampleProcess.cs</Item>
+      <ItemType>ProjectItem</ItemType>
+      <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\AltingBarrierTesting\AltingBarrierTesting.csproj</ProjectName>
+      <CreatedDate>2019-01-30T12:34:45.101225+00:00</CreatedDate>
+      <ViewedBy>Karol</ViewedBy>
+    </DevTrackerDataItem>
+    <DevTrackerDataItem ViewActiveTime="PT2M27.0222967S" EditActiveTime="PT1M25.776661S">
+      <ModifiedDate>0001-01-01T00:00:00</ModifiedDate>
+      <EditedCount>1</EditedCount>
+      <ViewedCount>2</ViewedCount>
+      <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\AltingBarrierTesting\AltingBarrierGadget0.cs</Item>
+      <ItemType>ProjectItem</ItemType>
+      <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\AltingBarrierTesting\AltingBarrierTesting.csproj</ProjectName>
+      <CreatedDate>2019-01-28T15:12:07.0248977+00:00</CreatedDate>
+      <ViewedBy>Karol</ViewedBy>
+    </DevTrackerDataItem>
+    <DevTrackerDataItem ViewActiveTime="PT13M25.8683726S" EditActiveTime="PT58.4841228S">
+      <ModifiedDate>2019-01-28T15:34:41.2095849+00:00</ModifiedDate>
+      <ModifiedBy>Karol</ModifiedBy>
+      <EditedCount>2</EditedCount>
+      <ViewedCount>2</ViewedCount>
+      <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\AltingBarrierTesting\AltingBarrierGadget0Demo0.cs</Item>
+      <ItemType>ProjectItem</ItemType>
+      <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\AltingBarrierTesting\AltingBarrierTesting.csproj</ProjectName>
+      <CreatedDate>2019-01-28T15:12:05.8984623+00:00</CreatedDate>
       <ViewedBy>Karol</ViewedBy>
     </DevTrackerDataItem>
     <DevTrackerDataItem ViewActiveTime="PT2M56.5662054S" EditActiveTime="PT1M10.9724947S">
@@ -477,11 +247,11 @@
       <CreatedDate>2018-07-28T15:03:56.278972+01:00</CreatedDate>
       <ViewedBy>Karol</ViewedBy>
     </DevTrackerDataItem>
-    <DevTrackerDataItem ViewActiveTime="PT4M37.051506S" EditActiveTime="PT2M49.7858349S">
+    <DevTrackerDataItem ViewActiveTime="PT5M30.8045947S" EditActiveTime="PT2M49.7858349S">
       <ModifiedDate>2018-10-16T18:54:34.8234186+01:00</ModifiedDate>
       <ModifiedBy>Karol</ModifiedBy>
       <EditedCount>4</EditedCount>
-      <ViewedCount>10</ViewedCount>
+      <ViewedCount>12</ViewedCount>
       <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CSPlang\Alting\AltingChannelInput.cs</Item>
       <ItemType>ProjectItem</ItemType>
       <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CSPlang\CSPlang.csproj</ProjectName>
@@ -499,11 +269,11 @@
       <CreatedDate>2018-07-28T15:24:29.6025284+01:00</CreatedDate>
       <ViewedBy>Karol</ViewedBy>
     </DevTrackerDataItem>
-    <DevTrackerDataItem ViewActiveTime="PT8M37.2265572S" EditActiveTime="PT3M19.8492074S">
+    <DevTrackerDataItem ViewActiveTime="PT9M35.4707693S" EditActiveTime="PT3M19.8492074S">
       <ModifiedDate>2018-11-04T15:43:24.9131648+00:00</ModifiedDate>
       <ModifiedBy>Karol</ModifiedBy>
       <EditedCount>4</EditedCount>
-      <ViewedCount>12</ViewedCount>
+      <ViewedCount>14</ViewedCount>
       <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CSPlang\Alting\AltingChannelInputImpl.cs</Item>
       <ItemType>ProjectItem</ItemType>
       <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CSPlang\CSPlang.csproj</ProjectName>
@@ -718,11 +488,11 @@
       <CreatedDate>2018-08-12T08:18:32.0768339+01:00</CreatedDate>
       <ViewedBy>Karol</ViewedBy>
     </DevTrackerDataItem>
-    <DevTrackerDataItem ViewActiveTime="PT4M11.4114066S" EditActiveTime="PT3M54.7830695S">
+    <DevTrackerDataItem ViewActiveTime="PT4M25.8463985S" EditActiveTime="PT3M54.7830695S">
       <ModifiedDate>2018-08-05T10:49:10.1435383+01:00</ModifiedDate>
       <ModifiedBy>Karol</ModifiedBy>
       <EditedCount>2</EditedCount>
-      <ViewedCount>5</ViewedCount>
+      <ViewedCount>6</ViewedCount>
       <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CSPlang\Any2\Any2AnyImpl.cs</Item>
       <ItemType>ProjectItem</ItemType>
       <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CSPlang\CSPlang.csproj</ProjectName>
@@ -827,11 +597,11 @@
       <CreatedDate>2018-08-05T11:30:26.8635142+01:00</CreatedDate>
       <ViewedBy>Karol</ViewedBy>
     </DevTrackerDataItem>
-    <DevTrackerDataItem ViewActiveTime="PT4M51.0060035S" EditActiveTime="PT2M5.1526904S">
+    <DevTrackerDataItem ViewActiveTime="PT5M6.1110274S" EditActiveTime="PT2M5.1526904S">
       <ModifiedDate>2018-09-06T21:21:44.6788714+01:00</ModifiedDate>
       <ModifiedBy>Karol</ModifiedBy>
       <EditedCount>4</EditedCount>
-      <ViewedCount>5</ViewedCount>
+      <ViewedCount>6</ViewedCount>
       <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CSPlang\Any2\Any2OneImpl.cs</Item>
       <ItemType>ProjectItem</ItemType>
       <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CSPlang\CSPlang.csproj</ProjectName>
@@ -1146,11 +916,11 @@
       <CreatedDate>2018-07-28T14:55:25.6817922+01:00</CreatedDate>
       <ViewedBy>Karol</ViewedBy>
     </DevTrackerDataItem>
-    <DevTrackerDataItem ViewActiveTime="PT32M43.0565658S" EditActiveTime="PT9M24.967379S">
+    <DevTrackerDataItem ViewActiveTime="PT34M4.1341473S" EditActiveTime="PT9M24.967379S">
       <ModifiedDate>2018-11-04T15:43:24.0219872+00:00</ModifiedDate>
       <ModifiedBy>Karol</ModifiedBy>
       <EditedCount>7</EditedCount>
-      <ViewedCount>11</ViewedCount>
+      <ViewedCount>13</ViewedCount>
       <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CSPlang\Channel\Channel.cs</Item>
       <ItemType>ProjectItem</ItemType>
       <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CSPlang\CSPlang.csproj</ProjectName>
@@ -1256,11 +1026,11 @@
       <CreatedDate>2018-07-28T15:07:51.4869141+01:00</CreatedDate>
       <ViewedBy>Karol</ViewedBy>
     </DevTrackerDataItem>
-    <DevTrackerDataItem ViewActiveTime="PT4M57.3740691S" EditActiveTime="PT27.8532169S">
+    <DevTrackerDataItem ViewActiveTime="PT5M1.7077448S" EditActiveTime="PT27.8532169S">
       <ModifiedDate>2018-10-16T18:54:06.6223666+01:00</ModifiedDate>
       <ModifiedBy>Karol</ModifiedBy>
       <EditedCount>2</EditedCount>
-      <ViewedCount>9</ViewedCount>
+      <ViewedCount>10</ViewedCount>
       <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CSPlang\Channel\ChannelInput.cs</Item>
       <ItemType>ProjectItem</ItemType>
       <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CSPlang\CSPlang.csproj</ProjectName>
@@ -1344,11 +1114,11 @@
       <CreatedDate>2018-07-28T15:22:53.4001236+01:00</CreatedDate>
       <ViewedBy>Karol</ViewedBy>
     </DevTrackerDataItem>
-    <DevTrackerDataItem ViewActiveTime="PT2M0.7329371S" EditActiveTime="PT1M2.1144505S">
+    <DevTrackerDataItem ViewActiveTime="PT4M25.1944678S" EditActiveTime="PT1M2.1144505S">
       <ModifiedDate>2018-10-16T18:50:47.8908717+01:00</ModifiedDate>
       <ModifiedBy>Karol</ModifiedBy>
       <EditedCount>3</EditedCount>
-      <ViewedCount>8</ViewedCount>
+      <ViewedCount>10</ViewedCount>
       <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CSPlang\Channel\ChannelInternals.cs</Item>
       <ItemType>ProjectItem</ItemType>
       <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CSPlang\CSPlang.csproj</ProjectName>
@@ -1546,11 +1316,11 @@
       <CreatedDate>2019-01-25T10:49:22.1087818+00:00</CreatedDate>
       <ViewedBy>Karol</ViewedBy>
     </DevTrackerDataItem>
-    <DevTrackerDataItem ViewActiveTime="PT2M3.9020174S" EditActiveTime="PT2M29.6671939S">
+    <DevTrackerDataItem ViewActiveTime="PT2M22.9709373S" EditActiveTime="PT2M29.6671939S">
       <ModifiedDate>2019-01-25T11:09:10.9797462+00:00</ModifiedDate>
       <ModifiedBy>Karol</ModifiedBy>
       <EditedCount>1</EditedCount>
-      <ViewedCount>1</ViewedCount>
+      <ViewedCount>2</ViewedCount>
       <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CommsTimeTesting\CommsTimeTesting.cs</Item>
       <ItemType>ProjectItem</ItemType>
       <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CommsTimeTesting\CommsTimeTesting.csproj</ProjectName>
@@ -1689,11 +1459,11 @@
       <CreatedDate>2018-08-12T09:01:16.7504932+01:00</CreatedDate>
       <ViewedBy>Karol</ViewedBy>
     </DevTrackerDataItem>
-    <DevTrackerDataItem ViewActiveTime="PT1M32.3976217S" EditActiveTime="PT4M21.9306639S">
-      <ModifiedDate>2019-01-25T12:04:52.4740526+00:00</ModifiedDate>
+    <DevTrackerDataItem ViewActiveTime="PT16M38.3261524S" EditActiveTime="PT10M3.8338012S">
+      <ModifiedDate>2019-01-31T10:04:46.3786215+00:00</ModifiedDate>
       <ModifiedBy>Karol</ModifiedBy>
-      <EditedCount>1</EditedCount>
-      <ViewedCount>1</ViewedCount>
+      <EditedCount>3</EditedCount>
+      <ViewedCount>4</ViewedCount>
       <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CommsTimeTesting\Consume.cs</Item>
       <ItemType>ProjectItem</ItemType>
       <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CommsTimeTesting\CommsTimeTesting.csproj</ProjectName>
@@ -1765,11 +1535,11 @@
       <CreatedDate>2018-08-12T09:10:05.7767053+01:00</CreatedDate>
       <ViewedBy>Karol</ViewedBy>
     </DevTrackerDataItem>
-    <DevTrackerDataItem ViewActiveTime="PT4M24.8211109S" EditActiveTime="PT3M52.8065751S">
+    <DevTrackerDataItem ViewActiveTime="PT5M55.8972928S" EditActiveTime="PT3M52.8065751S">
       <ModifiedDate>2018-11-04T15:43:19.4482168+00:00</ModifiedDate>
       <ModifiedBy>Karol</ModifiedBy>
       <EditedCount>3</EditedCount>
-      <ViewedCount>8</ViewedCount>
+      <ViewedCount>9</ViewedCount>
       <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CSPlang\CSPBarrier.cs</Item>
       <ItemType>ProjectItem</ItemType>
       <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CSPlang\CSPlang.csproj</ProjectName>
@@ -1798,11 +1568,11 @@
       <CreatedDate>2018-08-12T10:08:44.9515631+01:00</CreatedDate>
       <ViewedBy>Karol</ViewedBy>
     </DevTrackerDataItem>
-    <DevTrackerDataItem ViewActiveTime="PT33M5.2001816S" EditActiveTime="PT58M42.8069119S">
+    <DevTrackerDataItem ViewActiveTime="PT33M31.5730136S" EditActiveTime="PT58M42.8069119S">
       <ModifiedDate>2018-11-04T15:43:17.6391824+00:00</ModifiedDate>
       <ModifiedBy>Karol</ModifiedBy>
       <EditedCount>5</EditedCount>
-      <ViewedCount>15</ViewedCount>
+      <ViewedCount>16</ViewedCount>
       <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CSPlang\CSPParallel.cs</Item>
       <ItemType>ProjectItem</ItemType>
       <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CSPlang\CSPlang.csproj</ProjectName>
@@ -1830,21 +1600,21 @@
       <CreatedDate>2018-09-06T21:52:01.8677405+01:00</CreatedDate>
       <ViewedBy>Karol</ViewedBy>
     </DevTrackerDataItem>
-    <DevTrackerDataItem ViewActiveTime="PT1H1M9.2921407S" EditActiveTime="PT29M17.8210171S">
+    <DevTrackerDataItem ViewActiveTime="PT1H1M50.7498575S" EditActiveTime="PT29M17.8210171S">
       <ModifiedDate>2019-01-18T19:30:12.5925427+00:00</ModifiedDate>
       <ModifiedBy>Karol</ModifiedBy>
       <EditedCount>11</EditedCount>
-      <ViewedCount>16</ViewedCount>
+      <ViewedCount>17</ViewedCount>
       <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CSPlang\CSTimer.cs</Item>
       <ItemType>ProjectItem</ItemType>
       <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CSPlang\CSPlang.csproj</ProjectName>
       <CreatedDate>2018-07-28T15:26:19.9099355+01:00</CreatedDate>
       <ViewedBy>Karol</ViewedBy>
     </DevTrackerDataItem>
-    <DevTrackerDataItem ViewActiveTime="PT1H49M30.3476637S" EditActiveTime="PT5M19.1250764S">
+    <DevTrackerDataItem ViewActiveTime="PT2H1M58.4544761S" EditActiveTime="PT5M19.1250764S">
       <ModifiedDate>0001-01-01T00:00:00</ModifiedDate>
       <EditedCount>3</EditedCount>
-      <ViewedCount>18</ViewedCount>
+      <ViewedCount>20</ViewedCount>
       <Item>Debug Mode</Item>
       <ItemType>DebugModeItem</ItemType>
       <ProjectName />
@@ -2388,11 +2158,11 @@
       <CreatedDate>2018-10-20T17:30:48.4850297+01:00</CreatedDate>
       <ViewedBy>Karol</ViewedBy>
     </DevTrackerDataItem>
-    <DevTrackerDataItem ViewActiveTime="PT51.8712012S" EditActiveTime="PT2M24.1794595S">
+    <DevTrackerDataItem ViewActiveTime="PT3M31.1678205S" EditActiveTime="PT3M45.5206491S">
       <ModifiedDate>2018-11-12T11:25:23.0092698+00:00</ModifiedDate>
       <ModifiedBy>Karol</ModifiedBy>
-      <EditedCount>1</EditedCount>
-      <ViewedCount>1</ViewedCount>
+      <EditedCount>2</EditedCount>
+      <ViewedCount>2</ViewedCount>
       <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\PlugAndPlay\FramedButtonArray.cs</Item>
       <ItemType>ProjectItem</ItemType>
       <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\PlugAndPlay\PlugAndPlay.csproj</ProjectName>
@@ -2410,11 +2180,11 @@
       <CreatedDate>2019-01-23T11:35:22.5879483+00:00</CreatedDate>
       <ViewedBy>Karol</ViewedBy>
     </DevTrackerDataItem>
-    <DevTrackerDataItem ViewActiveTime="PT9M24.0735823S" EditActiveTime="PT8M3.493788S">
-      <ModifiedDate>2018-12-17T09:59:47.2269346+00:00</ModifiedDate>
+    <DevTrackerDataItem ViewActiveTime="PT10M3.9302277S" EditActiveTime="PT8M15.8713643S">
+      <ModifiedDate>2019-01-28T14:53:59.7393652+00:00</ModifiedDate>
       <ModifiedBy>Karol</ModifiedBy>
-      <EditedCount>5</EditedCount>
-      <ViewedCount>5</ViewedCount>
+      <EditedCount>6</EditedCount>
+      <ViewedCount>6</ViewedCount>
       <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\PlugAndPlay\GPrint.cs</Item>
       <ItemType>ProjectItem</ItemType>
       <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\PlugAndPlay\PlugAndPlay.csproj</ProjectName>
@@ -2432,11 +2202,11 @@
       <CreatedDate>2018-07-28T15:05:26.3340454+01:00</CreatedDate>
       <ViewedBy>Karol</ViewedBy>
     </DevTrackerDataItem>
-    <DevTrackerDataItem ViewActiveTime="PT1M46.4747312S" EditActiveTime="PT21.4860988S">
+    <DevTrackerDataItem ViewActiveTime="PT1M59.5051384S" EditActiveTime="PT21.4860988S">
       <ModifiedDate>2018-08-12T09:11:31.7926437+01:00</ModifiedDate>
       <ModifiedBy>Karol</ModifiedBy>
       <EditedCount>1</EditedCount>
-      <ViewedCount>8</ViewedCount>
+      <ViewedCount>9</ViewedCount>
       <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CSPlang\IamCSProcess.cs</Item>
       <ItemType>ProjectItem</ItemType>
       <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CSPlang\CSPlang.csproj</ProjectName>
@@ -2748,11 +2518,11 @@
       <CreatedDate>2018-07-28T15:21:52.7640305+01:00</CreatedDate>
       <ViewedBy>Karol</ViewedBy>
     </DevTrackerDataItem>
-    <DevTrackerDataItem ViewActiveTime="PT28M19.6364159S" EditActiveTime="PT6M7.9281737S">
+    <DevTrackerDataItem ViewActiveTime="PT28M52.2058261S" EditActiveTime="PT6M7.9281737S">
       <ModifiedDate>2018-11-04T15:43:22.10555+00:00</ModifiedDate>
       <ModifiedBy>Karol</ModifiedBy>
       <EditedCount>5</EditedCount>
-      <ViewedCount>12</ViewedCount>
+      <ViewedCount>14</ViewedCount>
       <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CSPlang\One2\One2OneChannelImpl.cs</Item>
       <ItemType>ProjectItem</ItemType>
       <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CSPlang\CSPlang.csproj</ProjectName>
@@ -3309,11 +3079,11 @@
       <CreatedDate>2018-08-12T10:11:46.2011741+01:00</CreatedDate>
       <ViewedBy>Karol</ViewedBy>
     </DevTrackerDataItem>
-    <DevTrackerDataItem ViewActiveTime="PT7M17.8661088S" EditActiveTime="PT8M23.8949357S">
-      <ModifiedDate>2019-01-21T12:53:15.2130498+00:00</ModifiedDate>
+    <DevTrackerDataItem ViewActiveTime="PT7M40.3939001S" EditActiveTime="PT8M26.8908856S">
+      <ModifiedDate>2019-01-28T14:46:52.6188891+00:00</ModifiedDate>
       <ModifiedBy>Karol</ModifiedBy>
-      <EditedCount>1</EditedCount>
-      <ViewedCount>2</ViewedCount>
+      <EditedCount>2</EditedCount>
+      <ViewedCount>3</ViewedCount>
       <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\PlugAndPlay\Printer.cs</Item>
       <ItemType>ProjectItem</ItemType>
       <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\PlugAndPlay\PlugAndPlay.csproj</ProjectName>
@@ -3329,6 +3099,17 @@
       <ItemType>ProjectItem</ItemType>
       <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CSPlang\CSPlang.csproj</ProjectName>
       <CreatedDate>2018-08-12T10:01:19.0825535+01:00</CreatedDate>
+      <ViewedBy>Karol</ViewedBy>
+    </DevTrackerDataItem>
+    <DevTrackerDataItem ViewActiveTime="PT2M58.597592S" EditActiveTime="PT4M25.7989754S">
+      <ModifiedDate>2019-01-30T13:24:59.0657885+00:00</ModifiedDate>
+      <ModifiedBy>Karol</ModifiedBy>
+      <EditedCount>2</EditedCount>
+      <ViewedCount>2</ViewedCount>
+      <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\AltingBarrierTesting\ProcessesArray.cs</Item>
+      <ItemType>ProjectItem</ItemType>
+      <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\AltingBarrierTesting\AltingBarrierTesting.csproj</ProjectName>
+      <CreatedDate>2019-01-28T15:31:32.5933311+00:00</CreatedDate>
       <ViewedBy>Karol</ViewedBy>
     </DevTrackerDataItem>
     <DevTrackerDataItem ViewActiveTime="PT1M14.4726057S" EditActiveTime="PT2M22.0972223S">
@@ -3479,15 +3260,26 @@
       <CreatedDate>2019-01-25T10:45:48.0136898+00:00</CreatedDate>
       <ViewedBy>Karol</ViewedBy>
     </DevTrackerDataItem>
-    <DevTrackerDataItem ViewActiveTime="PT25.92193S" EditActiveTime="PT51.5031868S">
-      <ModifiedDate>2019-01-25T10:51:42.4237317+00:00</ModifiedDate>
+    <DevTrackerDataItem ViewActiveTime="PT1M57.4413674S" EditActiveTime="PT1M14.6907353S">
+      <ModifiedDate>2019-01-28T14:55:17.3061786+00:00</ModifiedDate>
       <ModifiedBy>Karol</ModifiedBy>
-      <EditedCount>1</EditedCount>
-      <ViewedCount>1</ViewedCount>
+      <EditedCount>2</EditedCount>
+      <ViewedCount>2</ViewedCount>
       <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CommsTimeSymetricTesting\Program.cs</Item>
       <ItemType>ProjectItem</ItemType>
       <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CommsTimeSymetricTesting\CommsTimeSymetricTesting.csproj</ProjectName>
       <CreatedDate>2019-01-25T10:50:18.8252235+00:00</CreatedDate>
+      <ViewedBy>Karol</ViewedBy>
+    </DevTrackerDataItem>
+    <DevTrackerDataItem ViewActiveTime="PT5M29.9204954S" EditActiveTime="PT1M53.1784256S">
+      <ModifiedDate>2019-01-30T14:53:50.9582377+00:00</ModifiedDate>
+      <ModifiedBy>Karol</ModifiedBy>
+      <EditedCount>1</EditedCount>
+      <ViewedCount>1</ViewedCount>
+      <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\AltingBarrierTesting\Program.cs</Item>
+      <ItemType>ProjectItem</ItemType>
+      <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\AltingBarrierTesting\AltingBarrierTesting.csproj</ProjectName>
+      <CreatedDate>2019-01-30T12:34:45.5198626+00:00</CreatedDate>
       <ViewedBy>Karol</ViewedBy>
     </DevTrackerDataItem>
     <DevTrackerDataItem ViewActiveTime="PT37.6624968S" EditActiveTime="PT38.6225023S">
@@ -3543,11 +3335,11 @@
       <CreatedDate>2019-01-11T11:41:32.2472608+00:00</CreatedDate>
       <ViewedBy>Karol</ViewedBy>
     </DevTrackerDataItem>
-    <DevTrackerDataItem ViewActiveTime="PT2M6.5442718S" EditActiveTime="PT40.4529229S">
+    <DevTrackerDataItem ViewActiveTime="PT2M31.9078216S" EditActiveTime="PT40.4529229S">
       <ModifiedDate>2019-01-21T11:12:49.9957088+00:00</ModifiedDate>
       <ModifiedBy>Karol</ModifiedBy>
       <EditedCount>1</EditedCount>
-      <ViewedCount>3</ViewedCount>
+      <ViewedCount>4</ViewedCount>
       <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\PlugAndPlay\Regular.cs</Item>
       <ItemType>ProjectItem</ItemType>
       <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\PlugAndPlay\PlugAndPlay.csproj</ProjectName>
@@ -3935,6 +3727,17 @@
       <CreatedDate>2018-08-12T11:03:56.6080749+01:00</CreatedDate>
       <ViewedBy>Karol</ViewedBy>
     </DevTrackerDataItem>
+    <DevTrackerDataItem ViewActiveTime="PT13M12.4162711S" EditActiveTime="PT17M50.2701914S">
+      <ModifiedDate>2019-01-30T16:07:21.2068434+00:00</ModifiedDate>
+      <ModifiedBy>Karol</ModifiedBy>
+      <EditedCount>2</EditedCount>
+      <ViewedCount>2</ViewedCount>
+      <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\AltingBarrierTesting\SingleProcess.cs</Item>
+      <ItemType>ProjectItem</ItemType>
+      <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\AltingBarrierTesting\AltingBarrierTesting.csproj</ProjectName>
+      <CreatedDate>2019-01-28T15:37:31.8864079+00:00</CreatedDate>
+      <ViewedBy>Karol</ViewedBy>
+    </DevTrackerDataItem>
     <DevTrackerDataItem ViewActiveTime="PT31.8954257S" EditActiveTime="PT55.6184682S">
       <ModifiedDate>2018-08-12T09:57:59.3358823+01:00</ModifiedDate>
       <ModifiedBy>Karol</ModifiedBy>
@@ -4218,6 +4021,448 @@
     </DevTrackerDataItem>
   </TotalTimeList>
   <HistoryTimeList>
+    <DevTrackerDataItem ViewActiveTime="PT41.4577168S" EditActiveTime="PT0S">
+      <ModifiedDate>0001-01-01T00:00:00</ModifiedDate>
+      <EditedCount>0</EditedCount>
+      <ViewedCount>1</ViewedCount>
+      <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CSPlang\CSTimer.cs</Item>
+      <ItemType>ProjectItem</ItemType>
+      <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CSPlang\CSPlang.csproj</ProjectName>
+      <CreatedDate>2019-01-31T12:15:21.4559819+00:00</CreatedDate>
+      <ViewedBy>Karol</ViewedBy>
+    </DevTrackerDataItem>
+    <DevTrackerDataItem ViewActiveTime="PT14.5957894S" EditActiveTime="PT0S">
+      <ModifiedDate>0001-01-01T00:00:00</ModifiedDate>
+      <EditedCount>0</EditedCount>
+      <ViewedCount>1</ViewedCount>
+      <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CommsTimeTesting\Consume.cs</Item>
+      <ItemType>ProjectItem</ItemType>
+      <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CommsTimeTesting\CommsTimeTesting.csproj</ProjectName>
+      <CreatedDate>2019-01-31T12:15:06.8581981+00:00</CreatedDate>
+      <ViewedBy>Karol</ViewedBy>
+    </DevTrackerDataItem>
+    <DevTrackerDataItem ViewActiveTime="PT10M40.9927875S" EditActiveTime="PT1.8043691S">
+      <ModifiedDate>2019-01-31T10:04:46.3786215+00:00</ModifiedDate>
+      <ModifiedBy>Karol</ModifiedBy>
+      <EditedCount>1</EditedCount>
+      <ViewedCount>1</ViewedCount>
+      <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CommsTimeTesting\Consume.cs</Item>
+      <ItemType>ProjectItem</ItemType>
+      <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CommsTimeTesting\CommsTimeTesting.csproj</ProjectName>
+      <CreatedDate>2019-01-31T07:52:07.344035+00:00</CreatedDate>
+      <ViewedBy>Karol</ViewedBy>
+    </DevTrackerDataItem>
+    <DevTrackerDataItem ViewActiveTime="PT4M10.3578789S" EditActiveTime="PT5M40.0987682S">
+      <ModifiedDate>2019-01-30T18:13:02.8313905+00:00</ModifiedDate>
+      <ModifiedBy>Karol</ModifiedBy>
+      <EditedCount>1</EditedCount>
+      <ViewedCount>1</ViewedCount>
+      <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CommsTimeTesting\Consume.cs</Item>
+      <ItemType>ProjectItem</ItemType>
+      <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CommsTimeTesting\CommsTimeTesting.csproj</ProjectName>
+      <CreatedDate>2019-01-30T17:34:04.4053805+00:00</CreatedDate>
+      <ViewedBy>Karol</ViewedBy>
+    </DevTrackerDataItem>
+    <DevTrackerDataItem ViewActiveTime="PT19.0689199S" EditActiveTime="PT0S">
+      <ModifiedDate>0001-01-01T00:00:00</ModifiedDate>
+      <EditedCount>0</EditedCount>
+      <ViewedCount>1</ViewedCount>
+      <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CommsTimeTesting\CommsTimeTesting.cs</Item>
+      <ItemType>ProjectItem</ItemType>
+      <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CommsTimeTesting\CommsTimeTesting.csproj</ProjectName>
+      <CreatedDate>2019-01-30T17:33:52.0697623+00:00</CreatedDate>
+      <ViewedBy>Karol</ViewedBy>
+    </DevTrackerDataItem>
+    <DevTrackerDataItem ViewActiveTime="PT14.4349919S" EditActiveTime="PT0S">
+      <ModifiedDate>0001-01-01T00:00:00</ModifiedDate>
+      <EditedCount>0</EditedCount>
+      <ViewedCount>1</ViewedCount>
+      <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CSPlang\Any2\Any2AnyImpl.cs</Item>
+      <ItemType>ProjectItem</ItemType>
+      <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CSPlang\CSPlang.csproj</ProjectName>
+      <CreatedDate>2019-01-30T16:03:55.8239328+00:00</CreatedDate>
+      <ViewedBy>Karol</ViewedBy>
+    </DevTrackerDataItem>
+    <DevTrackerDataItem ViewActiveTime="PT15.1050239S" EditActiveTime="PT0S">
+      <ModifiedDate>0001-01-01T00:00:00</ModifiedDate>
+      <EditedCount>0</EditedCount>
+      <ViewedCount>1</ViewedCount>
+      <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CSPlang\Any2\Any2OneImpl.cs</Item>
+      <ItemType>ProjectItem</ItemType>
+      <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CSPlang\CSPlang.csproj</ProjectName>
+      <CreatedDate>2019-01-30T16:03:31.2138423+00:00</CreatedDate>
+      <ViewedBy>Karol</ViewedBy>
+    </DevTrackerDataItem>
+    <DevTrackerDataItem ViewActiveTime="PT4.3336757S" EditActiveTime="PT0S">
+      <ModifiedDate>0001-01-01T00:00:00</ModifiedDate>
+      <EditedCount>0</EditedCount>
+      <ViewedCount>1</ViewedCount>
+      <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CSPlang\Channel\ChannelInput.cs</Item>
+      <ItemType>ProjectItem</ItemType>
+      <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CSPlang\CSPlang.csproj</ProjectName>
+      <CreatedDate>2019-01-30T16:00:18.0654841+00:00</CreatedDate>
+      <ViewedBy>Karol</ViewedBy>
+    </DevTrackerDataItem>
+    <DevTrackerDataItem ViewActiveTime="PT54.2523058S" EditActiveTime="PT0S">
+      <ModifiedDate>0001-01-01T00:00:00</ModifiedDate>
+      <EditedCount>0</EditedCount>
+      <ViewedCount>1</ViewedCount>
+      <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CSPlang\Alting\AltingChannelInputImpl.cs</Item>
+      <ItemType>ProjectItem</ItemType>
+      <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CSPlang\CSPlang.csproj</ProjectName>
+      <CreatedDate>2019-01-30T15:59:21.04871+00:00</CreatedDate>
+      <ViewedBy>Karol</ViewedBy>
+    </DevTrackerDataItem>
+    <DevTrackerDataItem ViewActiveTime="PT22.6393703S" EditActiveTime="PT0S">
+      <ModifiedDate>0001-01-01T00:00:00</ModifiedDate>
+      <EditedCount>0</EditedCount>
+      <ViewedCount>1</ViewedCount>
+      <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CSPlang\One2\One2OneChannelImpl.cs</Item>
+      <ItemType>ProjectItem</ItemType>
+      <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CSPlang\CSPlang.csproj</ProjectName>
+      <CreatedDate>2019-01-30T13:33:41.13664+00:00</CreatedDate>
+      <ViewedBy>Karol</ViewedBy>
+    </DevTrackerDataItem>
+    <DevTrackerDataItem ViewActiveTime="PT6.2128612S" EditActiveTime="PT0S">
+      <ModifiedDate>0001-01-01T00:00:00</ModifiedDate>
+      <EditedCount>0</EditedCount>
+      <ViewedCount>1</ViewedCount>
+      <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CSPlang\Alting\AltingBarrierCoordinate.cs</Item>
+      <ItemType>ProjectItem</ItemType>
+      <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CSPlang\CSPlang.csproj</ProjectName>
+      <CreatedDate>2019-01-30T12:50:03.5477753+00:00</CreatedDate>
+      <ViewedBy>Karol</ViewedBy>
+    </DevTrackerDataItem>
+    <DevTrackerDataItem ViewActiveTime="PT24.8956819S" EditActiveTime="PT0S">
+      <ModifiedDate>0001-01-01T00:00:00</ModifiedDate>
+      <EditedCount>0</EditedCount>
+      <ViewedCount>1</ViewedCount>
+      <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CSPlang\Alternative.cs</Item>
+      <ItemType>ProjectItem</ItemType>
+      <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CSPlang\CSPlang.csproj</ProjectName>
+      <CreatedDate>2019-01-30T12:48:27.7054314+00:00</CreatedDate>
+      <ViewedBy>Karol</ViewedBy>
+    </DevTrackerDataItem>
+    <DevTrackerDataItem ViewActiveTime="PT34.4530373S" EditActiveTime="PT0S">
+      <ModifiedDate>0001-01-01T00:00:00</ModifiedDate>
+      <EditedCount>0</EditedCount>
+      <ViewedCount>1</ViewedCount>
+      <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CSPlang\Alting\AltingBarrier.cs</Item>
+      <ItemType>ProjectItem</ItemType>
+      <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CSPlang\CSPlang.csproj</ProjectName>
+      <CreatedDate>2019-01-30T12:47:37.5079015+00:00</CreatedDate>
+      <ViewedBy>Karol</ViewedBy>
+    </DevTrackerDataItem>
+    <DevTrackerDataItem ViewActiveTime="PT10M41.8099777S" EditActiveTime="PT0S">
+      <ModifiedDate>0001-01-01T00:00:00</ModifiedDate>
+      <EditedCount>0</EditedCount>
+      <ViewedCount>1</ViewedCount>
+      <Item>Debug Mode</Item>
+      <ItemType>DebugModeItem</ItemType>
+      <ProjectName />
+      <CreatedDate>2019-01-30T12:45:15.3588549+00:00</CreatedDate>
+      <ViewedBy>Karol</ViewedBy>
+    </DevTrackerDataItem>
+    <DevTrackerDataItem ViewActiveTime="PT5M29.9204954S" EditActiveTime="PT1M53.1784256S">
+      <ModifiedDate>2019-01-30T14:53:50.9582377+00:00</ModifiedDate>
+      <ModifiedBy>Karol</ModifiedBy>
+      <EditedCount>1</EditedCount>
+      <ViewedCount>1</ViewedCount>
+      <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\AltingBarrierTesting\Program.cs</Item>
+      <ItemType>ProjectItem</ItemType>
+      <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\AltingBarrierTesting\AltingBarrierTesting.csproj</ProjectName>
+      <CreatedDate>2019-01-30T12:34:45.5198626+00:00</CreatedDate>
+      <ViewedBy>Karol</ViewedBy>
+    </DevTrackerDataItem>
+    <DevTrackerDataItem ViewActiveTime="PT13M46.2339435S" EditActiveTime="PT12M37.0451419S">
+      <ModifiedDate>2019-01-30T16:20:23.0500657+00:00</ModifiedDate>
+      <ModifiedBy>Karol</ModifiedBy>
+      <EditedCount>1</EditedCount>
+      <ViewedCount>1</ViewedCount>
+      <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\AltingBarrierTesting\AltingBarrierExampleProcess.cs</Item>
+      <ItemType>ProjectItem</ItemType>
+      <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\AltingBarrierTesting\AltingBarrierTesting.csproj</ProjectName>
+      <CreatedDate>2019-01-30T12:34:45.101225+00:00</CreatedDate>
+      <ViewedBy>Karol</ViewedBy>
+    </DevTrackerDataItem>
+    <DevTrackerDataItem ViewActiveTime="PT39.8638523S" EditActiveTime="PT0S">
+      <ModifiedDate>0001-01-01T00:00:00</ModifiedDate>
+      <EditedCount>0</EditedCount>
+      <ViewedCount>1</ViewedCount>
+      <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CSPlang\Alting\AltingChannelInput.cs</Item>
+      <ItemType>ProjectItem</ItemType>
+      <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CSPlang\CSPlang.csproj</ProjectName>
+      <CreatedDate>2019-01-30T12:32:53.5875401+00:00</CreatedDate>
+      <ViewedBy>Karol</ViewedBy>
+    </DevTrackerDataItem>
+    <DevTrackerDataItem ViewActiveTime="PT2M2.9149182S" EditActiveTime="PT0S">
+      <ModifiedDate>0001-01-01T00:00:00</ModifiedDate>
+      <EditedCount>0</EditedCount>
+      <ViewedCount>1</ViewedCount>
+      <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CSPlang\Channel\ChannelInternals.cs</Item>
+      <ItemType>ProjectItem</ItemType>
+      <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CSPlang\CSPlang.csproj</ProjectName>
+      <CreatedDate>2019-01-30T12:32:53.405028+00:00</CreatedDate>
+      <ViewedBy>Karol</ViewedBy>
+    </DevTrackerDataItem>
+    <DevTrackerDataItem ViewActiveTime="PT0.2293868S" EditActiveTime="PT0S">
+      <ModifiedDate>0001-01-01T00:00:00</ModifiedDate>
+      <EditedCount>0</EditedCount>
+      <ViewedCount>1</ViewedCount>
+      <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CSPlang\Channel\Channel.cs</Item>
+      <ItemType>ProjectItem</ItemType>
+      <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CSPlang\CSPlang.csproj</ProjectName>
+      <CreatedDate>2019-01-30T12:32:53.1736471+00:00</CreatedDate>
+      <ViewedBy>Karol</ViewedBy>
+    </DevTrackerDataItem>
+    <DevTrackerDataItem ViewActiveTime="PT9.5684536S" EditActiveTime="PT3.1940639S">
+      <ModifiedDate>0001-01-01T00:00:00</ModifiedDate>
+      <EditedCount>1</EditedCount>
+      <ViewedCount>1</ViewedCount>
+      <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\AltingBarrierTesting\AltingBarrierGadget0Demo0.cs</Item>
+      <ItemType>ProjectItem</ItemType>
+      <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\AltingBarrierTesting\AltingBarrierTesting.csproj</ProjectName>
+      <CreatedDate>2019-01-30T12:32:52.9415822+00:00</CreatedDate>
+      <ViewedBy>Karol</ViewedBy>
+    </DevTrackerDataItem>
+    <DevTrackerDataItem ViewActiveTime="PT10.6734316S" EditActiveTime="PT1M25.776661S">
+      <ModifiedDate>0001-01-01T00:00:00</ModifiedDate>
+      <EditedCount>1</EditedCount>
+      <ViewedCount>1</ViewedCount>
+      <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\AltingBarrierTesting\AltingBarrierGadget0.cs</Item>
+      <ItemType>ProjectItem</ItemType>
+      <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\AltingBarrierTesting\AltingBarrierTesting.csproj</ProjectName>
+      <CreatedDate>2019-01-30T12:32:52.7194886+00:00</CreatedDate>
+      <ViewedBy>Karol</ViewedBy>
+    </DevTrackerDataItem>
+    <DevTrackerDataItem ViewActiveTime="PT11M47.7867079S" EditActiveTime="PT14M53.8939191S">
+      <ModifiedDate>2019-01-30T16:07:21.2068434+00:00</ModifiedDate>
+      <ModifiedBy>Karol</ModifiedBy>
+      <EditedCount>1</EditedCount>
+      <ViewedCount>1</ViewedCount>
+      <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\AltingBarrierTesting\SingleProcess.cs</Item>
+      <ItemType>ProjectItem</ItemType>
+      <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\AltingBarrierTesting\AltingBarrierTesting.csproj</ProjectName>
+      <CreatedDate>2019-01-30T12:32:52.389863+00:00</CreatedDate>
+      <ViewedBy>Karol</ViewedBy>
+    </DevTrackerDataItem>
+    <DevTrackerDataItem ViewActiveTime="PT1M41.0486626S" EditActiveTime="PT40.6421926S">
+      <ModifiedDate>2019-01-30T13:24:59.0657885+00:00</ModifiedDate>
+      <ModifiedBy>Karol</ModifiedBy>
+      <EditedCount>1</EditedCount>
+      <ViewedCount>1</ViewedCount>
+      <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\AltingBarrierTesting\ProcessesArray.cs</Item>
+      <ItemType>ProjectItem</ItemType>
+      <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\AltingBarrierTesting\AltingBarrierTesting.csproj</ProjectName>
+      <CreatedDate>2019-01-30T12:32:35.0080951+00:00</CreatedDate>
+      <ViewedBy>Karol</ViewedBy>
+    </DevTrackerDataItem>
+    <DevTrackerDataItem ViewActiveTime="PT1M24.6295632S" EditActiveTime="PT2M56.3762723S">
+      <ModifiedDate>2019-01-28T15:50:56.2833606+00:00</ModifiedDate>
+      <ModifiedBy>Karol</ModifiedBy>
+      <EditedCount>1</EditedCount>
+      <ViewedCount>1</ViewedCount>
+      <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\AltingBarrierTesting\SingleProcess.cs</Item>
+      <ItemType>ProjectItem</ItemType>
+      <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\AltingBarrierTesting\AltingBarrierTesting.csproj</ProjectName>
+      <CreatedDate>2019-01-28T15:37:31.8864079+00:00</CreatedDate>
+      <ViewedBy>Karol</ViewedBy>
+    </DevTrackerDataItem>
+    <DevTrackerDataItem ViewActiveTime="PT1M17.5878253S" EditActiveTime="PT3M45.1567828S">
+      <ModifiedDate>2019-01-28T15:47:15.8593576+00:00</ModifiedDate>
+      <ModifiedBy>Karol</ModifiedBy>
+      <EditedCount>1</EditedCount>
+      <ViewedCount>1</ViewedCount>
+      <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\AltingBarrierTesting\ProcessesArray.cs</Item>
+      <ItemType>ProjectItem</ItemType>
+      <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\AltingBarrierTesting\AltingBarrierTesting.csproj</ProjectName>
+      <CreatedDate>2019-01-28T15:31:32.5933311+00:00</CreatedDate>
+      <ViewedBy>Karol</ViewedBy>
+    </DevTrackerDataItem>
+    <DevTrackerDataItem ViewActiveTime="PT9.9300399S" EditActiveTime="PT0S">
+      <ModifiedDate>0001-01-01T00:00:00</ModifiedDate>
+      <EditedCount>0</EditedCount>
+      <ViewedCount>1</ViewedCount>
+      <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CSPlang\One2\One2OneChannelImpl.cs</Item>
+      <ItemType>ProjectItem</ItemType>
+      <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CSPlang\CSPlang.csproj</ProjectName>
+      <CreatedDate>2019-01-28T15:29:19.1152217+00:00</CreatedDate>
+      <ViewedBy>Karol</ViewedBy>
+    </DevTrackerDataItem>
+    <DevTrackerDataItem ViewActiveTime="PT21.5466125S" EditActiveTime="PT0S">
+      <ModifiedDate>0001-01-01T00:00:00</ModifiedDate>
+      <EditedCount>0</EditedCount>
+      <ViewedCount>1</ViewedCount>
+      <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CSPlang\Channel\ChannelInternals.cs</Item>
+      <ItemType>ProjectItem</ItemType>
+      <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CSPlang\CSPlang.csproj</ProjectName>
+      <CreatedDate>2019-01-28T15:29:01.8138676+00:00</CreatedDate>
+      <ViewedBy>Karol</ViewedBy>
+    </DevTrackerDataItem>
+    <DevTrackerDataItem ViewActiveTime="PT3.9919063S" EditActiveTime="PT0S">
+      <ModifiedDate>0001-01-01T00:00:00</ModifiedDate>
+      <EditedCount>0</EditedCount>
+      <ViewedCount>1</ViewedCount>
+      <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CSPlang\Alting\AltingChannelInputImpl.cs</Item>
+      <ItemType>ProjectItem</ItemType>
+      <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CSPlang\CSPlang.csproj</ProjectName>
+      <CreatedDate>2019-01-28T15:28:57.8199641+00:00</CreatedDate>
+      <ViewedBy>Karol</ViewedBy>
+    </DevTrackerDataItem>
+    <DevTrackerDataItem ViewActiveTime="PT13.8892364S" EditActiveTime="PT0S">
+      <ModifiedDate>0001-01-01T00:00:00</ModifiedDate>
+      <EditedCount>0</EditedCount>
+      <ViewedCount>1</ViewedCount>
+      <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CSPlang\Alting\AltingChannelInput.cs</Item>
+      <ItemType>ProjectItem</ItemType>
+      <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CSPlang\CSPlang.csproj</ProjectName>
+      <CreatedDate>2019-01-28T15:28:43.9277358+00:00</CreatedDate>
+      <ViewedBy>Karol</ViewedBy>
+    </DevTrackerDataItem>
+    <DevTrackerDataItem ViewActiveTime="PT2M39.2966193S" EditActiveTime="PT1M21.3411896S">
+      <ModifiedDate>0001-01-01T00:00:00</ModifiedDate>
+      <EditedCount>1</EditedCount>
+      <ViewedCount>1</ViewedCount>
+      <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\PlugAndPlay\FramedButtonArray.cs</Item>
+      <ItemType>ProjectItem</ItemType>
+      <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\PlugAndPlay\PlugAndPlay.csproj</ProjectName>
+      <CreatedDate>2019-01-28T15:14:44.7414937+00:00</CreatedDate>
+      <ViewedBy>Karol</ViewedBy>
+    </DevTrackerDataItem>
+    <DevTrackerDataItem ViewActiveTime="PT1M20.8481947S" EditActiveTime="PT0S">
+      <ModifiedDate>0001-01-01T00:00:00</ModifiedDate>
+      <EditedCount>0</EditedCount>
+      <ViewedCount>1</ViewedCount>
+      <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CSPlang\Channel\Channel.cs</Item>
+      <ItemType>ProjectItem</ItemType>
+      <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CSPlang\CSPlang.csproj</ProjectName>
+      <CreatedDate>2019-01-28T15:13:27.5825278+00:00</CreatedDate>
+      <ViewedBy>Karol</ViewedBy>
+    </DevTrackerDataItem>
+    <DevTrackerDataItem ViewActiveTime="PT1M46.2968347S" EditActiveTime="PT0S">
+      <ModifiedDate>0001-01-01T00:00:00</ModifiedDate>
+      <EditedCount>0</EditedCount>
+      <ViewedCount>1</ViewedCount>
+      <Item>Debug Mode</Item>
+      <ItemType>DebugModeItem</ItemType>
+      <ProjectName />
+      <CreatedDate>2019-01-28T15:12:30.9433011+00:00</CreatedDate>
+      <ViewedBy>Karol</ViewedBy>
+    </DevTrackerDataItem>
+    <DevTrackerDataItem ViewActiveTime="PT2.6530895S" EditActiveTime="PT0S">
+      <ModifiedDate>0001-01-01T00:00:00</ModifiedDate>
+      <EditedCount>0</EditedCount>
+      <ViewedCount>1</ViewedCount>
+      <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CSPlang\Alting\AltingBarrier.cs</Item>
+      <ItemType>ProjectItem</ItemType>
+      <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CSPlang\CSPlang.csproj</ProjectName>
+      <CreatedDate>2019-01-28T15:12:14.2597615+00:00</CreatedDate>
+      <ViewedBy>Karol</ViewedBy>
+    </DevTrackerDataItem>
+    <DevTrackerDataItem ViewActiveTime="PT0.2572895S" EditActiveTime="PT0S">
+      <ModifiedDate>0001-01-01T00:00:00</ModifiedDate>
+      <EditedCount>0</EditedCount>
+      <ViewedCount>1</ViewedCount>
+      <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CSPlang\Alting\AltingBarrierBase.cs</Item>
+      <ItemType>ProjectItem</ItemType>
+      <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CSPlang\CSPlang.csproj</ProjectName>
+      <CreatedDate>2019-01-28T15:12:14.002472+00:00</CreatedDate>
+      <ViewedBy>Karol</ViewedBy>
+    </DevTrackerDataItem>
+    <DevTrackerDataItem ViewActiveTime="PT2M16.3488651S" EditActiveTime="PT0S">
+      <ModifiedDate>0001-01-01T00:00:00</ModifiedDate>
+      <EditedCount>0</EditedCount>
+      <ViewedCount>1</ViewedCount>
+      <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\AltingBarrierTesting\AltingBarrierGadget0.cs</Item>
+      <ItemType>ProjectItem</ItemType>
+      <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\AltingBarrierTesting\AltingBarrierTesting.csproj</ProjectName>
+      <CreatedDate>2019-01-28T15:12:07.0248977+00:00</CreatedDate>
+      <ViewedBy>Karol</ViewedBy>
+    </DevTrackerDataItem>
+    <DevTrackerDataItem ViewActiveTime="PT13M16.299919S" EditActiveTime="PT55.2900589S">
+      <ModifiedDate>2019-01-28T15:34:41.2095849+00:00</ModifiedDate>
+      <ModifiedBy>Karol</ModifiedBy>
+      <EditedCount>1</EditedCount>
+      <ViewedCount>1</ViewedCount>
+      <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\AltingBarrierTesting\AltingBarrierGadget0Demo0.cs</Item>
+      <ItemType>ProjectItem</ItemType>
+      <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\AltingBarrierTesting\AltingBarrierTesting.csproj</ProjectName>
+      <CreatedDate>2019-01-28T15:12:05.8984623+00:00</CreatedDate>
+      <ViewedBy>Karol</ViewedBy>
+    </DevTrackerDataItem>
+    <DevTrackerDataItem ViewActiveTime="PT1M31.5194374S" EditActiveTime="PT23.1875485S">
+      <ModifiedDate>2019-01-28T14:55:17.3061786+00:00</ModifiedDate>
+      <ModifiedBy>Karol</ModifiedBy>
+      <EditedCount>1</EditedCount>
+      <ViewedCount>1</ViewedCount>
+      <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CommsTimeSymetricTesting\Program.cs</Item>
+      <ItemType>ProjectItem</ItemType>
+      <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CommsTimeSymetricTesting\CommsTimeSymetricTesting.csproj</ProjectName>
+      <CreatedDate>2019-01-28T14:54:07.6582251+00:00</CreatedDate>
+      <ViewedBy>Karol</ViewedBy>
+    </DevTrackerDataItem>
+    <DevTrackerDataItem ViewActiveTime="PT39.8566454S" EditActiveTime="PT12.3775763S">
+      <ModifiedDate>2019-01-28T14:53:59.7393652+00:00</ModifiedDate>
+      <ModifiedBy>Karol</ModifiedBy>
+      <EditedCount>1</EditedCount>
+      <ViewedCount>1</ViewedCount>
+      <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\PlugAndPlay\GPrint.cs</Item>
+      <ItemType>ProjectItem</ItemType>
+      <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\PlugAndPlay\PlugAndPlay.csproj</ProjectName>
+      <CreatedDate>2019-01-28T14:53:15.6075064+00:00</CreatedDate>
+      <ViewedBy>Karol</ViewedBy>
+    </DevTrackerDataItem>
+    <DevTrackerDataItem ViewActiveTime="PT22.5277913S" EditActiveTime="PT2.9959499S">
+      <ModifiedDate>2019-01-28T14:46:52.6188891+00:00</ModifiedDate>
+      <ModifiedBy>Karol</ModifiedBy>
+      <EditedCount>1</EditedCount>
+      <ViewedCount>1</ViewedCount>
+      <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\PlugAndPlay\Printer.cs</Item>
+      <ItemType>ProjectItem</ItemType>
+      <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\PlugAndPlay\PlugAndPlay.csproj</ProjectName>
+      <CreatedDate>2019-01-28T14:46:38.388488+00:00</CreatedDate>
+      <ViewedBy>Karol</ViewedBy>
+    </DevTrackerDataItem>
+    <DevTrackerDataItem ViewActiveTime="PT26.372832S" EditActiveTime="PT0S">
+      <ModifiedDate>0001-01-01T00:00:00</ModifiedDate>
+      <EditedCount>0</EditedCount>
+      <ViewedCount>1</ViewedCount>
+      <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CSPlang\CSPParallel.cs</Item>
+      <ItemType>ProjectItem</ItemType>
+      <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CSPlang\CSPlang.csproj</ProjectName>
+      <CreatedDate>2019-01-28T14:33:43.4116239+00:00</CreatedDate>
+      <ViewedBy>Karol</ViewedBy>
+    </DevTrackerDataItem>
+    <DevTrackerDataItem ViewActiveTime="PT13.0304072S" EditActiveTime="PT0S">
+      <ModifiedDate>0001-01-01T00:00:00</ModifiedDate>
+      <EditedCount>0</EditedCount>
+      <ViewedCount>1</ViewedCount>
+      <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CSPlang\IamCSProcess.cs</Item>
+      <ItemType>ProjectItem</ItemType>
+      <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CSPlang\CSPlang.csproj</ProjectName>
+      <CreatedDate>2019-01-28T14:33:30.5628668+00:00</CreatedDate>
+      <ViewedBy>Karol</ViewedBy>
+    </DevTrackerDataItem>
+    <DevTrackerDataItem ViewActiveTime="PT25.3635498S" EditActiveTime="PT0S">
+      <ModifiedDate>0001-01-01T00:00:00</ModifiedDate>
+      <EditedCount>0</EditedCount>
+      <ViewedCount>1</ViewedCount>
+      <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\PlugAndPlay\Regular.cs</Item>
+      <ItemType>ProjectItem</ItemType>
+      <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\PlugAndPlay\PlugAndPlay.csproj</ProjectName>
+      <CreatedDate>2019-01-28T14:27:13.47364+00:00</CreatedDate>
+      <ViewedBy>Karol</ViewedBy>
+    </DevTrackerDataItem>
+    <DevTrackerDataItem ViewActiveTime="PT1M31.0761819S" EditActiveTime="PT0S">
+      <ModifiedDate>0001-01-01T00:00:00</ModifiedDate>
+      <EditedCount>0</EditedCount>
+      <ViewedCount>1</ViewedCount>
+      <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CSPlang\CSPBarrier.cs</Item>
+      <ItemType>ProjectItem</ItemType>
+      <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CSPlang\CSPlang.csproj</ProjectName>
+      <CreatedDate>2019-01-28T14:24:56.8313779+00:00</CreatedDate>
+      <ViewedBy>Karol</ViewedBy>
+    </DevTrackerDataItem>
     <DevTrackerDataItem ViewActiveTime="PT10.8426884S" EditActiveTime="PT0S">
       <ModifiedDate>0001-01-01T00:00:00</ModifiedDate>
       <EditedCount>0</EditedCount>

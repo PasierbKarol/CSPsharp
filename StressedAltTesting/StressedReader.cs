@@ -43,6 +43,7 @@ namespace TestingUtilities
         {
             const int seconds = 1000;
             const int initialWait = 5;
+            //commented out as it doesn't add any value - Karol Pasierb
             //Console.WriteLine("\nWait (" + initialWait +
             //                    " seconds) for all the writers to get going ...");
             //CSTimer tim = new CSTimer();
@@ -55,6 +56,7 @@ namespace TestingUtilities
                 n[i] = new int[nWritersPerChannel];
             }
 
+            //commented out for performance testing - Karol Pasierb
             //for (int channel = 0; channel < c.Length; channel++)
             //{
             //    for (int i = 0; i < nWritersPerChannel; i++)

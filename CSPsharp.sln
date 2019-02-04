@@ -17,9 +17,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "userIO", "userIO\userIO.csp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StressedAltTesting", "StressedAltTesting\StressedAltTesting.csproj", "{D0013710-73AC-4F22-A0CA-73286E3CB1B0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommsTimeTesting", "CommsTimeTesting\CommsTimeTesting.csproj", "{3A38D561-F881-4C0F-B398-23662B503975}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CommsTimeTesting", "CommsTimeTesting\CommsTimeTesting.csproj", "{3A38D561-F881-4C0F-B398-23662B503975}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommsTimeSymetricTesting", "CommsTimeSymetricTesting\CommsTimeSymetricTesting.csproj", "{C08C9BE4-9E6D-41F8-9C86-C464723F34BE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CommsTimeSymetricTesting", "CommsTimeSymetricTesting\CommsTimeSymetricTesting.csproj", "{C08C9BE4-9E6D-41F8-9C86-C464723F34BE}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AltingBarrierTesting", "AltingBarrierTesting\AltingBarrierTesting.csproj", "{65260550-1710-4E0E-9C66-02F0270014D6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -63,6 +65,10 @@ Global
 		{C08C9BE4-9E6D-41F8-9C86-C464723F34BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C08C9BE4-9E6D-41F8-9C86-C464723F34BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C08C9BE4-9E6D-41F8-9C86-C464723F34BE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{65260550-1710-4E0E-9C66-02F0270014D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{65260550-1710-4E0E-9C66-02F0270014D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{65260550-1710-4E0E-9C66-02F0270014D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{65260550-1710-4E0E-9C66-02F0270014D6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
