@@ -17,25 +17,52 @@
 //  Author contacts: P.H.Welch@kent.ac.uk K.Chalmers@napier.ac.uk   //
 //                                                                  //
 //////////////////////////////////////////////////////////////////////
-
+/// 
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
+using CSPlang;
+using CSPlang.Any2;
 
 /**
  * @author P.H. Welch
  */
-
-namespace TestingUtilities
+namespace StressedAlt_PerformanceTesting
 {
-    public class StressedPacket
-    {
-        public readonly int writer;
-        public int n;
 
-        public StressedPacket(int writer)
+    public class StressedAltPerformance
+    {
+
+        public static void Main(String[] args)
         {
-            this.writer = writer;
+            int nChannels = 10;
+            int nWritersPerChannel = 100;
+            int nMessages = 2;
+
+            //Any2OneChannel[] c = Channel.any2oneArray (nChannels, new OverWriteOldestBuffer (1));
+            Any2OneChannel[] any2OneChannelsNumber = Channel.any2oneArray(nChannels);
+
+            StressedWriterPerformance[] writers = new StressedWriterPerformance[nChannels * nWritersPerChannel];
+
+            for (int channel = 0; channel < nChannels; channel++)
+            {
+                for (int i = 0; i < nWritersPerChannel; i++)
+                {
+                    writers[(channel * nWritersPerChannel) + i] = new StressedWriterPerformance(any2OneChannelsNumber[channel].Out(), channel, i);
+                }
+            }
+
+            new CSPParallel(
+                new IamCSProcess[] {
+                    new CSPParallel (writers),
+                    new StressedReaderPerformance(Channel.getInputArray(any2OneChannelsNumber),nMessages, nChannels, nWritersPerChannel)
+                }
+            ).run();
+
         }
     }
 }
+
+
+

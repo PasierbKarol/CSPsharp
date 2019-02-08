@@ -46,11 +46,11 @@ namespace TestingUtilities
 
         public static void Main(String[] args)
         {
-            int nChannels = 10;
-            int nWritersPerChannel = 10;
+            int nChannels = 20;
+            int nWritersPerChannel = 100;
 
             //Any2OneChannel[] c = Channel.any2oneArray (nChannels, new OverWriteOldestBuffer (1));
-            Any2OneChannel[] c = Channel.any2oneArray(nChannels);
+            Any2OneChannel[] any2OneChannelsNumber = Channel.any2oneArray(nChannels);
 
             StressedWriter[] writers = new StressedWriter[nChannels * nWritersPerChannel];
 
@@ -58,14 +58,14 @@ namespace TestingUtilities
             {
                 for (int i = 0; i < nWritersPerChannel; i++)
                 {
-                    writers[(channel * nWritersPerChannel) + i] = new StressedWriter(c[channel].Out(), channel, i);
+                    writers[(channel * nWritersPerChannel) + i] = new StressedWriter(any2OneChannelsNumber[channel].Out(), channel, i);
                 }
             }
 
             new CSPParallel(
                 new IamCSProcess[] {
                     new CSPParallel (writers),
-                    new StressedReader (Channel.getInputArray(c), nWritersPerChannel)
+                    new StressedReader (Channel.getInputArray(any2OneChannelsNumber), nWritersPerChannel)
                 }
             ).run();
 

@@ -20,8 +20,10 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 using CSPlang;
+using CSPutil;
 
 /**
  * @author P.H. Welch
@@ -71,10 +73,15 @@ namespace TestingUtilities
             //}
             Alternative alt = new Alternative(c);
             int counter = 0, tock = 0;
+            long t0 = 0, t1 = 0, microseconds = 0;
             while (true)
             {
                 if (counter == 0)
                 {
+                    /*t1 = CSPTimeMillis.CurrentTimeMillis();
+                    microseconds = (t1 - t0);
+                    Console.WriteLine("Reading time for tock " + tock + ": " + microseconds);*/
+
                     Console.Write("Tock " + tock + " : ");
                     int total = 0;
                     for (int channel = 0; channel < n.Length; channel++)
@@ -88,11 +95,24 @@ namespace TestingUtilities
                     Console.WriteLine(": " + total);
                     tock++;
                     counter = 10000;
+//                    t0 = CSPTimeMillis.CurrentTimeMillis();
+                    //Debug.WriteLine("Read time at counter 10000");
                 }
                 counter--;
+
+                t0 = CSPTimeMillis.CurrentTimeMillis();
                 int channelFairSelect = alt.fairSelect();
                 StressedPacket stressedPacket = (StressedPacket)c[channelFairSelect].read();
                 n[channelFairSelect][stressedPacket.writer] = stressedPacket.n;
+                t1 = CSPTimeMillis.CurrentTimeMillis();
+                microseconds = (t1 - t0) * 1000;
+                if (microseconds > 0)
+                {
+                    Debug.WriteLine("Reading time for tock " + tock + ": " + microseconds);
+                }
+
+
+
                 // for (int chan = 0; chan < channel; chan++) System.out.print ("  ");
                 // Console.WriteLine ("channel " + channel +
                 //                     " writer " + stressedPacket.writer +
