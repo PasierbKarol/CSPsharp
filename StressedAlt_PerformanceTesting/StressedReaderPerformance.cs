@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Text;
 using CSPlang;
 using CSPutil;
@@ -25,7 +26,7 @@ namespace StressedAlt_PerformanceTesting
 
         public void run()
         {
-            //initialize internal arrays of 2-dimmensional array
+            //initialize internal arrays of 2-dimensional array
             int[][] n = new int[c.Length][];
             for (int i = 0; i < n.Length; i++)
             {
@@ -33,24 +34,30 @@ namespace StressedAlt_PerformanceTesting
             }
 
             //setup variables
-            const int initialWait = 5000;
+            const int initialWait = 3000;
             int iterations = nMessages * nChannels * nWritersPerChannel;
             long t0 = 0, t1 = 0, microseconds = 0;
             Alternative alt = new Alternative(c);
             CSTimer timer = new CSTimer();
+            int channelFairSelect = 0;
+            StressedPacket stressedPacket;
+            var csv = new StringBuilder();
 
 
             //set the timer to wait for 5 seconds to make sure that all the readers are idle in writing state
-            Console.WriteLine("Waiting 5 seconds...");
+            Console.WriteLine("Waiting 3 seconds...");
             timer.after(initialWait + timer.read());
-            Console.WriteLine("Wait is over. Measuring time.");
+            Console.WriteLine("Waiting is over. Measuring time");
+
+
+            
 
             //perform read and measure the time
             t0 = CSPTimeMillis.CurrentTimeMillis();
             for (int i = 0; i < iterations; i++)
             {
-                int channelFairSelect = alt.fairSelect();
-                StressedPacket stressedPacket = (StressedPacket)c[channelFairSelect].read();
+                channelFairSelect = alt.fairSelect();
+                stressedPacket = (StressedPacket) c[channelFairSelect].read();
                 n[channelFairSelect][stressedPacket.writer] = stressedPacket.n;
             }
             t1 = CSPTimeMillis.CurrentTimeMillis();
@@ -58,35 +65,12 @@ namespace StressedAlt_PerformanceTesting
             if (microseconds > 0)
             {
                 Console.WriteLine("Reading time for " + iterations + " iterations: " + microseconds);
+                var newLine = string.Format("{0},{1},{2},{3},{4}", nChannels, nWritersPerChannel, nMessages, iterations, microseconds);
+                csv.AppendLine(newLine);
+                File.AppendAllText(@"d:\\stressedAlt_Test"+nChannels+"x"+nWritersPerChannel+".csv", csv.ToString());
             }
-
-            //int counter = 0, tock = 0;
-            //while (true)
-            //{
-            //    if (counter == 0)
-            //    {
-            //        Console.Write("Tock " + tock + " : ");
-            //        int total = 0;
-            //        for (int channel = 0; channel < n.Length; channel++)
-            //        {
-            //            Console.Write(n[channel][tock % nWritersPerChannel] + " ");
-            //            for (int i = 0; i < nWritersPerChannel; i++)
-            //            {
-            //                total += n[channel][i];
-            //            }
-            //        }
-            //        Console.WriteLine(": " + total);
-            //        tock++;
-            //        counter = 10000;
-            //        //                    t0 = CSPTimeMillis.CurrentTimeMillis();
-            //        //Debug.WriteLine("Read time at counter 10000");
-            //    }
-            //    counter--;
-
-                
-                
-
-            //}
+            //Console.WriteLine("Finished reader");
+           
         }
     }
 }

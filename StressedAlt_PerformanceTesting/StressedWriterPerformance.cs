@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 using CSPlang;
 using TestingUtilities;
@@ -10,33 +11,26 @@ namespace StressedAlt_PerformanceTesting
     {
         private readonly ChannelOutput Out;
         private readonly int channel;
-        private readonly int idWriter;
+        private readonly int writer;
+        private readonly int writerID;
 
-        public StressedWriterPerformance(ChannelOutput Out, int channel, int idWriter)
+        public StressedWriterPerformance(ChannelOutput Out, int channel, int writer, int writerID)
         {
             this.Out = Out;
             this.channel = channel;
-            this.idWriter = idWriter;
+            this.writer = writer;
+            this.writerID = writerID;
         }
 
         public void run()
         {
-            int n = 0;
-            StressedPacket stressedPacketA = new StressedPacket(idWriter);
-            StressedPacket stressedPacketB = new StressedPacket(idWriter);
-            while (true)
-            {
-                // for (int i = 0; i < idWriter; i++) System.out.print ("  ");
-                // System.out.println (id + " " + n);
-                stressedPacketA.n = idWriter;
+            //int n = 0;
+            StressedPacket stressedPacketA = new StressedPacket(writer);
+            StressedPacket stressedPacketB = new StressedPacket(writer);
+                stressedPacketA.n = writerID;
                 Out.write(stressedPacketA);
-                //n++;
-                // for (int i = 0; i < idWriter; i++) System.out.print ("  ");
-                // System.out.println (id + " " + n);
-                stressedPacketB.n = idWriter;
+                stressedPacketB.n = writerID;
                 Out.write(stressedPacketB);
-                //n++;
-            }
         }
     }
 }

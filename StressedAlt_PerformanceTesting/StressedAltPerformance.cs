@@ -36,9 +36,10 @@ namespace StressedAlt_PerformanceTesting
 
         public static void Main(String[] args)
         {
-            int nChannels = 10;
-            int nWritersPerChannel = 100;
+            int nChannels = 100;
+            int nWritersPerChannel = 200;
             int nMessages = 2;
+            int writerID = 0;
 
             //Any2OneChannel[] c = Channel.any2oneArray (nChannels, new OverWriteOldestBuffer (1));
             Any2OneChannel[] any2OneChannelsNumber = Channel.any2oneArray(nChannels);
@@ -49,16 +50,26 @@ namespace StressedAlt_PerformanceTesting
             {
                 for (int i = 0; i < nWritersPerChannel; i++)
                 {
-                    writers[(channel * nWritersPerChannel) + i] = new StressedWriterPerformance(any2OneChannelsNumber[channel].Out(), channel, i);
+                    writers[(channel * nWritersPerChannel) + i] = new StressedWriterPerformance(any2OneChannelsNumber[channel].Out(), channel, i, writerID);
+                    writerID++;
                 }
             }
 
-            new CSPParallel(
-                new IamCSProcess[] {
-                    new CSPParallel (writers),
-                    new StressedReaderPerformance(Channel.getInputArray(any2OneChannelsNumber),nMessages, nChannels, nWritersPerChannel)
-                }
-            ).run();
+            Console.WriteLine("TEST: " + nChannels + " Channels, " + nWritersPerChannel + " Writers, " + nMessages + " messages");
+            for (int i = 0; i < 10; i++)
+            {
+                new CSPParallel(
+                    new IamCSProcess[] {
+                        new CSPParallel (writers),
+                        new StressedReaderPerformance(Channel.getInputArray(any2OneChannelsNumber),nMessages, nChannels, nWritersPerChannel)
+                    }
+                ).run();
+                //Console.WriteLine("\nFinished " + i + " time");
+            }
+            Console.WriteLine("Finished all");
+
+
+
 
         }
     }
