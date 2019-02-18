@@ -35,10 +35,9 @@ namespace SantaClaus_Lapland
             ChannelOutputList consultingList = new ChannelOutputList(consulting);
             ChannelOutputList consultedList = new ChannelOutputList(consulted);
 
-            //IamCSProcess[] grotto = new IamCSProcess[18]; //2x8 herds and elves plus santa and vestibule - Karol Pasierb
             List<IamCSProcess> grottoList = new List<IamCSProcess>(); 
-            Reindeer[] herd = new Reindeer[8];
-            for (int i = 0; i < 8; i++)
+            Reindeer[] herd = new Reindeer[9];
+            for (int i = 0; i < 9; i++)
             {
                 herd[i] = new Reindeer(number: i,
                     stable: stable[i],
@@ -52,13 +51,12 @@ namespace SantaClaus_Lapland
                     holidayTime:
                     15000
                 );
-                //grotto[i] = herd[i];
                 grottoList.Add(herd[i]);
             }
 
-            Elf[] elves = new Elf[8];
+            Elf[] elves = new Elf[9];
             IamCSProcess[] elvesNetwork = new IamCSProcess[8];
-            for (int i = 0; i < 8; i++)
+            for (int i = 0; i < 9; i++)
             {
                 elves[i] = new Elf(number: i,
                     groups: elfGroups,
@@ -76,7 +74,6 @@ namespace SantaClaus_Lapland
                     workingTime:
                     1000
                 );
-                //grotto[i + 8] = elves[i];
                 grottoList.Add(elves[i]);
             }
 

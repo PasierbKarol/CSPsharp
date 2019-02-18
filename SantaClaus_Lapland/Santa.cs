@@ -56,13 +56,13 @@ namespace SantaClaus_Lapland
             while (true)
             {
                 index = santaAlt.priSelect();
-                int[] id = new int[8]; //size of the array must be provided. For loops no greater than 8 - Karol Pasierb
+                int[] id = new int[9]; //size of the array must be provided. For loops no greater than 9 - Karol Pasierb
 
                 switch (index)
                 {
                     case REINDEER:
                         Console.WriteLine("Santa: ho-ho-ho ... the reindeer are back");
-                        for (int i = 0; i < 8; i++)
+                        for (int i = 0; i < 9; i++)
                         {
                             ;
                             id[i] = (int) harness.read();
@@ -70,7 +70,7 @@ namespace SantaClaus_Lapland
                         }
 
                         Console.WriteLine("Santa: mush mush ...");
-                        for (int i = 0; i < 8; i++)
+                        for (int i = 0; i < 9; i++)
                         {
                             harnessed.write(1);
                         }
@@ -78,12 +78,12 @@ namespace SantaClaus_Lapland
                         // simulate time to undertake present deliveries
                         timer.sleep(deliveryTime + rng.Next(deliveryTime));
                         Console.WriteLine("Santa: woah ... we are back home");
-                        for (int i = 0; i < 8; i++)
+                        for (int i = 0; i < 9; i++)
                         {
                             returned.write(1);
                         }
 
-                        for (int i = 0; i < 8; i++)
+                        for (int i = 0; i < 9; i++)
                         {
                             Console.WriteLine("Santa: unharnessing reindeer " + id[i] );
                             unharnessList[id[i]].write(1);
@@ -98,13 +98,13 @@ namespace SantaClaus_Lapland
                         }
 
                         Console.WriteLine("Santa: ho-ho-ho ... some elves are here!");
-                        for (int i = 0; i < 2; i++)
+                        for (int i = 0; i < 3; i++)
                         {
                             consulting[id[i]].write(1);
                             Console.WriteLine("Santa: hello elf " + id[i] + " ...");
                         }
 
-                        for (int i = 0; i < 2; i++)
+                        for (int i = 0; i < 3; i++)
                         {
                             negotiating.read();
                         }
@@ -112,7 +112,7 @@ namespace SantaClaus_Lapland
                         Console.WriteLine("Santa: consulting with elves ...");
                         timer.sleep(consultationTime + rng.Next(consultationTime));
                         Console.WriteLine("Santa: OK, all done - thanks!");
-                        for (int i = 0; i < 2; i++)
+                        for (int i = 0; i < 3; i++)
                         {
                             consulted[id[i]].write(1);
                             Console.WriteLine("Santa: goodbye elf " + id[i] + " ...");
