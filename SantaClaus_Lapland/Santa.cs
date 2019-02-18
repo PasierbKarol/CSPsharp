@@ -48,8 +48,7 @@ namespace SantaClaus_Lapland
             const int ELVES = 1;
             Random rng = new Random();
             CSTimer timer = new CSTimer();
-            Guard[] santaGuards = {stable, consult as Guard};
-            Alternative santaAlt = new Alternative(santaGuards);
+            Alternative santaAlt = new Alternative(new Guard[] { stable, consult as Guard });
             openForBusiness.write(1);
             int index = -1;
 
