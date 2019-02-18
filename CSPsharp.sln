@@ -23,7 +23,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CommsTimeSymetricTesting", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AltingBarrierTesting", "AltingBarrierTesting\AltingBarrierTesting.csproj", "{65260550-1710-4E0E-9C66-02F0270014D6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StressedAlt_PerformanceTesting", "StressedAlt_PerformanceTesting\StressedAlt_PerformanceTesting.csproj", "{616AD88C-6307-4E11-9DE4-C984FD33E18B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StressedAlt_PerformanceTesting", "StressedAlt_PerformanceTesting\StressedAlt_PerformanceTesting.csproj", "{616AD88C-6307-4E11-9DE4-C984FD33E18B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SantaClaus_Lapland", "SantaClaus_Lapland\SantaClaus_Lapland.csproj", "{A7509E15-52DB-44C7-88C8-4A52BCF37623}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -75,6 +77,10 @@ Global
 		{616AD88C-6307-4E11-9DE4-C984FD33E18B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{616AD88C-6307-4E11-9DE4-C984FD33E18B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{616AD88C-6307-4E11-9DE4-C984FD33E18B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A7509E15-52DB-44C7-88C8-4A52BCF37623}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A7509E15-52DB-44C7-88C8-4A52BCF37623}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A7509E15-52DB-44C7-88C8-4A52BCF37623}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A7509E15-52DB-44C7-88C8-4A52BCF37623}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
