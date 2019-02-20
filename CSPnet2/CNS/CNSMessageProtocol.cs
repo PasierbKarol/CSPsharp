@@ -1,4 +1,3 @@
-
 //////////////////////////////////////////////////////////////////////
 //                                                                  //
 //  JCSP ("CSP for Java") Libraries                                 //
@@ -18,14 +17,17 @@
 //                                                                  //
 //////////////////////////////////////////////////////////////////////
 
-package jcsp.net2.cns;
+using System;
 
-/**
- * This class defines the message types that can be sent to and from the CNS. This is internal to JCSP
- * 
- * @author Kevin Chalmers
- */
-final class CNSMessageProtocol
+namespace CSPnet2.CNS
+{
+
+    /**
+     * This class defines the message types that can be sent to and from the CNS. This is internal to JCSP
+     * 
+     * @author Kevin Chalmers
+     */
+    sealed class CNSMessageProtocol
 {
     /**
      * Empty, private constructor. We do not create instances of this class.
@@ -38,50 +40,51 @@ final class CNSMessageProtocol
     /**
      * A message sent from a CNSService to a CNS allowing logging on
      */
-    static final byte LOGON_MESSAGE = 1;
+    internal static readonly byte LOGON_MESSAGE = 1;
 
     /**
      * The reply from a Logon
      */
-    static final byte LOGON_REPLY_MESSAGE = 2;
+    internal static readonly byte LOGON_REPLY_MESSAGE = 2;
 
     /**
      * Register a name with the CNS
      */
-    static final byte REGISTER_REQUEST = 3;
+    internal static readonly byte REGISTER_REQUEST = 3;
 
     /**
      * Resolve a location from the CNS
      */
-    static final byte RESOLVE_REQUEST = 4;
+    internal static readonly byte RESOLVE_REQUEST = 4;
 
     /**
      * *** Not currently used ***
      */
-    static final byte LEASE_REQUEST = 5;
+    internal static readonly byte LEASE_REQUEST = 5;
 
     /**
      * *** Not currently used ***
      */
-    static final byte DEREGISTER_REQUEST = 6;
+    internal static readonly byte DEREGISTER_REQUEST = 6;
 
     /**
      * A reply from a registration request
      */
-    static final byte REGISTER_REPLY = 7;
+    internal static readonly byte REGISTER_REPLY = 7;
 
     /**
      * A reply from a resolve request
      */
-    static final byte RESOLVE_REPLY = 8;
+    internal static readonly byte RESOLVE_REPLY = 8;
 
     /**
      * *** Not currently used ***
      */
-    static final byte LEASE_REPLY = 9;
+    internal static readonly byte LEASE_REPLY = 9;
 
     /**
      * *** Not currently used ***
      */
-    static final byte DEREGISTER_REPLY = 10;
+    internal static readonly byte DEREGISTER_REPLY = 10;
+}
 }

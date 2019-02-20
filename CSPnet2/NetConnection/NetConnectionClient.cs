@@ -1,4 +1,3 @@
-
 //////////////////////////////////////////////////////////////////////
 //                                                                  //
 //  JCSP ("CSP for Java") Libraries                                 //
@@ -18,12 +17,13 @@
 //                                                                  //
 //////////////////////////////////////////////////////////////////////
 
-package jcsp.net2;
+using System;
+using CSPlang;
+using CSPnet2;
 
-import jcsp.lang.ConnectionClient;
-
-public interface NetConnectionClient
-    extends Networked, ConnectionClient
+namespace CSPnet2.NetConnection
 {
-
+    public interface NetConnectionClient : Networked, ConnectionClient
+    {
+    }
 }

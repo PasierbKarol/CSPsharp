@@ -1,4 +1,3 @@
-
 //////////////////////////////////////////////////////////////////////
 //                                                                  //
 //  JCSP ("CSP for Java") Libraries                                 //
@@ -18,11 +17,13 @@
 //                                                                  //
 //////////////////////////////////////////////////////////////////////
 
-package jcsp.net2;
+using System;
+using CSPlang;
+using CSPlang.Alting;
+using CSPnet2.NetChannel;
 
-import jcsp.lang.AltingChannelInput;
-import jcsp.lang.AltingChannelInputWrapper;
-
+namespace CSPnet2
+{
 /**
  * A NetChannelInput that may be used as a guard. This class describes the abstract interface of such a channel. To
  * create an instance of this class, use the standard NetChannel factory, or the CNS. For information on the usage of
@@ -34,19 +35,31 @@ import jcsp.lang.AltingChannelInputWrapper;
  * @see NetChannel
  * @author Quickstone Technologies
  */
-public abstract class NetAltingChannelInput
-    extends AltingChannelInputWrapper
-    implements NetChannelInput
-{
-
-    /**
-     * Creates a new NetAltingChannelInput, with the given channel as the guard
-     * 
-     * @param in
-     *            The channel that is used within the alternative
-     */
-    protected NetAltingChannelInput(AltingChannelInput in)
+    public abstract class NetAltingChannelInput : AltingChannelInputWrapper, NetChannelInput
     {
-        super(in);
+        /**
+         * Creates a new NetAltingChannelInput, with the given channel as the guard
+         * 
+         * @param in
+         *            The channel that is used within the alternative
+         */
+        protected NetAltingChannelInput(AltingChannelInput In) : base(In)
+        {
+        }
+
+        public NetLocation getLocation()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void destroy()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void setDecoder(NetworkMessageFilter.FilterRx decoder)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

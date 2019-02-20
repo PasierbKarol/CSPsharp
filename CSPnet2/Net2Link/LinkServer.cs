@@ -1,4 +1,3 @@
-
 //////////////////////////////////////////////////////////////////////
 //                                                                  //
 //  JCSP ("CSP for Java") Libraries                                 //
@@ -18,25 +17,28 @@
 //                                                                  //
 //////////////////////////////////////////////////////////////////////
 
-package jcsp.net2;
+using System;
+using CSPlang;
+using CSPnet2.Node;
 
-import jcsp.lang.CSProcess;
-import jcsp.lang.ProcessManager;
+namespace CSPnet2.Net2Link
+{
 
-/**
- * Abstract class defining the LinkServer.
- * 
- * @author Kevin Chalmers
- */
-public abstract class LinkServer
-    implements CSProcess
+    //import jcsp.lang.ProcessManager;
+
+    /**
+     * Abstract class defining the LinkServer.
+     * 
+     * @author Kevin Chalmers
+     */
+    public abstract class LinkServer : IamCSProcess
 {
     /**
      * @param address
      * @throws IllegalArgumentException
      * @throws JCSPNetworkException
      */
-    public static final void start(NodeAddress address)
+    public static /*final*/ void start(NodeAddress address)
         throws IllegalArgumentException, JCSPNetworkException
     {
         Node.log.log(LinkServer.class, "Attempting to start Link Server on " + address);
@@ -51,7 +53,7 @@ public abstract class LinkServer
      * @param nodeID
      * @return The Link connected to the Node with the corresponding NodeID, or null if no such Node exists
      */
-    protected final Link requestLink(NodeID nodeID)
+    protected /*final*/ Link requestLink(NodeID nodeID)
     {
         return LinkManager.getInstance().requestLink(nodeID);
     }
@@ -60,8 +62,9 @@ public abstract class LinkServer
      * @param link
      * @return True if the Link to the Node was successfully registered, false otherwise
      */
-    protected final boolean registerLink(Link link)
+    protected /*final*/ Boolean registerLink(Link link)
     {
         return LinkManager.getInstance().registerLink(link);
     }
+}
 }

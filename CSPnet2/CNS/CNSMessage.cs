@@ -1,4 +1,3 @@
-
 //////////////////////////////////////////////////////////////////////
 //                                                                  //
 //  JCSP ("CSP for Java") Libraries                                 //
@@ -18,40 +17,42 @@
 //                                                                  //
 //////////////////////////////////////////////////////////////////////
 
-package jcsp.net2.cns;
+using System;
+using CSPnet2.NetChannel;
 
-import jcsp.net2.NetChannelLocation;
+namespace CSPnet2.CNS
+{
 
 /**
  * A message sent between a CNS and a CNSService. This is an internal structure to JCSP.
  * 
  * @author Kevin Chalmers
  */
-final class CNSMessage
-{
-    /**
-     * The message type. See CNSMessageProtocol
-     */
-    byte type = 0;
+    sealed class CNSMessage
+    {
+        /**
+         * The message type. See CNSMessageProtocol
+         */
+        byte type = 0;
 
-    /**
-     * Whether the previous message was successful
-     */
-    boolean success = false;
+        /**
+         * Whether the previous message was successful
+         */
+        Boolean success = false;
 
-    /**
-     * Location parameter. Usually the location to register
-     */
-    NetChannelLocation location1 = null;
+        /**
+         * Location parameter. Usually the location to register
+         */
+        NetChannelLocation location1 = null;
 
-    /**
-     * Location parameter. Usually the reply location
-     */
-    NetChannelLocation location2 = null;
+        /**
+         * Location parameter. Usually the reply location
+         */
+        NetChannelLocation location2 = null;
 
-    /**
-     * Name to register or resolve
-     */
-    String name = "";
-
+        /**
+         * Name to register or resolve
+         */
+        String name = "";
+    }
 }

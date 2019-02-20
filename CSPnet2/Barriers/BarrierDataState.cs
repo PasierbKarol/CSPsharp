@@ -1,4 +1,3 @@
-
 //////////////////////////////////////////////////////////////////////
 //                                                                  //
 //  JCSP ("CSP for Java") Libraries                                 //
@@ -18,50 +17,53 @@
 //                                                                  //
 //////////////////////////////////////////////////////////////////////
 
-package jcsp.net2;
+using System;
 
-/**
- * Describes the possible states that a networked Barrier might be in.
- * 
- * @author Kevin Chalmers
- */
-final class BarrierDataState
+namespace CSPnet2.Barriers
 {
     /**
-     * Empty private constructor. This is simply a protocol.
+     * Describes the possible states that a networked Barrier might be in.
+     * 
+     * @author Kevin Chalmers
      */
-    private BarrierDataState()
+    sealed class BarrierDataState
     {
-        // Empty constructor
+        /**
+         * Empty private constructor. This is simply a protocol.
+         */
+        private BarrierDataState()
+        {
+            // Empty constructor
+        }
+
+        /**
+         * Barrier is inactive. It has not been initialised yet.
+         */
+        internal static readonly byte INACTIVE = 0;
+
+        /**
+         * Barrier is in OK state, and is a server end. Has been initialised.
+         */
+        internal static readonly byte OK_SERVER = 1;
+
+        /**
+         * Barrier is in OK state, and is a client end. Has been initialised
+         */
+        internal static readonly byte OK_CLIENT = 2;
+
+        /**
+         * Barrier is broken.
+         */
+        internal static readonly byte BROKEN = 3;
+
+        /**
+         * Barrier has been destroyed
+         */
+        internal static readonly byte DESTROYED = 4;
+
+        /**
+         * Barrier has resigned from the server front end.
+         */
+        internal static readonly byte RESIGNED = 5;
     }
-
-    /**
-     * Barrier is inactive. It has not been initialised yet.
-     */
-    static final byte INACTIVE = 0;
-
-    /**
-     * Barrier is in OK state, and is a server end. Has been initialised.
-     */
-    static final byte OK_SERVER = 1;
-
-    /**
-     * Barrier is in OK state, and is a client end. Has been initialised
-     */
-    static final byte OK_CLIENT = 2;
-
-    /**
-     * Barrier is broken.
-     */
-    static final byte BROKEN = 3;
-
-    /**
-     * Barrier has been destroyed
-     */
-    static final byte DESTROYED = 4;
-
-    /**
-     * Barrier has resigned from the server front end.
-     */
-    static final byte RESIGNED = 5;
 }

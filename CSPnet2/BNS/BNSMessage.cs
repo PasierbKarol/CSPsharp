@@ -1,4 +1,3 @@
-
 //////////////////////////////////////////////////////////////////////
 //                                                                  //
 //  JCSP ("CSP for Java") Libraries                                 //
@@ -18,41 +17,44 @@
 //                                                                  //
 //////////////////////////////////////////////////////////////////////
 
-package jcsp.net2.bns;
+using System;
+using CSPnet2.Barriers;
+using CSPnet2.NetChannel;
 
-import jcsp.net2.NetBarrierLocation;
-import jcsp.net2.NetChannelLocation;
+namespace CSPnet2.BNS
+{
+
 
 /**
  * A message sent between a BNS and a BNSService. This is an internal structure to JCSP
  * 
  * @author Kevin Chalmers
  */
-final class BNSMessage
-{
+    sealed class BNSMessage
+    {
+        /**
+         * The message type. See BNSMessageProtocol
+         */
+        byte type = 0;
 
-    /**
-     * The message type. See BNSMessageProtocol
-     */
-    byte type = 0;
+        /**
+         * Whether the previous message was successful
+         */
+        Boolean success = false;
 
-    /**
-     * Whether the previous message was successful
-     */
-    boolean success = false;
+        /**
+         * The location that the BNS must reply to
+         */
+        NetChannelLocation serviceLocation = null;
 
-    /**
-     * The location that the BNS must reply to
-     */
-    NetChannelLocation serviceLocation = null;
+        /**
+         * The location of a resolves or registered barrier
+         */
+        NetBarrierLocation location = null;
 
-    /**
-     * The location of a resolves or registered barrier
-     */
-    NetBarrierLocation location = null;
-
-    /**
-     * The name to register or resolve
-     */
-    String name = "";
+        /**
+         * The name to register or resolve
+         */
+        String name = "";
+    }
 }

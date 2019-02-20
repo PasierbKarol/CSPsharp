@@ -18,21 +18,22 @@
 //                                                                  //
 //////////////////////////////////////////////////////////////////////
 
-package jcsp.net2;
+using System;
+using CSPlang;
 
-import jcsp.lang.ProcessInterruptedException;
-
+namespace CSPnet2
+{
 /**
  * A package-visible class that implements a straightforward mutex, for use by Net2AnyChannel
  * 
  * @author Neil Brown
  */
-class Mutex
+class Net2_Mutex
 {
     /**
      * Flag to mark the mutex as claimed
      */
-    private boolean claimed = false;
+    private Boolean claimed = false;
 
     /**
      * Claims the mutex for exclusive access
@@ -49,7 +50,7 @@ class Mutex
                 }
                 catch (InterruptedException e)
                 {
-                    throw new ProcessInterruptedException("*** Thrown from Mutex.claim()\n" + e.toString());
+                    throw new ProcessInterruptedException("*** Thrown from Net2_Mutex.claim()\n" + e.toString());
                 }
             }
             this.claimed = true;
@@ -67,4 +68,5 @@ class Mutex
             notify();
         }
     }
+}
 }

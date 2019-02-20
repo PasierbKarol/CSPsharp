@@ -1,4 +1,3 @@
-
 //////////////////////////////////////////////////////////////////////
 //                                                                  //
 //  JCSP ("CSP for Java") Libraries                                 //
@@ -18,9 +17,13 @@
 //                                                                  //
 //////////////////////////////////////////////////////////////////////
 
-package jcsp.net2.tcpip;
+using System;
+using CSPnet2.Node;
 
-import jcsp.net2.NodeAddress;
+namespace CSPnet2.TCPIP
+{
+
+    import jcsp.net2.NodeAddress;
 import jcsp.net2.ProtocolID;
 
 /**
@@ -29,8 +32,7 @@ import jcsp.net2.ProtocolID;
  * 
  * @author Kevin Chalmers
  */
-public final class TCPIPProtocolID
-    extends ProtocolID
+public sealed class TCPIPProtocolID : ProtocolID
 {
     /**
      * Singleton instance of this class
@@ -76,4 +78,5 @@ public final class TCPIPProtocolID
         return new TCPIPNodeAddress(address, port);
     }
 
+}
 }

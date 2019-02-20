@@ -1,4 +1,3 @@
-
 //////////////////////////////////////////////////////////////////////
 //                                                                  //
 //  JCSP ("CSP for Java") Libraries                                 //
@@ -18,26 +17,31 @@
 //                                                                  //
 //////////////////////////////////////////////////////////////////////
 
-package jcsp.net2.mobile;
+using System;
+using CSPnet2.NetChannel;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
+namespace CSPnet2.Mobile
+{
 
-import jcsp.net2.JCSPNetworkException;
-import jcsp.net2.NetChannel;
-import jcsp.net2.NetChannelLocation;
-import jcsp.net2.NetChannelOutput;
-import jcsp.net2.NetLocation;
-import jcsp.net2.NetworkPoisonException;
-import jcsp.net2.NetworkMessageFilter.FilterTx;
+//    import java.io.IOException;
+//import java.io.ObjectInputStream;
+//import java.io.ObjectOutputStream;
+//import java.io.Serializable;
+//
+//import jcsp.net2.JCSPNetworkException;
+//import jcsp.net2.NetChannel;
+//import jcsp.net2.NetChannelLocation;
+//import jcsp.net2.NetChannelOutput;
+//import jcsp.net2.NetLocation;
+//import jcsp.net2.NetworkPoisonException;
+//import jcsp.net2.NetworkMessageFilter.FilterTx;
 
 /**
  * @author Kevin
  */
-public final class MobileChannelOutput
-    implements NetChannelOutput, Serializable
+
+    [Serializable]
+public sealed class MobileChannelOutput : NetChannelOutput
 {
     private NetChannelLocation msgBoxLocation;
 
@@ -49,7 +53,7 @@ public final class MobileChannelOutput
         this.actualOut = NetChannel.one2net(loc);
     }
 
-    public MobileChannelOutput(NetChannelLocation loc, FilterTx encoder)
+    public MobileChannelOutput(NetChannelLocation loc, NetworkMessageFilter.FilterTx encoder)
     {
         this.msgBoxLocation = loc;
         this.actualOut = NetChannel.one2net(loc, encoder);
@@ -81,7 +85,7 @@ public final class MobileChannelOutput
         this.actualOut.asyncWrite(obj);
     }
 
-    public void setEncoder(FilterTx encoder)
+    public void setEncoder(NetworkMessageFilter.FilterTx encoder)
     {
         this.actualOut.setEncoder(encoder);
     }
@@ -100,4 +104,5 @@ public final class MobileChannelOutput
         this.actualOut = NetChannel.one2net(this.msgBoxLocation);
     }
 
+}
 }

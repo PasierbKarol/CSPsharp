@@ -1,4 +1,3 @@
-
 //////////////////////////////////////////////////////////////////////
 //                                                                  //
 //  JCSP ("CSP for Java") Libraries                                 //
@@ -18,28 +17,37 @@
 //                                                                  //
 //////////////////////////////////////////////////////////////////////
 
-package jcsp.net2.bns;
+using System;
+using System.Collections;
+using CSPlang;
+using CSPnet2.Barriers;
+using CSPnet2.BNS;
+using CSPnet2.NetChannel;
+using CSPnet2.Node;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
+namespace CSPnet2.BNS
+{
 
-import jcsp.lang.Alternative;
-import jcsp.lang.AltingChannelInput;
-import jcsp.lang.CSProcess;
-import jcsp.lang.Guard;
-import jcsp.net2.JCSPNetworkException;
-import jcsp.net2.Link;
-import jcsp.net2.LinkFactory;
-import jcsp.net2.NetAltingChannelInput;
-import jcsp.net2.NetBarrier;
-import jcsp.net2.NetBarrierEnd;
-import jcsp.net2.NetBarrierLocation;
-import jcsp.net2.NetChannel;
-import jcsp.net2.NetChannelOutput;
-import jcsp.net2.Node;
-import jcsp.net2.NodeAddress;
-import jcsp.net2.NodeID;
+//    import java.util.ArrayList;
+//import java.util.HashMap;
+//import java.util.Iterator;
+//
+//import jcsp.lang.Alternative;
+//import jcsp.lang.AltingChannelInput;
+//import jcsp.lang.CSProcess;
+//import jcsp.lang.Guard;
+//import jcsp.net2.JCSPNetworkException;
+//import jcsp.net2.Link;
+//import jcsp.net2.LinkFactory;
+//import jcsp.net2.NetAltingChannelInput;
+//import jcsp.net2.NetBarrier;
+//import jcsp.net2.NetBarrierEnd;
+//import jcsp.net2.NetBarrierLocation;
+//import jcsp.net2.NetChannel;
+//import jcsp.net2.NetChannelOutput;
+//import jcsp.net2.Node;
+//import jcsp.net2.NodeAddress;
+//import jcsp.net2.NodeID;
 
 /**
  * This is the main process for the Barrier Name Server. For a more in depth discussion of name servers, see CNS.
@@ -49,8 +57,7 @@ import jcsp.net2.NodeID;
  * @see Node
  * @author Kevin Chalmers
  */
-public class BNS
-    implements CSProcess
+public class BNS : IamCSProcess
 {
     /**
      * The internal service. This is used by the factory methods.
@@ -60,37 +67,37 @@ public class BNS
     /**
      * Flag used to denote if the connection to the BNS has been initialised
      */
-    private static boolean initialised = false;
+    private static Boolean initialised = false;
 
     /**
      * Singleton instance of the BNS. Only one may be created on a Node
      */
-    private static final BNS instance = new BNS();
+    private static readonly BNS instance = new BNS();
 
     /**
      * Map of registered barriers; name->location
      */
-    private final HashMap registeredBarriers = new HashMap();
+    private readonly HashMap registeredBarriers = new HashMap();
 
     /**
      * Map of barriers registered to a Node; NodeID-><list of barriers>
      */
-    private final HashMap barrierRegister = new HashMap();
+    private readonly HashMap barrierRegister = new HashMap();
 
     /**
      * Map of currently waiting resolves; name->reply-location
      */
-    private final HashMap waitingResolves = new HashMap();
+    private readonly HashMap waitingResolves = new HashMap();
 
     /**
      * Map of currently logged clients; NodeID->reply-channel
      */
-    private final HashMap loggedClients = new HashMap();
+    private readonly HashMap loggedClients = new HashMap();
 
     /**
      * A channel used to receive incoming link lost notifications
      */
-    private final AltingChannelInput lostLink = Node.getInstance().getLinkLostEventChannel();
+    private readonly AltingChannelInput lostLink = Node.getInstance().getLinkLostEventChannel();
 
     /**
      * Private empty constructor
@@ -645,4 +652,5 @@ public class BNS
         return NetBarrierEnd.netBarrier(loc, enrolled);
     }
 
+}
 }

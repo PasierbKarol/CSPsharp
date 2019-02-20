@@ -1,4 +1,3 @@
-
 //////////////////////////////////////////////////////////////////////
 //                                                                  //
 //  JCSP ("CSP for Java") Libraries                                 //
@@ -18,29 +17,37 @@
 //                                                                  //
 //////////////////////////////////////////////////////////////////////
 
-package jcsp.net2.cns;
+using System;
+using System.Collections;
+using CSPlang;
+using CSPnet2.CNS;
+using CSPnet2.NetChannel;
+using CSPnet2.Node;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
+namespace CSPnet2.CNS
+{
 
-import jcsp.lang.Alternative;
-import jcsp.lang.AltingChannelInput;
-import jcsp.lang.CSProcess;
-import jcsp.lang.Guard;
-import jcsp.net2.JCSPNetworkException;
-import jcsp.net2.Link;
-import jcsp.net2.LinkFactory;
-import jcsp.net2.NetAltingChannelInput;
-import jcsp.net2.NetChannel;
-import jcsp.net2.NetChannelLocation;
-import jcsp.net2.NetChannelOutput;
-import jcsp.net2.NetSharedChannelInput;
-import jcsp.net2.NetSharedChannelOutput;
-import jcsp.net2.NetworkMessageFilter;
-import jcsp.net2.Node;
-import jcsp.net2.NodeAddress;
-import jcsp.net2.NodeID;
+//    import java.util.ArrayList;
+//import java.util.HashMap;
+//import java.util.Iterator;
+//
+//import jcsp.lang.Alternative;
+//import jcsp.lang.AltingChannelInput;
+//import jcsp.lang.CSProcess;
+//import jcsp.lang.Guard;
+//import jcsp.net2.JCSPNetworkException;
+//import jcsp.net2.Link;
+//import jcsp.net2.LinkFactory;
+//import jcsp.net2.NetAltingChannelInput;
+//import jcsp.net2.NetChannel;
+//import jcsp.net2.NetChannelLocation;
+//import jcsp.net2.NetChannelOutput;
+//import jcsp.net2.NetSharedChannelInput;
+//import jcsp.net2.NetSharedChannelOutput;
+//import jcsp.net2.NetworkMessageFilter;
+//import jcsp.net2.Node;
+//import jcsp.net2.NodeAddress;
+//import jcsp.net2.NodeID;
 
 /**
  * <p>
@@ -195,8 +202,7 @@ import jcsp.net2.NodeID;
  * @author Quickstone Technologies Limited
  * @author Kevin Chalmers (updates for new architecture)
  */
-public class CNS
-    implements CSProcess
+public class CNS : IamCSProcess
 {
     /**
      * The internal service. This is used by the factory methods
@@ -206,37 +212,37 @@ public class CNS
     /**
      * Flag used to denote whether the CNS has been initialised
      */
-    private static boolean initialised = false;
+    private static Boolean initialised = false;
 
     /**
      * Singleton instance of a CNS. Only one may be created on a Node
      */
-    private static final CNS instance = new CNS();
+    private static readonly CNS instance = new CNS();
 
     /**
      * The map of registered channels, name->location
      */
-    private final HashMap registeredChannels = new HashMap();
+    private readonly HashMap registeredChannels = new HashMap();
 
     /**
      * The map of channels registered to a Node; NodeID-><list of channels>
      */
-    private final HashMap channelRegister = new HashMap();
+    private readonly HashMap channelRegister = new HashMap();
 
     /**
      * The map of currently waiting resolves; name->reply-location
      */
-    private final HashMap waitingResolves = new HashMap();
+    private readonly HashMap waitingResolves = new HashMap();
 
     /**
      * The map of currently logged clients; NodeID->reply-channel
      */
-    private final HashMap loggedClients = new HashMap();
+    private readonly HashMap loggedClients = new HashMap();
 
     /**
      * A channel used to receive incoming link lost notifications
      */
-    private final AltingChannelInput lostLink = Node.getInstance().getLinkLostEventChannel();
+    private readonly AltingChannelInput lostLink = Node.getInstance().getLinkLostEventChannel();
 
     /**
      * Private empty constructor
@@ -1543,4 +1549,5 @@ public class CNS
         return NetChannel.any2net(loc, filter);
     }
 
+}
 }

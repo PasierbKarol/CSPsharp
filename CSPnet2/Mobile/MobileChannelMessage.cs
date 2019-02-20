@@ -1,4 +1,3 @@
-
 //////////////////////////////////////////////////////////////////////
 //                                                                  //
 //  JCSP ("CSP for Java") Libraries                                 //
@@ -18,27 +17,28 @@
 //                                                                  //
 //////////////////////////////////////////////////////////////////////
 
-package jcsp.net2.mobile;
+using System;
+using CSPnet2.NetChannel;
 
-import java.io.Serializable;
-
-import jcsp.net2.NetChannelLocation;
-
+namespace CSPnet2.Mobile
+{
 /**
  * @author Kevin
  */
-final class MobileChannelMessage
-    implements Serializable
-{
-    static final int REQUEST = 1;
 
-    static final int CHECK = 2;
+    [Serializable]
+    sealed class MobileChannelMessage
+    {
+        static readonly int REQUEST = 1;
 
-    static final int CHECK_RESPONSE = 3;
+        static readonly int CHECK = 2;
 
-    int type = -1;
+        static readonly int CHECK_RESPONSE = 3;
 
-    boolean ready = false;
+        int type = -1;
 
-    NetChannelLocation inputLocation = null;
+        Boolean ready = false;
+
+        NetChannelLocation inputLocation = null;
+    }
 }

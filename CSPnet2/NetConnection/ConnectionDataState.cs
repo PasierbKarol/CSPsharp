@@ -1,7 +1,3 @@
-/**
- * 
- */
-
 //////////////////////////////////////////////////////////////////////
 //                                                                  //
 //  JCSP ("CSP for Java") Libraries                                 //
@@ -21,28 +17,31 @@
 //                                                                  //
 //////////////////////////////////////////////////////////////////////
 
-package jcsp.net2;
+using System;
 
-/**
- * @author Kevin Chalmers
- */
-final class ConnectionDataState
+namespace CSPnet2.NetConnection
 {
-    static final byte INACTIVE = 0;
+    /**
+     * @author Kevin Chalmers
+     */
+    sealed class ConnectionDataState
+{
+    internal static readonly byte INACTIVE = 0;
 
-    static final byte CLIENT_STATE_CLOSED = 1;
+    internal static readonly byte CLIENT_STATE_CLOSED = 1;
 
-    static final byte CLIENT_STATE_OPEN = 2;
+    internal static readonly byte CLIENT_STATE_OPEN = 2;
 
-    static final byte CLIENT_STATE_MADE_REQ = 3;
+    internal static readonly byte CLIENT_STATE_MADE_REQ = 3;
 
-    static final byte SERVER_STATE_CLOSED = 4;
+    internal static readonly byte SERVER_STATE_CLOSED = 4;
 
-    static final byte SERVER_STATE_OPEN = 5;
+    internal static readonly byte SERVER_STATE_OPEN = 5;
 
-    static final byte SERVER_STATE_RECEIVED = 6;
+    internal static readonly byte SERVER_STATE_RECEIVED = 6;
 
-    static final byte DESTROYED = 7;
+    internal static readonly byte DESTROYED = 7;
 
-    static final byte BROKEN = 8;
+    internal static readonly byte BROKEN = 8;
+}
 }

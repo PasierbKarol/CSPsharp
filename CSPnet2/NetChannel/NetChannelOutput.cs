@@ -22,7 +22,6 @@ using CSPlang;
 
 namespace CSPnet2.NetChannel
 {
-
     /**
      * An interface defining a ChannelOutput that is networked. For information on how to an object of this type, see
      * ChannelOutput. For information on how to create a NetChannelOutput, see the the relevant factory.
@@ -56,12 +55,13 @@ namespace CSPnet2.NetChannel
         /*public*/ void asyncWrite(Object obj);
 
 
-    /**
-     * Sets the underlying encoder for the channel
-     * 
-     * @param encoder
-     *            The encoder to use for the channel.
-     */
-    /*public*/ void setEncoder(NetworkMessageFilter.FilterTx encoder);
+        /**
+         * Sets the underlying encoder for the channel
+         * 
+         * @param encoder
+         *            The encoder to use for the channel.
+         */
+        /*public*/
+        void setEncoder(NetworkMessageFilter.FilterTx encoder);
     }
 }

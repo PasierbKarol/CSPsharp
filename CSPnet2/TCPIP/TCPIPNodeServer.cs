@@ -1,4 +1,3 @@
-
 //////////////////////////////////////////////////////////////////////
 //                                                                  //
 //  JCSP ("CSP for Java") Libraries                                 //
@@ -18,23 +17,29 @@
 //                                                                  //
 //////////////////////////////////////////////////////////////////////
 
-package jcsp.net2.tcpip;
+using System;
+using CSPnet2.BNS;
+using CSPnet2.CNS;
+using CSPnet2.Node;
 
-import java.net.Inet4Address;
-import java.net.InetAddress;
+namespace CSPnet2.TCPIP
+{
 
-import jcsp.lang.CSProcess;
-import jcsp.lang.Parallel;
-import jcsp.net2.Node;
-import jcsp.net2.bns.BNS;
-import jcsp.net2.cns.CNS;
+//    import java.net.Inet4Address;
+//import java.net.InetAddress;
+//
+//import jcsp.lang.CSProcess;
+//import jcsp.lang.Parallel;
+//import jcsp.net2.Node;
+//import jcsp.net2.bns.BNS;
+//import jcsp.net2.cns.CNS;
 
 /**
  * The new name for the TCPIPCNSServer. Use this class instead.
  * 
  * @author Kevin Chalmers
  */
-public final class TCPIPNodeServer
+public sealed class TCPIPNodeServer
 {
     /**
      * @param args
@@ -103,4 +108,5 @@ public final class TCPIPNodeServer
         CSProcess[] processes = { CNS.getInstance(), BNS.getInstance() };
         new Parallel(processes).run();
     }
+}
 }

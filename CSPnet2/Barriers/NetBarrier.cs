@@ -1,4 +1,3 @@
-
 //////////////////////////////////////////////////////////////////////
 //                                                                  //
 //  JCSP ("CSP for Java") Libraries                                 //
@@ -18,17 +17,23 @@
 //                                                                  //
 //////////////////////////////////////////////////////////////////////
 
-package jcsp.net2;
+using System;
+using System.Collections.Generic;
+using CSPlang;
+using CSPnet2;
+using CSPnet2.Barriers;
+using CSPnet2.Node;
 
-import java.util.LinkedList;
-
-import jcsp.lang.AltingChannelInput;
-import jcsp.lang.Any2OneChannel;
-import jcsp.lang.Barrier;
-import jcsp.lang.Channel;
-import jcsp.lang.ChannelOutput;
-import jcsp.lang.ProcessInterruptedException;
-import jcsp.util.InfiniteBuffer;
+namespace CSPnet2.Barriers
+{
+//    import java.util.LinkedList;
+//import jcsp.lang.AltingChannelInput;
+//import jcsp.lang.Any2OneChannel;
+//import jcsp.lang.Barrier;
+//import jcsp.lang.Channel;
+//import jcsp.lang.ChannelOutput;
+//import jcsp.lang.ProcessInterruptedException;
+//import jcsp.util.InfiniteBuffer;
 
 /**
  * This class is a networked implementation of the standard JCSP Barrier.
@@ -96,29 +101,27 @@ import jcsp.util.InfiniteBuffer;
  * @author Kevin Chalmers (networked part)
  * @author P.H. Welch (Barrier)
  */
-public final class NetBarrier
-    extends Barrier
-    implements Networked
+public sealed class NetBarrier : CSPBarrier, Networked
 {
     /**
      * The SUID for this object. Shouldn't really need it. Barrier should not be serializable.
      */
-    private static final long serialVersionUID = 1L;
+    private static readonly long serialVersionUID = 1L;
 
     /**
      * The data structure representing this NetBarrier object
      */
-    private final BarrierData data;
+    private readonly BarrierData data;
 
     /**
      * The location that this NetBarrier is connected to
      */
-    private final NetBarrierLocation remoteLocation;
+    private readonly NetBarrierLocation remoteLocation;
 
     /**
      * The local location of this NetBarrier
      */
-    private final NetBarrierLocation localLocation;
+    private readonly NetBarrierLocation localLocation;
 
     /**
      * The number of locally connected processes
@@ -143,12 +146,12 @@ public final class NetBarrier
     /**
      * Flag used to determine if the NetBarrier is connected to a server end on the same Node
      */
-    private boolean locallyConnected = false;
+    private Boolean locallyConnected = false;
 
     /**
      * A queue of waiting network ends waiting for a SYNC message
      */
-    private final LinkedList waitingEnds = new LinkedList();
+    private readonly LinkedList<> waitingEnds = new LinkedList();
 
     /**
      * The number of initial network enrolls that this barrier must wait for.
@@ -168,17 +171,17 @@ public final class NetBarrier
     /**
      * The input channel into this NetBarrier from the Links
      */
-    private final AltingChannelInput in;
+    private readonly AltingChannelInput In;
 
     /**
      * The exclusive access lock for syncing, etc.
      */
-    private final Object lock = new Object();
+    private readonly Object lock = new Object();
 
     /**
      * A flag used to signify that a waking process should perform a network sync when released
      */
-    private boolean performNetSync = false;
+    private Boolean performNetSync = false;
 
     /**
      * The constructor for a NetBarrier
@@ -959,4 +962,5 @@ public final class NetBarrier
     {
         return this.localLocation;
     }
+}
 }

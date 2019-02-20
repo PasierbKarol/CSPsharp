@@ -1,4 +1,3 @@
-
 //////////////////////////////////////////////////////////////////////
 //                                                                  //
 //  JCSP ("CSP for Java") Libraries                                 //
@@ -18,17 +17,20 @@
 //                                                                  //
 //////////////////////////////////////////////////////////////////////
 
-package jcsp.net2;
+using System;
+using CSPlang;
+using CSPnet2.NetConnection;
 
-import jcsp.lang.ChannelOutput;
-
-final class ConnectionData
+namespace CSPnet2.NetConnection
 {
-    int vconnn = -1;
+    sealed class ConnectionData
+    {
+        int vconnn = -1;
 
-    byte state = ConnectionDataState.INACTIVE;
+        byte state = ConnectionDataState.INACTIVE;
 
-    ChannelOutput toConnection = null;
+        ChannelOutput toConnection = null;
 
-    ChannelOutput openServer = null;
+        ChannelOutput openServer = null;
+    }
 }

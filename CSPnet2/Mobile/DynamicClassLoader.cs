@@ -1,4 +1,3 @@
-
 //////////////////////////////////////////////////////////////////////
 //                                                                  //
 //  JCSP ("CSP for Java") Libraries                                 //
@@ -18,30 +17,35 @@
 //                                                                  //
 //////////////////////////////////////////////////////////////////////
 
-package jcsp.net2.mobile;
+using System;
+using System.Collections;
+using CSPnet2.NetChannel;
+using CSPnet2.Node;
 
-import java.util.Hashtable;
+namespace CSPnet2.Mobile
+{
 
-import jcsp.net2.JCSPNetworkException;
-import jcsp.net2.NetChannel;
-import jcsp.net2.NetChannelInput;
-import jcsp.net2.NetChannelLocation;
-import jcsp.net2.NetChannelOutput;
-import jcsp.net2.NodeID;
+//    import java.util.Hashtable;
+//
+//import jcsp.net2.JCSPNetworkException;
+//import jcsp.net2.NetChannel;
+//import jcsp.net2.NetChannelInput;
+//import jcsp.net2.NetChannelLocation;
+//import jcsp.net2.NetChannelOutput;
+//import jcsp.net2.NodeID;
 
 /**
  * @author Kevin
  */
-final class DynamicClassLoader
-    extends ClassLoader
+sealed class DynamicClassLoader : ClassLoader
 {
-    final NodeID originatingNode;
+    readonly NodeID originatingNode;
 
     NetChannelOutput requestClassData;
 
     NetChannelInput classDataResponse = NetChannel.net2one();
 
-    final Hashtable classes = new Hashtable();
+    readonly Hashtable classes = new Hashtable();
 
     DynamicClassLoader(NodeID originator, NetChannelLocation requestLocation)
     {
@@ -109,4 +113,5 @@ final class DynamicClassLoader
             throw new ClassNotFoundException(className);
         }
     }
+}
 }

@@ -1,4 +1,3 @@
-
 //////////////////////////////////////////////////////////////////////
 //                                                                  //
 //  JCSP ("CSP for Java") Libraries                                 //
@@ -18,27 +17,26 @@
 //                                                                  //
 //////////////////////////////////////////////////////////////////////
 
-package jcsp.net2.mobile;
+using System;
+using CSPnet2.NetChannel;
+using CSPnet2.Node;
 
-import java.io.Serializable;
-
-import jcsp.net2.NetChannelLocation;
-import jcsp.net2.NodeID;
-
+namespace CSPnet2.Mobile
+{
 /**
  * @author Kevin
  */
-final class ClassRequest
-    implements Serializable
-{
-    final NodeID originatingNode;
-    final String className;
-    final NetChannelLocation returnLocation;
-
-    ClassRequest(NodeID originator, String name, NetChannelLocation response)
+    sealed class ClassRequest
     {
-        this.originatingNode = originator;
-        this.className = name;
-        this.returnLocation = response;
+        readonly NodeID originatingNode;
+        readonly String className;
+        readonly NetChannelLocation returnLocation;
+
+        ClassRequest(NodeID originator, String name, NetChannelLocation response)
+        {
+            this.originatingNode = originator;
+            this.className = name;
+            this.returnLocation = response;
+        }
     }
 }

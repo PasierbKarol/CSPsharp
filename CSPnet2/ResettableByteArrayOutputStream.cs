@@ -1,4 +1,3 @@
-
 //////////////////////////////////////////////////////////////////////
 //                                                                  //
 //  JCSP ("CSP for Java") Libraries                                 //
@@ -18,9 +17,12 @@
 //                                                                  //
 //////////////////////////////////////////////////////////////////////
 
-package jcsp.net2;
+using System;
 
-import java.io.ByteArrayOutputStream;
+namespace CSPnet2
+{
+
+    import java.io.ByteArrayOutputStream;
 
 /**
  * This class is used by the ObjectNetworkMessageFilter. It acts as a normal ByteArrayOutputStream, but allows the
@@ -28,8 +30,7 @@ import java.io.ByteArrayOutputStream;
  * 
  * @author Kevin Chalmers
  */
-final class ResettableByteArrayOutputStream
-    extends ByteArrayOutputStream
+sealed class ResettableByteArrayOutputStream : ByteArrayOutputStream
 {
     /**
      * Creates a new ResettableByteArrayOutputStream
@@ -54,4 +55,5 @@ final class ResettableByteArrayOutputStream
         if (this.buf.length != size)
             this.buf = new byte[size];
     }
+}
 }

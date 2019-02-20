@@ -1,4 +1,3 @@
-
 //////////////////////////////////////////////////////////////////////
 //                                                                  //
 //  JCSP ("CSP for Java") Libraries                                 //
@@ -18,15 +17,21 @@
 //                                                                  //
 //////////////////////////////////////////////////////////////////////
 
-package jcsp.net2;
+using System;
+using CSPlang;
+using CSPlang.Any2;
+using CSPutil;
 
-import java.io.IOException;
+namespace CSPnet2.NetChannel
+{
 
-import jcsp.lang.AltingChannelInput;
-import jcsp.lang.Any2OneChannel;
-import jcsp.lang.Channel;
-import jcsp.net2.NetworkMessageFilter.FilterRx;
-import jcsp.util.InfiniteBuffer;
+//    import java.io.IOException;
+//
+//import jcsp.lang.AltingChannelInput;
+//import jcsp.lang.Any2OneChannel;
+//import jcsp.lang.Channel;
+//import jcsp.net2.NetworkMessageFilter.FilterRx;
+//import jcsp.util.InfiniteBuffer;
 
 /**
  * A concrete implementation of a NetAltingChannelInput. This is a hidden class created by the architecture. To create
@@ -37,19 +42,18 @@ import jcsp.util.InfiniteBuffer;
  * @see NetChannel
  * @author Kevin Chalmers (updated from Quickstone Technologies)
  */
-final class Net2OneChannel
-    extends NetAltingChannelInput
+sealed class Net2OneChannel : NetAltingChannelInput
 {
     /**
      * The input channel coming into the networked channel input object from Links or locally connected net channel
      * outputs.
      */
-    private final AltingChannelInput in;
+    private readonly AltingChannelInput In;
 
     /**
      * The ChannelData structure representing this channel.
      */
-    private final ChannelData data;
+    private readonly ChannelData data;
 
     /**
      * The lastRead ChannelMessage. Used during an extended read operation to allow the ACK message to be sent to the
@@ -60,12 +64,12 @@ final class Net2OneChannel
     /**
      * The filter used to convert the incoming byte array into an object
      */
-    private FilterRx messageFilter;
+    private NetworkMessageFilter.FilterRx messageFilter;
 
     /**
      * The location of this channel
      */
-    private final NetChannelLocation location;
+    private readonly NetChannelLocation location;
 
     /**
      * Static factory method used to create a new Net2OneChannel. Used internally within the architecture.
@@ -76,7 +80,7 @@ final class Net2OneChannel
      *            The filter on the channel used to convert read bytes into an object
      * @return A new Net2OneChannel
      */
-    static Net2OneChannel create(int poisonImmunity, FilterRx filter)
+    static Net2OneChannel create(int poisonImmunity, NetworkMessageFilter.FilterRx filter)
     {
         // Create a new ChannelData object
         ChannelData data = new ChannelData();
@@ -111,7 +115,7 @@ final class Net2OneChannel
      * @throws IllegalArgumentException
      *             Thrown if the index given is already allocated within the ChannelManager
      */
-    static Net2OneChannel create(int index, int poisonImmunity, FilterRx filter)
+    static Net2OneChannel create(int index, int poisonImmunity, NetworkMessageFilter.FilterRx filter)
         throws IllegalArgumentException
     {
         // Create a new ChannelData object
@@ -652,4 +656,5 @@ final class Net2OneChannel
         this.messageFilter = decoder;
     }
 
+}
 }

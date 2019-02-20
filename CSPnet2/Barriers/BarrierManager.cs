@@ -1,4 +1,3 @@
-
 //////////////////////////////////////////////////////////////////////
 //                                                                  //
 //  JCSP ("CSP for Java") Libraries                                 //
@@ -18,9 +17,14 @@
 //                                                                  //
 //////////////////////////////////////////////////////////////////////
 
-package jcsp.net2;
+using System;
+using System.Collections;
+using CSPnet2.Barriers;
 
-import java.util.Hashtable;
+namespace CSPnet2.Barriers
+{
+
+    //import java.util.Hashtable;
 
 /**
  * Manages the networked Barriers in the system. This object wraps a Hashtable containing the NetBarrier data objects,
@@ -30,7 +34,7 @@ import java.util.Hashtable;
  * @see NetBarrier
  * @author Kevin Chalmers
  */
-final class BarrierManager
+sealed class BarrierManager
 {
     /**
      * The index for the next Barrier to be created. We start at 50 as it allows us to have up to 50 default Barriers
@@ -42,7 +46,7 @@ final class BarrierManager
      * The table containing the Barriers. An Integer (object wrapped int) is used as the key, and the BarrierData as the
      * value.
      */
-    private final Hashtable barriers = new Hashtable();
+    private readonly Hashtable barriers = new Hashtable();
 
     /**
      * Singleton instance of the BarrierManager
@@ -142,4 +146,5 @@ final class BarrierManager
         Integer objIndex = new Integer(data.vbn);
         this.barriers.remove(objIndex);
     }
+}
 }

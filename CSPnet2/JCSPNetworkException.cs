@@ -1,4 +1,3 @@
-
 //////////////////////////////////////////////////////////////////////
 //                                                                  //
 //  JCSP ("CSP for Java") Libraries                                 //
@@ -18,31 +17,33 @@
 //                                                                  //
 //////////////////////////////////////////////////////////////////////
 
-package jcsp.net2;
+using System;
+using CSPlang;
 
-/**
- * This is the general exception thrown when something bad happens in the underlying architecture. Currently this is
- * generalised for the sake of simplicity. However, a number of different errors may occur internally, and therefore
- * this exception may be specialised into particular exception types in the future.
- * 
- * @author Kevin Chalmers
- */
-public final class JCSPNetworkException
-    extends RuntimeException
+namespace CSPnet2
 {
     /**
-     * Default serial ID. Given for the sake of completeness.
-     */
-    private static final long serialVersionUID = 1L;
-
-    /**
-     * Constructor for a new JCSPNetworkException
+     * This is the general exception thrown when something bad happens in the underlying architecture. Currently this is
+     * generalised for the sake of simplicity. However, a number of different errors may occur internally, and therefore
+     * this exception may be specialised into particular exception types in the future.
      * 
-     * @param message
-     *            The message for the exception
+     * @author Kevin Chalmers
      */
-    public JCSPNetworkException(String message)
+    public sealed class JCSPNetworkException : RuntimeException
     {
-        super(message);
+        /**
+         * Default serial ID. Given for the sake of completeness.
+         */
+        private static readonly long serialVersionUID = 1L;
+
+        /**
+         * Constructor for a new JCSPNetworkException
+         * 
+         * @param message
+         *            The message for the exception
+         */
+        public JCSPNetworkException(String message) : base(message)
+        {
+        }
     }
 }

@@ -1,4 +1,3 @@
-
 //////////////////////////////////////////////////////////////////////
 //                                                                  //
 //  JCSP ("CSP for Java") Libraries                                 //
@@ -18,22 +17,26 @@
 //                                                                  //
 //////////////////////////////////////////////////////////////////////
 
-package jcsp.net2.tcpip;
+using System;
+using System.Net.Sockets;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.net.Inet4Address;
-import java.net.InetAddress;
-import java.net.Socket;
+namespace CSPnet2.TCPIP
+{
 
-import jcsp.net2.JCSPNetworkException;
-import jcsp.net2.Link;
-import jcsp.net2.Node;
-import jcsp.net2.NodeAddress;
-import jcsp.net2.NodeID;
+//    import java.io.BufferedInputStream;
+//import java.io.BufferedOutputStream;
+//import java.io.DataInputStream;
+//import java.io.DataOutputStream;
+//import java.io.IOException;
+//import java.net.Inet4Address;
+//import java.net.InetAddress;
+//import java.net.Socket;
+//
+//import jcsp.net2.JCSPNetworkException;
+//import jcsp.net2.Link;
+//import jcsp.net2.Node;
+//import jcsp.net2.NodeAddress;
+//import jcsp.net2.NodeID;
 
 /**
  * A concrete implementation of a Link that operates over a TCP/IP based socket connection. For information on Link, see
@@ -66,8 +69,7 @@ import jcsp.net2.NodeID;
  * @see TCPIPNodeAddress
  * @author Kevin Chalmers
  */
-public final class TCPIPLink
-    extends Link
+public sealed class TCPIPLink : Link.Link
 {
     /**
      * Defines the size of the buffer to place on the incoming and outgoing streams. This is a rather large size, and
@@ -78,7 +80,7 @@ public final class TCPIPLink
     /**
      * Flag to determine whether the Nagle algorithm should be activated. Default is false (off).
      */
-    public static boolean NAGLE = false;
+    public static Boolean NAGLE = false;
 
     /**
      * The socket connected to the remote Node.
@@ -349,4 +351,5 @@ public final class TCPIPLink
     {
         return this.remoteAddress;
     }
+}
 }

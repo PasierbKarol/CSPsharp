@@ -1,4 +1,3 @@
-
 //////////////////////////////////////////////////////////////////////
 //                                                                  //
 //  JCSP ("CSP for Java") Libraries                                 //
@@ -18,22 +17,23 @@
 //                                                                  //
 //////////////////////////////////////////////////////////////////////
 
-package jcsp.net2.mobile;
+using System;
 
-import java.io.Serializable;
-
+namespace CSPnet2.Mobile
+{
 /**
  * @author Kevin
  */
-final class ClassData
-    implements Serializable
-{
-    final String className;
-    final byte[] bytes;
-
-    ClassData(String name, byte[] classBytes)
+    [Serializable]
+    sealed class ClassData
     {
-        this.className = name;
-        this.bytes = classBytes;
+        readonly String className;
+        readonly byte[] bytes;
+
+        ClassData(String name, byte[] classBytes)
+        {
+            this.className = name;
+            this.bytes = classBytes;
+        }
     }
 }

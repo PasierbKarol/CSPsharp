@@ -1,4 +1,3 @@
-
 //////////////////////////////////////////////////////////////////////
 //                                                                  //
 //  JCSP ("CSP for Java") Libraries                                 //
@@ -18,17 +17,23 @@
 //                                                                  //
 //////////////////////////////////////////////////////////////////////
 
-package jcsp.net2.bns;
+using System;
+using CSPnet2.Barriers;
+using CSPnet2.NetChannel;
+using CSPnet2.Node;
 
-import jcsp.net2.JCSPNetworkException;
-import jcsp.net2.NetBarrier;
-import jcsp.net2.NetBarrierLocation;
-import jcsp.net2.NetChannel;
-import jcsp.net2.NetChannelInput;
-import jcsp.net2.NetChannelLocation;
-import jcsp.net2.NetChannelOutput;
-import jcsp.net2.Node;
-import jcsp.net2.NodeID;
+namespace CSPnet2.BNS
+{
+
+//    import jcsp.net2.JCSPNetworkException;
+//import jcsp.net2.NetBarrier;
+//import jcsp.net2.NetBarrierLocation;
+//import jcsp.net2.NetChannel;
+//import jcsp.net2.NetChannelInput;
+//import jcsp.net2.NetChannelLocation;
+//import jcsp.net2.NetChannelOutput;
+//import jcsp.net2.Node;
+//import jcsp.net2.NodeID;
 
 /**
  * This is the service object used to register and resolve barrier names with a Barrier Name Server. This provides a
@@ -36,17 +41,17 @@ import jcsp.net2.NodeID;
  * 
  * @author Kevin Chalmers (updated from Quickstone Technologies)
  */
-public final class BNSService
+public sealed class BNSService
 {
     /**
      * The channel to send messages to the BNS upon
      */
-    private final NetChannelOutput toBNS;
+    private readonly NetChannelOutput toBNS;
 
     /**
      * The incoming channel to receive messages from the BNS
      */
-    private final NetChannelInput fromBNS;
+    private readonly NetChannelInput fromBNS;
 
     /**
      * Creates a new BNSService
@@ -144,4 +149,5 @@ public final class BNSService
             return reply.location;
         throw new JCSPNetworkException("Failed to resolve barrier named: " + name);
     }
+}
 }

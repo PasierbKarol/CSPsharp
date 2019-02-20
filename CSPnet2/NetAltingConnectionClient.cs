@@ -1,4 +1,3 @@
-
 //////////////////////////////////////////////////////////////////////
 //                                                                  //
 //  JCSP ("CSP for Java") Libraries                                 //
@@ -18,40 +17,40 @@
 //                                                                  //
 //////////////////////////////////////////////////////////////////////
 
-package jcsp.net2;
+using System;
+using CSPlang;
+using CSPlang.Alting;
+using CSPlang.Any2;
+using CSPnet2;
+using CSPnet2.Link;
+using CSPnet2.NetConnection;
+using CSPnet2.Node;
+using CSPutil;
 
-import java.io.IOException;
-
-import jcsp.lang.AltingChannelInput;
-import jcsp.lang.AltingConnectionClient;
-import jcsp.lang.Any2OneChannel;
-import jcsp.lang.Channel;
-import jcsp.lang.ChannelOutput;
-import jcsp.util.InfiniteBuffer;
-
-public final class NetAltingConnectionClient
-    extends AltingConnectionClient
-    implements NetConnectionClient
+namespace CSPnet2
 {
-    private final AltingChannelInput in;
 
-    private final ChannelOutput toLinkTX;
+//    import java.io.IOException;
+//
+//import jcsp.lang.AltingChannelInput;
+//import jcsp.lang.AltingConnectionClient;
+//import jcsp.lang.Any2OneChannel;
+//import jcsp.lang.Channel;
+//import jcsp.lang.ChannelOutput;
+//import jcsp.util.InfiniteBuffer;
 
-    private final Link linkConnectedTo;
-
-    private final NetConnectionLocation serverLocation;
-
-    private final NetConnectionLocation localLocation;
-
-    private final ConnectionData localConnection;
-
-    private final boolean isLocal;
-
-    private final NetworkMessageFilter.FilterTx outputFilter;
-
-    private final NetworkMessageFilter.FilterRx inputFilter;
-
-    private final ConnectionData data;
+public sealed class NetAltingConnectionClient : AltingConnectionClient, NetConnectionClient
+{
+    private readonly AltingChannelInput In;
+    private readonly ChannelOutput toLinkTX;
+    private readonly Link.Link linkConnectedTo;
+    private readonly NetConnectionLocation serverLocation;
+    private readonly NetConnectionLocation localLocation;
+    private readonly ConnectionData localConnection;
+    private readonly Boolean isLocal;
+    private readonly NetworkMessageFilter.FilterTx outputFilter;
+    private readonly NetworkMessageFilter.FilterRx inputFilter;
+    private readonly ConnectionData data;
 
     static NetAltingConnectionClient create(NetConnectionLocation loc, NetworkMessageFilter.FilterTx filterTX,
                                             NetworkMessageFilter.FilterRx filterRX)
@@ -363,4 +362,5 @@ public final class NetAltingConnectionClient
     {
         return this.data;
     }
+}
 }

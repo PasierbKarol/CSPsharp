@@ -21,7 +21,6 @@ using CSPlang;
 
 namespace CSPnet2.NetChannel
 {
-
     /**
      * This interface defines a ChannelInput that is also networked. For information on ChannelInput see the relevant class.
      * For information on how to create a NetChannelInput, see the relevant factory class
@@ -33,12 +32,13 @@ namespace CSPnet2.NetChannel
      */
     public interface NetChannelInput : ChannelInput, Networked
     {
-    /**
-     * Sets the underlying decoder for the channel
-     * 
-     * @param decoder
-     *            The new decoder to use.
-     */
-    /*public*/ void setDecoder(NetworkMessageFilter.FilterRx decoder);
+        /**
+         * Sets the underlying decoder for the channel
+         * 
+         * @param decoder
+         *            The new decoder to use.
+         */
+        /*public*/
+        void setDecoder(NetworkMessageFilter.FilterRx decoder);
     }
 }

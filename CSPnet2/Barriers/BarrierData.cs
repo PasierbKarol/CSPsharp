@@ -1,4 +1,3 @@
-
 //////////////////////////////////////////////////////////////////////
 //                                                                  //
 //  JCSP ("CSP for Java") Libraries                                 //
@@ -18,10 +17,11 @@
 //                                                                  //
 //////////////////////////////////////////////////////////////////////
 
-package jcsp.net2;
+using System;
+using CSPlang;
 
-import jcsp.lang.ChannelOutput;
-
+namespace CSPnet2.Barriers
+{
 /**
  * Contains the data that relates to a networked Barrier. This is an external data structure within JCSP networking, and
  * is held by both the NetBarrier and the BarrierManager. For information on the operation of the NetBarrier, see the
@@ -30,7 +30,7 @@ import jcsp.lang.ChannelOutput;
  * @see NetBarrier
  * @author Kevin Chalmers
  */
-final class BarrierData
+sealed class BarrierData
 {
     /**
      * The virtual Barrier number that uniquely identifies the Barrier within the Node
@@ -47,4 +47,5 @@ final class BarrierData
      */
     ChannelOutput toBarrier = null;
 
+}
 }

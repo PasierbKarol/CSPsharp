@@ -1,7 +1,3 @@
-/**
- * 
- */
-
 //////////////////////////////////////////////////////////////////////
 //                                                                  //
 //  JCSP ("CSP for Java") Libraries                                 //
@@ -21,31 +17,33 @@
 //                                                                  //
 //////////////////////////////////////////////////////////////////////
 
-package jcsp.net2;
+using System;
+using CSPnet2.Node;
 
-import java.io.Serializable;
+namespace CSPnet2.NetConnection
+{
 
 /**
  * @author Kevin
  */
-public final class NetConnectionLocation
-    extends NetLocation
-    implements Serializable
+
+[Serializable]
+public sealed class NetConnectionLocation : NetLocation
 {
     /**
      * The SUID representing this class
      */
-    private static final long serialVersionUID = 1L;
+    private static readonly long serialVersionUID = 1L;
 
     /**
      * The NodeID portion of the location
      */
-    private final NodeID nodeID;
+    private readonly NodeID nodeID;
 
     /**
      * The vconnn portion of the location
      */
-    private final int vconnn;
+    private readonly int vconnn;
 
     /**
      * Creates a new NetConnectionLocation
@@ -66,7 +64,7 @@ public final class NetConnectionLocation
      * 
      * @return The NodeID part of the NetConnectionLocation
      */
-    public NodeID getNodeID()
+    public override NodeID getNodeID()
     {
         return this.nodeID;
     }
@@ -76,7 +74,7 @@ public final class NetConnectionLocation
      * 
      * @return The NodeAddress part of the NetConnectionLocation
      */
-    public NodeAddress getNodeAddress()
+    public override NodeAddress getNodeAddress()
     {
         return this.nodeID.getNodeAddress();
     }
@@ -112,14 +110,15 @@ public final class NetConnectionLocation
     {
         if (str.equalsIgnoreCase("null"))
             return null;
-        if (str.startsWith("nconnl://"))
+        if (str.StartsWith("nconnl://"))
         {
-            String toParse = str.substring(6);
-            String[] addressBits = toParse.split("/");
+            String toParse = str.Substring(6);
+            String[] addressBits = toParse.Split("/");
             NodeID nodeID = NodeID.parse(addressBits[0]);
-            int vcn = Integer.parseInt(addressBits[1]);
+            int vcn = Int32.Parse(addressBits[1]);
             return new NetConnectionLocation(nodeID, vcn);
         }
-        throw new IllegalArgumentException("String is not a string form of a NetConnectionLocation");
+        throw new ArgumentException("String is not a string form of a NetConnectionLocation");
     }
+}
 }

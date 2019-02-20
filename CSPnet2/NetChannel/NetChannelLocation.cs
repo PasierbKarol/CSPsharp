@@ -17,12 +17,11 @@
 //                                                                  //
 //////////////////////////////////////////////////////////////////////
 
-using  System;
+using System;
 using CSPnet2.Node;
 
 namespace CSPnet2.NetChannel
 {
-
     /**
      * This class is a data structure representing the location of a NetChannelInput in a network. The NetChannelLocation
      * consists of the NodeID of the Node on which the NetChannelInput resides, and its Virtual Channel Number, which is the
@@ -147,9 +146,10 @@ namespace CSPnet2.NetChannel
             {
                 Console.WriteLine(e + "String is not a string form of a NetChannelLocation");
             }
-            return new NetChannelLocation(nodeID, vcn);
 
+            return new NetChannelLocation(nodeID, vcn);
         }
     }
 }
+
 }

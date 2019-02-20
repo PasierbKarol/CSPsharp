@@ -1,4 +1,3 @@
-
 //////////////////////////////////////////////////////////////////////
 //                                                                  //
 //  JCSP ("CSP for Java") Libraries                                 //
@@ -18,16 +17,18 @@
 //                                                                  //
 //////////////////////////////////////////////////////////////////////
 
-package jcsp.net2.cns;
+using System;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
-
-import jcsp.net2.NetChannelLocation;
-import jcsp.net2.NetworkMessageFilter;
+namespace CSPnet2.CNS
+{
+//    import java.io.ByteArrayInputStream;
+//import java.io.ByteArrayOutputStream;
+//import java.io.DataInputStream;
+//import java.io.DataOutputStream;
+//import java.io.IOException;
+//
+//import jcsp.net2.NetChannelLocation;
+//import jcsp.net2.NetworkMessageFilter;
 
 /**
  * This filter is used by the CNS and CNSService to transmit messages between one another in a manner that is platform
@@ -39,7 +40,7 @@ import jcsp.net2.NetworkMessageFilter;
  * @see NetworkMessageFilter
  * @author Kevin Chalmers
  */
-final class CNSNetworkMessageFilter
+sealed class CNSNetworkMessageFilter
 {
 
     /**
@@ -48,17 +49,17 @@ final class CNSNetworkMessageFilter
      * @author Kevin Chalmers
      */
     static final class FilterTX
-        implements NetworkMessageFilter.FilterTx
+        : NetworkMessageFilter.FilterTx
     {
         /**
          * The byte stream we will use to retrieve the byte message from
          */
-        private final ByteArrayOutputStream baos;
+        private readonly ByteArrayOutputStream baos;
 
         /**
          * The data stream, used to write the parts of the CNSMessage to
          */
-        private final DataOutputStream dos;
+        private readonly DataOutputStream dos;
 
         /**
          * Creates a new CNS encoding filter
@@ -113,8 +114,8 @@ final class CNSNetworkMessageFilter
      * 
      * @author Kevin Chalmers
      */
-    static final class FilterRX
-        implements NetworkMessageFilter.FilterRx
+    static sealed class FilterRX
+        : NetworkMessageFilter.FilterRx
     {
         /**
          * The input end to read the message back from
@@ -160,4 +161,5 @@ final class CNSNetworkMessageFilter
         }
 
     }
+}
 }

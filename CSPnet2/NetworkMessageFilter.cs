@@ -21,7 +21,6 @@ using System;
 
 namespace CSPnet2
 {
-
     /**
      * This class defines what is required for the internal networked channel filter. These filters are used to encode and
      * decode objects into a byte array equivalent. This enables data independence between separate platforms, as well as

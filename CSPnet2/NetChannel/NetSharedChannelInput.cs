@@ -21,7 +21,6 @@ using CSPlang.Shared;
 
 namespace CSPnet2.NetChannel
 {
-
     /**
      * Defines a networked ChannelInput that is safe to be used by multiple concurrent processes. For more information see
      * NetChannelInput and SharedChannelInput. To create an instance, see the relevant factory method.
@@ -31,8 +30,8 @@ namespace CSPnet2.NetChannel
      * @see NetChannel
      * @author Kevin Chalmers (updated from Quickstone Technologies)
      */
-    public interface NetSharedChannelInput: SharedChannelInput, NetChannelInput
+    public interface NetSharedChannelInput : SharedChannelInput, NetChannelInput
     {
-    // Nothing new to declare
+        // Nothing new to declare
     }
 }

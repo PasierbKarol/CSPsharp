@@ -1,4 +1,3 @@
-
 //////////////////////////////////////////////////////////////////////
 //                                                                  //
 //  JCSP ("CSP for Java") Libraries                                 //
@@ -18,34 +17,41 @@
 //                                                                  //
 //////////////////////////////////////////////////////////////////////
 
-package jcsp.net2;
+using System;
+using System.Collections;
+using CSPlang;
+using CSPnet2.Node;
+using CSPutil;
 
-import java.util.ArrayList;
-import java.util.Hashtable;
-import java.util.Iterator;
+namespace CSPnet2.Net2Link
+{
 
-import jcsp.lang.AltingChannelInput;
-import jcsp.lang.Channel;
-import jcsp.lang.ChannelOutput;
-import jcsp.lang.One2OneChannel;
-import jcsp.util.InfiniteBuffer;
+    //    import java.util.ArrayList;
+    //import java.util.Hashtable;
+    //import java.util.Iterator;
+    //
+    //import jcsp.lang.AltingChannelInput;
+    //import jcsp.lang.Channel;
+    //import jcsp.lang.ChannelOutput;
+    //import jcsp.lang.One2OneChannel;
+    //import jcsp.util.InfiniteBuffer;
 
-/**
- * Class for managing Links. Ensures that only one Link is only ever created for each individual Node that the hosting
- * Node may be connected to. This is an internal management class of JCSP. For information on how to create Links, see
- * LinkFactory.
- * 
- * @see Link
- * @see LinkFactory
- * @author Kevin Chalmers (updated from Quickstone Technologies)
- */
-final class LinkManager
+    /**
+     * Class for managing Links. Ensures that only one Link is only ever created for each individual Node that the hosting
+     * Node may be connected to. This is an internal management class of JCSP. For information on how to create Links, see
+     * LinkFactory.
+     * 
+     * @see Link
+     * @see LinkFactory
+     * @author Kevin Chalmers (updated from Quickstone Technologies)
+     */
+    sealed class LinkManager
 {
     /**
      * A table containing the links currently in operation within the Node. The key is a NodeID and the value is the
      * Link itself for that specific NodeID.
      */
-    private static final Hashtable links = new Hashtable();
+    private static readonly Hashtable links = new Hashtable();
 
     /**
      * These event channels are used by the LinkManager to inform any process that may be interested in Link Lost
@@ -109,7 +115,7 @@ final class LinkManager
      *            The Link to register.
      * @return True if a Link to the Node does not yet exist, false otherwise.
      */
-    synchronized boolean registerLink(Link link)
+    synchronized Boolean registerLink(Link link)
     {
         // Log the registration attempt
         Node.log.log(this.getClass(), "Trying to register Link to: " + link.remoteID);
@@ -167,4 +173,5 @@ final class LinkManager
         return eventChan.in();
     }
 
+}
 }

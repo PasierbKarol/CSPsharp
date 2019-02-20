@@ -1,4 +1,3 @@
-
 //////////////////////////////////////////////////////////////////////
 //                                                                  //
 //  JCSP ("CSP for Java") Libraries                                 //
@@ -18,29 +17,34 @@
 //                                                                  //
 //////////////////////////////////////////////////////////////////////
 
-package jcsp.net2.mobile;
+using System;
+using CSPlang;
+using CSPnet2.NetChannel;
+using CSPnet2.Node;
 
-import java.io.Serializable;
+namespace CSPnet2.Mobile
+{
 
-import jcsp.lang.ProcessManager;
-import jcsp.net2.NetChannelLocation;
-import jcsp.net2.NodeID;
+
+//import jcsp.lang.ProcessManager;
+//import jcsp.net2.NetChannelLocation;
+//import jcsp.net2.NodeID;
 
 /**
  * @author Kevin
  */
-final class DynamicClassLoaderMessage
-    implements Serializable
-{
+
+    [Serializable]
+sealed class DynamicClassLoaderMessage{
     static
     {
         ClassManager classManager = new ClassManager();
         new ProcessManager(classManager).start();
     }
 
-    final NodeID originatingNode;
-    final NetChannelLocation requestLocation;
-    final byte[] bytes;
+    readonly NodeID originatingNode;
+    readonly NetChannelLocation requestLocation;
+    readonly byte[] bytes;
 
     DynamicClassLoaderMessage(NodeID originator, NetChannelLocation request, byte[] classData)
     {
@@ -48,4 +52,5 @@ final class DynamicClassLoaderMessage
         this.requestLocation = request;
         this.bytes = classData;
     }
+}
 }

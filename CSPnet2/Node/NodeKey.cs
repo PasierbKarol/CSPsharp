@@ -21,7 +21,6 @@ using System;
 
 namespace CSPnet2.Node
 {
-
     /**
      * A unique object for allowing access to privileged operations on the Node. Returned when a Node is initialised.
      * 

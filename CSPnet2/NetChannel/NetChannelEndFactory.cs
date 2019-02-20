@@ -21,7 +21,6 @@ using CSPnet2.Node;
 
 namespace CSPnet2.NetChannel
 {
-
     /**
      * This interface defines the methods that any networked channel factory must implement. For a concrete implementation,
      * see StandardNetChannelEndFactory
@@ -36,7 +35,8 @@ namespace CSPnet2.NetChannel
          * 
          * @return A new NetAltingChannelInput
          */
-        /*public*/ NetAltingChannelInput net2one();
+        /*public*/
+        NetAltingChannelInput net2one();
 
         /**
          * Creates a new NetAltingChannelInput with the given immunity level for poison
@@ -45,7 +45,8 @@ namespace CSPnet2.NetChannel
          *            The immunity level for poison
          * @return A new NetAltingChannelInput
          */
-        /*public*/ NetAltingChannelInput net2one(int immunityLevel);
+        /*public*/
+        NetAltingChannelInput net2one(int immunityLevel);
 
         /**
          * Creates a new NetAltingChannelInput which uses the given filter to decode incoming messages
@@ -54,7 +55,8 @@ namespace CSPnet2.NetChannel
          *            The filter used to decode incoming messages
          * @return A new NetAltingChannelInput
          */
-        /*public*/ NetAltingChannelInput net2one(NetworkMessageFilter.FilterRx filter);
+        /*public*/
+        NetAltingChannelInput net2one(NetworkMessageFilter.FilterRx filter);
 
         /**
          * Creates a new NetAltingChannelInput with the given poison immunity level which uses the given filter to decode
@@ -66,14 +68,16 @@ namespace CSPnet2.NetChannel
          *            The filter used to decode incoming messages
          * @return A new NetAltingChannelInput
          */
-        /*public*/ NetAltingChannelInput net2one(int immunityLevel, NetworkMessageFilter.FilterRx filter);
+        /*public*/
+        NetAltingChannelInput net2one(int immunityLevel, NetworkMessageFilter.FilterRx filter);
 
         /**
          * Creates a new NetSharedChannelInput
          * 
          * @return A new NetSharedChannelInput
          */
-        /*public*/ NetSharedChannelInput net2any();
+        /*public*/
+        NetSharedChannelInput net2any();
 
         /**
          * Creates a new NetSharedChannelInput with the given poison immunity level
@@ -82,7 +86,8 @@ namespace CSPnet2.NetChannel
          *            The immunity level to poison for this channel
          * @return A new NetSharedChannelInput
          */
-        /*public*/ NetSharedChannelInput net2any(int immunityLevel);
+        /*public*/
+        NetSharedChannelInput net2any(int immunityLevel);
 
         /**
          * Creates a new NetSharedChannelInput which uses the given filter to decode incoming messages
@@ -91,7 +96,8 @@ namespace CSPnet2.NetChannel
          *            The filter used to decode incoming messages
          * @return A new NetSharedChannelInput
          */
-        /*public*/ NetSharedChannelInput net2any(NetworkMessageFilter.FilterRx filter);
+        /*public*/
+        NetSharedChannelInput net2any(NetworkMessageFilter.FilterRx filter);
 
         /**
          * Creates a new NetSharedChannelInput with the given poison immunity level, which uses the given filter to decode
@@ -103,7 +109,8 @@ namespace CSPnet2.NetChannel
          *            The filter used to decode incoming messages
          * @return A new NetSharedChannelInput
          */
-        /*public*/ NetSharedChannelInput net2any(int immunityLevel, NetworkMessageFilter.FilterRx filter);
+        /*public*/
+        NetSharedChannelInput net2any(int immunityLevel, NetworkMessageFilter.FilterRx filter);
 
         /**
          * Creates a new NetAltingChannelInput with the given index
@@ -137,7 +144,6 @@ namespace CSPnet2.NetChannel
         /// <exception cref="IllegalArgumentException">some scenario</exception>
         /*public*/
         NetAltingChannelInput numberedNet2One(int index, int immunityLevel);
-
 
 
         /**
@@ -231,7 +237,6 @@ namespace CSPnet2.NetChannel
         NetSharedChannelInput numberedNet2Any(int index, NetworkMessageFilter.FilterRx filter);
 
 
-
         /**
          * Creates a new NetSharedChannelInput with the given index and poison immunity level, which uses the given filter
          * to decode incoming messages.
@@ -288,7 +293,6 @@ namespace CSPnet2.NetChannel
         NetChannelOutput one2net(NetChannelLocation loc, int immunityLevel);
 
 
-
         /**
          * Creates a new NetChannelOutput connected to the input end with the given NetChannelLocation, and uses the given
          * filter to encode outgoing messages
@@ -306,7 +310,6 @@ namespace CSPnet2.NetChannel
         /// <exception cref="JCSPNetworkException">some scenario</exception>
         /*public*/
         NetChannelOutput one2net(NetChannelLocation loc, NetworkMessageFilter.FilterTx filter);
-
 
 
         /**
@@ -328,7 +331,6 @@ namespace CSPnet2.NetChannel
         /// <exception cref="JCSPNetworkException">some scenario</exception>
         /*public*/
         NetChannelOutput one2net(NetChannelLocation loc, int immunityLevel, NetworkMessageFilter.FilterTx filter);
-
 
 
         /**
@@ -423,7 +425,6 @@ namespace CSPnet2.NetChannel
         NetChannelOutput one2net(NodeID nodeID, int vcn);
 
 
-
         /**
          * Creates a new NetChannelOutput connected to the channel with the given vcn on the given Node, and with the given
          * poison immunity level
@@ -445,7 +446,6 @@ namespace CSPnet2.NetChannel
         NetChannelOutput one2net(NodeID nodeID, int vcn, int immunityLevel);
 
 
-
         /**
          * Creates a new NetChannelOutput connected to the channel with the given vcn on the given Node, which uses the
          * given filter to encode outgoing messages
@@ -465,7 +465,6 @@ namespace CSPnet2.NetChannel
         /// <exception cref="JCSPNetworkException">some scenario</exception>
         /*public*/
         NetChannelOutput one2net(NodeID nodeID, int vcn, NetworkMessageFilter.FilterTx filter);
-
 
 
         /**
@@ -647,7 +646,8 @@ namespace CSPnet2.NetChannel
         /// <summary>what this does</summary>
         /// <exception cref="JCSPNetworkException">some scenario</exception>
         /*public*/
-        NetChannelOutput one2net(NodeAddress nodeAddr, int vcn, int immunityLevel, NetworkMessageFilter.FilterTx filter);
+        NetChannelOutput one2net(NodeAddress nodeAddr, int vcn, int immunityLevel,
+            NetworkMessageFilter.FilterTx filter);
 
         /**
          * Creates a new NetSharedChannelOutput connected to the channel with the given vcn on the given Node
@@ -726,7 +726,7 @@ namespace CSPnet2.NetChannel
         /// <summary>what this does</summary>
         /// <exception cref="JCSPNetworkException">some scenario</exception>
         /*public*/
-        NetSharedChannelOutput any2net(NodeAddress nodeAddr, int vcn, int immunityLevel, NetworkMessageFilter.FilterTx filter);
-
+        NetSharedChannelOutput any2net(NodeAddress nodeAddr, int vcn, int immunityLevel,
+            NetworkMessageFilter.FilterTx filter);
     }
 }

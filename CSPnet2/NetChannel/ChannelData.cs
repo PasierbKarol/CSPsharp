@@ -1,4 +1,3 @@
-
 //////////////////////////////////////////////////////////////////////
 //                                                                  //
 //  JCSP ("CSP for Java") Libraries                                 //
@@ -18,10 +17,12 @@
 //                                                                  //
 //////////////////////////////////////////////////////////////////////
 
-package jcsp.net2;
+using System;
+using CSPlang;
+using CSPnet2.NetChannel;
 
-import jcsp.lang.ChannelInput;
-import jcsp.lang.ChannelOutput;
+namespace CSPnet2.NetChannel
+{
 
 /**
  * A class that is used to keep track of the state of a network channel. For a description of networked channels, see
@@ -31,7 +32,7 @@ import jcsp.lang.ChannelOutput;
  * @see jcsp.net2.NetChannelOutput
  * @author Kevin Chalmers
  */
-final class ChannelData
+sealed class ChannelData
 {
     /**
      * The virtual channel number. A unique number on the Node for identifying a channel.
@@ -58,11 +59,12 @@ final class ChannelData
     /**
      * Indicates the immunity level to poison this channel has
      */
-    int immunityLevel = Integer.MAX_VALUE;
+    int immunityLevel = Int32.MaxValue;
 
     /**
      * The other end of the toChannel. This will be set whenever a channel is used in a mobile manner. Any received
      * messages when the channel is moved are written to the normal channel, and they can then be accessed via this end.
      */
     ChannelInput fromChannel = null;
+}
 }

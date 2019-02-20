@@ -1,4 +1,3 @@
-
 //////////////////////////////////////////////////////////////////////
 //                                                                  //
 //  JCSP ("CSP for Java") Libraries                                 //
@@ -18,49 +17,55 @@
 //                                                                  //
 //////////////////////////////////////////////////////////////////////
 
-package jcsp.net2;
+using System;
+using System.Threading;
+using CSPlang;
+using CSPnet2.Node;
 
-import jcsp.lang.ProcessManager;
+namespace CSPnet2.Net2Link
+{
 
-/**
- * This class is used to create a new Link from a given NodeID or NodeAddress.
- * <p>
- * It is perfectly reasonable for a user to create a Link to another Node without utilising the normal connection
- * methods. This class is therefore made public to allow such an occurrence.
- * </p>
- * <p>
- * Example, using TCP/IP
- * </p>
- * <p>
- * <code>
- * TCPIPNodeAddress address = new TCPIPNodeAddress("192.168.1.100", 5000);<br>
- * Link link = LinkFactory.getLink(address);<br>
- * </code>
- * </p>
- * <p>
- * The getLink method will either return an existing Link if one exists, or it shall create a new one if necessary.
- * </p>
- * <p>
- * Using this method allows quick creation of channels / barrier on a remote Node without going through the normal name
- * servers. For example:
- * </p>
- * <p>
- * <code>
- * NetChannelLocation loc = new NetChannelLocation(link.getRemoteNodeID(), 100);<br>
- * NetChannelOutput out = NetChannelEnd.one2net(loc);<br>
- * </code>
- * </p>
- * <p>
- * This method is generally considered faster than using the CNS, or creating channels just using the address and VCN.
- * It does require the user to know the address and channel number that is to be connected too.
- * </p>
- * 
- * @see Link
- * @see NodeAddress
- * @see NodeID
- * @author Kevin Chalmers (updated from Quickstone Technologies)
- */
-public final class LinkFactory
+    //import jcsp.lang.ProcessManager;
+
+    /**
+     * This class is used to create a new Link from a given NodeID or NodeAddress.
+     * <p>
+     * It is perfectly reasonable for a user to create a Link to another Node without utilising the normal connection
+     * methods. This class is therefore made public to allow such an occurrence.
+     * </p>
+     * <p>
+     * Example, using TCP/IP
+     * </p>
+     * <p>
+     * <code>
+     * TCPIPNodeAddress address = new TCPIPNodeAddress("192.168.1.100", 5000);<br>
+     * Link link = LinkFactory.getLink(address);<br>
+     * </code>
+     * </p>
+     * <p>
+     * The getLink method will either return an existing Link if one exists, or it shall create a new one if necessary.
+     * </p>
+     * <p>
+     * Using this method allows quick creation of channels / barrier on a remote Node without going through the normal name
+     * servers. For example:
+     * </p>
+     * <p>
+     * <code>
+     * NetChannelLocation loc = new NetChannelLocation(link.getRemoteNodeID(), 100);<br>
+     * NetChannelOutput out = NetChannelEnd.one2net(loc);<br>
+     * </code>
+     * </p>
+     * <p>
+     * This method is generally considered faster than using the CNS, or creating channels just using the address and VCN.
+     * It does require the user to know the address and channel number that is to be connected too.
+     * </p>
+     * 
+     * @see Link
+     * @see NodeAddress
+     * @see NodeID
+     * @author Kevin Chalmers (updated from Quickstone Technologies)
+     */
+    public sealed class LinkFactory
 {
 
     /**
@@ -222,4 +227,5 @@ public final class LinkFactory
         // Return the Link
         return toReturn;
     }
+}
 }

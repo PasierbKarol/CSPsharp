@@ -21,7 +21,6 @@ using CSPnet2.Node;
 
 namespace CSPnet2
 {
-
     /**
      * This abstract class defines a data structure that is a location of a networked synchronization mechanism. Currently,
      * JCSP offers two location structures - NetChannelLocation and NetBarrierLocation. See the relevant documentation for

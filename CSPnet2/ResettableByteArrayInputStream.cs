@@ -1,4 +1,3 @@
-
 //////////////////////////////////////////////////////////////////////
 //                                                                  //
 //  JCSP ("CSP for Java") Libraries                                 //
@@ -18,9 +17,12 @@
 //                                                                  //
 //////////////////////////////////////////////////////////////////////
 
-package jcsp.net2;
+using System;
 
-import java.io.ByteArrayInputStream;
+namespace CSPnet2
+{
+
+    import java.io.ByteArrayInputStream;
 
 /**
  * This class is used by the ObjectNetworkMessageFilter. It acts as a ByteArrayInputStream, but allows the internal byte
@@ -28,8 +30,7 @@ import java.io.ByteArrayInputStream;
  * 
  * @author Kevin Chalmers
  */
-final class ResettableByteArrayInputStream
-    extends ByteArrayInputStream
+sealed class ResettableByteArrayInputStream : ByteArrayInputStream
 {
     /**
      * Creates a new ResettableByteArrayInputStream
@@ -54,4 +55,5 @@ final class ResettableByteArrayInputStream
         this.count = bytes.length;
         this.pos = 0;
     }
+}
 }

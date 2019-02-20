@@ -1,4 +1,3 @@
-
 //////////////////////////////////////////////////////////////////////
 //                                                                  //
 //  JCSP ("CSP for Java") Libraries                                 //
@@ -18,33 +17,42 @@
 //                                                                  //
 //////////////////////////////////////////////////////////////////////
 
-package jcsp.net2;
+using System;
+using CSPlang;
+using CSPlang.Alting;
+using CSPlang.Any2;
+using CSPnet2;
+using CSPnet2.Link;
+using CSPnet2.NetConnection;
+using CSPnet2.Node;
+using CSPutil;
 
-import jcsp.lang.AltingChannelInput;
-import jcsp.lang.AltingConnectionServer;
-import jcsp.lang.Any2OneChannel;
-import jcsp.lang.Channel;
-import jcsp.util.InfiniteBuffer;
-
-public final class NetAltingConnectionServer
-    extends AltingConnectionServer
-    implements NetConnectionServer
+namespace CSPnet2
 {
-    private final AltingChannelInput requestIn;
 
-    private final AltingChannelInput openIn;
+//    import jcsp.lang.AltingChannelInput;
+//import jcsp.lang.AltingConnectionServer;
+//import jcsp.lang.Any2OneChannel;
+//import jcsp.lang.Channel;
+//import jcsp.util.InfiniteBuffer;
 
-    private final NetConnectionLocation location;
+public sealed class NetAltingConnectionServer : AltingConnectionServer, NetConnectionServer
+{
+    private readonly AltingChannelInput requestIn;
 
-    private final NetworkMessageFilter.FilterRx inputFilter;
+    private readonly AltingChannelInput openIn;
 
-    private final NetworkMessageFilter.FilterTx outputFilter;
+    private readonly NetConnectionLocation location;
 
-    private final ConnectionData data;
+    private readonly NetworkMessageFilter.FilterRx inputFilter;
 
-    private final NetworkMessage lastRead = null;
+    private readonly NetworkMessageFilter.FilterTx outputFilter;
 
-    private final Link linkConnectedTo = null;
+    private readonly ConnectionData data;
+
+    private readonly NetworkMessage lastRead = null;
+
+    private readonly Link linkConnectedTo = null;
 
     static NetAltingConnectionServer create(int index, NetworkMessageFilter.FilterRx filterRX,
             NetworkMessageFilter.FilterTx filterTX)
@@ -126,4 +134,5 @@ public final class NetAltingConnectionServer
         return null;
     }
 
+}
 }

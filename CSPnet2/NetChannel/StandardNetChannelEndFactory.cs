@@ -1,4 +1,3 @@
-
 //////////////////////////////////////////////////////////////////////
 //                                                                  //
 //  JCSP ("CSP for Java") Libraries                                 //
@@ -18,17 +17,19 @@
 //                                                                  //
 //////////////////////////////////////////////////////////////////////
 
-package jcsp.net2;
+using System;
 
-/**
- * A concrete implementation of a NetChannelEndFactory, used to create networked channel ends
- * 
- * @see NetChannelEndFactory
- * @see NetChannel
- * @author Kevin Chalmers (updated from Quickstone Technologies)
- */
-public final class StandardNetChannelEndFactory
-    implements NetChannelEndFactory
+namespace CSPnet2.NetChannel
+{
+
+    /**
+     * A concrete implementation of a NetChannelEndFactory, used to create networked channel ends
+     * 
+     * @see NetChannelEndFactory
+     * @see NetChannel
+     * @author Kevin Chalmers (updated from Quickstone Technologies)
+     */
+    public sealed class StandardNetChannelEndFactory : NetChannelEndFactory
 {
 
     /**
@@ -807,4 +808,5 @@ public final class StandardNetChannelEndFactory
         return Any2NetChannel.create(loc, immunityLevel, filter);
     }
 
+}
 }

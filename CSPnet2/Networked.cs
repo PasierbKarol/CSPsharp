@@ -19,7 +19,6 @@
 
 namespace CSPnet2
 {
-
     /**
      * Defines a standard JCSP synchronization mechanism which is also networked. For concrete examples of this class, see
      * NetBarrier, and the networked channels
@@ -36,11 +35,13 @@ namespace CSPnet2
          * 
          * @return The location of the construct
          */
-        /*public*/ NetLocation getLocation();
+        /*public*/
+        NetLocation getLocation();
 
         /**
          * Destroys the Networked construct
          */
-        /*public*/ void destroy();
+        /*public*/
+        void destroy();
     }
 }

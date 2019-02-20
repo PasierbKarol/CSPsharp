@@ -1,4 +1,3 @@
-
 //////////////////////////////////////////////////////////////////////
 //                                                                  //
 //  JCSP ("CSP for Java") Libraries                                 //
@@ -18,17 +17,23 @@
 //                                                                  //
 //////////////////////////////////////////////////////////////////////
 
-package jcsp.net2;
+using System;
+using CSPlang;
+using CSPnet2.Link;
+using CSPutil;
 
-import java.io.IOException;
+namespace CSPnet2.NetChannel
+{
 
-import jcsp.lang.AltingChannelInput;
-import jcsp.lang.Channel;
-import jcsp.lang.ChannelOutput;
-import jcsp.lang.One2OneChannel;
-import jcsp.lang.PoisonException;
-import jcsp.net2.NetworkMessageFilter.FilterTx;
-import jcsp.util.InfiniteBuffer;
+//    import java.io.IOException;
+//
+//import jcsp.lang.AltingChannelInput;
+//import jcsp.lang.Channel;
+//import jcsp.lang.ChannelOutput;
+//import jcsp.lang.One2OneChannel;
+//import jcsp.lang.PoisonException;
+//import jcsp.net2.NetworkMessageFilter.FilterTx;
+//import jcsp.util.InfiniteBuffer;
 
 /**
  * An outputting end of a networked channel (TX). This is a concrete implementation created internally by JCSP. For
@@ -38,56 +43,55 @@ import jcsp.util.InfiniteBuffer;
  * @see NetChannel
  * @author Kevin Chalmers (Updated from Quickstone Technologies)
  */
-final class One2NetChannel
-    implements NetChannelOutput
+sealed class One2NetChannel : NetChannelOutput
 {
 
     /**
      * The channel connecting to the Link that connects to the networked input end of this channel.
      */
-    private final ChannelOutput toLinkTx;
+    private readonly ChannelOutput toLinkTx;
 
     /**
      * The actual Link this output channel sends on. We keep this as it allows us to register and unregister with the
      * Link as we are created and destroyed, allowing the Link to inform the channel when a Link goes down.
      */
-    private final Link linkConnectedTo;
+    private readonly Link.Link linkConnectedTo;
 
     /**
      * This is used if we are ever connected locally. We use this to check the state of a locally connected channel
      * prior to sending a message.
      */
-    private final ChannelData localChannel;
+    private readonly ChannelData localChannel;
 
     /**
      * The channel used to receive acknowledgements from the input end via the Link.
      */
-    private final AltingChannelInput theAckChannel;
+    private readonly AltingChannelInput theAckChannel;
 
     /**
      * A structure containing the information on the state of the channel.
      */
-    private final ChannelData data;
+    private readonly ChannelData data;
 
     /**
      * The location that this channel is connected to (the input channel ends location)
      */
-    private final NetChannelLocation remoteLocation;
+    private readonly NetChannelLocation remoteLocation;
 
     /**
      * The local channel end location
      */
-    private final NetChannelLocation localLocation;
+    private readonly NetChannelLocation localLocation;
 
     /**
      * Flag to determine if this is a locally connected channel or not
      */
-    private final boolean isLocal;
+    private readonly Boolean isLocal;
 
     /**
      * The filter used to encode outgoing messages
      */
-    private FilterTx messageFilter;
+    private NetworkMessageFilter.FilterTx messageFilter;
 
     /**
      * Creates a new One2NetChannel by connecting to an already created NetChannelInput
@@ -102,7 +106,7 @@ final class One2NetChannel
      * @throws JCSPNetworkException
      *             Thrown if the connection to the remote Node fails
      */
-    static One2NetChannel create(NetChannelLocation loc, int immunity, FilterTx filter)
+    static One2NetChannel create(NetChannelLocation loc, int immunity, NetworkMessageFilter.FilterTx filter)
         throws JCSPNetworkException
     {
         // Create the channel data structure
@@ -111,7 +115,7 @@ final class One2NetChannel
         // Create the channel linking this to the Link level. This channel is the one used to receive acknowledgement
         // messages
         One2OneChannel chan = Channel.one2one(new InfiniteBuffer());
-        data.toChannel = chan.out();
+        data.toChannel = chan.Out();
 
         // Set state of channel
         data.state = ChannelDataState.OK_OUTPUT;
@@ -654,4 +658,5 @@ final class One2NetChannel
         this.messageFilter = encoder;
     }
 
+}
 }

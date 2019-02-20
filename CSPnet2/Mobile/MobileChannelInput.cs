@@ -1,4 +1,3 @@
-
 //////////////////////////////////////////////////////////////////////
 //                                                                  //
 //  JCSP ("CSP for Java") Libraries                                 //
@@ -18,26 +17,32 @@
 //                                                                  //
 //////////////////////////////////////////////////////////////////////
 
-package jcsp.net2.mobile;
+using System;
+using CSPlang;
+using CSPnet2.NetChannel;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
+namespace CSPnet2.Mobile
+{
 
-import jcsp.lang.ProcessManager;
-import jcsp.net2.NetAltingChannelInput;
-import jcsp.net2.NetChannel;
-import jcsp.net2.NetChannelInput;
-import jcsp.net2.NetChannelLocation;
-import jcsp.net2.NetChannelOutput;
-import jcsp.net2.NetLocation;
-import jcsp.net2.NetworkMessageFilter;
-import jcsp.net2.ObjectNetworkMessageFilter;
-import jcsp.net2.NetworkMessageFilter.FilterRx;
+//    import java.io.IOException;
+//import java.io.ObjectInputStream;
+//import java.io.ObjectOutputStream;
+//import java.io.Serializable;
+//
+//import jcsp.lang.ProcessManager;
+//import jcsp.net2.NetAltingChannelInput;
+//import jcsp.net2.NetChannel;
+//import jcsp.net2.NetChannelInput;
+//import jcsp.net2.NetChannelLocation;
+//import jcsp.net2.NetChannelOutput;
+//import jcsp.net2.NetLocation;
+//import jcsp.net2.NetworkMessageFilter;
+//import jcsp.net2.ObjectNetworkMessageFilter;
+//import jcsp.net2.NetworkMessageFilter.FilterRx;
 
-public final class MobileChannelInput
-    implements NetChannelInput, Serializable
+
+    [Serializable]
+public sealed class MobileChannelInput : NetChannelInput
 {
 
     private NetChannelLocation messageBoxLoc;
@@ -60,7 +65,7 @@ public final class MobileChannelInput
         this.toMessageBox = NetChannel.one2net(this.msgBoxReqLoc);
     }
 
-    public MobileChannelInput(NetworkMessageFilter.FilterTx encoder, FilterRx decoder)
+    public MobileChannelInput(NetworkMessageFilter.FilterTx encoder, NetworkMessageFilter.FilterRx decoder)
     {
         NetAltingChannelInput toMsgBox = NetChannel.net2one(decoder);
         NetAltingChannelInput msgBoxReq = NetChannel.net2one();
@@ -113,7 +118,7 @@ public final class MobileChannelInput
         return this.messageBoxLoc;
     }
 
-    public void setDecoder(FilterRx decoder)
+    public void setDecoder(NetworkMessageFilter.FilterRx decoder)
     {
         this.actualIn.setDecoder(decoder);
     }
@@ -135,4 +140,5 @@ public final class MobileChannelInput
         this.actualIn = NetChannel.net2one();
         this.toMessageBox = NetChannel.one2net(this.messageBoxLoc);
     }
+}
 }

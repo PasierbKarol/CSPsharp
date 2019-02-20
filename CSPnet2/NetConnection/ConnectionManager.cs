@@ -1,4 +1,3 @@
-
 //////////////////////////////////////////////////////////////////////
 //                                                                  //
 //  JCSP ("CSP for Java") Libraries                                 //
@@ -18,15 +17,17 @@
 //                                                                  //
 //////////////////////////////////////////////////////////////////////
 
-package jcsp.net2;
+using System;
+using System.Collections;
 
-import java.util.Hashtable;
+namespace CSPnet2.NetConnection
+{
 
-final class ConnectionManager
+sealed class ConnectionManager
 {
     private static int index = 50;
 
-    private final Hashtable connections = new Hashtable();
+    private readonly Hashtable connections = new Hashtable();
 
     private static ConnectionManager instance = new ConnectionManager();
 
@@ -85,4 +86,5 @@ final class ConnectionManager
         Integer objIndex = new Integer(data.vconnn);
         this.connections.remove(objIndex);
     }
+}
 }

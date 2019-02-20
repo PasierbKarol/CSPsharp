@@ -1,4 +1,3 @@
-
 //////////////////////////////////////////////////////////////////////
 //                                                                  //
 //  JCSP ("CSP for Java") Libraries                                 //
@@ -18,9 +17,12 @@
 //                                                                  //
 //////////////////////////////////////////////////////////////////////
 
-package jcsp.net2;
+using System;
+using CSPnet2.Node;
 
-import jcsp.net.tcpip.TCPIPProtocolID;
+namespace CSPnet2
+{
+    //import jcsp.net.tcpip.TCPIPProtocolID;
 
 /**
  * This abstract class must be defined in concrete protocol implementations. Its main usage is to allow installation and
@@ -29,17 +31,20 @@ import jcsp.net.tcpip.TCPIPProtocolID;
  * @see TCPIPProtocolID
  * @author Kevin Chalmers
  */
-public abstract class ProtocolID
-{
-    /**
-     * Parses an address string into an address object
-     * 
-     * @param addressString
-     *            String representation of an address
-     * @return A new NodeAddress object
-     * @throws IllegalArgumentException
-     *             Thrown if the string is in an incorrect form
-     */
-    protected abstract NodeAddress parse(String addressString)
-        throws IllegalArgumentException;
+    public abstract class ProtocolID
+    {
+        /**
+         * Parses an address string into an address object
+         * 
+         * @param addressString
+         *            String representation of an address
+         * @return A new NodeAddress object
+         * @throws IllegalArgumentException
+         *             Thrown if the string is in an incorrect form
+         */
+
+        /// <summary>what this does</summary>
+        /// <exception cref="ArgumentException">some scenario</exception>
+        protected abstract NodeAddress parse(String addressString);
+    }
 }

@@ -1,4 +1,3 @@
-
 //////////////////////////////////////////////////////////////////////
 //                                                                  //
 //  JCSP ("CSP for Java") Libraries                                 //
@@ -18,10 +17,11 @@
 //                                                                  //
 //////////////////////////////////////////////////////////////////////
 
-package jcsp.net2;
+using System;
+using CSPnet2.Node;
 
-import java.io.Serializable;
-
+namespace CSPnet2.Barriers
+{
 /**
  * This class is a data structure representing the location of a NetBarrier in a network. The NetBarrierLocation
  * consists of the NodeID of the Node on which the NetBarrier resides, and its Virtual Barrier Number, which is the
@@ -45,24 +45,23 @@ import java.io.Serializable;
  * @see NetLocation
  * @author Kevin Chalmers
  */
-public final class NetBarrierLocation
-    extends NetLocation
-    implements Serializable
+[Serializable]
+public sealed class NetBarrierLocation :NetLocation
 {
     /**
      * The SUID of this object. Required for Serialization.
      */
-    private static final long serialVersionUID = 1L;
+    private static readonly long serialVersionUID = 1L;
 
     /**
      * The NodeID portion of the location structure
      */
-    private final NodeID nodeID;
+    private readonly NodeID nodeID;
 
     /**
      * The index portion of the location structure
      */
-    private final int vbn;
+    private readonly int vbn;
 
     /**
      * Constructor to create a new NetBarrierLocation
@@ -150,4 +149,5 @@ public final class NetBarrierLocation
         // We don't have a NetBarrierLocation
         throw new IllegalArgumentException("String is not a string form of a NetBarrierLocation");
     }
+}
 }

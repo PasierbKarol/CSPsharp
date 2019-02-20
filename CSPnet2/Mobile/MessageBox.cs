@@ -1,4 +1,3 @@
-
 //////////////////////////////////////////////////////////////////////
 //                                                                  //
 //  JCSP ("CSP for Java") Libraries                                 //
@@ -18,116 +17,125 @@
 //                                                                  //
 //////////////////////////////////////////////////////////////////////
 
-package jcsp.net2.mobile;
+using System;
+using CSPlang;
+using CSPnet2.NetChannel;
 
-import jcsp.lang.Alternative;
-import jcsp.lang.CSProcess;
-import jcsp.lang.Guard;
-import jcsp.net2.JCSPNetworkException;
-import jcsp.net2.NetAltingChannelInput;
-import jcsp.net2.NetChannel;
-import jcsp.net2.NetChannelLocation;
-import jcsp.net2.NetChannelOutput;
-import jcsp.net2.NetworkMessageFilter;
-import jcsp.net2.Node;
-
-final class MessageBox
-    implements CSProcess
+namespace CSPnet2.Mobile
 {
-    private final NetAltingChannelInput in;
+//    import jcsp.lang.Alternative;
+//import jcsp.lang.CSProcess;
+//import jcsp.lang.Guard;
+//import jcsp.net2.JCSPNetworkException;
+//import jcsp.net2.NetAltingChannelInput;
+//import jcsp.net2.NetChannel;
+//import jcsp.net2.NetChannelLocation;
+//import jcsp.net2.NetChannelOutput;
+//import jcsp.net2.NetworkMessageFilter;
+//import jcsp.net2.Node;
 
-    private final NetAltingChannelInput fromInputEnd;
+    sealed class MessageBox : IamCSProcess
+    {
+        private readonly NetAltingChannelInput In;
 
-    private NetChannelOutput toInputEnd = null;
+        private readonly NetAltingChannelInput fromInputEnd;
 
-    private final NetworkMessageFilter.FilterTx encoder;
+        private NetChannelOutput toInputEnd = null;
 
-    private final NetChannelLocation inputEndLoc = null;
+        private readonly NetworkMessageFilter.FilterTx encoder;
 
-    MessageBox(NetAltingChannelInput intoBox, NetAltingChannelInput requestChannel,
+        private readonly NetChannelLocation inputEndLoc = null;
+
+        MessageBox(NetAltingChannelInput intoBox, NetAltingChannelInput requestChannel,
             NetworkMessageFilter.FilterTx encodingFilter)
-    {
-        this.in = intoBox;
-        this.fromInputEnd = requestChannel;
-        this.encoder = encodingFilter;
-    }
-
-    public void run()
-    {
-        try
         {
-            while (true)
-            {
-                MobileChannelMessage msg = (MobileChannelMessage)fromInputEnd.read();
-                if (msg.type == MobileChannelMessage.REQUEST)
-                {
-                    if (!msg.inputLocation.equals(this.inputEndLoc))
-                    {
-                        if (this.toInputEnd != null)
-                        {
-                            this.toInputEnd.destroy();
-                        }
-                        this.toInputEnd = NetChannel.one2net(msg.inputLocation, this.encoder);
-                    }
-                    Object obj = this.in.read();
-                    this.toInputEnd.write(obj);
-                }
-                else if (msg.type == MobileChannelMessage.CHECK)
-                {
-                    if (!msg.inputLocation.equals(this.inputEndLoc))
-                    {
-                        if (this.toInputEnd != null)
-                        {
-                            this.toInputEnd.destroy();
-                        }
-                        this.toInputEnd = NetChannel.one2net(msg.inputLocation, this.encoder);
-                    }
-
-                    MobileChannelMessage response = new MobileChannelMessage();
-                    response.type = MobileChannelMessage.CHECK_RESPONSE;
-                    if (this.in.pending())
-                    {
-                        response.ready = true;
-                        this.toInputEnd.write(response);
-                    }
-                    else
-                    {
-                        this.toInputEnd.write(response);
-                        Guard[] guards = { this.fromInputEnd, this.in };
-                        Alternative alt = new Alternative(guards);
-                        int selected = alt.priSelect();
-                        if (selected == 1)
-                        {
-                            MobileChannelMessage resp = new MobileChannelMessage();
-                            resp.type = MobileChannelMessage.CHECK_RESPONSE;
-                            resp.ready = true;
-                            try
-                            {
-                                // Try and write to the input end
-                                this.toInputEnd.write(response);
-                            }
-                            catch (JCSPNetworkException ex)
-                            {
-                                // The channel input end is no longer there.
-                                // Quietly ignore and wait for request.
-                            }
-                        }
-                        // If a new message from the input end has been received, then deal with
-                        // that message separately. Go into the main loop again.
-                    }
-                }
-            }
+            this.In = intoBox;
+            this.fromInputEnd = requestChannel;
+            this.encoder = encodingFilter;
         }
-        catch (JCSPNetworkException jne)
+
+        public void run()
         {
-            // Something went wrong during comms. Kill the message box and all channels.
-            this.in.destroy();
-            this.fromInputEnd.destroy();
-            if (this.toInputEnd != null)
+            try
             {
-                this.toInputEnd.destroy();
+                while (true)
+                {
+                    MobileChannelMessage msg = (MobileChannelMessage) fromInputEnd.read();
+                    if (msg.type == MobileChannelMessage.REQUEST)
+                    {
+                        if (!msg.inputLocation.equals(this.inputEndLoc))
+                        {
+                            if (this.toInputEnd != null)
+                            {
+                                this.toInputEnd.destroy();
+                            }
+
+                            this.toInputEnd = NetChannel.one2net(msg.inputLocation, this.encoder);
+                        }
+
+                        Object obj = this.In.read();
+                        this.toInputEnd.write(obj);
+                    }
+                    else if (msg.type == MobileChannelMessage.CHECK)
+                    {
+                        if (!msg.inputLocation.equals(this.inputEndLoc))
+                        {
+                            if (this.toInputEnd != null)
+                            {
+                                this.toInputEnd.destroy();
+                            }
+
+                            this.toInputEnd = NetChannel.one2net(msg.inputLocation, this.encoder);
+                        }
+
+                        MobileChannelMessage response = new MobileChannelMessage();
+                        response.type = MobileChannelMessage.CHECK_RESPONSE;
+                        if (this.In.pending())
+                        {
+                            response.ready = true;
+                            this.toInputEnd.write(response);
+                        }
+                        else
+                        {
+                            this.toInputEnd.write(response);
+                            Guard[] guards = {this.fromInputEnd, this.In};
+                            Alternative alt = new Alternative(guards);
+                            int selected = alt.priSelect();
+                            if (selected == 1)
+                            {
+                                MobileChannelMessage resp = new MobileChannelMessage();
+                                resp.type = MobileChannelMessage.CHECK_RESPONSE;
+                                resp.ready = true;
+                                try
+                                {
+                                    // Try and write to the input end
+                                    this.toInputEnd.write(response);
+                                }
+                                catch (JCSPNetworkException ex)
+                                {
+                                    // The channel input end is no longer there.
+                                    // Quietly ignore and wait for request.
+                                }
+                            }
+
+                            // If a new message from the input end has been received, then deal with
+                            // that message separately. Go into the main loop again.
+                        }
+                    }
+                }
             }
-            Node.err.log(this.getClass(), "Message box threw exception during comms.  Destroying");
+            catch (JCSPNetworkException jne)
+            {
+                // Something went wrong during comms. Kill the message box and all channels.
+                this.In.destroy();
+                this.fromInputEnd.destroy();
+                if (this.toInputEnd != null)
+                {
+                    this.toInputEnd.destroy();
+                }
+
+                Node.err.log(this.getClass(), "Message box threw exception during comms.  Destroying");
+            }
         }
     }
 }

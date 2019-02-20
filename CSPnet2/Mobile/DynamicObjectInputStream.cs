@@ -1,4 +1,3 @@
-
 //////////////////////////////////////////////////////////////////////
 //                                                                  //
 //  JCSP ("CSP for Java") Libraries                                 //
@@ -18,20 +17,22 @@
 //                                                                  //
 //////////////////////////////////////////////////////////////////////
 
-package jcsp.net2.mobile;
+using System;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectStreamClass;
+namespace CSPnet2.Mobile
+{
+
+//    import java.io.IOException;
+//import java.io.InputStream;
+//import java.io.ObjectInputStream;
+//import java.io.ObjectStreamClass;
 
 /**
  * @author Kevin
  */
-final class DynamicObjectInputStream
-    extends ObjectInputStream
+sealed class DynamicObjectInputStream : ObjectInputStream
 {
-    final DynamicClassLoader dcl;
+    readonly DynamicClassLoader dcl;
 
     DynamicObjectInputStream(InputStream is, DynamicClassLoader loader)
         throws IOException
@@ -45,4 +46,5 @@ final class DynamicObjectInputStream
     {
         return dcl.loadClass(desc.getName());
     }
+}
 }

@@ -18,9 +18,13 @@
 //                                                                  //
 //////////////////////////////////////////////////////////////////////
 
-package jcsp.net2;
+using System;
+using CSPnet2;
 
-import java.io.IOException;
+namespace CSPnet2
+{
+
+    import java.io.IOException;
 
 /**
  * A NetworkMessageFilter used to send and receive raw byte data.
@@ -28,15 +32,14 @@ import java.io.IOException;
  * @see NetworkMessageFilter
  * @author Kevin Chalmers
  */
-public final class RawNetworkMessageFilter
+public sealed class RawNetworkMessageFilter
 {
     /**
      * The receiving filter
      * 
      * @author Kevin Chalmers
      */
-    public static final class FilterRX
-        implements NetworkMessageFilter.FilterRx
+    public static final class FilterRX : NetworkMessageFilter.FilterRx
     {
         /**
          * Creates a new RawNetworkMessageFilter.FilterRX
@@ -65,8 +68,7 @@ public final class RawNetworkMessageFilter
      * 
      * @author Kevin Chalmers
      */
-    public static final class FilterTX
-        implements NetworkMessageFilter.FilterTx
+    public static final class FilterTX : NetworkMessageFilter.FilterTx
     {
         /**
          * Creates a new output filter
@@ -93,4 +95,5 @@ public final class RawNetworkMessageFilter
             return (byte[])obj;
         }
     }
+}
 }

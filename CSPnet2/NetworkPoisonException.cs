@@ -1,4 +1,3 @@
-
 //////////////////////////////////////////////////////////////////////
 //                                                                  //
 //  JCSP ("CSP for Java") Libraries                                 //
@@ -18,10 +17,11 @@
 //                                                                  //
 //////////////////////////////////////////////////////////////////////
 
-package jcsp.net2;
+using System;
+using CSPlang;
 
-import jcsp.lang.PoisonException;
-
+namespace CSPnet2
+{
 /**
  * An exception thrown when a networked channel is poisoned. See the poison exception in the core package for more
  * information
@@ -29,22 +29,21 @@ import jcsp.lang.PoisonException;
  * @see PoisonException
  * @author Kevin Chalmers
  */
-public final class NetworkPoisonException
-    extends PoisonException
-{
-    /**
-     * The SUID of the class
-     */
-    private static final long serialVersionUID = 1L;
-
-    /**
-     * Creates a new NetworkPoisonException
-     * 
-     * @param strength
-     *            The strength of the poison
-     */
-    protected NetworkPoisonException(int strength)
+    public sealed class NetworkPoisonException : PoisonException
     {
-        super(strength);
+        /**
+         * The SUID of the class
+         */
+        private static readonly long serialVersionUID = 1L;
+
+        /**
+         * Creates a new NetworkPoisonException
+         * 
+         * @param strength
+         *            The strength of the poison
+         */
+        protected NetworkPoisonException(int strength) : base(strength)
+        {
+        }
     }
 }

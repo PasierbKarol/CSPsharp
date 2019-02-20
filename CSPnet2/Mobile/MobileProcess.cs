@@ -26,10 +26,13 @@
 //////////////////////////////////////////////////////////////////////
 
 
-package jcsp.net2.mobile;
+using System;
+using CSPlang;
 
-import java.io.*;
-import jcsp.lang.*;
+namespace CSPnet2.Mobile
+{
+
+//    import java.io.*;
 
 /**
  *
@@ -50,7 +53,9 @@ import jcsp.lang.*;
  * @author Kevin Chalmers
  * @version 1.0
  */
-public abstract class MobileProcess implements CSProcess, Serializable
+
+    [Serializable]
+public abstract class MobileProcess : IamCSProcess
 {
    /**
     * An array of input ends to hook the process into an existing network.
@@ -67,7 +72,7 @@ public abstract class MobileProcess implements CSProcess, Serializable
     * @param inputs ChannelInput[]
     * @param outputs ChannelOutput[]
     */
-   public final void init(ChannelInput[] inputs, ChannelOutput[] outputs)
+   public /*final*/ void init(ChannelInput[] inputs, ChannelOutput[] outputs)
    {
       this.inputs = inputs;
       this.outputs = outputs;
@@ -76,7 +81,7 @@ public abstract class MobileProcess implements CSProcess, Serializable
    /**
     * Prepares the process to move again by setting all its channels to null.
     */
-   public final void remove()
+   public /*final*/ void remove()
    {
       inputs = null;
       outputs = null;
@@ -86,7 +91,7 @@ public abstract class MobileProcess implements CSProcess, Serializable
     * Attaches the Mobile Process with an array of input channels.
     * @param inputs ChannelInput[]
     */
-   public final void attachInputs(ChannelInput[] inputs)
+   public /*final*/ void attachInputs(ChannelInput[] inputs)
    {
       this.inputs = inputs;
    }
@@ -95,7 +100,7 @@ public abstract class MobileProcess implements CSProcess, Serializable
     * Attaches the Mobile process with an array of output channels.
     * @param outputs ChannelOutput[]
     */
-   public final void attachOutputs(ChannelOutput[] outputs)
+   public /*final*/ void attachOutputs(ChannelOutput[] outputs)
    {
       this.outputs = outputs;
    }
@@ -103,7 +108,7 @@ public abstract class MobileProcess implements CSProcess, Serializable
    /**
     * Detatches the output ends.
     */
-   public final void detachOutputs()
+   public /*final*/ void detachOutputs()
    {
       outputs = null;
    }
@@ -111,8 +116,14 @@ public abstract class MobileProcess implements CSProcess, Serializable
    /**
     * Detaches the input ends.
     */
-   public final void detachInputs()
+   public /*final*/ void detachInputs()
    {
       inputs = null;
    }
+
+    public void run()
+    {
+        throw new NotImplementedException();
+    }
+}
 }

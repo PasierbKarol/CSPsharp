@@ -1,4 +1,3 @@
-
 //////////////////////////////////////////////////////////////////////
 //                                                                  //
 //  JCSP ("CSP for Java") Libraries                                 //
@@ -18,25 +17,32 @@
 //                                                                  //
 //////////////////////////////////////////////////////////////////////
 
-package jcsp.net2.mobile;
+using System;
+using System.IO;
+using CSPnet2;
+using CSPnet2.Mobile;
+using CSPnet2.NetChannel;
+using CSPnet2.Node;
 
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
+namespace CSPnet2.Mobile
+{
 
-import jcsp.net2.NetChannelLocation;
-import jcsp.net2.NetworkMessageFilter;
-import jcsp.net2.Node;
-import jcsp.net2.ObjectNetworkMessageFilter;
+//    import java.io.ByteArrayInputStream;
+//import java.io.IOException;
+//
+//import jcsp.net2.NetChannelLocation;
+//import jcsp.net2.NetworkMessageFilter;
+//import jcsp.net2.Node;
+//import jcsp.net2.ObjectNetworkMessageFilter;
 
 /**
  * @author Kevin
  */
-public final class CodeLoadingChannelFilter
+public sealed class CodeLoadingChannelFilter
 {
-    public static final class FilterRX
-        implements NetworkMessageFilter.FilterRx
+    public static final class FilterRX : NetworkMessageFilter.FilterRx
     {
-        private final ObjectNetworkMessageFilter.FilterRX objectFilter = new ObjectNetworkMessageFilter.FilterRX();
+        private readonly ObjectNetworkMessageFilter.FilterRX objectFilter = new ObjectNetworkMessageFilter.FilterRX();
 
         public FilterRX()
         {
@@ -81,10 +87,9 @@ public final class CodeLoadingChannelFilter
         }
     }
 
-    public static final class FilterTX
-        implements NetworkMessageFilter.FilterTx
+    public static final class FilterTX : NetworkMessageFilter.FilterTx
     {
-        private final ObjectNetworkMessageFilter.FilterTX internalFilter = new ObjectNetworkMessageFilter.FilterTX();
+        private readonly ObjectNetworkMessageFilter.FilterTX internalFilter = new ObjectNetworkMessageFilter.FilterTX();
 
         public FilterTX()
         {
@@ -111,4 +116,5 @@ public final class CodeLoadingChannelFilter
         }
 
     }
+}
 }

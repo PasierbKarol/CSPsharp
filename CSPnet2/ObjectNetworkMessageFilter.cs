@@ -1,4 +1,3 @@
-
 //////////////////////////////////////////////////////////////////////
 //                                                                  //
 //  JCSP ("CSP for Java") Libraries                                 //
@@ -18,9 +17,14 @@
 //                                                                  //
 //////////////////////////////////////////////////////////////////////
 
-package jcsp.net2;
+using System;
+using System.IO;
+using CSPlang;
+using CSPnet2;
 
-import java.io.IOException;
+namespace CSPnet2
+{
+    import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
@@ -30,7 +34,7 @@ import java.io.ObjectOutputStream;
  * 
  * @author Kevin Chalmers
  */
-public final class ObjectNetworkMessageFilter
+public sealed class ObjectNetworkMessageFilter
 {
     /*
      * Size of the internal buffer of the memory stream
@@ -42,23 +46,22 @@ public final class ObjectNetworkMessageFilter
      * 
      * @author Kevin Chalmers
      */
-    public static final class FilterRX
-        implements NetworkMessageFilter.FilterRx
+    public static final class FilterRX : NetworkMessageFilter.FilterRx
     {
         /**
          * These four bytes represent the normal header expected in Java for object streams
          */
-        static final byte[] objectStreamHeader = { -84, -19, 0, 5 };
+        static readonly byte[] objectStreamHeader = { -84, -19, 0, 5 };
 
         /**
          * The byte array stream used to connect to the ObjectInputStream
          */
-        private final ResettableByteArrayInputStream bais;
+        private readonly ResettableByteArrayInputStream bais;
 
         /**
          * The ObjectInputStream used to read the objects from.
          */
-        private final ObjectInputStream ois;
+        private readonly ObjectInputStream ois;
 
         /**
          * Creates a new incoming object filter
@@ -114,8 +117,7 @@ public final class ObjectNetworkMessageFilter
      * 
      * @author Kevin Chalmers
      */
-    public static final class FilterTX
-        implements NetworkMessageFilter.FilterTx
+    public static final class FilterTX : NetworkMessageFilter.FilterTx
     {
         /**
          * The output stream to get the bytes from
@@ -169,4 +171,5 @@ public final class ObjectNetworkMessageFilter
 
     }
 
+}
 }

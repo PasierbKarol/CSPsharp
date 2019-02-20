@@ -1,4 +1,3 @@
-
 //////////////////////////////////////////////////////////////////////
 //                                                                  //
 //  JCSP ("CSP for Java") Libraries                                 //
@@ -18,15 +17,18 @@
 //                                                                  //
 //////////////////////////////////////////////////////////////////////
 
-package jcsp.net2;
+using System;
 
-/**
- * This class is the factory class for creating NetBarrier objects. For information, see NetBarrier.
- * 
- * @see NetBarrier
- * @author Kevin Chalmers
- */
-public final class NetBarrierEnd
+namespace CSPnet2.Barriers
+{
+
+    /**
+     * This class is the factory class for creating NetBarrier objects. For information, see NetBarrier.
+     * 
+     * @see NetBarrier
+     * @author Kevin Chalmers
+     */
+    public sealed class NetBarrierEnd
 {
     /**
      * 
@@ -136,4 +138,5 @@ public final class NetBarrierEnd
         // Create a new NetBarrier
         return NetBarrier.create(new NetBarrierLocation(link.remoteID, vbn), enrolled);
     }
+}
 }

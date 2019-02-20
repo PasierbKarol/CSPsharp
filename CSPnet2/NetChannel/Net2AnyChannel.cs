@@ -1,4 +1,3 @@
-
 //////////////////////////////////////////////////////////////////////
 //                                                                  //
 //  JCSP ("CSP for Java") Libraries                                 //
@@ -18,9 +17,12 @@
 //                                                                  //
 //////////////////////////////////////////////////////////////////////
 
-package jcsp.net2;
+using System;
 
-import jcsp.net2.NetworkMessageFilter.FilterRx;
+namespace CSPnet2.NetChannel
+{
+
+    //import jcsp.net2.NetworkMessageFilter.FilterRx;
 
 /**
  * This class is a concrete implementation of a NetSharedChannelInput, and acts as a wrapper to a Net2OneChannel,
@@ -33,19 +35,18 @@ import jcsp.net2.NetworkMessageFilter.FilterRx;
  * @author Kevin Chalmers (updated from Quickstone Technologies)
  * @author Neil Brown (for the extended read operations)
  */
-final class Net2AnyChannel
-    implements NetSharedChannelInput
+sealed class Net2AnyChannel : NetSharedChannelInput
 {
 
     /**
      * The underlying Net2OneChannel that this object wraps around
      */
-    private final Net2OneChannel actualChannel;
+    private readonly Net2OneChannel actualChannel;
 
     /**
      * A mutual exclusion lock, allowing only one process access to perform a read operation at a time
      */
-    private final Mutex mutex = new Mutex();
+    private readonly Net_Mutex mutex = new Net_Mutex();
 
     /**
      * A static factory method to create a new Net2AnyChannel object
@@ -284,4 +285,5 @@ final class Net2AnyChannel
         }
     }
 
+}
 }

@@ -1,4 +1,3 @@
-
 //////////////////////////////////////////////////////////////////////
 //                                                                  //
 //  JCSP ("CSP for Java") Libraries                                 //
@@ -17,43 +16,51 @@
 //  Author contacts: P.H.Welch@kent.ac.uk K.Chalmers@napier.ac.uk   //
 //                                                                  //
 //////////////////////////////////////////////////////////////////////
+using System;
+using System.Collections;
+using System.IO;
+using System.Threading.Tasks;
+using CSPlang;
+using CSPlang.Any2;
+using CSPnet2.Barriers;
+using CSPnet2.Node;
 
-package jcsp.net2;
+namespace CSPnet2.Net2Link
+{
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Hashtable;
-import java.util.Iterator;
+    //    import java.io.DataInputStream;
+    //import java.io.DataOutputStream;
+    //import java.io.IOException;
+    //import java.util.ArrayList;
+    //import java.util.Hashtable;
+    //import java.util.Iterator;
+    //
+    //import jcsp.lang.Any2OneChannel;
+    //import jcsp.lang.CSProcess;
+    //import jcsp.lang.Channel;
+    //import jcsp.lang.ChannelInput;
+    //import jcsp.lang.ChannelOutput;
+    //import jcsp.lang.Parallel;
+    //import jcsp.lang.ProcessManager;
 
-import jcsp.lang.Any2OneChannel;
-import jcsp.lang.CSProcess;
-import jcsp.lang.Channel;
-import jcsp.lang.ChannelInput;
-import jcsp.lang.ChannelOutput;
-import jcsp.lang.Parallel;
-import jcsp.lang.ProcessManager;
-
-/**
- * Abstract class representing a Link. This class defines the two processes (Link TX, Link RX) where the network
- * protocol is of key importance. Specific technology protocols (e.g. TCP/IP) must extend this class, providing the
- * necessary streams for operation, and also overriding the methods connect, createResources and destroyResources, which
- * will have specific implementations dependent on the underlying technology. Everything else should operate as defined
- * in this class.
- * 
- * @see jcsp.net2.NetworkProtocol
- * @author Kevin Chalmers
- */
-public abstract class Link
-    implements CSProcess
+    /**
+     * Abstract class representing a Link. This class defines the two processes (Link TX, Link RX) where the network
+     * protocol is of key importance. Specific technology protocols (e.g. TCP/IP) must extend this class, providing the
+     * necessary streams for operation, and also overriding the methods connect, createResources and destroyResources, which
+     * will have specific implementations dependent on the underlying technology. Everything else should operate as defined
+     * in this class.
+     * 
+     * @see jcsp.net2.NetworkProtocol
+     * @author Kevin Chalmers
+     */
+    public abstract class Link : IamCSProcess
 {
     /**
      * A flag used to indicate whether the Link is connected or not. This flag is set normally during the connect
      * operation, but may be done within the constructor. If not set during the constructor, and if connect is not
      * called to set the flag to true, then when the process is run connect will be called.
      */
-    protected boolean connected = false;
+    protected Boolean connected = false;
 
     /**
      * The incoming stream for the connection. This must be created by the specific protocol implementation.
@@ -69,7 +76,7 @@ public abstract class Link
      * The channel connected to the Link Tx process. This is used by channels, barriers, and the Link Rx to send
      * messages to the node this Link is connected to.
      */
-    private final Any2OneChannel txChannel = Channel.any2one();
+    private readonly Any2OneChannel txChannel = Channel.any2one();
 
     /**
      * The NodeID of the opposite end of the connection. This should be set either during construction, or during the
@@ -107,7 +114,7 @@ public abstract class Link
      * 
      * @return NodeID of the connected Link.
      */
-    public final NodeID getRemoteNodeID()
+    public /*final*/ NodeID getRemoteNodeID()
     {
         return this.remoteID;
     }
@@ -117,7 +124,7 @@ public abstract class Link
      * 
      * @return The ChannelOutput used to communicate with the Link Tx.
      */
-    protected final ChannelOutput getTxChannel()
+    protected /*final*/ ChannelOutput getTxChannel()
     {
         return this.txChannel.out();
     }
@@ -129,7 +136,7 @@ public abstract class Link
      * @throws JCSPNetworkException
      *             Thrown if the connection fails.
      */
-    public abstract boolean connect()
+    public abstract Boolean connect()
         throws JCSPNetworkException;
 
     /**
@@ -141,7 +148,7 @@ public abstract class Link
      * @throws JCSPNetworkException
      *             Thrown if a problem occurs creating the resources.
      */
-    protected abstract boolean createResources()
+    protected abstract Boolean createResources()
         throws JCSPNetworkException;
 
     /**
@@ -155,7 +162,7 @@ public abstract class Link
      * 
      * @return True if Link was registered, false otherwise.
      */
-    public final boolean registerLink()
+    public /*final*/ Boolean registerLink()
     {
         return LinkManager.getInstance().registerLink(this);
     }
@@ -163,7 +170,7 @@ public abstract class Link
     /**
      * Marks the Link as lost within the LinkManager.
      */
-    protected final void lostLink()
+    protected /*final*/ void lostLink()
     {
         // Acquire a lock on the Link. We wish to stop any more channel or barrier registrations,
         // so therefore we stop any more happening until the Link lost operation is completed.
@@ -320,7 +327,7 @@ public abstract class Link
     /**
      * The run method for the process. This will connect the Link (if necessary) and then start the Tx and Rx Loops.
      */
-    public final void run()
+    public /*final*/ void run()
     {
         // Check if connected, and if not try and connect.
         if (!this.connected)
@@ -1062,4 +1069,5 @@ public abstract class Link
             }
         }
     }
+}
 }

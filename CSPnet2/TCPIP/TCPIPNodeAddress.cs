@@ -18,13 +18,17 @@
 //                                                                  //
 //////////////////////////////////////////////////////////////////////
 
-package jcsp.net2.tcpip;
+using System;
+using CSPnet2.Node;
 
-import jcsp.net2.JCSPNetworkException;
-import jcsp.net2.Link;
-import jcsp.net2.LinkServer;
-import jcsp.net2.NodeAddress;
-import jcsp.net2.ProtocolID;
+namespace CSPnet2.TCPIP
+{
+
+//    import jcsp.net2.JCSPNetworkException;
+//import jcsp.net2.Link;
+//import jcsp.net2.LinkServer;
+//import jcsp.net2.NodeAddress;
+//import jcsp.net2.ProtocolID;
 
 /**
  * A concrete implementation of a NodeAddress that is designed for TCP/IP connections.
@@ -32,13 +36,12 @@ import jcsp.net2.ProtocolID;
  * @see NodeAddress
  * @author Kevin Chalmers
  */
-public final class TCPIPNodeAddress
-    extends NodeAddress
+public sealed class TCPIPNodeAddress : NodeAddress
 {
     /**
      * The SUID for this class
      */
-    private static final long serialVersionUID = 1L;
+    private static readonly long serialVersionUID = 1L;
 
     /**
      * The IP address part of the address
@@ -94,7 +97,7 @@ public final class TCPIPNodeAddress
      * 
      * @return The port number part of the address
      */
-    public final int getPort()
+    public /*final*/ int getPort()
     {
         return this.port;
     }
@@ -115,7 +118,7 @@ public final class TCPIPNodeAddress
      * 
      * @return The IP Address part of the address
      */
-    public final String getIpAddress()
+    public /*final*/ String getIpAddress()
     {
         return this.ip;
     }
@@ -178,4 +181,5 @@ public final class TCPIPNodeAddress
         return TCPIPProtocolID.getInstance();
     }
 
+}
 }

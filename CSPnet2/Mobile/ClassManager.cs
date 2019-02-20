@@ -1,4 +1,3 @@
-
 //////////////////////////////////////////////////////////////////////
 //                                                                  //
 //  JCSP ("CSP for Java") Libraries                                 //
@@ -18,28 +17,34 @@
 //                                                                  //
 //////////////////////////////////////////////////////////////////////
 
-package jcsp.net2.mobile;
+using System;
+using System.Collections;
+using System.IO;
+using CSPlang;
+using CSPnet2.Mobile;
+using CSPnet2.NetChannel;
+using CSPnet2.Node;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Hashtable;
+namespace CSPnet2.Mobile
+{
 
-import jcsp.lang.CSProcess;
-import jcsp.net2.JCSPNetworkException;
-import jcsp.net2.NetChannel;
-import jcsp.net2.NetChannelInput;
-import jcsp.net2.NetChannelOutput;
-import jcsp.net2.Node;
+//    import java.io.IOException;
+//import java.io.InputStream;
+//import java.util.Hashtable;
+//
+//import jcsp.net2.JCSPNetworkException;
+//import jcsp.net2.NetChannel;
+//import jcsp.net2.NetChannelInput;
+//import jcsp.net2.NetChannelOutput;
 
 /**
  * @author Kevin
  */
-final class ClassManager
-    implements CSProcess
+sealed class ClassManager : IamCSProcess
 {
     static Hashtable classLoaders = new Hashtable();
 
-    static NetChannelInput in = NetChannel.numberedNet2One(10);
+    static NetChannelInput In = NetChannel.numberedNet2One(10);
 
     public void run()
     {
@@ -47,40 +52,40 @@ final class ClassManager
         {
             try
             {
-                ClassRequest req = (ClassRequest)in.read();
+                ClassRequest req = (ClassRequest) In.read();
                 if (req.originatingNode.equals(Node.getInstance().getNodeID()))
                 {
                     String className = req.className.replace('.', '/') + ".class";
-                    InputStream is = ClassLoader.getSystemResourceAsStream(className);
+                    InputStream inputStream = ClassLoader.getSystemResourceAsStream(className);
                     try
                     {
-                        if (is != null)
+                        if (inputStream != null)
                         {
                             int read = 0;
-                            byte[] bytes = new byte[is.available()];
+                            byte[] bytes = new byte[inputStream.available()];
                             while (read < bytes.length)
-                                read += is.read(bytes, read, bytes.length - read);
+                                read += inputStream.read(bytes, read, bytes.length - read);
                             ClassData resp = new ClassData(req.className, bytes);
-                            NetChannelOutput out = NetChannel.one2net(req.returnLocation);
-                            out.asyncWrite(resp);
-                            out.destroy();
-                            out = null;
+                            NetChannelOutput Out = NetChannel.one2net(req.returnLocation);
+                            Out.asyncWrite(resp);
+                            Out.destroy();
+                            Out = null;
                         }
                         else
                         {
                             ClassData resp = new ClassData(req.className, null);
-                            NetChannelOutput out = NetChannel.one2net(req.returnLocation);
-                            out.asyncWrite(resp);
-                            out.destroy();
-                            out = null;
+                            NetChannelOutput Out = NetChannel.one2net(req.returnLocation);
+                            Out.asyncWrite(resp);
+                            Out.destroy();
+                            Out = null;
                         }
                     }
                     catch (IOException ioe)
                     {
                         ClassData resp = new ClassData(req.className, null);
-                        NetChannelOutput out = NetChannel.one2net(req.returnLocation);
-                        out.asyncWrite(resp);
-                        out.destroy();
+                        NetChannelOutput Out = NetChannel.one2net(req.returnLocation);
+                        Out.asyncWrite(resp);
+                        Out.destroy();
                     }
                 }
                 else
@@ -89,9 +94,9 @@ final class ClassManager
                     if (loader == null)
                     {
                         ClassData resp = new ClassData(req.className, null);
-                        NetChannelOutput out = NetChannel.one2net(req.returnLocation);
-                        out.asyncWrite(resp);
-                        out.destroy();
+                        NetChannelOutput Out = NetChannel.one2net(req.returnLocation);
+                        Out.asyncWrite(resp);
+                        Out.destroy();
                     }
                     else
                     {
@@ -99,16 +104,16 @@ final class ClassManager
                         {
                             byte[] bytes = loader.requestClass(req.className);
                             ClassData resp = new ClassData(req.className, bytes);
-                            NetChannelOutput out = NetChannel.one2net(req.returnLocation);
-                            out.asyncWrite(resp);
-                            out.destroy();
+                            NetChannelOutput Out = NetChannel.one2net(req.returnLocation);
+                            Out.asyncWrite(resp);
+                            Out.destroy();
                         }
                         catch (ClassNotFoundException cnf)
                         {
                             ClassData resp = new ClassData(req.className, null);
-                            NetChannelOutput out = NetChannel.one2net(req.returnLocation);
-                            out.asyncWrite(resp);
-                            out.destroy();
+                            NetChannelOutput Out = NetChannel.one2net(req.returnLocation);
+                            Out.asyncWrite(resp);
+                            Out.destroy();
                         }
                     }
                 }
@@ -119,4 +124,5 @@ final class ClassManager
             }
         }
     }
+}
 }

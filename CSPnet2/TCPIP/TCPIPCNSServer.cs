@@ -1,4 +1,3 @@
-
 //////////////////////////////////////////////////////////////////////
 //                                                                  //
 //  JCSP ("CSP for Java") Libraries                                 //
@@ -18,16 +17,19 @@
 //                                                                  //
 //////////////////////////////////////////////////////////////////////
 
-package jcsp.net2.tcpip;
+using System;
 
-import java.net.Inet4Address;
-import java.net.InetAddress;
+namespace CSPnet2.TCPIP
+{
 
-import jcsp.lang.CSProcess;
-import jcsp.lang.Parallel;
-import jcsp.net2.Node;
-import jcsp.net2.bns.BNS;
-import jcsp.net2.cns.CNS;
+//    import java.net.Inet4Address;
+//import java.net.InetAddress;
+//
+//import jcsp.lang.CSProcess;
+//import jcsp.lang.Parallel;
+//import jcsp.net2.Node;
+//import jcsp.net2.bns.BNS;
+//import jcsp.net2.cns.CNS;
 
 /**
  * This is the original (now deprecated) server program for use by
@@ -35,7 +37,7 @@ import jcsp.net2.cns.CNS;
  * @author Kevin Chalmers (updated from Quickstone Technologies)
  * @deprecated Use TCPIPNodeFactory instead
  */
-public final class TCPIPCNSServer
+public sealed class TCPIPCNSServer
 {
     /**
      * @param args
@@ -102,4 +104,5 @@ public final class TCPIPCNSServer
         CSProcess[] processes = { CNS.getInstance(), BNS.getInstance() };
         new Parallel(processes).run();
     }
+}
 }

@@ -1,4 +1,3 @@
-
 //////////////////////////////////////////////////////////////////////
 //                                                                  //
 //  JCSP ("CSP for Java") Libraries                                 //
@@ -18,9 +17,11 @@
 //                                                                  //
 //////////////////////////////////////////////////////////////////////
 
-package jcsp.net2;
+using System;
+using System.Collections;
 
-import java.util.Hashtable;
+namespace CSPnet2.NetChannel
+{
 
 /**
  * A class used to manage the networked channels on the Node. This is an internal object to JCSP networking. For a
@@ -30,7 +31,7 @@ import java.util.Hashtable;
  * @see jcsp.net2.NetChannelOutput
  * @author Kevin Chalmers
  */
-final class ChannelManager
+sealed class ChannelManager
 {
     /**
      * The index for the next channel to be created. We start at 50 as it allows us to have up to 50 default channels,
@@ -42,7 +43,7 @@ final class ChannelManager
      * The table containing the channels. An Integer (object wrapped int) is used as the key, and the ChannelData as the
      * value.
      */
-    private final Hashtable channels = new Hashtable();
+    private readonly Hashtable channels = new Hashtable();
 
     /**
      * Singleton instance of the ChannelManager
@@ -144,4 +145,5 @@ final class ChannelManager
         this.channels.remove(objIndex);
     }
 
+}
 }

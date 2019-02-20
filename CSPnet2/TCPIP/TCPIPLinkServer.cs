@@ -18,21 +18,25 @@
 //                                                                  //
 //////////////////////////////////////////////////////////////////////
 
-package jcsp.net2.tcpip;
+using System;
+using CSPnet2.Link;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.net.Inet4Address;
-import java.net.InetAddress;
-import java.net.ServerSocket;
-import java.net.Socket;
+namespace CSPnet2.TCPIP
+{
 
-import jcsp.lang.ProcessManager;
-import jcsp.net2.JCSPNetworkException;
-import jcsp.net2.LinkServer;
-import jcsp.net2.Node;
-import jcsp.net2.NodeID;
+//    import java.io.DataInputStream;
+//import java.io.DataOutputStream;
+//import java.io.IOException;
+//import java.net.Inet4Address;
+//import java.net.InetAddress;
+//import java.net.ServerSocket;
+//import java.net.Socket;
+//
+//import jcsp.lang.ProcessManager;
+//import jcsp.net2.JCSPNetworkException;
+//import jcsp.net2.LinkServer;
+//import jcsp.net2.Node;
+//import jcsp.net2.NodeID;
 
 /**
  * Concrete implementation of a LinkServer that listens on a TCP/IP based ServerSocket. For information on LinkServer,
@@ -54,18 +58,17 @@ import jcsp.net2.NodeID;
  * @see LinkServer
  * @author Kevin Chalmers
  */
-public final class TCPIPLinkServer
-    extends LinkServer
+public sealed class TCPIPLinkServer : LinkServer
 {
     /**
      * The ServerSocket that this class wraps around. The process listens on this connection
      */
-    private final ServerSocket serv;
+    private readonly ServerSocket serv;
 
     /**
      * The NodeAddress that this LinkServer is listening on. This should be the same as the Node's address.
      */
-    final TCPIPNodeAddress listeningAddress;
+    readonly TCPIPNodeAddress listeningAddress;
 
     /**
      * Creates LinkServer by wrapping round an existing ServerSocket. Used internally by JCSP
@@ -275,4 +278,5 @@ public final class TCPIPLinkServer
         }
     }
 
+}
 }

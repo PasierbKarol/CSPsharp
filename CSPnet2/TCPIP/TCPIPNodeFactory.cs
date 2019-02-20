@@ -1,4 +1,3 @@
-
 //////////////////////////////////////////////////////////////////////
 //                                                                  //
 //  JCSP ("CSP for Java") Libraries                                 //
@@ -18,19 +17,24 @@
 //                                                                  //
 //////////////////////////////////////////////////////////////////////
 
-package jcsp.net2.tcpip;
+using System;
+using CSPlang;
+using CSPnet2.Node;
 
-import java.io.IOException;
-import java.net.Inet4Address;
-import java.net.InetAddress;
-import java.net.ServerSocket;
-import java.net.UnknownHostException;
+namespace CSPnet2.TCPIP
+{
 
-import jcsp.lang.ProcessManager;
-import jcsp.net2.JCSPNetworkException;
-import jcsp.net2.Node;
-import jcsp.net2.NodeAddress;
-import jcsp.net2.NodeFactory;
+//    import java.io.IOException;
+//import java.net.Inet4Address;
+//import java.net.InetAddress;
+//import java.net.ServerSocket;
+//import java.net.UnknownHostException;
+//
+//import jcsp.lang.ProcessManager;
+//import jcsp.net2.JCSPNetworkException;
+//import jcsp.net2.Node;
+//import jcsp.net2.NodeAddress;
+//import jcsp.net2.NodeFactory;
 
 /**
  * Used to initialise a Node. This is kept for backward compatibility. See Node for more information.
@@ -40,8 +44,7 @@ import jcsp.net2.NodeFactory;
  * @deprecated This method of Node initialisation should no longer be used. See Node for more information
  * @author Kevin Chalmers
  */
-public final class TCPIPNodeFactory
-    extends NodeFactory
+public sealed class TCPIPNodeFactory : NodeFactory
 {
 
     /**
@@ -155,4 +158,5 @@ public final class TCPIPNodeFactory
             throw new JCSPNetworkException("Failed to open new Server Socket.\n" + ioe.getMessage());
         }
     }
+}
 }
