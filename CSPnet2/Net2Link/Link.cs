@@ -218,10 +218,10 @@ namespace CSPnet2.Net2Link
      * @param data
      *            The ChannelData object representing the channel
      */
-    void registerChannel(ChannelData data)
+    internal void registerChannel(ChannelData data);
     {
         // Acquire a lock on the Link. This is to ensure that we don't try and register when the Link is going down.
-        synchronized (this)
+        lock (this)
         {
             // Check that the Link is still up. If it isn't, then we inform the channel.
             // *IMPLEMENTATION NOTE*: Technically, we could either throw an exception or return a error message here.
@@ -241,7 +241,7 @@ namespace CSPnet2.Net2Link
             // Otherwise the Link can take the channel. Add the channel to the table of registered channels.
             else
             {
-                Integer objIndex = new Integer(data.vcn);
+                int objIndex = new Integer(data.vcn);
                 this.connectedOutputs.put(objIndex, data);
             }
         }
@@ -253,7 +253,7 @@ namespace CSPnet2.Net2Link
      * @param data
      *            The ChannelData object representing the channel.
      */
-    void deRegisterChannel(ChannelData data)
+    public void deRegisterChannel(ChannelData data)
     {
         // Acquire a lock on the Link.
         lock (this)

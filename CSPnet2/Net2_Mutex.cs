@@ -39,7 +39,7 @@ class Net2_Mutex
     /**
      * Claims the mutex for exclusive access
      */
-    void claim()
+    internal void claim()
     {
         lock (this)
         {
@@ -61,7 +61,7 @@ class Net2_Mutex
     /**
      * Releases the mutex for exclusive access
      */
-    void release()
+    internal void release()
     {
         lock (this)
         {

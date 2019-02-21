@@ -21,6 +21,7 @@ using System;
 using CSPlang;
 using CSPlang.Any2;
 using CSPutil;
+using CSPnet2.NetNode;
 
 namespace CSPnet2.NetChannel
 {
@@ -149,17 +150,16 @@ sealed class Net2OneChannel : NetAltingChannelInput
      *            The filter used to convert the incoming byte array to an object
      * @//throws JCSPNetworkException
      */
-    private Net2OneChannel(AltingChannelInput input, ChannelData chanData, FilterRx filter)
+    private Net2OneChannel(AltingChannelInput input, ChannelData chanData, FilterRx filter) : base(input)
         //throws JCSPNetworkException
     {
         // Set the wrapper's alting channel input so the channel can be used as a guard
-        super(input);
 
         // Set the various properties
-        this.in = input;
+        this.In = input;
         this.data = chanData;
         this.data.state = ChannelDataState.OK_INPUT;
-        this.location = new NetChannelLocation(NetNode.getInstance().getNodeID(), this.data.vcn);
+        this.location = new NetChannelLocation(Node.getInstance().getNodeID(), this.data.vcn);
         this.messageFilter = filter;
     }
 
@@ -219,7 +219,7 @@ sealed class Net2OneChannel : NetAltingChannelInput
      * @//throws NetworkPoisonException
      *             Thrown if the channel has poisoned
      */
-    public boolean pending()
+    public Boolean pending()
         //throws JCSPNetworkException, NetworkPoisonException
     {
         // First check the state of the channel.
@@ -229,7 +229,7 @@ sealed class Net2OneChannel : NetAltingChannelInput
             throw new NetworkPoisonException(this.data.poisonLevel);
 
         // Return if the channel has any pending messages
-        return this.in.pending();
+        return this.In.pending();
     }
 
     /**
@@ -257,7 +257,7 @@ sealed class Net2OneChannel : NetAltingChannelInput
                 // The poison is strong enough. We need to change our state to poisoned.
 
                 // We need to lock on the state to ensure no link is using it as we change it
-                synchronized (this.data)
+                lock (this.data)
                 {
                     // Now change our state
                     this.data.state = ChannelDataState.POISONED;
@@ -276,10 +276,10 @@ sealed class Net2OneChannel : NetAltingChannelInput
                 }
 
                 // Now we must send POISON to any waiting SEND messages
-                while (this.in.pending())
+                while (this.In.pending())
                 {
                     // We have an incoming message. Read the message.
-                    NetworkMessage pending = (NetworkMessage)this.in.read();
+                    NetworkMessage pending = (NetworkMessage)this.In.read();
 
                     switch (pending.type)
                     {
@@ -354,7 +354,7 @@ sealed class Net2OneChannel : NetAltingChannelInput
         while (true)
         {
             // Read in the next message
-            NetworkMessage msg = (NetworkMessage)this.in.read();
+            NetworkMessage msg = (NetworkMessage)this.In.read();
 
             // Now we need to decode the message and act accordingly
             try
@@ -396,17 +396,17 @@ sealed class Net2OneChannel : NetAltingChannelInput
                         // The Link checked our immunity level, so this poison message must be greater than our immunity
 
                         // We need to lock on the state to ensure no link is using it as we change it
-                        synchronized (this.data)
+                        lock (this.data)
                         {
                             // Now change our state
                             this.data.state = ChannelDataState.POISONED;
                         }
 
                         // Now we must send POISON to any waiting SEND messages
-                        while (this.in.pending())
+                        while (this.In.pending())
                         {
                             // We have an incoming message. Read the message.
-                            NetworkMessage pending = (NetworkMessage)this.in.read();
+                            NetworkMessage pending = (NetworkMessage)this.In.read();
 
                             switch (pending.type)
                             {
@@ -488,7 +488,7 @@ sealed class Net2OneChannel : NetAltingChannelInput
         while (true)
         {
             // Read in the next message
-            NetworkMessage msg = (NetworkMessage)this.in.read();
+            NetworkMessage msg = (NetworkMessage)this.In.read();
 
             // Now we need to decode the message and act accordingly
             try
@@ -516,17 +516,17 @@ sealed class Net2OneChannel : NetAltingChannelInput
                         // The Link checked our immunity level, so this poison message must be greater than our immunity
 
                         // We need to lock on the state to ensure no link is using it as we change it
-                        synchronized (this.data)
+                        lock (this.data)
                         {
                             // Now change our state
                             this.data.state = ChannelDataState.POISONED;
                         }
 
                         // Now we must send POISON to any waiting SEND messages
-                        while (this.in.pending())
+                        while (this.In.pending())
                         {
                             // We have an incoming message. Read the message.
-                            NetworkMessage pending = (NetworkMessage)this.in.read();
+                            NetworkMessage pending = (NetworkMessage)this.In.read();
 
                             switch (pending.type)
                             {
@@ -591,7 +591,7 @@ sealed class Net2OneChannel : NetAltingChannelInput
     public void destroy()
     {
         // First acquire a lock on the channel
-        synchronized (this.data)
+        lock (this.data)
         {
             // Now we can change our state
             this.data.state = ChannelDataState.DESTROYED;
@@ -613,10 +613,10 @@ sealed class Net2OneChannel : NetAltingChannelInput
         }
 
         // Now we must reject any incoming messages, except poison
-        while (this.in.pending())
+        while (this.In.pending())
         {
             // We have a pending message. Deal with it.
-            NetworkMessage msg = (NetworkMessage)this.in.read();
+            NetworkMessage msg = (NetworkMessage)this.In.read();
 
             // Check that it is not a poison
             if (msg.type != NetworkProtocol.POISON)
@@ -640,7 +640,7 @@ sealed class Net2OneChannel : NetAltingChannelInput
      * 
      * @return The ChannelData for this Channel
      */
-    final ChannelData getChannelData()
+    /*final*/ ChannelData getChannelData()
     {
         return this.data;
     }

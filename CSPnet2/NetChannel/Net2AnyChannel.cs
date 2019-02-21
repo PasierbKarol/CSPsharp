@@ -46,7 +46,7 @@ sealed class Net2AnyChannel : NetSharedChannelInput
     /**
      * A mutual exclusion lock, allowing only one process access to perform a read operation at a time
      */
-    private readonly Net_Mutex mutex = new Net_Mutex();
+    private readonly Net2_Mutex mutex = new Net2_Mutex();
 
     /**
      * A static factory method to create a new Net2AnyChannel object
@@ -117,7 +117,7 @@ sealed class Net2AnyChannel : NetSharedChannelInput
         //throws InvalidOperationException, JCSPNetworkException, NetworkPoisonException
     {
         // Acquire lock on the channel to ensure exclusive access
-        synchronized (this)
+        lock (this)
         {
             // We now try and end the read operation. There are a number of possible exceptions
             // that can be thrown, so we must catch them and re-throw them. What we must ensure is
@@ -163,7 +163,7 @@ sealed class Net2AnyChannel : NetSharedChannelInput
         this.mutex.claim();
 
         // Now ensure that we are the only process operating on the underlying channel
-        synchronized (this)
+        lock (this)
         {
             // We now try and perform the read operation. There are a number of possible exceptions, which we must
             // catch and then re-throw again. Finally, we must ensure that the read operation is finished by
@@ -210,7 +210,7 @@ sealed class Net2AnyChannel : NetSharedChannelInput
         this.mutex.claim();
 
         // Now ensure we have exclusive access to the channel
-        synchronized (this)
+        lock (this)
         {
             // Now return the message read from the channel. We could encounter a number of exceptions here, in which
             // case we must re-throw the exception, remembering to release to release the read lock prior to doing so.
@@ -244,7 +244,7 @@ sealed class Net2AnyChannel : NetSharedChannelInput
      */
     public void poison(int strength)
     {
-        synchronized (this)
+        lock (this)
         {
             this.actualChannel.poison(strength);
         }
@@ -265,7 +265,7 @@ sealed class Net2AnyChannel : NetSharedChannelInput
      */
     public void destroy()
     {
-        synchronized (this)
+        lock (this)
         {
             this.actualChannel.destroy();
         }
@@ -279,7 +279,7 @@ sealed class Net2AnyChannel : NetSharedChannelInput
      */
     public void setDecoder(FilterRx decoder)
     {
-        synchronized (this)
+        lock (this)
         {
             this.actualChannel.setDecoder(decoder);
         }

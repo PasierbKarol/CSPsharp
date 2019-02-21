@@ -18,6 +18,7 @@
 //////////////////////////////////////////////////////////////////////
 
 using CSPnet2.NetChannel;
+using System;
 
 namespace CSPnet2
 {
@@ -49,21 +50,22 @@ namespace CSPnet2
          * @//throws JCSPNetworkException
          *             Thrown if a connection to the Node cannot be made.
          */
-       internal static Any2NetChannel create(NetChannelLocation loc, int immunity, NetworkMessageFilter.FilterTx filter)
-        ////throws JCSPNetworkException { One2NetChannel channel = One2NetChannel. create(loc, immunity, filter);
-        return new Any2NetChannel(channel);
-    }
+        internal static Any2NetChannel create(NetChannelLocation loc, int immunity, NetworkMessageFilter.FilterTx filter)
+            ////throws JCSPNetworkException { One2NetChannel channel = One2NetChannel. create(loc, immunity, filter);
+        {
+            return new Any2NetChannel(channel);
+        }
 
-    /**
-     * Constructor wrapping an existing One2NetChannel in an Any2NetChannel
-     * 
-     * @param channel
-     *            The One2NetChannel to be wrapped.
-     */
-    private Any2NetChannel(One2NetChannel channel)
-    {
-    this.chan = channel;
-}
+        /**
+         * Constructor wrapping an existing One2NetChannel in an Any2NetChannel
+         * 
+         * @param channel
+         *            The One2NetChannel to be wrapped.
+         */
+        private Any2NetChannel(One2NetChannel channel)
+        {
+            this.chan = channel;
+        }
 
 /**
  * Poisons the underlying channel
@@ -71,23 +73,24 @@ namespace CSPnet2
  * @param strength
  *            The strength of the poison being put on the channel
  */
-public void poison(int strength)
-{
-synchronized(this)
-{
-    this.chan.poison(strength);
-}
-}
+        public void poison(int strength)
+        {
+            lock (this)
+            {
+                this.chan.poison(strength);
+            }
+        }
 
 /**
  * Gets the NetChannelLocation of the input end this channel is connected to.
  * 
  * @return The location of the input end that this output end is connected to.
  */
-public NetLocation getLocation()
-{
-return this.chan.getLocation();
-}
+        public NetLocation getLocation()
+        {
+            return this.chan.getLocation();
+        }
+
 /**
  * Writes an object to the underlying channel.
  * 
@@ -98,14 +101,15 @@ return this.chan.getLocation();
  * @//throws PoisonException
  *             Thrown if the channel has been poisoned.
  */
-public void write(Object object)
+        public void write(Object _object)
 //throws JCSPNetworkException, PoisonException
-{
-synchronized (this)
-{
-this.chan.write(object);
-}
-}
+        {
+            lock (this)
+            {
+                this.chan.write( _object);
+            }
+        }
+
 /**
  * Writes asynchronously to the underlying channel.
  * 
@@ -116,36 +120,38 @@ this.chan.write(object);
  * @//throws PoisonException
  *             Thrown is the channel has been poisoned
  */
-public void asyncWrite(Object object)
+        public void asyncWrite(Object _object)
 //throws JCSPNetworkException, PoisonException
-{
-synchronized (this)
-{
-this.chan.asyncWrite(object);
-}
-}
+        {
+            lock (this)
+            {
+                this.chan.asyncWrite(_object);
+            }
+        }
+
 /**
  * Removes the channel from the ChannelManager, and sets the state to DESTROYED
  */
-public void destroy()
-{
-synchronized (this)
-{
-this.chan.destroy();
-}
-}
+        public void destroy()
+        {
+            lock (this)
+            {
+                this.chan.destroy();
+            }
+        }
+
 /**
  * Sets the underlying message filter
  * 
  * @param encoder
  *            The new message filter to use
  */
-public void setEncoder(FilterTx encoder)
-{
-synchronized (this)
-{
-this.chan.setEncoder(encoder);
-}
-}
-}
+        public void setEncoder(FilterTx encoder)
+        {
+            lock (this)
+            {
+                this.chan.setEncoder(encoder);
+            }
+        }
+    }
 }

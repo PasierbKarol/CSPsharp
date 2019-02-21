@@ -132,7 +132,7 @@ namespace CSPnet2.NetChannel
             int vcn = 0;
             try
             {
-                if (str.equalsIgnoreCase("null"))
+                if (str.Equals("null", StringComparison.OrdinalIgnoreCase))
                     return null;
                 if (str.StartsWith("ncl://"))
                 {
@@ -150,6 +150,4 @@ namespace CSPnet2.NetChannel
             return new NetChannelLocation(nodeID, vcn);
         }
     }
-}
-
 }

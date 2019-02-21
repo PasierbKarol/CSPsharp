@@ -108,7 +108,7 @@ public sealed class NetConnectionLocation : NetLocation
      */
     public static NetConnectionLocation parse(String str)
     {
-        if (str.equalsIgnoreCase("null"))
+        if (str.Equals("null", StringComparison.OrdinalIgnoreCase))
             return null;
         if (str.StartsWith("nconnl://"))
         {

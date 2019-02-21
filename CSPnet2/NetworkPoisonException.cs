@@ -42,8 +42,9 @@ namespace CSPnet2
          * @param strength
          *            The strength of the poison
          */
-        protected NetworkPoisonException(int strength) : base(strength)
+        internal NetworkPoisonException(int strength) : base(strength)
         {
+            throw new NotImplementedException();
         }
     }
 }

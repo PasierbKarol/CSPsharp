@@ -63,7 +63,7 @@ sealed class ChannelManager
      * 
      * @return The singleton instance of the ChannelManager
      */
-    static ChannelManager getInstance()
+    internal static ChannelManager getInstance()
     {
         return instance;
     }
@@ -74,18 +74,21 @@ sealed class ChannelManager
      * @param cd
      *            The ChannelData for the channel
      */
-    synchronized void create(ChannelData cd)
+    /*synchronized*/ internal void create(ChannelData cd)
     {
         // First allocate a new number for the channel
-        Integer objIndex = new Integer(index);
-        while (this.channels.get(objIndex) != null)
-            objIndex = new Integer(++index);
+        int objIndex = index;
+        while (this.channels[objIndex] != null)
+        {
+            //objIndex = new Integer(++index);
+            ++index;
+        }
 
         // Set the index of the ChannelData
         cd.vcn = index;
 
         // Now put the channel in the channel Hashtable
-        this.channels.put(objIndex, cd);
+        this.channels.Add(objIndex, cd);
 
         // Finally increment the index for the next channel to be created
         index++;
@@ -101,19 +104,19 @@ sealed class ChannelManager
      * @//throws ArgumentException 
      *             If a channel of the given index already exists.
      */
-    synchronized void create(int idx, ChannelData cd)
+    /*synchronized*/ internal void create(int idx, ChannelData cd)
         //throws ArgumentException 
     {
         // First check that a channel of the given index does not exist. If it does, throw an exception
-        Integer objIndex = new Integer(idx);
-        if (this.channels.get(objIndex) != null)
+        int objIndex = idx;
+        if (this.channels[objIndex] != null)
             throw new ArgumentException ("Channel of given number already exists.");
 
         // Set the index of the channel data
         cd.vcn = idx;
 
         // Now add the channel to the channels table
-        this.channels.put(objIndex, cd);
+        this.channels.Add(objIndex, cd);
 
         // Update the index if necessary
         if (idx == ChannelManager.index)
@@ -127,10 +130,10 @@ sealed class ChannelManager
      *            Index in the table to retrieve the channel from.
      * @return The ChannelData object for the channel.
      */
-    ChannelData getChannel(int idx)
+    internal ChannelData getChannel(int idx)
     {
-        Integer objIndex = new Integer(idx);
-        return (ChannelData)this.channels.get(objIndex);
+        int objIndex = idx;
+        return (ChannelData)this.channels[objIndex];
     }
 
     /**
@@ -139,10 +142,10 @@ sealed class ChannelManager
      * @param data
      *            ChannelData for channel to remove
      */
-    void removeChannel(ChannelData data)
+    internal void removeChannel(ChannelData data)
     {
-        Integer objIndex = new Integer(data.vcn);
-        this.channels.remove(objIndex);
+        int objIndex = data.vcn;
+        this.channels.Remove(objIndex);
     }
 
 }

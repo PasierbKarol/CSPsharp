@@ -18,6 +18,8 @@
 //////////////////////////////////////////////////////////////////////
 
 using System;
+using CSPnet2.Net2Link;
+using CSPnet2.NetNode;
 
 namespace CSPnet2.NetChannel
 {
@@ -480,7 +482,7 @@ namespace CSPnet2.NetChannel
         //throws JCSPNetworkException
     {
         NetChannelLocation loc = new NetChannelLocation(nodeID, vcn);
-        return One2NetChannel.create(loc, Integer.MAX_VALUE, new ObjectNetworkMessageFilter.FilterTX());
+        return One2NetChannel.create(loc, Int32.MaxValue, new ObjectNetworkMessageFilter.FilterTX());
     }
 
     /**
@@ -522,7 +524,7 @@ namespace CSPnet2.NetChannel
         //throws JCSPNetworkException
     {
         NetChannelLocation loc = new NetChannelLocation(nodeID, vcn);
-        return One2NetChannel.create(loc, Integer.MAX_VALUE, filter);
+        return One2NetChannel.create(loc, Int32.MaxValue, filter);
     }
 
     /**
@@ -563,7 +565,7 @@ namespace CSPnet2.NetChannel
         //throws JCSPNetworkException
     {
         NetChannelLocation loc = new NetChannelLocation(nodeID, vcn);
-        return Any2NetChannel.create(loc, Integer.MAX_VALUE, new ObjectNetworkMessageFilter.FilterTX());
+        return Any2NetChannel.create(loc, Int32.MaxValue, new ObjectNetworkMessageFilter.FilterTX());
     }
 
     /**
@@ -605,7 +607,7 @@ namespace CSPnet2.NetChannel
         //throws JCSPNetworkException
     {
         NetChannelLocation loc = new NetChannelLocation(nodeID, vcn);
-        return Any2NetChannel.create(loc, Integer.MAX_VALUE, filter);
+        return Any2NetChannel.create(loc, Int32.MaxValue, filter);
     }
 
     /**
@@ -648,7 +650,7 @@ namespace CSPnet2.NetChannel
     {
         NodeID remoteNode = LinkFactory.getLink(nodeAddr).remoteID;
         NetChannelLocation loc = new NetChannelLocation(remoteNode, vcn);
-        return One2NetChannel.create(loc, Integer.MAX_VALUE, new ObjectNetworkMessageFilter.FilterTX());
+        return One2NetChannel.create(loc, Int32.MaxValue, new ObjectNetworkMessageFilter.FilterTX());
     }
 
     /**
@@ -692,7 +694,7 @@ namespace CSPnet2.NetChannel
     {
         NodeID remoteNode = LinkFactory.getLink(nodeAddr).remoteID;
         NetChannelLocation loc = new NetChannelLocation(remoteNode, vcn);
-        return One2NetChannel.create(loc, Integer.MAX_VALUE, filter);
+        return One2NetChannel.create(loc, Int32.MaxValue, filter);
     }
 
     /**
@@ -736,7 +738,7 @@ namespace CSPnet2.NetChannel
     {
         NodeID remoteNode = LinkFactory.getLink(nodeAddr).remoteID;
         NetChannelLocation loc = new NetChannelLocation(remoteNode, vcn);
-        return Any2NetChannel.create(loc, Integer.MAX_VALUE, new ObjectNetworkMessageFilter.FilterTX());
+        return Any2NetChannel.create(loc, Int32.MaxValue, new ObjectNetworkMessageFilter.FilterTX());
     }
 
     /**
@@ -780,7 +782,7 @@ namespace CSPnet2.NetChannel
     {
         NodeID remoteNode = LinkFactory.getLink(nodeAddr).remoteID;
         NetChannelLocation loc = new NetChannelLocation(remoteNode, vcn);
-        return Any2NetChannel.create(loc, Integer.MAX_VALUE, filter);
+        return Any2NetChannel.create(loc, Int32.MaxValue, filter);
     }
 
     /**
