@@ -18,7 +18,7 @@
 //////////////////////////////////////////////////////////////////////
 
 using System;
-using CSPnet2.Node;
+using CSPnet2.NetNode;
 
 namespace CSPnet2.Barriers
 {
@@ -45,109 +45,110 @@ namespace CSPnet2.Barriers
  * @see NetLocation
  * @author Kevin Chalmers
  */
-[Serializable]
-public sealed class NetBarrierLocation :NetLocation
-{
-    /**
-     * The SUID of this object. Required for Serialization.
-     */
-    private static readonly long serialVersionUID = 1L;
-
-    /**
-     * The NodeID portion of the location structure
-     */
-    private readonly NodeID nodeID;
-
-    /**
-     * The index portion of the location structure
-     */
-    private readonly int vbn;
-
-    /**
-     * Constructor to create a new NetBarrierLocation
-     * 
-     * @param aNodeID
-     *            The NodeID portion of the NetBarrierLocation
-     * @param aVBN
-     *            The index part of the NetBarrierLocation
-     */
-    public NetBarrierLocation(NodeID aNodeID, int aVBN)
+    [Serializable]
+    public sealed class NetBarrierLocation : NetLocation
     {
-        this.nodeID = aNodeID;
-        this.vbn = aVBN;
-    }
+        /**
+         * The SUID of this object. Required for Serialization.
+         */
+        private static readonly long serialVersionUID = 1L;
 
-    /**
-     * Gets the NodeID part of the location
-     * 
-     * @return The NodeID part of the NetBarrierLocation
-     */
-    public NodeID getNodeID()
-    {
-        return this.nodeID;
-    }
+        /**
+         * The NodeID portion of the location structure
+         */
+        private readonly NodeID nodeID;
 
-    /**
-     * Gets the NodeAddress part of the location
-     * 
-     * @return The NodeAddress part of the NetBarrierLocation
-     */
-    public NodeAddress getNodeAddress()
-    {
-        return this.nodeID.getNodeAddress();
-    }
+        /**
+         * The index portion of the location structure
+         */
+        private readonly int vbn;
 
-    /**
-     * Gets the index part of the location
-     * 
-     * @return The VBN part of the NetBarrierLocation
-     */
-    public int getVBN()
-    {
-        return this.vbn;
-    }
-
-    /**
-     * Returns the string representation of the NetBarrierLocation. This takes the form of nbl://[<I>NodeID</I>]/[<I>VBN</I>].
-     * This string representation has been created to allow other frameworks to interpret the NetBarrierLocation.
-     * 
-     * @return String representation of the NetBarrierLocation
-     */
-    public String toString()
-    {
-        return "nbl://" + this.nodeID.toString() + "/" + this.vbn;
-    }
-
-    /**
-     * Takes the string representation of a NetBarrierLocation and converts it back into an object for usage by JCSP.
-     * 
-     * @param str
-     *            The string representation of the NetBarrierLocation
-     * @return A NetBarrierLocation produced from a String representation
-     * @throws IllegalArgumentException
-     *             Thrown if a non NetBarrierLocation is attempted to be parsed
-     */
-    public static NetBarrierLocation parse(String str)
-        throws IllegalArgumentException
-    {
-        if (str.equalsIgnoreCase("null"))
-            return null;
-        // Check that the string starts with nbl://
-        if (str.startsWith("nbl://"))
+        /**
+         * Constructor to create a new NetBarrierLocation
+         * 
+         * @param aNodeID
+         *            The NodeID portion of the NetBarrierLocation
+         * @param aVBN
+         *            The index part of the NetBarrierLocation
+         */
+        public NetBarrierLocation(NodeID aNodeID, int aVBN)
         {
-            // Take the off the starting part of the string
-            String toParse = str.substring(6);
-            // Split the string in two
-            int index = toParse.indexOf("/");
-            // Parse the NodeID portion
-            NodeID nodeID = NodeID.parse(toParse.substring(0, index));
-            // Parse the VBN portion
-            int vcn = Integer.parseInt(toParse.substring(index + 1));
-            // Return a new NetBarrierLocation created from the two parts
-            return new NetBarrierLocation(nodeID, vcn);
+            this.nodeID = aNodeID;
+            this.vbn = aVBN;
         }
-        // We don't have a NetBarrierLocation
-        throw new IllegalArgumentException("String is not a string form of a NetBarrierLocation");
+
+        /**
+         * Gets the NodeID part of the location
+         * 
+         * @return The NodeID part of the NetBarrierLocation
+         */
+        public override NodeID getNodeID()
+        {
+            return this.nodeID;
+        }
+
+        /**
+         * Gets the NodeAddress part of the location
+         * 
+         * @return The NodeAddress part of the NetBarrierLocation
+         */
+        public override NodeAddress getNodeAddress()
+        {
+            return this.nodeID.getNodeAddress();
+        }
+
+        /**
+         * Gets the index part of the location
+         * 
+         * @return The VBN part of the NetBarrierLocation
+         */
+        public int getVBN()
+        {
+            return this.vbn;
+        }
+
+        /**
+         * Returns the string representation of the NetBarrierLocation. This takes the form of nbl://[<I>NodeID</I>]/[<I>VBN</I>].
+         * This string representation has been created to allow other frameworks to interpret the NetBarrierLocation.
+         * 
+         * @return String representation of the NetBarrierLocation
+         */
+        public String toString()
+        {
+            return "nbl://" + this.nodeID.toString() + "/" + this.vbn;
+        }
+
+        /**
+         * Takes the string representation of a NetBarrierLocation and converts it back into an object for usage by JCSP.
+         * 
+         * @param str
+         *            The string representation of the NetBarrierLocation
+         * @return A NetBarrierLocation produced from a String representation
+         * @throws IllegalArgumentException
+         *             Thrown if a non NetBarrierLocation is attempted to be parsed
+         */
+        public static NetBarrierLocation parse(String str)
+            //throws ArgumentException
+        {
+            if (str.Equals("null", StringComparison.OrdinalIgnoreCase))
+                return null;
+            // Check that the string starts with nbl://
+            if (str.StartsWith("nbl://"))
+            {
+                // Take the off the starting part of the string
+                String toParse = str.Substring(6);
+                // Split the string in two
+                int index = toParse.IndexOf("/");
+                // Parse the NodeID portion
+                NodeID nodeID = NodeID.parse(toParse.Substring(0, index));
+                // Parse the VBN portion
+                int vcn = Int32.Parse(toParse.Substring(index + 1));
+                // Return a new NetBarrierLocation created from the two parts
+                return new NetBarrierLocation(nodeID, vcn);
+            }
+
+            // We don't have a NetBarrierLocation
+            throw new ArgumentException("String is not a string form of a NetBarrierLocation");
+        }
     }
-}
 }

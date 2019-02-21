@@ -37,7 +37,7 @@ sealed class ChannelData
     /**
      * The virtual channel number. A unique number on the Node for identifying a channel.
      */
-    int vcn = -1;
+    internal int vcn = -1;
 
     /**
      * The current state of the channel.

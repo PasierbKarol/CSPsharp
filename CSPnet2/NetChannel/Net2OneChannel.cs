@@ -159,7 +159,7 @@ sealed class Net2OneChannel : NetAltingChannelInput
         this.in = input;
         this.data = chanData;
         this.data.state = ChannelDataState.OK_INPUT;
-        this.location = new NetChannelLocation(Node.getInstance().getNodeID(), this.data.vcn);
+        this.location = new NetChannelLocation(NetNode.getInstance().getNodeID(), this.data.vcn);
         this.messageFilter = filter;
     }
 

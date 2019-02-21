@@ -19,7 +19,7 @@
 //////////////////////////////////////////////////////////////////////
 
 using System;
-using CSPnet2.Node;
+using CSPnet2.NetNode;
 
 namespace CSPnet2.TCPIP
 {

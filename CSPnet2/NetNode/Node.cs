@@ -18,8 +18,10 @@
 //////////////////////////////////////////////////////////////////////
 
 using System;
+using CSPlang;
+using CSPnet2.Net2Link;
 
-namespace CSPnet2.Node
+namespace CSPnet2.NetNode
 {
 
 //    import java.io.OutputStream;
@@ -103,7 +105,7 @@ public sealed class Node
      * @throws JCSPNetworkException
      */
     public NodeKey init(NodeAddress addr)
-        throws JCSPNetworkException
+        //throws JCSPNetworkException
     {
         return this.init("", addr);
     }
@@ -115,7 +117,7 @@ public sealed class Node
      * @throws JCSPNetworkException
      */
     public NodeKey init(String name, NodeAddress addr)
-        throws JCSPNetworkException
+        //throws JCSPNetworkException
     {
         Node.log.log(this.getClass(), "Node initialisation begun");
         if (this.initialized)
@@ -135,7 +137,7 @@ public sealed class Node
      * @throws JCSPNetworkException
      */
     public NodeKey init(NodeFactory factory)
-        throws JCSPNetworkException
+        //throws JCSPNetworkException
     {
         Node.log.log(this.getClass(), "Node initialisation begun");
         if (this.initialized)
@@ -174,52 +176,6 @@ public sealed class Node
         err = new Logger(stream);
     }
 
-    /**
-     * @author Kevin Chalmers
-     */
-    public static class Logger
-    {
-        /**
-         * 
-         */
-        private final PrintWriter logger;
-
-        /**
-         * 
-         */
-        Logger()
-        {
-            this.logger = null;
-        }
-
-        /**
-         * @param stream
-         */
-        Logger(OutputStream stream)
-        {
-            this.logger = new PrintWriter(stream);
-        }
-
-        /**
-         * @param clazz
-         * @param message
-         */
-        public synchronized void log(Class clazz, String message)
-        {
-            if (this.logger == null)
-                return;
-            Date date = new Date(System.currentTimeMillis());
-            try
-            {
-                this.logger.println("(" + date.toString() + ")-" + clazz.getName() + ":");
-                this.logger.println("\t\"" + message + "\"");
-                this.logger.flush();
-            }
-            catch (Exception e)
-            {
-                // Do nothing
-            }
-        }
-    }
+    
 }
 }

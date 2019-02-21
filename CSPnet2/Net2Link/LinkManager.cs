@@ -20,7 +20,7 @@
 using System;
 using System.Collections;
 using CSPlang;
-using CSPnet2.Node;
+using CSPnet2.NetNode;
 using CSPutil;
 
 namespace CSPnet2.Net2Link
@@ -77,7 +77,7 @@ namespace CSPnet2.Net2Link
      * 
      * @return The singleton instance of the LinkManager
      */
-    static LinkManager getInstance()
+    internal static LinkManager getInstance()
     {
         return instance;
     }
@@ -90,10 +90,10 @@ namespace CSPnet2.Net2Link
      * @param link
      *            The Link that has been lost.
      */
-    synchronized void lostLink(Link link)
+    /*synchronized*/ void lostLink(Link link)
     {
         // First remove the Link from the links table, using the Link's NodeID
-        Link removed = (Link)links.remove(link.remoteID);
+        Link removed = (Link)links.Remove(link.remoteID);
 
         // Now check if the Link was indeed removed. Unlikely to happened, but the Link may have been previously removed
         // meaning we have achieved nothing
@@ -115,7 +115,7 @@ namespace CSPnet2.Net2Link
      *            The Link to register.
      * @return True if a Link to the Node does not yet exist, false otherwise.
      */
-    synchronized Boolean registerLink(Link link)
+    /*synchronized*/ Boolean registerLink(Link link)
     {
         // Log the registration attempt
         Node.log.log(this.getClass(), "Trying to register Link to: " + link.remoteID);
@@ -124,7 +124,7 @@ namespace CSPnet2.Net2Link
         NodeID remoteID = link.remoteID;
 
         // Now check whether the key has been registered in the Links table
-        if (links.containsKey(remoteID))
+        if (links.ContainsKey(remoteID))
         {
             // Connection to the Node already exists. Log.
             Node.err.log(this.getClass(), "Failed to register Link to " + link.remoteID
@@ -138,7 +138,7 @@ namespace CSPnet2.Net2Link
         Node.log.log(this.getClass(), "Link established to: " + link.remoteID);
 
         // Add the Link to the links table
-        links.put(link.remoteID, link);
+        links.Add(link.remoteID, link);
 
         // Return true
         return true;
@@ -151,9 +151,9 @@ namespace CSPnet2.Net2Link
      *            The NodeID of the remote node
      * @return The Link for the given NodeID
      */
-    synchronized Link requestLink(NodeID id)
+    /*synchronized*/ internal Link requestLink(NodeID id)
     {
-        return (Link)links.get(id);
+        return (Link)links[id];
     }
 
     /**
@@ -161,16 +161,16 @@ namespace CSPnet2.Net2Link
      * 
      * @return A input end for receiving Link Lost Events.
      */
-    synchronized AltingChannelInput getLinkLostEventChannel()
+    /*synchronized*/ AltingChannelInput getLinkLostEventChannel()
     {
         // Create a new infinitely buffered one to one channel
-        final One2OneChannel eventChan = Channel.one2one(new InfiniteBuffer());
+        One2OneChannel eventChan = Channel.one2one(new InfiniteBuffer());
 
         // Add the output end to the list of event channels
-        eventChans.add(eventChan.out());
+        eventChans.Add(eventChan.Out());
 
         // Return the input end
-        return eventChan.in();
+        return eventChan.In();
     }
 
 }

@@ -23,7 +23,8 @@ using System.Threading.Tasks;
 using CSPlang;
 using CSPlang.Any2;
 using CSPnet2.Barriers;
-using CSPnet2.Node;
+using CSPnet2.NetChannel;
+using CSPnet2.NetNode;
 
 namespace CSPnet2.Net2Link
 {
@@ -126,7 +127,7 @@ namespace CSPnet2.Net2Link
      */
     protected /*final*/ ChannelOutput getTxChannel()
     {
-        return this.txChannel.out();
+        return this.txChannel.Out();
     }
 
     /**
@@ -255,15 +256,15 @@ namespace CSPnet2.Net2Link
     void deRegisterChannel(ChannelData data)
     {
         // Acquire a lock on the Link.
-        synchronized (this)
+        lock (this)
         {
             // All we need to do is ensure that the Hashtable of connected channels still exists. It is unlikely that
             // this occurrence can happen, but destroy may be called on the channel as the Link is going down.
             if (this.connectedOutputs != null)
             {
                 // Remove the channel from the registered channels Hashtable
-                Integer objIndex = new Integer(data.vcn);
-                this.connectedOutputs.remove(objIndex);
+                int objIndex = data.vcn;
+                this.connectedOutputs.Remove(objIndex);
             }
         }
     }
@@ -274,10 +275,10 @@ namespace CSPnet2.Net2Link
      * @param data
      *            The barrier to register with the Link
      */
-    void registerBarrier(BarrierData data)
+    internal void registerBarrier(BarrierData data)
     {
         // Acquire lock on the Link
-        synchronized (this)
+        lock (this)
         {
             // Check that the Link is still up. If it isn't, then we inform the Barrier.
             // *IMPLEMENTATION NOTE*: Technically, we could either throw an exception or return a error message here.
@@ -346,7 +347,7 @@ namespace CSPnet2.Net2Link
                 // Something went wrong during connection. Stop Link
                 System.out.println(jne.getMessage());
                 jne.printStackTrace();
-                Node.err.log(this.getClass(), "Failed to connect Link to " + this.remoteID);
+                NetNode.err.log(this.getClass(), "Failed to connect Link to " + this.remoteID);
                 return;
             }
         }

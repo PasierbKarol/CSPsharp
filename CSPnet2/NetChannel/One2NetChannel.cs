@@ -127,7 +127,7 @@ sealed class One2NetChannel : NetChannelOutput
         ChannelOutput toLink;
 
         // Check if this is a local link, and if so connect directly to the input channel
-        if (loc.getNodeID().equals(Node.getInstance().getNodeID()))
+        if (loc.getNodeID().equals(NetNode.getInstance().getNodeID()))
         {
             toLink = ChannelManager.getInstance().getChannel(loc.getVCN()).toChannel;
             return new One2NetChannel(chan.in(), toLink, null, data, loc, immunity, filter);

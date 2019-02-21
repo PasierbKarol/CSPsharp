@@ -23,7 +23,7 @@ using CSPlang;
 using CSPnet2.Barriers;
 using CSPnet2.BNS;
 using CSPnet2.NetChannel;
-using CSPnet2.Node;
+using CSPnet2.NetNode;
 
 namespace CSPnet2.BNS
 {
@@ -97,7 +97,7 @@ public class BNS : IamCSProcess
     /**
      * A channel used to receive incoming link lost notifications
      */
-    private readonly AltingChannelInput lostLink = Node.getInstance().getLinkLostEventChannel();
+    private readonly AltingChannelInput lostLink = NetNode.getInstance().getLinkLostEventChannel();
 
     /**
      * Private empty constructor

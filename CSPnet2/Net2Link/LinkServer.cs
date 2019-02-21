@@ -19,7 +19,7 @@
 
 using System;
 using CSPlang;
-using CSPnet2.Node;
+using CSPnet2.NetNode;
 
 namespace CSPnet2.Net2Link
 {
@@ -41,12 +41,12 @@ namespace CSPnet2.Net2Link
     public static /*final*/ void start(NodeAddress address)
         throws IllegalArgumentException, JCSPNetworkException
     {
-        Node.log.log(LinkServer.class, "Attempting to start Link Server on " + address);
+        NetNode.log.log(LinkServer.class, "Attempting to start Link Server on " + address);
         LinkServer linkServer = address.createLinkServer();
         ProcessManager linkServProc = new ProcessManager(linkServer);
         linkServProc.setPriority(Link.LINK_PRIORITY);
         linkServProc.start();
-        Node.log.log(LinkServer.class, "Link Server started on " + address);
+        NetNode.log.log(LinkServer.class, "Link Server started on " + address);
     }
 
     /**

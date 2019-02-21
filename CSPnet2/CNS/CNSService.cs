@@ -19,7 +19,7 @@
 
 using System;
 using CSPnet2.NetChannel;
-using CSPnet2.Node;
+using CSPnet2.NetNode;
 
 namespace CSPnet2.CNS
 {
@@ -77,10 +77,10 @@ public sealed class CNSService
         // Check if we logged on OK
         if (logonReply.success == false)
         {
-            Node.err.log(this.getClass(), "Failed to logon to CNS");
+            NetNode.err.log(this.getClass(), "Failed to logon to CNS");
             throw new JCSPNetworkException("Failed to Logon to CNS");
         }
-        Node.log.log(this.getClass(), "Logged into CNS");
+        NetNode.log.log(this.getClass(), "Logged into CNS");
     }
 
     /**

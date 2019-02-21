@@ -36,38 +36,39 @@ sealed class ConnectionManager
 
     }
 
-    static ConnectionManager getInstance()
+    internal static ConnectionManager getInstance()
     {
         return instance;
     }
 
-    synchronized void create(ConnectionData data)
+    /*synchronized*/ internal void create(ConnectionData data)
     {
-        Integer objIndex = new Integer(index);
-        while (this.connections.get(objIndex) != null)
+        int objIndex = index;
+        while (this.connections[objIndex] != null)
         {
-            objIndex = new Integer(++index);
+            //objIndex = new Integer(++index);
+            ++index;
         }
 
         data.vconnn = index;
 
-        this.connections.put(objIndex, data);
+        this.connections.Add(objIndex, data);
 
         index++;
     }
 
-    synchronized void create(int idx, ConnectionData data)
-        throws IllegalArgumentException
+    /*synchronized*/ internal void create(int idx, ConnectionData data)
+        //throws IllegalArgumentException
     {
-        Integer objIndex = new Integer(idx);
-        if (this.connections.get(objIndex) != null)
+        int objIndex = idx;
+        if (this.connections[objIndex] != null)
         {
-            throw new IllegalArgumentException("Connection of given number already exists");
+            throw new ArgumentException("Connection of given number already exists");
         }
 
         data.vconnn = idx;
 
-        this.connections.put(objIndex, data);
+        this.connections.Add(objIndex, data);
 
         if (idx == ConnectionManager.index)
         {
@@ -75,16 +76,16 @@ sealed class ConnectionManager
         }
     }
 
-    ConnectionData getConnection(int idx)
+    internal ConnectionData getConnection(int idx)
     {
-        Integer objIndex = new Integer(idx);
-        return (ConnectionData)this.connections.get(objIndex);
+        int objIndex = idx;
+        return (ConnectionData)this.connections[objIndex];
     }
 
-    void removeConnection(ConnectionData data)
+    internal void removeConnection(ConnectionData data)
     {
-        Integer objIndex = new Integer(data.vconnn);
-        this.connections.remove(objIndex);
+        int objIndex =data.vconnn;
+        this.connections.Remove(objIndex);
     }
 }
 }

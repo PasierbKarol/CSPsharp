@@ -18,13 +18,14 @@
 //////////////////////////////////////////////////////////////////////
 
 using System;
+using System.IO;
 using CSPlang;
 using CSPlang.Alting;
 using CSPlang.Any2;
 using CSPnet2;
-using CSPnet2.Link;
+using CSPnet2.Net2Link;
 using CSPnet2.NetConnection;
-using CSPnet2.Node;
+using CSPnet2.NetNode;
 using CSPutil;
 
 namespace CSPnet2
@@ -43,7 +44,7 @@ public sealed class NetAltingConnectionClient : AltingConnectionClient, NetConne
 {
     private readonly AltingChannelInput In;
     private readonly ChannelOutput toLinkTX;
-    private readonly Link.Link linkConnectedTo;
+    private readonly Link linkConnectedTo;
     private readonly NetConnectionLocation serverLocation;
     private readonly NetConnectionLocation localLocation;
     private readonly ConnectionData localConnection;
@@ -52,9 +53,8 @@ public sealed class NetAltingConnectionClient : AltingConnectionClient, NetConne
     private readonly NetworkMessageFilter.FilterRx inputFilter;
     private readonly ConnectionData data;
 
-    static NetAltingConnectionClient create(NetConnectionLocation loc, NetworkMessageFilter.FilterTx filterTX,
-                                            NetworkMessageFilter.FilterRx filterRX)
-        throws JCSPNetworkException
+    static NetAltingConnectionClient create(NetConnectionLocation loc, NetworkMessageFilter.FilterTx filterTX, NetworkMessageFilter.FilterRx filterRX)
+        //throws JCSPNetworkException
     {
         // Create the connection data structure
         ConnectionData data = new ConnectionData();
@@ -62,7 +62,7 @@ public sealed class NetAltingConnectionClient : AltingConnectionClient, NetConne
         // Create channel linking this to the Link level. This channel is used to receive response and
         // acknowledgement messages
         Any2OneChannel chan = Channel.any2one(new InfiniteBuffer());
-        data.toConnection = chan.out();
+        data.toConnection = chan.Out();
 
         // Set state of connection
         data.state = ConnectionDataState.CLIENT_STATE_CLOSED;
@@ -74,7 +74,7 @@ public sealed class NetAltingConnectionClient : AltingConnectionClient, NetConne
         if (loc.getNodeID().equals(Node.getInstance().getNodeID()))
         {
             toLink = ConnectionManager.getInstance().getConnection(loc.getVConnN()).toConnection;
-            return new NetAltingConnectionClient(chan.in(), toLink, null, data, loc, filterTX, filterRX);
+            return new NetAltingConnectionClient(chan.In(), toLink, null, data, loc, filterTX, filterRX);
         }
 
         Link link = LinkManager.getInstance().requestLink(loc.getNodeID());
@@ -86,16 +86,15 @@ public sealed class NetAltingConnectionClient : AltingConnectionClient, NetConne
 
         toLink = link.getTxChannel();
 
-        return new NetAltingConnectionClient(chan.in(), toLink, link, data, loc, filterTX, filterRX);
+        return new NetAltingConnectionClient(chan.In(), toLink, link, data, loc, filterTX, filterRX);
     }
 
     private NetAltingConnectionClient(AltingChannelInput input, ChannelOutput toLink, Link link,
-                                      ConnectionData connData, NetConnectionLocation loc, NetworkMessageFilter.FilterTx filterTX,
-                                      NetworkMessageFilter.FilterRx filterRX)
+ConnectionData connData, NetConnectionLocation loc, NetworkMessageFilter.FilterTx filterTX,
+                                      NetworkMessageFilter.FilterRx filterRX) : base(input)
     {
-        super(input);
         this.toLinkTX = toLink;
-        this.in = input;
+        this.In = input;
         this.data = connData;
         this.serverLocation = loc;
         this.localLocation = new NetConnectionLocation(Node.getInstance().getNodeID(), connData.vconnn);
@@ -118,11 +117,11 @@ public sealed class NetAltingConnectionClient : AltingConnectionClient, NetConne
         }
     }
 
-    public boolean isOpen()
-        throws IllegalStateException, JCSPNetworkException
+    public Boolean isOpen()
+        //throws IllegalStateException, JCSPNetworkException
     {
         if (this.data.state == ConnectionDataState.CLIENT_STATE_MADE_REQ)
-            throw new IllegalStateException("Can only call isOpen after a reply has been received from the server");
+            throw new InvalidOperationException ("Can only call isOpen after a reply has been received from the server");
         if (this.data.state == ConnectionDataState.DESTROYED)
             throw new JCSPNetworkException("Client connection end has been destroyed");
         if (this.data.state == ConnectionDataState.BROKEN)
@@ -131,10 +130,10 @@ public sealed class NetAltingConnectionClient : AltingConnectionClient, NetConne
     }
 
     public Object reply()
-        throws IllegalStateException, JCSPNetworkException
+        //throws IllegalStateException, JCSPNetworkException
     {
         if (this.data.state != ConnectionDataState.CLIENT_STATE_MADE_REQ)
-            throw new IllegalStateException("Can only call reply() after a request()");
+            throw new InvalidOperationException ("Can only call reply() after a request()");
         if (this.data.state == ConnectionDataState.DESTROYED)
             throw new JCSPNetworkException("Client connection end has been destroyed");
         if (this.data.state == ConnectionDataState.BROKEN)
@@ -142,11 +141,11 @@ public sealed class NetAltingConnectionClient : AltingConnectionClient, NetConne
 
         while (true)
         {
-            NetworkMessage msg = (NetworkMessage)this.in.read();
+            NetworkMessage msg = (NetworkMessage)this.In.read();
 
             try
             {
-                synchronized (this.data)
+                lock (this.data)
                 {
                     switch (msg.type)
                     {
@@ -202,22 +201,22 @@ public sealed class NetAltingConnectionClient : AltingConnectionClient, NetConne
     }
 
     public void request(Object obj)
-        throws IllegalStateException, JCSPNetworkException
+       // throws IllegalStateException, JCSPNetworkException
     {
         if (this.data.state == ConnectionDataState.CLIENT_STATE_MADE_REQ)
-            throw new IllegalStateException("Cannot call request(Object) twice without calling reply()");
+            throw new InvalidOperationException ("Cannot call request(Object) twice without calling reply()");
         if (this.data.state == ConnectionDataState.DESTROYED)
             throw new JCSPNetworkException("Client connection end has been destroyed");
         if (this.data.state == ConnectionDataState.BROKEN)
             throw new JCSPNetworkException("Client connection end has broken");
 
-        if (this.in.pending())
+        if (this.In.pending())
         {
-            NetworkMessage msg = (NetworkMessage)this.in.read();
+            NetworkMessage message = (NetworkMessage)this.In.read();
 
-            synchronized (this.data)
+            lock (this.data)
             {
-                if (msg.type == NetworkProtocol.LINK_LOST)
+                if (message.type == NetworkProtocol.LINK_LOST)
                 {
                     this.data.state = ConnectionDataState.BROKEN;
                     ConnectionManager.getInstance().removeConnection(this.data);
@@ -246,7 +245,7 @@ public sealed class NetAltingConnectionClient : AltingConnectionClient, NetConne
         {
             msg.data = this.outputFilter.filterTX(obj);
 
-            synchronized (this.data)
+            lock (this.data)
             {
                 this.data.state = ConnectionDataState.CLIENT_STATE_MADE_REQ;
             }
@@ -257,7 +256,7 @@ public sealed class NetAltingConnectionClient : AltingConnectionClient, NetConne
             }
             else
             {
-                synchronized (this.localConnection)
+                lock (this.localConnection)
                 {
                     switch (this.localConnection.state)
                     {
@@ -281,7 +280,7 @@ public sealed class NetAltingConnectionClient : AltingConnectionClient, NetConne
             throw new JCSPNetworkException("Error when trying to convert the message for sending");
         }
 
-        NetworkMessage reply = (NetworkMessage)this.in.read();
+        NetworkMessage reply = (NetworkMessage)this.In.read();
 
         if (reply.type == NetworkProtocol.REJECT_CONNECTION)
         {
@@ -308,16 +307,16 @@ public sealed class NetAltingConnectionClient : AltingConnectionClient, NetConne
 
     public void destroy()
     {
-        synchronized (this.data)
+        lock (this.data)
         {
             this.data.state = ConnectionDataState.DESTROYED;
             ConnectionManager.getInstance().removeConnection(this.data);
             // TODO: deregistration from link
 
             // Deal with left over messages
-            while (this.in.pending())
+            while (this.In.pending())
             {
-                NetworkMessage msg = (NetworkMessage)this.in.read();
+                NetworkMessage msg = (NetworkMessage)this.In.read();
                 switch (msg.type)
                 {
                     case NetworkProtocol.REPLY:
@@ -358,7 +357,7 @@ public sealed class NetAltingConnectionClient : AltingConnectionClient, NetConne
         return this.localLocation;
     }
 
-    final ConnectionData getConnectionData()
+    /*final*/ ConnectionData getConnectionData()
     {
         return this.data;
     }

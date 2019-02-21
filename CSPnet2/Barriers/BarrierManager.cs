@@ -66,7 +66,7 @@ sealed class BarrierManager
      * 
      * @return The singleton instance of the BarrierManager
      */
-    static BarrierManager getInstance()
+    internal static BarrierManager getInstance()
     {
         return instance;
     }
@@ -77,18 +77,21 @@ sealed class BarrierManager
      * @param bd
      *            The BarrierData for the Barrier
      */
-    synchronized void create(BarrierData bd)
+    /*synchronized*/ internal void create(BarrierData bd)
     {
         // First allocate the next available number for the Barrier index (VBN).
-        Integer objIndex = new Integer(index);
-        while (this.barriers.get(objIndex) != null)
-            objIndex = new Integer(++index);
+        int objIndex = index;
+        while (this.barriers[objIndex] != null)
+        {
+            //objIndex = new Integer(++index);
+            ++index;
+        }
 
         // Now set the index of the BarrierData to the required index
         bd.vbn = index;
 
         // And add the BarrierData at the given index in the Hashtable
-        this.barriers.put(objIndex, bd);
+        this.barriers.Add(objIndex, bd);
 
         // Increment the index for the next allocation
         index++;
@@ -104,20 +107,20 @@ sealed class BarrierManager
      * @throws IllegalArgumentException
      *             If a barrier of the given index already exists.
      */
-    synchronized void create(int idx, BarrierData bd)
-        throws IllegalArgumentException
+    /*synchronized*/ internal void create(int idx, BarrierData bd)
+        //throws IllegalArgumentException
     {
-        Integer objIndex = new Integer(idx);
+        int objIndex = idx;
 
         // First, ensure that no barrier of the given index already exists. If it does, throw an exception
-        if (this.barriers.get(objIndex) != null)
-            throw new IllegalArgumentException("Barrier of given number already exists.");
+        if (this.barriers[objIndex] != null)
+            throw new ArgumentException("Barrier of given number already exists.");
 
         // Now allocate the index to the BarrierData object
         bd.vbn = idx;
 
         // And put the new barrier into the list of barriers, and increment the next index if necessary
-        this.barriers.put(objIndex, bd);
+        this.barriers.Add(objIndex, bd);
         if (idx == BarrierManager.index)
             BarrierManager.index++;
     }
@@ -129,10 +132,10 @@ sealed class BarrierManager
      *            Index in the table to retrieve the barrier from.
      * @return The BarrierData object for the barrier.
      */
-    BarrierData getBarrier(int idx)
+    internal BarrierData getBarrier(int idx)
     {
-        Integer objIndex = new Integer(idx);
-        return (BarrierData)this.barriers.get(objIndex);
+        int objIndex = idx;
+        return (BarrierData)this.barriers[objIndex];
     }
 
     /**
@@ -143,8 +146,8 @@ sealed class BarrierManager
      */
     void removeBarrier(BarrierData data)
     {
-        Integer objIndex = new Integer(data.vbn);
-        this.barriers.remove(objIndex);
+        int objIndex = data.vbn;
+        this.barriers.Remove(objIndex);
     }
 }
 }

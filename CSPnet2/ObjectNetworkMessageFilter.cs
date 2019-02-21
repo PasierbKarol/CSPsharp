@@ -24,9 +24,9 @@ using CSPnet2;
 
 namespace CSPnet2
 {
-    import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+//    import java.io.IOException;
+//import java.io.ObjectInputStream;
+//import java.io.ObjectOutputStream;
 
 /**
  * This class is the standard encoding and decoding filter for networked JCSP channels. It uses standard Java
@@ -46,7 +46,10 @@ public sealed class ObjectNetworkMessageFilter
      * 
      * @author Kevin Chalmers
      */
-    public static final class FilterRX : NetworkMessageFilter.FilterRx
+/**
+ * Static classes are sealed by default in C#
+ */
+    public static /*sealed*/ class FilterRX : NetworkMessageFilter.FilterRx
     {
         /**
          * These four bytes represent the normal header expected in Java for object streams
@@ -94,7 +97,7 @@ public sealed class ObjectNetworkMessageFilter
          *             Thrown of something goes wrong during the decoding
          */
         public Object filterRX(byte[] bytes)
-            throws IOException
+            //throws IOException
         {
             try
             {
@@ -117,17 +120,17 @@ public sealed class ObjectNetworkMessageFilter
      * 
      * @author Kevin Chalmers
      */
-    public static final class FilterTX : NetworkMessageFilter.FilterTx
+    public static /*final*/ class FilterTX : NetworkMessageFilter.FilterTx
     {
         /**
          * The output stream to get the bytes from
          */
-        private final ResettableByteArrayOutputStream baos;
+        private readonly ResettableByteArrayOutputStream baos;
 
         /**
          * The ObjectOutputStream connected to the byte stream to allow the serialization of objects
          */
-        private final ObjectOutputStream oos;
+        private readonly ObjectOutputStream oos;
 
         /**
          * Creates a new encoding object filter
@@ -157,7 +160,7 @@ public sealed class ObjectNetworkMessageFilter
          *             Thrown if something goes wrong during the serialization
          */
         public byte[] filterTX(Object obj)
-            throws IOException
+           // throws IOException
         {
             // First we reset the byte buffer to the buffer size, just in case a previous message caused it to grow
             this.baos.reset(ObjectNetworkMessageFilter.BUFFER_SIZE);

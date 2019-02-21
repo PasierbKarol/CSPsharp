@@ -22,7 +22,7 @@ using System;
 namespace CSPnet2
 {
 
-    import java.io.ByteArrayOutputStream;
+    //import java.io.ByteArrayOutputStream;
 
 /**
  * This class is used by the ObjectNetworkMessageFilter. It acts as a normal ByteArrayOutputStream, but allows the
@@ -38,9 +38,8 @@ sealed class ResettableByteArrayOutputStream : ByteArrayOutputStream
      * @param size
      *            The size of the internal buffer
      */
-    ResettableByteArrayOutputStream(int size)
+    ResettableByteArrayOutputStream(int size) : base(size)
     {
-        super(size);
     }
 
     /**

@@ -25,12 +25,9 @@ namespace CSPnet2.NetConnection
 {
     sealed class ConnectionData
     {
-        int vconnn = -1;
-
-        byte state = ConnectionDataState.INACTIVE;
-
-        ChannelOutput toConnection = null;
-
-        ChannelOutput openServer = null;
+        internal int vconnn = -1;
+        internal byte state = ConnectionDataState.INACTIVE;
+        internal ChannelOutput toConnection = null;
+        internal ChannelOutput openServer = null;
     }
 }

@@ -20,7 +20,7 @@
 using System;
 using CSPnet2.Barriers;
 using CSPnet2.NetChannel;
-using CSPnet2.Node;
+using CSPnet2.NetNode;
 
 namespace CSPnet2.BNS
 {
@@ -80,10 +80,10 @@ public sealed class BNSService
         // Check if we logged on OK
         if (logonReply.success == false)
         {
-            Node.err.log(this.getClass(), "Failed to logon to BNS");
+            NetNode.err.log(this.getClass(), "Failed to logon to BNS");
             throw new JCSPNetworkException("Failed to logon to BNS");
         }
-        Node.log.log(this.getClass(), "Logged into BNS");
+        NetNode.log.log(this.getClass(), "Logged into BNS");
     }
 
     /**

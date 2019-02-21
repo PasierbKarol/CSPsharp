@@ -22,9 +22,9 @@ using CSPlang;
 using CSPlang.Alting;
 using CSPlang.Any2;
 using CSPnet2;
-using CSPnet2.Link;
+using CSPnet2.Net2Link;
 using CSPnet2.NetConnection;
-using CSPnet2.Node;
+using CSPnet2.NetNode;
 using CSPutil;
 
 namespace CSPnet2
@@ -56,16 +56,16 @@ public sealed class NetAltingConnectionServer : AltingConnectionServer, NetConne
 
     static NetAltingConnectionServer create(int index, NetworkMessageFilter.FilterRx filterRX,
             NetworkMessageFilter.FilterTx filterTX)
-        throws IllegalArgumentException
+        //throws IllegalArgumentException
     {
         ConnectionData data = new ConnectionData();
         Any2OneChannel requestChan = Channel.any2one(new InfiniteBuffer());
         Any2OneChannel openChan = Channel.any2one(new InfiniteBuffer());
-        data.toConnection = requestChan.out();
-        data.openServer = openChan.out();
+        data.toConnection = requestChan.Out();
+        data.openServer = openChan.Out();
         data.state = ConnectionDataState.SERVER_STATE_CLOSED;
         ConnectionManager.getInstance().create(index, data);
-        return new NetAltingConnectionServer(openChan.in(), requestChan.in(), data, filterRX, filterTX);
+        return new NetAltingConnectionServer(openChan.In(), requestChan.In(), data, filterRX, filterTX);
     }
 
     static NetAltingConnectionServer create(NetworkMessageFilter.FilterRx filterRX,
@@ -74,18 +74,17 @@ public sealed class NetAltingConnectionServer : AltingConnectionServer, NetConne
         ConnectionData data = new ConnectionData();
         Any2OneChannel requestChan = Channel.any2one(new InfiniteBuffer());
         Any2OneChannel openChan = Channel.any2one(new InfiniteBuffer());
-        data.toConnection = requestChan.out();
-        data.openServer = openChan.out();
+        data.toConnection = requestChan.Out();
+        data.openServer = openChan.Out();
         data.state = ConnectionDataState.SERVER_STATE_CLOSED;
         ConnectionManager.getInstance().create(data);
-        return new NetAltingConnectionServer(openChan.in(), requestChan.in(), data, filterRX, filterTX);
+        return new NetAltingConnectionServer(openChan.In(), requestChan.In(), data, filterRX, filterTX);
     }
 
     private NetAltingConnectionServer(AltingChannelInput openChan, AltingChannelInput requestChan,
-                                      ConnectionData connData, NetworkMessageFilter.FilterRx filterRX, NetworkMessageFilter.FilterTx filterTX)
-        throws JCSPNetworkException
+                                      ConnectionData connData, NetworkMessageFilter.FilterRx filterRX, NetworkMessageFilter.FilterTx filterTX) : base(openChan)
+        //throws JCSPNetworkException
     {
-        super(openChan);
         this.openIn = openChan;
         this.requestIn = requestChan;
         this.data = connData;
@@ -106,33 +105,42 @@ public sealed class NetAltingConnectionServer : AltingConnectionServer, NetConne
         return null;
     }
 
-    public void reply(Object data, boolean close)
-        throws IllegalStateException
+    public void reply(Object data, Boolean close)
+        //throws IllegalStateException
     {
         // TODO Auto-generated method stub
 
     }
 
     public void reply(Object data)
-        throws IllegalStateException
+        //throws IllegalStateException
     {
         // TODO Auto-generated method stub
 
     }
 
     public void replyAndClose(Object data)
-        throws IllegalStateException
+       //throws IllegalStateException
     {
         // TODO Auto-generated method stub
 
     }
 
     public Object request()
-        throws IllegalStateException
+        //throws IllegalStateException
     {
         // TODO Auto-generated method stub
         return null;
     }
 
+    public override bool enable(Alternative alt)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override bool disable()
+    {
+        throw new NotImplementedException();
+    }
 }
 }

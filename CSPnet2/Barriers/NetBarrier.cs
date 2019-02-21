@@ -19,10 +19,14 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using CSPlang;
+using CSPlang.Any2;
 using CSPnet2;
 using CSPnet2.Barriers;
-using CSPnet2.Node;
+using CSPnet2.Net2Link;
+using CSPnet2.NetNode;
+using CSPutil;
 
 namespace CSPnet2.Barriers
 {
@@ -176,7 +180,7 @@ public sealed class NetBarrier : CSPBarrier, Networked
     /**
      * The exclusive access lock for syncing, etc.
      */
-    private readonly Object lock = new Object();
+    private readonly Object lockObject = new Object();
 
     /**
      * A flag used to signify that a waking process should perform a network sync when released
@@ -201,22 +205,21 @@ public sealed class NetBarrier : CSPBarrier, Networked
      * @throws IllegalArgumentException
      *             Thrown if the number of local enrolled processes is less than 1, or remote enrolled is less than 0
      */
-    private NetBarrier(BarrierData barData, int numToEnroll, int netNumToEnroll, NetBarrierLocation serverLocation,
-            AltingChannelInput inToBar, ChannelOutput toLink)
-        throws IllegalArgumentException
+    private NetBarrier(BarrierData barData, int numToEnroll, int netNumToEnroll, NetBarrierLocation serverLocation, AltingChannelInput inToBar, ChannelOutput toLink)
+        //throws IllegalArgumentException
     {
         // First do some sanity checks
         if (numToEnroll < 1)
-            throw new IllegalArgumentException("*** Attempt to set an enrollment of less than 1 on a NetBarrier *** \n");
+            throw new ArgumentException("*** Attempt to set an enrollment of less than 1 on a NetBarrier *** \n");
         if (netNumToEnroll < 0)
-            throw new IllegalArgumentException("*** Attempt to create a NetBarrier with negative remote enrolls *** \n");
+            throw new ArgumentException("*** Attempt to create a NetBarrier with negative remote enrolls *** \n");
 
         // Now set the standard parameters
         this.localEnrolled = numToEnroll;
         this.localCountDown = numToEnroll;
         this.data = barData;
         this.localLocation = new NetBarrierLocation(Node.getInstance().getNodeID(), this.data.vbn);
-        this.in = inToBar;
+        this.In = inToBar;
 
         // Now check if we are a server or client end.
         if (this.data.state == BarrierDataState.OK_SERVER)
@@ -239,7 +242,7 @@ public sealed class NetBarrier : CSPBarrier, Networked
                 // We are remotely connected. Get the channel connected to the server end
                 this.toLinkTX = this.localBar.toBarrier;
                 // Now we need to check if we can still enroll with it
-                synchronized (this.localBar)
+                lock (this.localBar)
                 {
                     if (this.localBar.state != BarrierDataState.OK_SERVER)
                         throw new JCSPNetworkException(
@@ -277,15 +280,15 @@ public sealed class NetBarrier : CSPBarrier, Networked
      * @throws IllegalArgumentException
      *             Thrown if the number of enrolled processes is outside the defined ranges
      */
-    static NetBarrier create(int localEnroll, int remoteEnroll)
-        throws IllegalArgumentException
+    internal static NetBarrier create(int localEnroll, int remoteEnroll)
+        //throws IllegalArgumentException
     {
         // First, the sanity checks
         if (localEnroll < 1)
-            throw new IllegalArgumentException(
+            throw new ArgumentException(
                     "Tried to create a NetBarrier with fewer than one locally enrolled process");
         if (remoteEnroll < 0)
-            throw new IllegalArgumentException("Tried to create a NetBarrier with negative remote enrollments");
+            throw new ArgumentException("Tried to create a NetBarrier with negative remote enrollments");
 
         // Now create the BarrierData structure
         BarrierData data = new BarrierData();
@@ -294,11 +297,11 @@ public sealed class NetBarrier : CSPBarrier, Networked
         // Create the connecting channel
         Any2OneChannel chan = Channel.any2one(new InfiniteBuffer());
         // Add the output end to the structure
-        data.toBarrier = chan.out();
+        data.toBarrier = chan.Out();
         // Initialise the structure with the BarrierManager
         BarrierManager.getInstance().create(data);
         // Return a new NetBarrier
-        return new NetBarrier(data, localEnroll, remoteEnroll, null, chan.in(), null);
+        return new NetBarrier(data, localEnroll, remoteEnroll, null, chan.In(), null);
     }
 
     /**
@@ -314,15 +317,15 @@ public sealed class NetBarrier : CSPBarrier, Networked
      * @throws IllegalArgumentException
      *             Thrown if the any of the arguments are outside the desired ranges.
      */
-    static NetBarrier create(int localEnroll, int remoteEnroll, int barrierIndex)
-        throws IllegalArgumentException
+    internal static NetBarrier create(int localEnroll, int remoteEnroll, int barrierIndex)
+        //throws IllegalArgumentException
     {
         // First, the sanity checks.
         if (localEnroll < 1)
-            throw new IllegalArgumentException(
+            throw new ArgumentException(
                     "Tried to create a NetBarrier with fewer than one locally enrolled process");
         if (remoteEnroll < 0)
-            throw new IllegalArgumentException("Tried to create a NetBarrier with negative remote enrollments");
+            throw new ArgumentException("Tried to create a NetBarrier with negative remote enrollments");
 
         // Now create the BarrierData structure
         BarrierData data = new BarrierData();
@@ -331,11 +334,11 @@ public sealed class NetBarrier : CSPBarrier, Networked
         // Create the connecting channel
         Any2OneChannel chan = Channel.any2one(new InfiniteBuffer());
         // Add the output end to the structure
-        data.toBarrier = chan.out();
+        data.toBarrier = chan.Out();
         // Initialise the structure with the BarrierManager, using the given index
         BarrierManager.getInstance().create(barrierIndex, data);
         // Return a new NetBarrier
-        return new NetBarrier(data, localEnroll, remoteEnroll, null, chan.in(), null);
+        return new NetBarrier(data, localEnroll, remoteEnroll, null, chan.In(), null);
     }
 
     /**
@@ -351,12 +354,12 @@ public sealed class NetBarrier : CSPBarrier, Networked
      * @throws IllegalArgumentException
      *             Thrown if local enrolled is less than 1
      */
-    static NetBarrier create(NetBarrierLocation loc, int localEnroll)
-        throws JCSPNetworkException, IllegalArgumentException
+    internal static NetBarrier create(NetBarrierLocation loc, int localEnroll)
+        //throws JCSPNetworkException, IllegalArgumentException
     {
         // First, the sanity check.
         if (localEnroll < 1)
-            throw new IllegalArgumentException(
+            throw new ArgumentException(
                     "Tried to create a NetBarrier with fewer than one locally enrolled process");
 
         // Next, create the BarrierData structure
@@ -366,7 +369,7 @@ public sealed class NetBarrier : CSPBarrier, Networked
         // Create the connecting channel between this object and the Links
         Any2OneChannel chan = Channel.any2one(new InfiniteBuffer());
         // Attach the output end to the structure
-        data.toBarrier = chan.out();
+        data.toBarrier = chan.Out();
         // Initialise the barrier with the BarrierManager
         BarrierManager.getInstance().create(data);
 
@@ -375,7 +378,7 @@ public sealed class NetBarrier : CSPBarrier, Networked
         {
             // We are locally connected, so create a new NetBarrier. The constructor will connect to the Barrier server
             // end for us.
-            return new NetBarrier(data, localEnroll, 0, loc, chan.in(), null);
+            return new NetBarrier(data, localEnroll, 0, loc, chan.In(), null);
         }
 
         // We are not locally connected. Continue.
@@ -410,7 +413,7 @@ public sealed class NetBarrier : CSPBarrier, Networked
         // Register with the Link
         link.registerBarrier(data);
         // Return a new NetBarrier
-        return new NetBarrier(data, localEnroll, 0, loc, chan.in(), toLink);
+        return new NetBarrier(data, localEnroll, 0, loc, chan.In(), toLink);
     }
 
     /**
@@ -423,9 +426,9 @@ public sealed class NetBarrier : CSPBarrier, Networked
     {
         if (numToEnroll < 1)
         {
-            throw new IllegalArgumentException("*** Attempt to set an enrollment of less than 1 on a NetBarrier ***\n");
+            throw new ArgumentException("*** Attempt to set an enrollment of less than 1 on a NetBarrier ***\n");
         }
-        synchronized (this.lock)
+        lock (this.lockObject)
         {
             this.localEnrolled = numToEnroll;
             this.localCountDown = numToEnroll;
@@ -440,7 +443,7 @@ public sealed class NetBarrier : CSPBarrier, Networked
      *             Thrown if something goes wrong in the underlying architecture
      */
     public void sync()
-        throws JCSPNetworkException
+        //throws JCSPNetworkException
     {
         // First check our state
         if (this.data.state == BarrierDataState.BROKEN)
@@ -451,13 +454,13 @@ public sealed class NetBarrier : CSPBarrier, Networked
             throw new JCSPNetworkException("The Barrier has been completely resigned from");
 
         // Now we must ensure we are the only process interacting with the Barrier
-        synchronized (this.lock)
+        lock (this.lockObject)
         {
             // First we check for any incoming messages
-            while (this.in.pending())
+            while (this.In.pending())
             {
                 // We have a waiting message. Read it in.
-                NetworkMessage msg = (NetworkMessage)this.in.read();
+                NetworkMessage msg = (NetworkMessage)this.In.read();
 
                 // Now behave based on the type of message
                 switch (msg.type)
@@ -484,12 +487,13 @@ public sealed class NetBarrier : CSPBarrier, Networked
                         {
                             // Link to server end has gone down. Break Barrier as we are no longer doing a network SYNC.
                             // Set state to broken
-                            synchronized (this.data)
+                            lock (this.data)
                             {
                                 this.data.state = BarrierDataState.BROKEN;
                             }
                             // Release any waiting processes
-                            this.lock.notifyAll();
+                            //this.lockObject.PulseAll();
+                            Monitor.PulseAll(this.lockObject);
 
                             // Throw exception
                             throw new JCSPNetworkException("Link to server end lost");
@@ -546,10 +550,11 @@ public sealed class NetBarrier : CSPBarrier, Networked
                 // We are not the final process to SYNC locally. Decrement countdown.
                 this.localCountDown--;
 
-                // Wait on the lock
-                try
-                {
-                    this.lock.wait();
+                    // Wait on the lockObject
+                    try
+                    {
+                    //this.lockObject.wait();
+                    Monitor.Wait(this.lockObject);
 
                     // Now we check if we have had a problem
                     if (this.data.state != BarrierDataState.OK_CLIENT && this.data.state != BarrierDataState.OK_SERVER)
@@ -564,10 +569,10 @@ public sealed class NetBarrier : CSPBarrier, Networked
                         return;
 
                 }
-                catch (InterruptedException ie)
+                catch (ThreadInterruptedException ie)
                 {
                     // Should never happen, however
-                    throw new ProcessInterruptedException("*** Thrown from NetBarrier.sync() ***\n" + ie.toString());
+                    throw new ProcessInterruptedException("*** Thrown from NetBarrier.sync() ***\n" + ie.ToString());
                 }
             }
 
@@ -593,7 +598,7 @@ public sealed class NetBarrier : CSPBarrier, Networked
                     msg.toLink = this.data.toBarrier;
 
                     // Now check the state of the local barrier. We need to lock onto it.
-                    synchronized (this.localBar)
+                    lock (this.localBar)
                     {
                         if (this.localBar.state != BarrierDataState.OK_SERVER)
                             throw new JCSPNetworkException("The server end of the NetBarrier is down.");
@@ -607,14 +612,15 @@ public sealed class NetBarrier : CSPBarrier, Networked
                 }
 
                 // Wait for incoming message
-                NetworkMessage message = (NetworkMessage)this.in.read();
+                NetworkMessage message = (NetworkMessage)this.In.read();
 
                 // Now behave according to incoming message
                 switch (message.type)
                 {
                     case NetworkProtocol.RELEASE:
                         // Everything OK, release processes
-                        this.lock.notifyAll();
+                        //this.lockObject.notifyAll();
+                        Monitor.PulseAll(this.lockObject);
                         this.localCountDown = this.localEnrolled;
                         break;
 
@@ -622,12 +628,13 @@ public sealed class NetBarrier : CSPBarrier, Networked
                     case NetworkProtocol.LINK_LOST:
                         // Our sync was rejected, or the Link to the server is down. Set state to broken, and throw
                         // exception
-                        synchronized (this.data)
+                        lock (this.data)
                         {
                             this.data.state = BarrierDataState.BROKEN;
                         }
 
-                        this.lock.notifyAll();
+                        //this.lockObject.notifyAll();
+                        Monitor.PulseAll(this.lockObject);
 
                         if (message.type == NetworkProtocol.REJECT_BARRIER)
                             throw new JCSPNetworkException("SYNC to server end of NetBarrier was rejected");
@@ -641,7 +648,7 @@ public sealed class NetBarrier : CSPBarrier, Networked
                 while (this.netCountDown > 0)
                 {
                     // Read in the next message
-                    NetworkMessage message = (NetworkMessage)this.in.read();
+                    NetworkMessage message = (NetworkMessage)this.In.read();
 
                     // Deal with message
                     switch (message.type)
@@ -687,7 +694,9 @@ public sealed class NetBarrier : CSPBarrier, Networked
                 // All local processes and client ends have synced. Release all.
                 this.localCountDown = this.localEnrolled;
                 this.netCountDown = this.netEnrolled;
-                this.lock.notifyAll();
+                //this.lockObject.notifyAll();
+                Monitor.PulseAll(this.lockObject);
+
 
                 // Iterate through the list of waiting ends and send them all a RELEASE message
                 for (; !this.waitingEnds.isEmpty();)
@@ -711,7 +720,7 @@ public sealed class NetBarrier : CSPBarrier, Networked
      *             Thrown if the barrier is not a state where it can be enrolled with
      */
     public void enroll()
-        throws JCSPNetworkException
+        //throws JCSPNetworkException
     {
         // First check our state
         if (this.data.state == BarrierDataState.BROKEN)
@@ -720,14 +729,14 @@ public sealed class NetBarrier : CSPBarrier, Networked
             throw new JCSPNetworkException("The Barrier has been destroyed");
 
         // Get exclusive access to the Barrier
-        synchronized (this.lock)
+        lock (this.lockObject)
         {
             // Do we need to reenroll on the server?
             if (this.data.state == BarrierDataState.RESIGNED)
             {
                 // We were previously resigned from the server end. First we need to change our state. Acquire
                 // a lock on our state.
-                synchronized (this.data)
+                lock (this.data)
                 {
                     this.data.state = BarrierDataState.OK_CLIENT;
                 }
@@ -751,7 +760,7 @@ public sealed class NetBarrier : CSPBarrier, Networked
      *             Thrown if something bad happens within the underlying architecture
      */
     public void resign()
-        throws JCSPNetworkException
+        //throws JCSPNetworkException
     {
         // First check our state
         if (this.data.state == BarrierDataState.BROKEN)
@@ -762,7 +771,7 @@ public sealed class NetBarrier : CSPBarrier, Networked
             return;
 
         // Now acquire a lock on the barrier to assure exclusive access
-        synchronized (this.lock)
+        lock (this.lockObject)
         {
             // Now we must check if enrolled will become 0 or not
             if (this.localEnrolled == 1)
@@ -772,7 +781,7 @@ public sealed class NetBarrier : CSPBarrier, Networked
                 {
                     // We are a server end, and we are the last enrolled one. We need to change our state.
                     // Lock our state object
-                    synchronized (this.data)
+                    lock (this.data)
                     {
                         // Change state to resigned
                         this.data.state = BarrierDataState.RESIGNED;
@@ -794,16 +803,16 @@ public sealed class NetBarrier : CSPBarrier, Networked
                     // would break the Barrier. Release all the waiting client ends with a REJECT and throw an exception
 
                     // Set state to broken
-                    synchronized (this.data)
+                    lock (this.data)
                     {
                         this.data.state = BarrierDataState.BROKEN;
                     }
 
                     // We now have to check for pending messages
-                    while (this.in.pending())
+                    while (this.In.pending())
                     {
                         // There is an incoming message. Handle it
-                        NetworkMessage message = (NetworkMessage)this.in.read();
+                        NetworkMessage message = (NetworkMessage)this.In.read();
 
                         // The only message type we are interested in is SYNC calls. Enrollments and resignments will
                         // not effect the barrier going down.
@@ -857,7 +866,8 @@ public sealed class NetBarrier : CSPBarrier, Networked
                     // will not have a problem.
 
                     // Wake a process
-                    this.lock.notify();
+                    //this.lockObject.notify();
+                    Monitor.Pulse(this.lockObject);
                 }
                 else
                 {
@@ -875,7 +885,7 @@ public sealed class NetBarrier : CSPBarrier, Networked
      *             Thrown if something goes wrong in the underlying architecture
      */
     public void destroy()
-        throws JCSPNetworkException
+        //throws JCSPNetworkException
     {
         // First check our state and change it accordingly
         if (this.data.state == BarrierDataState.BROKEN)
@@ -886,20 +896,21 @@ public sealed class NetBarrier : CSPBarrier, Networked
             this.data.state = BarrierDataState.DESTROYED;
 
         // Now acquire lock on the barrier
-        synchronized (this.lock)
+        lock (this.lockObject)
         {
             // Are we a client or server end?
             if (this.data.state == BarrierDataState.OK_CLIENT)
             {
                 // Change our state to destroyed
                 // We now lock on the barrier state to update it
-                synchronized (this.data)
+                lock (this.data)
                 {
                     this.data.state = BarrierDataState.DESTROYED;
                 }
 
                 // There isn't anything left to do but release the locally waiting processes
-                this.lock.notifyAll();
+               // this.lockObject.notifyAll();
+                Monitor.PulseAll(this.lockObject);
             }
             else
             {
@@ -907,16 +918,16 @@ public sealed class NetBarrier : CSPBarrier, Networked
 
                 // Change our state to destroyed
                 // We now lock on the barrier state to update it
-                synchronized (this.data)
+                lock (this.data)
                 {
                     this.data.state = BarrierDataState.DESTROYED;
                 }
 
                 // We now have to check for pending messages
-                while (this.in.pending())
+                while (this.In.pending())
                 {
                     // There is an incoming message. Handle it
-                    NetworkMessage message = (NetworkMessage)this.in.read();
+                    NetworkMessage message = (NetworkMessage)this.In.read();
 
                     // The only message type we are interested in is SYNC calls. Enrollments and resignments will not
                     // effect the barrier going down. Whenever the enrolling end SYNCs, it will be rejected here or by

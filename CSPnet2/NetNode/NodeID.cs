@@ -20,7 +20,7 @@
 using System;
 using CSPutil;
 
-namespace CSPnet2.Node
+namespace CSPnet2.NetNode
 {
 
     /**
@@ -79,10 +79,10 @@ namespace CSPnet2.Node
      * @param nodeAddress
      *            Symbolic address of the Node
      */
-    NodeID(String nodeName, NodeAddress nodeAddress)
+    internal NodeID(String nodeName, NodeAddress nodeAddress)
     {
         this.time = CSPTimeMillis.CurrentTimeMillis();
-        this.mem = Runtime.getRuntime().freeMemory();
+        this.mem = System.Runtime.getRuntime().freeMemory();
         //this.hashCode = new Object().hashCode();
         this.hashCode = new Object().GetHashCode();
         this.name = nodeName;
@@ -121,8 +121,8 @@ namespace CSPnet2.Node
     public int compareTo(/*final*/ Object arg0)
     {
         // Check if other object is a NodeID. If not throw exception
-        if (!(arg0 instanceof NodeID))
-        throw new IllegalArgumentException("Attempting to compare NodeID to an object that is not a NodeID");
+        if (!(arg0 is NodeID))
+        throw new ArgumentException("Attempting to compare NodeID to an object that is not a NodeID");
 
         NodeID other = (NodeID) arg0;
 

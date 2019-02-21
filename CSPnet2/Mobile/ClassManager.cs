@@ -23,7 +23,7 @@ using System.IO;
 using CSPlang;
 using CSPnet2.Mobile;
 using CSPnet2.NetChannel;
-using CSPnet2.Node;
+using CSPnet2.NetNode;
 
 namespace CSPnet2.Mobile
 {
@@ -53,7 +53,7 @@ sealed class ClassManager : IamCSProcess
             try
             {
                 ClassRequest req = (ClassRequest) In.read();
-                if (req.originatingNode.equals(Node.getInstance().getNodeID()))
+                if (req.originatingNode.equals(NetNode.getInstance().getNodeID()))
                 {
                     String className = req.className.replace('.', '/') + ".class";
                     InputStream inputStream = ClassLoader.getSystemResourceAsStream(className);

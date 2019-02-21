@@ -18,6 +18,8 @@
 //////////////////////////////////////////////////////////////////////
 
 using System;
+using CSPnet2.Net2Link;
+using CSPnet2.NetNode;
 
 namespace CSPnet2.Barriers
 {
@@ -50,9 +52,19 @@ namespace CSPnet2.Barriers
      *             Thrown if the parameters are outside the defined ranges
      */
     public static NetBarrier netBarrier(int localEnrolled, int netEnrolled)
-        throws IllegalArgumentException
     {
-        return NetBarrier.create(localEnrolled, netEnrolled);
+        NetBarrier barrierToReturn = null;
+        try
+        {
+            barrierToReturn =  NetBarrier.create(localEnrolled, netEnrolled);
+        }
+        catch (ArgumentException e)
+        {
+            Console.WriteLine(e);
+            
+        }
+
+        return barrierToReturn;
     }
 
     /**
@@ -69,9 +81,19 @@ namespace CSPnet2.Barriers
      *             Thrown if the parameters are outside the defined ranges
      */
     public static NetBarrier numberedNetBarrier(int index, int localEnrolled, int netEnrolled)
-        throws IllegalArgumentException
     {
-        return NetBarrier.create(localEnrolled, netEnrolled, index);
+        NetBarrier barrierToReturn = null;
+        try
+        {
+            barrierToReturn = NetBarrier.create(localEnrolled, netEnrolled, index);
+        }
+        catch (ArgumentException e)
+        {
+            Console.WriteLine(e);
+
+        }
+
+        return barrierToReturn;
     }
 
     /**
@@ -88,9 +110,24 @@ namespace CSPnet2.Barriers
      *             Thrown if the number of of local enrolled is outside the defined range
      */
     public static NetBarrier netBarrier(NetBarrierLocation loc, int enrolled)
-        throws JCSPNetworkException, IllegalArgumentException
     {
-        return NetBarrier.create(loc, enrolled);
+        NetBarrier barrierToReturn = null;
+        try
+        {
+            barrierToReturn = NetBarrier.create(loc, enrolled);
+        }
+        catch (ArgumentException e)
+        {
+            Console.WriteLine(e);
+
+        }
+        catch(JCSPNetworkException e)
+        {
+            Console.WriteLine(e);
+
+        }
+
+            return barrierToReturn;
     }
 
     /**
@@ -109,9 +146,27 @@ namespace CSPnet2.Barriers
      *             Thrown if the number of enrolled is outside the defined range
      */
     public static NetBarrier netBarrier(NodeID nodeID, int vbn, int enrolled)
-        throws JCSPNetworkException, IllegalArgumentException
     {
-        return NetBarrier.create(new NetBarrierLocation(nodeID, vbn), enrolled);
+
+        NetBarrier barrierToReturn = null;
+        try
+        {
+            barrierToReturn = NetBarrier.create(new NetBarrierLocation(nodeID, vbn), enrolled );
+        }
+        catch (ArgumentException e)
+        {
+            Console.WriteLine(e);
+
+        }
+        catch (JCSPNetworkException e)
+        {
+            Console.WriteLine(e);
+
+        }
+
+        return barrierToReturn;
+
+           // return NetBarrier.create(new NetBarrierLocation(nodeID, vbn), enrolled);
     }
 
     /**
@@ -130,13 +185,31 @@ namespace CSPnet2.Barriers
      *             Thrown if the number of enrolled processes is outside the defined range.
      */
     public static NetBarrier netBarrier(NodeAddress addr, int vbn, int enrolled)
-        throws JCSPNetworkException, IllegalArgumentException
     {
         // Get the Link with the given address
         Link link = LinkFactory.getLink(addr);
 
+            NetBarrier barrierToReturn = null;
+        try
+        {
+            barrierToReturn = NetBarrier.create(new NetBarrierLocation(link.remoteID, vbn), enrolled);
+        }
+        catch (ArgumentException e)
+        {
+            Console.WriteLine(e);
+
+        }
+        catch (JCSPNetworkException e)
+        {
+            Console.WriteLine(e);
+
+        }
+
+        return barrierToReturn;
+
+
         // Create a new NetBarrier
-        return NetBarrier.create(new NetBarrierLocation(link.remoteID, vbn), enrolled);
+        //return NetBarrier.create(new NetBarrierLocation(link.remoteID, vbn), enrolled);
     }
 }
 }

@@ -19,7 +19,7 @@
 
 using System;
 using CSPlang;
-using CSPnet2.Node;
+using CSPnet2.NetNode;
 
 namespace CSPnet2.TCPIP
 {
@@ -78,7 +78,7 @@ public sealed class TCPIPNodeFactory : NodeFactory
      * @throws JCSPNetworkException
      *             Thrown if something goes wrong during the Node initialisation process
      */
-    protected NodeAddress initNode(Node node)
+    protected NodeAddress initNode(NetNode node)
         throws JCSPNetworkException
     {
         // First install TCPIPProtocolID

@@ -20,7 +20,7 @@
 using System;
 using System.Collections;
 using CSPnet2.NetChannel;
-using CSPnet2.Node;
+using CSPnet2.NetNode;
 
 namespace CSPnet2.Mobile
 {

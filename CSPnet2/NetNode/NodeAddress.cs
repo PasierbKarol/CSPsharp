@@ -19,8 +19,9 @@
 
 using System;
 using System.Collections;
+using CSPnet2.Net2Link;
 
-namespace CSPnet2.Node
+namespace CSPnet2.NetNode
 {
    // import java.util.Hashtable;
 
@@ -88,7 +89,7 @@ public abstract class NodeAddress : Comparable
      */
     public int hashCode()
     {
-        return this.address.hashCode();
+        return this.address.GetHashCode();
     }
 
     /**
@@ -100,10 +101,10 @@ public abstract class NodeAddress : Comparable
      */
     public Boolean equals(/*final*/ Object obj)
     {
-        if (!(obj instanceof NodeAddress))
+        if (!(obj is NodeAddress))
             return false;
         NodeAddress other = (NodeAddress)obj;
-        return (this.protocol.equals(other.protocol) && this.address.equals(other.address));
+        return (this.protocol.Equals(other.protocol) && this.address.Equals(other.address));
     }
 
     /**
@@ -115,33 +116,36 @@ public abstract class NodeAddress : Comparable
      */
     public int compareTo(/*final*/ Object arg0)
     {
-        if (!(arg0 instanceof NodeAddress))
+        if (!(arg0 is NodeAddress))
             return -1;
         NodeAddress other = (NodeAddress)arg0;
-        if (!this.protocol.equals(other.protocol))
-            return this.protocol.compareTo(other.protocol);
-        return this.address.compareTo(other.address);
+        if (!this.protocol.Equals(other.protocol))
+            return this.protocol.CompareTo(other.protocol);
+        return this.address.CompareTo(other.address);
     }
 
-    /**
-     * Creates a Link connected to this address
-     * 
-     * @return A new Link connected to this address
-     * @throws JCSPNetworkException
-     *             If something goes wrong during the creation of the Link
-     */
-    protected abstract Link createLink()
-        throws JCSPNetworkException;
+        /**
+         * Creates a Link connected to this address
+         * 
+         * @return A new Link connected to this address
+         * @throws JCSPNetworkException
+         *             If something goes wrong during the creation of the Link
+         */
+        /// <summary>what this does</summary>
+        /// <exception cref="JCSPNetworkException">some scenario</exception>
+        protected abstract Link createLink();
 
-    /**
-     * Creates a LinkServer listening on this address
-     * 
-     * @return A new LinkServer listening on this address
-     * @throws JCSPNetworkException
-     *             If something goes wrong during the creation of the LinkServer
-     */
-    protected abstract LinkServer createLinkServer()
-        throws JCSPNetworkException;
+        /**
+         * Creates a LinkServer listening on this address
+         * 
+         * @return A new LinkServer listening on this address
+         * @throws JCSPNetworkException
+         *             If something goes wrong during the creation of the LinkServer
+         */
+
+    /// <summary>what this does</summary>
+    /// <exception cref="JCSPNetworkException">some scenario</exception>
+    protected abstract LinkServer createLinkServer();
 
     /**
      * Retrieves the correct protocol handler for the implemented address type. This is used during Node initialisation
@@ -150,25 +154,27 @@ public abstract class NodeAddress : Comparable
      */
     protected abstract ProtocolID getProtocolID();
 
-    /**
-     * Parses a string representation of a NodeAddress back to its object form
-     * 
-     * @param str
-     *            The string to parse
-     * @return A new NodeAddress created from a String form
-     * @throws IllegalArgumentException
-     *             Thrown if the string is not for a recognised protocol.
-     */
-    public static NodeAddress parse(String str)
-        throws IllegalArgumentException
+        /**
+         * Parses a string representation of a NodeAddress back to its object form
+         * 
+         * @param str
+         *            The string to parse
+         * @return A new NodeAddress created from a String form
+         * @throws IllegalArgumentException
+         *             Thrown if the string is not for a recognised protocol.
+         */
+
+
+        public static NodeAddress parse(String str)
+//        throws IllegalArgumentException
     {
-        int index = str.indexOf("\\\\");
-        ProtocolID protocol = (ProtocolID)NodeAddress.installedProtocols.get(str.substring(0, index));
+        int index = str.IndexOf("\\\\");
+        ProtocolID protocol = (ProtocolID)NodeAddress.installedProtocols.get(str.Substring(0, index));
         if (protocol != null)
         {
-            return protocol.parse(str.substring(index+4));
+            return protocol.parse(str.Substring(index+4));
         }
-        throw new IllegalArgumentException("Unknown protocol used for parsing NodeAddress");
+        throw new ArgumentException("Unknown protocol used for parsing NodeAddress");
     }
 
     /**
@@ -179,9 +185,9 @@ public abstract class NodeAddress : Comparable
      * @param protocol
      *            ProtocolID installed
      */
-    public synchronized static void installProtocol(String name, ProtocolID protocol)
+    public /*synchronized*/ static void installProtocol(String name, ProtocolID protocol)
     {
-        if (!NodeAddress.installedProtocols.containsKey(name))
+        if (!NodeAddress.installedProtocols.ContainsKey(name))
             NodeAddress.installedProtocols.put(name, protocol);
         // If the protocol is already installed, we do nothing.
     }

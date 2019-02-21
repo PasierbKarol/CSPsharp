@@ -33,26 +33,26 @@ namespace CSPnet2
         /**
          * The message type, as described in NetworkProtocol.
          */
-        int type = (int) -1;
+        internal int type = (int) -1;
 
         /**
          * The first attribute of the message.
          */
-        int attr1 = -1;
+        internal int attr1 = -1;
 
         /**
          * The second attribute of the message
          */
-        int attr2 = -1;
+        internal int attr2 = -1;
 
         /**
          * Data sent in the message if relevant.
          */
-        byte[] data = null;
+        internal byte[] data = null;
 
         /**
          * ChannelOutput to the Link so that acknowledgements can be sent.
          */
-        ChannelOutput toLink = null;
+        internal ChannelOutput toLink = null;
     }
 }

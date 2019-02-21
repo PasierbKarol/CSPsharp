@@ -35,17 +35,17 @@ sealed class BarrierData
     /**
      * The virtual Barrier number that uniquely identifies the Barrier within the Node
      */
-    int vbn = -1;
+    internal int vbn = -1;
 
     /**
      * The current state of the Barrier
      */
-    byte state = BarrierDataState.INACTIVE;
+    internal byte state = BarrierDataState.INACTIVE;
 
     /**
      * The connection to the Barrier for connecting to the NetBarrier object from the Link
      */
-    ChannelOutput toBarrier = null;
+    internal ChannelOutput toBarrier = null;
 
 }
 }

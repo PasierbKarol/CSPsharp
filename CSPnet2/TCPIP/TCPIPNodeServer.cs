@@ -20,7 +20,7 @@
 using System;
 using CSPnet2.BNS;
 using CSPnet2.CNS;
-using CSPnet2.Node;
+using CSPnet2.NetNode;
 
 namespace CSPnet2.TCPIP
 {
@@ -49,7 +49,7 @@ public sealed class TCPIPNodeServer
         throws Exception
     {
         Node.getInstance().setLog(System.out);
-        Node.getInstance().setErr(System.err);
+        NetNode.getInstance().setErr(System.err);
         // Get the local IP addresses
         InetAddress[] local = InetAddress.getAllByName(InetAddress.getLocalHost().getHostName());
         InetAddress toUse = InetAddress.getLocalHost();
@@ -103,7 +103,7 @@ public sealed class TCPIPNodeServer
         // Create a local address object
         TCPIPNodeAddress localAddr = new TCPIPNodeAddress(toUse.getHostAddress(), 7890);
         // Initialise the Node
-        Node.getInstance().init(localAddr);
+        NetNode.getInstance().init(localAddr);
         // Start CNS and BNS
         CSProcess[] processes = { CNS.getInstance(), BNS.getInstance() };
         new Parallel(processes).run();

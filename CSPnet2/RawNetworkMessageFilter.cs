@@ -19,12 +19,13 @@
 //////////////////////////////////////////////////////////////////////
 
 using System;
+using System.IO;
 using CSPnet2;
 
 namespace CSPnet2
 {
 
-    import java.io.IOException;
+    //import java.io.IOException;
 
 /**
  * A NetworkMessageFilter used to send and receive raw byte data.
@@ -39,7 +40,7 @@ public sealed class RawNetworkMessageFilter
      * 
      * @author Kevin Chalmers
      */
-    public static final class FilterRX : NetworkMessageFilter.FilterRx
+    public static /*final*/ class FilterRX : NetworkMessageFilter.FilterRx
     {
         /**
          * Creates a new RawNetworkMessageFilter.FilterRX
@@ -68,7 +69,7 @@ public sealed class RawNetworkMessageFilter
      * 
      * @author Kevin Chalmers
      */
-    public static final class FilterTX : NetworkMessageFilter.FilterTx
+    public static /*final*/ class FilterTX : NetworkMessageFilter.FilterTx
     {
         /**
          * Creates a new output filter
@@ -88,9 +89,9 @@ public sealed class RawNetworkMessageFilter
          *             Thrown if the sent object is not a byte array
          */
         public byte[] filterTX(Object obj)
-            throws IOException
+            //throws IOException
         {
-            if (!(obj instanceof byte[]))
+            if (!(obj is byte[]))
                 throw new IOException("Raw data filter received an object that was not a byte[]");
             return (byte[])obj;
         }

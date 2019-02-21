@@ -22,7 +22,7 @@ using System.Collections;
 using CSPlang;
 using CSPnet2.CNS;
 using CSPnet2.NetChannel;
-using CSPnet2.Node;
+using CSPnet2.NetNode;
 
 namespace CSPnet2.CNS
 {
@@ -242,7 +242,7 @@ public class CNS : IamCSProcess
     /**
      * A channel used to receive incoming link lost notifications
      */
-    private readonly AltingChannelInput lostLink = Node.getInstance().getLinkLostEventChannel();
+    private readonly AltingChannelInput lostLink = NetNode.getInstance().getLinkLostEventChannel();
 
     /**
      * Private empty constructor

@@ -22,7 +22,7 @@ using System.IO;
 using CSPnet2;
 using CSPnet2.Mobile;
 using CSPnet2.NetChannel;
-using CSPnet2.Node;
+using CSPnet2.NetNode;
 
 namespace CSPnet2.Mobile
 {
@@ -40,7 +40,7 @@ namespace CSPnet2.Mobile
  */
 public sealed class CodeLoadingChannelFilter
 {
-    public static final class FilterRX : NetworkMessageFilter.FilterRx
+    public static /*final*/ class FilterRX : NetworkMessageFilter.FilterRx
     {
         private readonly ObjectNetworkMessageFilter.FilterRX objectFilter = new ObjectNetworkMessageFilter.FilterRX();
 

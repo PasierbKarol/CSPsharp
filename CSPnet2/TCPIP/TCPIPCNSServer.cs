@@ -99,7 +99,7 @@ public sealed class TCPIPCNSServer
         // Create a local address object
         TCPIPNodeAddress localAddr = new TCPIPNodeAddress(toUse.getHostAddress(), 7890);
         // Initialise the Node
-        Node.getInstance().init(localAddr);
+        NetNode.getInstance().init(localAddr);
         // Start CNS and BNS
         CSProcess[] processes = { CNS.getInstance(), BNS.getInstance() };
         new Parallel(processes).run();

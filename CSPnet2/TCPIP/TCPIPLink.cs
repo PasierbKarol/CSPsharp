@@ -181,12 +181,12 @@ public sealed class TCPIPLink : Link.Link
             // We are not connected, so set connected to false.
             this.connected = false;
             // Log Node connection
-            Node.log.log(this.getClass(), "Link created to " + address.toString());
+            NetNode.log.log(this.getClass(), "Link created to " + address.toString());
         }
         catch (IOException ioe)
         {
             // Something went wrong during connection. Log and throw exception
-            Node.err.log(this.getClass(), "Failed to create Link to " + address.toString());
+            NetNode.err.log(this.getClass(), "Failed to create Link to " + address.toString());
             throw new JCSPNetworkException("Failed to create TCPIPLink to: " + address.getAddress());
         }
     }

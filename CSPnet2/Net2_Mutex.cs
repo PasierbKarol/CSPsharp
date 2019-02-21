@@ -19,6 +19,7 @@
 //////////////////////////////////////////////////////////////////////
 
 using System;
+using System.Threading;
 using CSPlang;
 
 namespace CSPnet2
@@ -40,17 +41,17 @@ class Net2_Mutex
      */
     void claim()
     {
-        synchronized (this)
+        lock (this)
         {
             while (this.claimed)
             {
                 try
                 {
-                    wait();
+                    Monitor.Wait(this);
                 }
-                catch (InterruptedException e)
+                catch (ThreadInterruptedException e)
                 {
-                    throw new ProcessInterruptedException("*** Thrown from Net2_Mutex.claim()\n" + e.toString());
+                    throw new ProcessInterruptedException("*** Thrown from Net2_Mutex.claim()\n" + e.ToString());
                 }
             }
             this.claimed = true;
@@ -62,10 +63,10 @@ class Net2_Mutex
      */
     void release()
     {
-        synchronized (this)
+        lock (this)
         {
             this.claimed = false;
-            notify();
+            Monitor.Pulse(this);
         }
     }
 }
