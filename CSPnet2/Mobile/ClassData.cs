@@ -30,7 +30,7 @@ namespace CSPnet2.Mobile
         readonly String className;
         readonly byte[] bytes;
 
-        ClassData(String name, byte[] classBytes)
+        internal ClassData(String name, byte[] classBytes)
         {
             this.className = name;
             this.bytes = classBytes;

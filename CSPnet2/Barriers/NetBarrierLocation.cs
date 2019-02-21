@@ -124,11 +124,11 @@ namespace CSPnet2.Barriers
          * @param str
          *            The string representation of the NetBarrierLocation
          * @return A NetBarrierLocation produced from a String representation
-         * @throws IllegalArgumentException
+         * @//throws ArgumentException 
          *             Thrown if a non NetBarrierLocation is attempted to be parsed
          */
         public static NetBarrierLocation parse(String str)
-            //throws ArgumentException
+            ////throws ArgumentException
         {
             if (str.Equals("null", StringComparison.OrdinalIgnoreCase))
                 return null;

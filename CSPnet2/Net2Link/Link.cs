@@ -83,7 +83,7 @@ namespace CSPnet2.Net2Link
      * The NodeID of the opposite end of the connection. This should be set either during construction, or during the
      * connect method of a child class.
      */
-    protected NodeID remoteID;
+    internal NodeID remoteID;
 
     /**
      * Link priority in the system. This is a publicly accessible value that can be set by a user.
@@ -94,7 +94,7 @@ namespace CSPnet2.Net2Link
      * Link priority for this Link. This is exposed to child classes to allow specific Link priorities for different
      * Link types.
      */
-    protected int priority = Link.LINK_PRIORITY;
+    internal int priority = Link.LINK_PRIORITY;
 
     /**
      * This Hashtable is used to keep track of the current output channels that are connected to this Link. In the
@@ -125,7 +125,7 @@ namespace CSPnet2.Net2Link
      * 
      * @return The ChannelOutput used to communicate with the Link Tx.
      */
-    protected /*final*/ ChannelOutput getTxChannel()
+    internal /*final*/ ChannelOutput getTxChannel()
     {
         return this.txChannel.Out();
     }
@@ -134,11 +134,11 @@ namespace CSPnet2.Net2Link
      * Connects to the remote Node. This must be overridden by a child class implementation.
      * 
      * @return True if the connection succeeds, false otherwise.
-     * @throws JCSPNetworkException
+     * @//throws JCSPNetworkException
      *             Thrown if the connection fails.
      */
     public abstract Boolean connect()
-        throws JCSPNetworkException;
+        //throws JCSPNetworkException;
 
     /**
      * Creates the resources (if any) required for the Node. These could be set up during construction, but if not, this
@@ -146,11 +146,11 @@ namespace CSPnet2.Net2Link
      * method.
      * 
      * @return True if resources were created OK, false otherwise.
-     * @throws JCSPNetworkException
+     * @//throws JCSPNetworkException
      *             Thrown if a problem occurs creating the resources.
      */
     protected abstract Boolean createResources()
-        throws JCSPNetworkException;
+        //throws JCSPNetworkException;
 
     /**
      * Destroys any used resources. This is called whenever a Node fails. Particular implementations must overwrite this
@@ -353,8 +353,8 @@ namespace CSPnet2.Net2Link
         }
 
         // Create and start Tx and Rx loops.
-        TxLoop txLoop = new TxLoop(this.txChannel.in(), this.txStream);
-        RxLoop rxLoop = new RxLoop(this.txChannel.out(), this.rxStream);
+        TxLoop txLoop = new TxLoop(this.txChannel.In(), this.txStream);
+        RxLoop rxLoop = new RxLoop(this.txChannel.Out(), this.rxStream);
         ProcessManager txProc = new ProcessManager(txLoop);
         ProcessManager rxProc = new ProcessManager(rxLoop);
         txProc.setPriority(this.priority);
@@ -368,7 +368,7 @@ namespace CSPnet2.Net2Link
         {
             NetworkMessage linkLost = new NetworkMessage();
             linkLost.type = NetworkProtocol.LINK_LOST;
-            NetworkMessage msg = (NetworkMessage)this.txChannel.in().read();
+            NetworkMessage msg = (NetworkMessage)this.txChannel.In().read();
             switch (msg.type)
             {
                 // We only respond to certain message types.

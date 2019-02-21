@@ -118,12 +118,12 @@ namespace CSPnet2.NetChannel
          * @param index
          *            The index to create the channel with
          * @return A new NetAltingChannelInput
-         * @throws IllegalArgumentException
+         * @//throws ArgumentException 
          *             Thrown if a channel with the given index already exists
          */
 
         /// <summary>what this does</summary>
-        /// <exception cref="IllegalArgumentException">some scenario</exception>
+        /// <exception cref="ArgumentException ">some scenario</exception>
         /*public*/
         NetAltingChannelInput numberedNet2One(int index);
 
@@ -136,12 +136,12 @@ namespace CSPnet2.NetChannel
          * @param immunityLevel
          *            The immunity to poison that the channel has
          * @return A new NetAltingChannelInput
-         * @throws IllegalArgumentException
+         * @//throws ArgumentException 
          *             Thrown if a channel with the given index already exists
          */
 
         /// <summary>what this does</summary>
-        /// <exception cref="IllegalArgumentException">some scenario</exception>
+        /// <exception cref="ArgumentException ">some scenario</exception>
         /*public*/
         NetAltingChannelInput numberedNet2One(int index, int immunityLevel);
 
@@ -154,12 +154,12 @@ namespace CSPnet2.NetChannel
          * @param filter
          *            The filter used to decode incoming messages
          * @return A new NetAltingChannelInput
-         * @throws IllegalArgumentException
+         * @//throws ArgumentException 
          *             Thrown if a channel with the given index already exists
          */
 
         /// <summary>what this does</summary>
-        /// <exception cref="IllegalArgumentException">some scenario</exception>
+        /// <exception cref="ArgumentException ">some scenario</exception>
         /*public*/
         NetAltingChannelInput numberedNet2One(int index, NetworkMessageFilter.FilterRx filter);
 
@@ -175,12 +175,12 @@ namespace CSPnet2.NetChannel
          * @param filter
          *            The filter used to decode incoming messages
          * @return A new NetAltingChannelInput
-         * @throws IllegalArgumentException
+         * @//throws ArgumentException 
          *             Thrown if a channel with the given index already exists
          */
 
         /// <summary>what this does</summary>
-        /// <exception cref="IllegalArgumentException">some scenario</exception>
+        /// <exception cref="ArgumentException ">some scenario</exception>
         /*public*/
         NetAltingChannelInput numberedNet2One(int index, int immunityLevel, NetworkMessageFilter.FilterRx filter);
 
@@ -191,12 +191,12 @@ namespace CSPnet2.NetChannel
          * @param index
          *            The index to create the channel with
          * @return A new NetSharedChannelInput
-         * @throws IllegalArgumentException
+         * @//throws ArgumentException 
          *             Thrown if a channel with the given index already exists
          */
 
         /// <summary>what this does</summary>
-        /// <exception cref="IllegalArgumentException">some scenario</exception>
+        /// <exception cref="ArgumentException ">some scenario</exception>
         /*public*/
         NetSharedChannelInput numberedNet2Any(int index);
 
@@ -209,12 +209,12 @@ namespace CSPnet2.NetChannel
          * @param immunityLevel
          *            The immunity to poison the channel has
          * @return A new NetSharedChannelInput
-         * @throws IllegalArgumentException
+         * @//throws ArgumentException 
          *             Thrown if a channel with the given index already exists
          */
 
         /// <summary>what this does</summary>
-        /// <exception cref="IllegalArgumentException">some scenario</exception>
+        /// <exception cref="ArgumentException ">some scenario</exception>
         /*public*/
         NetSharedChannelInput numberedNet2Any(int index, int immunityLevel);
 
@@ -227,12 +227,12 @@ namespace CSPnet2.NetChannel
          * @param filter
          *            The filter used to decode incoming messages
          * @return A new NetSharedChannelInput
-         * @throws IllegalArgumentException
+         * @//throws ArgumentException 
          *             Thrown if a channel with the given index already exists
          */
 
         /// <summary>what this does</summary>
-        /// <exception cref="IllegalArgumentException">some scenario</exception>
+        /// <exception cref="ArgumentException ">some scenario</exception>
         /*public*/
         NetSharedChannelInput numberedNet2Any(int index, NetworkMessageFilter.FilterRx filter);
 
@@ -248,12 +248,12 @@ namespace CSPnet2.NetChannel
          * @param filter
          *            The filter used to decode incoming messages
          * @return A new NetSharedChannelInput
-         * @throws IllegalArgumentException
+         * @//throws ArgumentException 
          *             Thrown if a channel with the given index already exists.
          */
 
         /// <summary>what this does</summary>
-        /// <exception cref="IllegalArgumentException">some scenario</exception>
+        /// <exception cref="ArgumentException ">some scenario</exception>
         /*public*/
         NetSharedChannelInput numberedNet2Any(int index, int immunityLevel, NetworkMessageFilter.FilterRx filter);
 
@@ -264,7 +264,7 @@ namespace CSPnet2.NetChannel
          * @param loc
          *            The location of the input end of the channel
          * @return A new NetChannelOutput
-         * @throws JCSPNetworkException
+         * @//throws JCSPNetworkException
          *             Thrown if something goes wrong in the underlying architecture
          */
 
@@ -283,7 +283,7 @@ namespace CSPnet2.NetChannel
          * @param immunityLevel
          *            The immunity to poison that this channel has
          * @return A new NetChannelOutput
-         * @throws JCSPNetworkException
+         * @//throws JCSPNetworkException
          *             Thrown if something goes wrong in the underlying architecture
          */
 
@@ -302,7 +302,7 @@ namespace CSPnet2.NetChannel
          * @param filter
          *            The filter used to encode outgoing messages
          * @return A new NetChannelOutput
-         * @throws JCSPNetworkException
+         * @//throws JCSPNetworkException
          *             Thrown if something goes wrong in the underlying architecture
          */
 
@@ -323,7 +323,7 @@ namespace CSPnet2.NetChannel
          * @param filter
          *            The filter used to encode outgoing messages
          * @return A new NetChannelOutput
-         * @throws JCSPNetworkException
+         * @//throws JCSPNetworkException
          *             Thrown if something goes wrong in the underlying architecture
          */
 
@@ -339,7 +339,7 @@ namespace CSPnet2.NetChannel
          * @param loc
          *            The location of the input end of the channel
          * @return A new NetSharedChannelInput
-         * @throws JCSPNetworkException
+         * @//throws JCSPNetworkException
          *             Thrown if something goes wrong in the underlying architecture
          */
 
@@ -358,7 +358,7 @@ namespace CSPnet2.NetChannel
          * @param immunityLevel
          *            The immunity to poison that the channel has
          * @return A new NetSharedChannelInput
-         * @throws JCSPNetworkException
+         * @//throws JCSPNetworkException
          *             Thrown if something goes wrong in the underlying architecture
          */
 
@@ -377,7 +377,7 @@ namespace CSPnet2.NetChannel
          * @param filter
          *            The filter used to encode outgoing messages
          * @return A new NetSharedChannelOutput
-         * @throws JCSPNetworkException
+         * @//throws JCSPNetworkException
          *             Thrown if something goes wrong in the underlying architecture
          */
 
@@ -398,7 +398,7 @@ namespace CSPnet2.NetChannel
          * @param filter
          *            The filter used to encode outgoing messages
          * @return A new NetSharedChannelOutput
-         * @throws JCSPNetworkException
+         * @//throws JCSPNetworkException
          *             Thrown if something goes wrong in the underlying architecture
          */
 
@@ -415,7 +415,7 @@ namespace CSPnet2.NetChannel
          * @param vcn
          *            The Virtual Channel Number of the input channel
          * @return A new NetChannelOutput
-         * @throws JCSPNetworkException
+         * @//throws JCSPNetworkException
          *             Thrown if something goes wrong in the underlying architecture
          */
 
@@ -436,7 +436,7 @@ namespace CSPnet2.NetChannel
          * @param immunityLevel
          *            The immunity to poison of the channel
          * @return A new NetChannelOutput
-         * @throws JCSPNetworkException
+         * @//throws JCSPNetworkException
          *             Thrown if something goes wrong in the underlying architecture
          */
 
@@ -457,7 +457,7 @@ namespace CSPnet2.NetChannel
          * @param filter
          *            The filter to encode outgoing messages
          * @return A new NetChannelOutput
-         * @throws JCSPNetworkException
+         * @//throws JCSPNetworkException
          *             Thrown if something goes wrong with the underlying architecture
          */
 
@@ -480,7 +480,7 @@ namespace CSPnet2.NetChannel
          * @param filter
          *            The filter that encodes the outgoing messages
          * @return A new NetChannelOutput
-         * @throws JCSPNetworkException
+         * @//throws JCSPNetworkException
          *             Thrown if something goes wrong with the underlying architecture
          */
 
@@ -497,7 +497,7 @@ namespace CSPnet2.NetChannel
          * @param vcn
          *            The Virtual Channel Number of the input channel
          * @return A new NetSharedChannelOutput
-         * @throws JCSPNetworkException
+         * @//throws JCSPNetworkException
          *             Thrown if something goes wrong in the underlying architecture
          */
 
@@ -517,7 +517,7 @@ namespace CSPnet2.NetChannel
          * @param immunityLevel
          *            The immunity to poison that the channel has
          * @return A new NetSharedChannelOutput
-         * @throws JCSPNetworkException
+         * @//throws JCSPNetworkException
          *             Thrown if something goes wrong in the underlying architecture
          */
 
@@ -537,7 +537,7 @@ namespace CSPnet2.NetChannel
          * @param filter
          *            The filter used to encode the outgoing messages
          * @return A new NetSharedChannelOutput
-         * @throws JCSPNetworkException
+         * @//throws JCSPNetworkException
          *             Thrown if something goes wrong in the underlying architecture
          */
 
@@ -560,7 +560,7 @@ namespace CSPnet2.NetChannel
          * @param filter
          *            The filter used to encode outgoing messages
          * @return A new NetSharedChannelOutput
-         * @throws JCSPNetworkException
+         * @//throws JCSPNetworkException
          *             Thrown if something goes wrong in the underlying architecture
          */
 
@@ -577,7 +577,7 @@ namespace CSPnet2.NetChannel
          * @param vcn
          *            The Virtual Channel Number of the input channel
          * @return A new NetChannelOutput
-         * @throws JCSPNetworkException
+         * @//throws JCSPNetworkException
          *             Thrown if something goes wrong in the underlying architecture
          */
 
@@ -597,7 +597,7 @@ namespace CSPnet2.NetChannel
          * @param immunityLevel
          *            The immunity to poison the channel has
          * @return A new NetChannelOutput
-         * @throws JCSPNetworkException
+         * @//throws JCSPNetworkException
          *             Thrown if something goes wrong in the underlying architecture
          */
 
@@ -617,7 +617,7 @@ namespace CSPnet2.NetChannel
          * @param filter
          *            The filter used to encode outgoing messages
          * @return A new NetChannelOutput
-         * @throws JCSPNetworkException
+         * @//throws JCSPNetworkException
          *             Thrown if something goes wrong in the underlying architecture
          */
 
@@ -639,7 +639,7 @@ namespace CSPnet2.NetChannel
          * @param filter
          *            The filter used to encode outgoing messages
          * @return A new NetChannelOutput
-         * @throws JCSPNetworkException
+         * @//throws JCSPNetworkException
          *             Thrown if something goes wrong in the underlying architecture
          */
 
@@ -657,7 +657,7 @@ namespace CSPnet2.NetChannel
          * @param vcn
          *            The Virtual Channel Number of the input channel
          * @return A new NetSharedChannelOutput
-         * @throws JCSPNetworkException
+         * @//throws JCSPNetworkException
          *             Thrown if something goes wrong in the underlying architecture
          */
 
@@ -677,7 +677,7 @@ namespace CSPnet2.NetChannel
          * @param immunityLevel
          *            The immunity to poison that the channel has
          * @return A new NetSharedChannelOutput
-         * @throws JCSPNetworkException
+         * @//throws JCSPNetworkException
          *             Thrown if something goes wrong in the underlying architecture
          */
 
@@ -697,7 +697,7 @@ namespace CSPnet2.NetChannel
          * @param filter
          *            The immunity to poison that the channel has
          * @return A new NetSharedChannelOutput
-         * @throws JCSPNetworkException
+         * @//throws JCSPNetworkException
          *             Thrown if something goes wrong in the underlying architecture
          */
 
@@ -719,7 +719,7 @@ namespace CSPnet2.NetChannel
          * @param filter
          *            The filter used to encode outgoing messages
          * @return A new NetSharedChannelOutput
-         * @throws JCSPNetworkException
+         * @//throws JCSPNetworkException
          *             Thrown if something goes wrong in the underlying architecture
          */
 

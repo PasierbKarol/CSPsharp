@@ -34,15 +34,14 @@ sealed class DynamicObjectInputStream : ObjectInputStream
 {
     readonly DynamicClassLoader dcl;
 
-    DynamicObjectInputStream(InputStream is, DynamicClassLoader loader)
-        throws IOException
+    DynamicObjectInputStream(InputStream inputStream, DynamicClassLoader loader) : base(inputStream)
+        ////throws IOException
     {
-        super(is);
         this.dcl = loader;
     }
 
     protected Class resolveClass(ObjectStreamClass desc)
-        throws IOException, ClassNotFoundException
+        ////throws IOException, ClassNotFoundException
     {
         return dcl.loadClass(desc.getName());
     }

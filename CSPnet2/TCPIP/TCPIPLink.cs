@@ -97,11 +97,11 @@ public sealed class TCPIPLink : Link.Link
      * 
      * @param address
      *            The address of the remote Node to connect to
-     * @throws JCSPNetworkException
+     * @//throws JCSPNetworkException
      *             Thrown if something goes wrong during the creation process
      */
     public TCPIPLink(TCPIPNodeAddress address)
-        throws JCSPNetworkException
+        //throws JCSPNetworkException
     {
         try
         {
@@ -198,11 +198,11 @@ public sealed class TCPIPLink : Link.Link
      *            The socket to create the TCPIPLink with
      * @param nodeID
      *            The NodeID of the remote Node
-     * @throws JCSPNetworkException
+     * @//throws JCSPNetworkException
      *             Thrown if there is a problem during the connection
      */
     TCPIPLink(Socket socket, NodeID nodeID)
-        throws JCSPNetworkException
+        //throws JCSPNetworkException
     {
         try
         {
@@ -236,11 +236,11 @@ public sealed class TCPIPLink : Link.Link
      * Connects the Link to the remote Node. Exchanges the NodeIDs
      * 
      * @return True if the Link successfully connected to the remote Link
-     * @throws JCSPNetworkException
+     * @//throws JCSPNetworkException
      *             Thrown if something goes wrong during the connection
      */
     public boolean connect()
-        throws JCSPNetworkException
+        //throws JCSPNetworkException
     {
         // First check if we are connected.
         if (this.connected)
@@ -299,11 +299,11 @@ public sealed class TCPIPLink : Link.Link
      * Creates any required resources. For TCP/IP there is none.
      * 
      * @return True if all resources were created OK. Always the case in TCP/IP
-     * @throws JCSPNetworkException
+     * @//throws JCSPNetworkException
      *             Thrown if anything goes wrong during the creation process.
      */
     protected boolean createResources()
-        throws JCSPNetworkException
+        //throws JCSPNetworkException
     {
         // Just return true
         return true;

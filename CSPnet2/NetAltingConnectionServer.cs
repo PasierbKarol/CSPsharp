@@ -56,7 +56,7 @@ public sealed class NetAltingConnectionServer : AltingConnectionServer, NetConne
 
     static NetAltingConnectionServer create(int index, NetworkMessageFilter.FilterRx filterRX,
             NetworkMessageFilter.FilterTx filterTX)
-        //throws IllegalArgumentException
+        ////throws ArgumentException 
     {
         ConnectionData data = new ConnectionData();
         Any2OneChannel requestChan = Channel.any2one(new InfiniteBuffer());
@@ -83,7 +83,7 @@ public sealed class NetAltingConnectionServer : AltingConnectionServer, NetConne
 
     private NetAltingConnectionServer(AltingChannelInput openChan, AltingChannelInput requestChan,
                                       ConnectionData connData, NetworkMessageFilter.FilterRx filterRX, NetworkMessageFilter.FilterTx filterTX) : base(openChan)
-        //throws JCSPNetworkException
+        ////throws JCSPNetworkException
     {
         this.openIn = openChan;
         this.requestIn = requestChan;
@@ -106,28 +106,28 @@ public sealed class NetAltingConnectionServer : AltingConnectionServer, NetConne
     }
 
     public void reply(Object data, Boolean close)
-        //throws IllegalStateException
+        ////throws InvalidOperationException
     {
         // TODO Auto-generated method stub
 
     }
 
     public void reply(Object data)
-        //throws IllegalStateException
+        ////throws InvalidOperationException
     {
         // TODO Auto-generated method stub
 
     }
 
     public void replyAndClose(Object data)
-       //throws IllegalStateException
+       ////throws InvalidOperationException
     {
         // TODO Auto-generated method stub
 
     }
 
     public Object request()
-        //throws IllegalStateException
+        ////throws InvalidOperationException
     {
         // TODO Auto-generated method stub
         return null;

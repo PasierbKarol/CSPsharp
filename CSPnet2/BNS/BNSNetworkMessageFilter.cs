@@ -18,6 +18,9 @@
 //////////////////////////////////////////////////////////////////////
 
 using System;
+using System.IO;
+using CSPnet2.Barriers;
+using CSPnet2.NetChannel;
 
 namespace CSPnet2.BNS
 {
@@ -49,7 +52,7 @@ sealed class BNSNetworkMessageFilter
      * 
      * @author Kevin Chalmers
      */
-    static final class FilterTX : NetworkMessageFilter.FilterTx
+    static /*final*/ class FilterTX : NetworkMessageFilter.FilterTx
     {
 
         /**
@@ -77,14 +80,14 @@ sealed class BNSNetworkMessageFilter
          * @param obj
          *            A BNSMessage to convert
          * @return the byte equivalent of the BNSMessage
-         * @throws IOException
+         * @//throws IOException
          *             Thrown if something goes wrong during the conversion
          */
         public byte[] filterTX(Object obj)
-            throws IOException
+            ////throws IOException
         {
             // First ensure we have a BNSMessage
-            if (!(obj instanceof BNSMessage))
+            if (!(obj is BNSMessage))
                 throw new IOException("Attempted to send a non BNSMessage on a BNSMessage channel");
 
             BNSMessage msg = (BNSMessage)obj;
@@ -116,7 +119,7 @@ sealed class BNSNetworkMessageFilter
      * 
      * @author Kevin Chalmers
      */
-    static final class FilterRX : NetworkMessageFilter.FilterRx
+    static /*final*/ class FilterRX : NetworkMessageFilter.FilterRx
     {
         /**
          * The input end of the pipe to read the message back
@@ -142,11 +145,11 @@ sealed class BNSNetworkMessageFilter
          * @param bytes
          *            The bytes to convert back into a BNSMessage
          * @return The recreated BNSMessage
-         * @throws IOException
+         * @//throws IOException
          *             Thrown if something goes wrong during the recreation
          */
         public Object filterRX(byte[] bytes)
-            throws IOException
+            ////throws IOException
         {
             this.byteIn = new ByteArrayInputStream(bytes);
             this.dis = new DataInputStream(byteIn);

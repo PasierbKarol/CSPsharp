@@ -89,11 +89,11 @@ public sealed class TCPIPLinkServer : LinkServer
      * 
      * @param address
      *            The address to listen on for new connections
-     * @throws JCSPNetworkException
+     * @//throws JCSPNetworkException
      *             Thrown if something goes wrong during the creation of the ServerSocket
      */
     public TCPIPLinkServer(TCPIPNodeAddress address)
-        throws JCSPNetworkException
+        //throws JCSPNetworkException
     {
         try
         {

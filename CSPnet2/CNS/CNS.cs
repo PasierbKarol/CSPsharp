@@ -21,6 +21,7 @@ using System;
 using System.Collections;
 using CSPlang;
 using CSPnet2.CNS;
+using CSPnet2.Net2Link;
 using CSPnet2.NetChannel;
 using CSPnet2.NetNode;
 
@@ -242,7 +243,7 @@ public class CNS : IamCSProcess
     /**
      * A channel used to receive incoming link lost notifications
      */
-    private readonly AltingChannelInput lostLink = NetNode.getInstance().getLinkLostEventChannel();
+    private readonly AltingChannelInput lostLink = Node.getInstance().getLinkLostEventChannel();
 
     /**
      * Private empty constructor
@@ -267,11 +268,11 @@ public class CNS : IamCSProcess
      * 
      * @param cnsNode
      *            The Node that the CNS is located on
-     * @throws JCSPNetworkException
+     * @//throws JCSPNetworkException
      *             Thrown if something goes wrong in the underlying architecture
      */
     public static void initialise(NodeID cnsNode)
-        throws JCSPNetworkException
+        ////throws JCSPNetworkException
     {
         // First check that we are not already initialised
         if (CNS.initialised)
@@ -292,11 +293,11 @@ public class CNS : IamCSProcess
      * 
      * @param cnsNode
      *            The Node that the CNS is located on
-     * @throws JCSPNetworkException
+     * @//throws JCSPNetworkException
      *             Thrown if something goes wrong in the underlying architecture
      */
     public static void initialise(NodeAddress cnsNode)
-        throws JCSPNetworkException
+        ////throws JCSPNetworkException
     {
         // First check that we are not already initialised
         if (CNS.initialised)
@@ -321,10 +322,10 @@ public class CNS : IamCSProcess
     public void run()
     {
         // Create the channel to receive incoming messages on. The index is 1.
-        NetAltingChannelInput in = NetChannel.numberedNet2One(1, new CNSNetworkMessageFilter.FilterRX());
+        NetAltingChannelInput In = NetChannel.numberedNet2One(1, new CNSNetworkMessageFilter.FilterRX());
 
         // Now we wish to alternate upon this channel, and the link lost channel
-        Alternative alt = new Alternative(new Guard[] { this.lostLink, in });
+        Alternative alt = new Alternative(new Guard[] { this.lostLink, In });
 
         // Loop forever
         while (true)
@@ -338,7 +339,7 @@ public class CNS : IamCSProcess
                     NodeID lostNode = (NodeID)this.lostLink.read();
 
                     // Log loss of connection
-                    Node.log.log(this.getClass(), "Lost Link to: " + lostNode.toString());
+                    Node.log.log(this.GetType(), "Lost Link to: " + lostNode.toString());
 
                     // First remove the logged client
                     this.loggedClients.remove(lostNode);
@@ -359,7 +360,7 @@ public class CNS : IamCSProcess
                         {
                             String toRemove = (String)iter.next();
                             this.registeredChannels.remove(toRemove);
-                            Node.log.log(this.getClass(), toRemove + " deregistered");
+                            Node.log.log(this.GetType(), toRemove + " deregistered");
                         }
                     }
                     break;
@@ -368,7 +369,7 @@ public class CNS : IamCSProcess
                 case 1:
                 {
                     // Read in the message
-                    CNSMessage message = (CNSMessage)in.read();
+                    CNSMessage message = (CNSMessage)In.read();
 
                     // Now behave based on the type of the message
                     switch (message.type)
@@ -377,22 +378,22 @@ public class CNS : IamCSProcess
                         case CNSMessageProtocol.LOGON_MESSAGE:
                         {
                             // Log the logon attempt
-                            Node.log.log(this.getClass(), "Logon received from: "
+                            Node.log.log(this.GetType(), "Logon received from: "
                                                           + message.location1.getNodeID().toString());
 
                             // try-catch loop. We don't want the CNS to fail
                             try
                             {
                                 // Check if the Node is already logged on
-                                NetChannelOutput out = (NetChannelOutput)this.loggedClients.get(message.location1
+                                NetChannelOutput Out = (NetChannelOutput)this.loggedClients.get(message.location1
                                         .getNodeID());
 
                                 // If out is null, no previous log on received
-                                if (out != null)
+                                if (Out != null)
                                 {
                                     // This Node is already logged on. Send fail message
                                     // Log failed attempt
-                                    Node.err.log(this.getClass(), message.location1.getNodeID().toString()
+                                    Node.err.log(this.GetType(), message.location1.getNodeID().toString()
                                                                   + " already logged on.  Rejecting");
 
                                     // Create reply channel to the Node.
@@ -413,7 +414,7 @@ public class CNS : IamCSProcess
                                 {
                                     // Node hasn't previously registered
                                     // Log registration
-                                    Node.log.log(this.getClass(), message.location1.getNodeID().toString()
+                                    Node.log.log(this.GetType(), message.location1.getNodeID().toString()
                                                                   + " successfully logged on");
 
                                     // Create the reply channel
@@ -443,24 +444,24 @@ public class CNS : IamCSProcess
                         case CNSMessageProtocol.REGISTER_REQUEST:
                         {
                             // Log registration
-                            Node.log.log(this.getClass(), "Registration for " + message.name + " received");
+                            Node.log.log(this.GetType(), "Registration for " + message.name + " received");
 
                             // Catch any JCSPNetworkException
                             try
                             {
                                 // Get the reply channel from our logged clients map
-                                NetChannelOutput out = (NetChannelOutput)this.loggedClients.get(message.location1
+                                NetChannelOutput Out = (NetChannelOutput)this.loggedClients.get(message.location1
                                         .getNodeID());
 
                                 // Check if the Node has logged on with us
-                                if (out == null)
+                                if (Out == null)
                                 {
                                     // The Node is not logged on. Send failure message
-                                    Node.err.log(this.getClass(), "Registration failed. "
+                                    Node.err.log(this.GetType(), "Registration failed. "
                                                                   + message.location1.getNodeID() + " not logged on");
 
                                     // Create the channel to reply to
-                                    out = NetChannel.one2net(message.location1, new CNSNetworkMessageFilter.FilterTX());
+                                    Out = NetChannel.one2net(message.location1, new CNSNetworkMessageFilter.FilterTX());
 
                                     // Create the reply message
                                     CNSMessage reply = new CNSMessage();
@@ -468,10 +469,10 @@ public class CNS : IamCSProcess
                                     reply.success = false;
 
                                     // Write the reply asynchronously. Do not block the CNS
-                                    out.asyncWrite(reply);
+                                    Out.asyncWrite(reply);
 
                                     // Destroy the temporary channel
-                                    out.destroy();
+                                    Out.destroy();
                                 }
 
                                 // The Node is registered, now check if the name is
@@ -479,7 +480,7 @@ public class CNS : IamCSProcess
                                 {
                                     // The name is already registered. Inform the register
                                     // Log the failed registration
-                                    Node.err.log(this.getClass(), "Registration failed. " + message.name
+                                    Node.err.log(this.GetType(), "Registration failed. " + message.name
                                                                   + " already registered");
 
                                     // Create reply message
@@ -488,13 +489,13 @@ public class CNS : IamCSProcess
                                     reply.success = false;
 
                                     // Write the reply asynchronously. Do not block the CNS
-                                    out.asyncWrite(reply);
+                                    Out.asyncWrite(reply);
                                 }
                                 else
                                 {
                                     // Name is not already registered.
                                     // Log successful registration
-                                    Node.log.log(this.getClass(), "Registration of " + message.name + "succeded");
+                                    Node.log.log(this.GetType(), "Registration of " + message.name + "succeded");
 
                                     // Now check if any client end is waiting for this name
                                     ArrayList pending = (ArrayList)this.waitingResolves.get(message.name);
@@ -513,7 +514,7 @@ public class CNS : IamCSProcess
                                                 CNSMessage msg = (CNSMessage)iter.next();
 
                                                 // Log resolve completion
-                                                Node.log.log(this.getClass(), "Queued resolve of " + message.name
+                                                Node.log.log(this.GetType(), "Queued resolve of " + message.name
                                                                               + " by " + msg.location1.getNodeID()
                                                                               + " completed");
 
@@ -568,7 +569,7 @@ public class CNS : IamCSProcess
                                     registered.add(message.name);
 
                                     // Log the successful registration
-                                    Node.log.log(this.getClass(), message.name + " registered to " + message.location2);
+                                    Node.log.log(this.GetType(), message.name + " registered to " + message.location2);
 
                                     // Create the reply message
                                     CNSMessage reply = new CNSMessage();
@@ -576,7 +577,7 @@ public class CNS : IamCSProcess
                                     reply.success = true;
 
                                     // Write it asynchronously to the registering Node
-                                    out.asyncWrite(reply);
+                                    Out.asyncWrite(reply);
                                 }
                             }
                             catch (JCSPNetworkException jne)
@@ -590,25 +591,25 @@ public class CNS : IamCSProcess
                         case CNSMessageProtocol.RESOLVE_REQUEST:
                         {
                             // Log resolve request
-                            Node.log.log(this.getClass(), "Resolve request for " + message.name + " received");
+                            Node.log.log(this.GetType(), "Resolve request for " + message.name + " received");
 
                             // Catch any JCSP Network Exception
                             try
                             {
                                 // Check if the resolving Node is logged on
-                                NetChannelOutput out = (NetChannelOutput)this.loggedClients.get(message.location1
+                                NetChannelOutput Out = (NetChannelOutput)this.loggedClients.get(message.location1
                                         .getNodeID());
 
                                 // If the channel is null, then the Node has yet to log on with us
-                                if (out == null)
+                                if (Out == null)
                                 {
                                     // Node is not logged on
                                     // Log failed resolution
-                                    Node.err.log(this.getClass(), "Resolve failed. " + message.location1.getNodeID()
+                                    Node.err.log(this.GetType(), "Resolve failed. " + message.location1.getNodeID()
                                                                   + " not logged on");
 
                                     // Create connection to the resolver
-                                    out = NetChannel.one2net(message.location1, new CNSNetworkMessageFilter.FilterTX());
+                                    Out = NetChannel.one2net(message.location1, new CNSNetworkMessageFilter.FilterTX());
 
                                     // Create the reply message
                                     CNSMessage reply = new CNSMessage();
@@ -616,10 +617,10 @@ public class CNS : IamCSProcess
                                     reply.success = false;
 
                                     // Write message asynchronously to the Node
-                                    out.asyncWrite(reply);
+                                    Out.asyncWrite(reply);
 
                                     // Destroy temporary channel
-                                    out.destroy();
+                                    Out.destroy();
                                 }
                                 else
                                 {
@@ -632,7 +633,7 @@ public class CNS : IamCSProcess
                                     {
                                         // The name is not registered. We need to queue the resolve until it does
                                         // Log the queueing of the resolve
-                                        Node.log.log(this.getClass(), message.name
+                                        Node.log.log(this.GetType(), message.name
                                                                       + " not registered. Queueing resolve by "
                                                                       + message.location1.getNodeID().toString());
 
@@ -655,7 +656,7 @@ public class CNS : IamCSProcess
                                     {
                                         // The location is not null. Send it to the resolver
                                         // Log successful resolution
-                                        Node.log.log(this.getClass(), "Resolve request completed. " + message.name
+                                        Node.log.log(this.GetType(), "Resolve request completed. " + message.name
                                                                       + " location being sent to "
                                                                       + message.location1.getNodeID());
 
@@ -696,17 +697,17 @@ public class CNS : IamCSProcess
      *            The name to register with the CNS
      * @deprecated Use net2one instead
      * @return A new NetAltingChannelInput registered with the given name
-     * @throws IllegalStateException
+     * @//throws InvalidOperationException
      *             Thrown if the CNS has not been initialised
-     * @throws IllegalArgumentException
+     * @//throws ArgumentException 
      *             Thrown if the channel name is already registered
      */
     public static NetAltingChannelInput createNet2One(String name)
-        throws IllegalStateException, IllegalArgumentException
+        ////throws InvalidOperationException, ArgumentException 
     {
         // Check if the CNS connection is initialised
         if (!CNS.initialised)
-            throw new IllegalStateException("The connection to the CNS has not been initialised");
+            throw new InvalidOperationException ("The connection to the CNS has not been initialised");
 
         // Create a new channel
         NetAltingChannelInput toReturn = NetChannel.net2one();
@@ -717,7 +718,7 @@ public class CNS : IamCSProcess
 
         // Failed to register channel. Destroy the channel and throw exception
         toReturn.destroy();
-        throw new IllegalArgumentException("Failed to register " + name + " with the CNS");
+        throw new ArgumentException("Failed to register " + name + " with the CNS");
     }
 
     /**
@@ -727,17 +728,17 @@ public class CNS : IamCSProcess
      *            The name to register with the CNS
      * @deprecated Use net2any instead
      * @return A new NetSharedChannelInput registered with the given name
-     * @throws IllegalStateException
+     * @//throws InvalidOperationException
      *             Thrown if the CNS has not been initialised
-     * @throws IllegalArgumentException
+     * @//throws ArgumentException 
      *             Thrown if the channel name is already registered
      */
     public static NetSharedChannelInput createNet2Any(String name)
-        throws IllegalStateException, IllegalArgumentException
+        ////throws InvalidOperationException, ArgumentException 
     {
         // Check if the CNS connection is initialised
         if (!CNS.initialised)
-            throw new IllegalStateException("The connection to the CNS has not been initialised");
+            throw new InvalidOperationException("The connection to the CNS has not been initialised");
 
         // Create a new channel
         NetSharedChannelInput toReturn = NetChannel.net2any();
@@ -748,7 +749,7 @@ public class CNS : IamCSProcess
 
         // Failed to register channel. Destroy the channel and throw exception
         toReturn.destroy();
-        throw new IllegalArgumentException("Failed to register " + name + " with the CNS");
+        throw new ArgumentException("Failed to register " + name + " with the CNS");
     }
 
     /**
@@ -758,17 +759,17 @@ public class CNS : IamCSProcess
      *            The name to resolve
      * @deprecated Use one2net instead
      * @return A new NetChannelOutput connected to the input with the registered name
-     * @throws IllegalStateException
+     * @//throws InvalidOperationException
      *             Thrown if the connection to the CNS is not initialised
-     * @throws JCSPNetworkException
+     * @//throws JCSPNetworkException
      *             Thrown if something goes wrong in the underlying architecture
      */
     public static NetChannelOutput createOne2Net(String name)
-        throws IllegalStateException, JCSPNetworkException
+       // //throws InvalidOperationException, JCSPNetworkException
     {
         // Check if the CNS connection is initialised
         if (!CNS.initialised)
-            throw new IllegalStateException("The connection to the CNS has not been initialised");
+            throw new InvalidOperationException ("The connection to the CNS has not been initialised");
 
         // Resolve the location of the channel
         NetChannelLocation loc = CNS.service.resolve(name);
@@ -784,17 +785,17 @@ public class CNS : IamCSProcess
      *            The name to resolve
      * @deprecated Use one2net instead
      * @return A new NetChannelOutput connected to the input with the registered name
-     * @throws IllegalStateException
+     * @//throws InvalidOperationException
      *             Thrown if the connection to the CNS is not initialised
-     * @throws JCSPNetworkException
+     * @//throws JCSPNetworkException
      *             Thrown if something goes wrong in the underlying architecture
      */
     public static NetSharedChannelOutput createAny2Net(String name)
-        throws JCSPNetworkException, IllegalStateException
+        ////throws JCSPNetworkException, InvalidOperationException
     {
         // Check if the CNS connection is initialised
         if (!CNS.initialised)
-            throw new IllegalStateException("The connection to the CNS has not been initialised");
+            throw new InvalidOperationException ("The connection to the CNS has not been initialised");
 
         // Resolve the location of the channel
         NetChannelLocation loc = CNS.service.resolve(name);
@@ -809,17 +810,17 @@ public class CNS : IamCSProcess
      * @param name
      *            The name to register with the CNS
      * @return A new NetAltingChannelInput registered with the given name
-     * @throws IllegalStateException
+     * @//throws InvalidOperationException
      *             Thrown if the CNS has not been initialised
-     * @throws IllegalArgumentException
+     * @//throws ArgumentException 
      *             Thrown if the channel name is already registered
      */
     public static NetAltingChannelInput net2one(String name)
-        throws IllegalStateException, IllegalArgumentException
+        ////throws InvalidOperationException, ArgumentException 
     {
         // Check if the CNS connection is initialised
         if (!CNS.initialised)
-            throw new IllegalStateException("The connection to the CNS has not been initialised");
+            throw new InvalidOperationException ("The connection to the CNS has not been initialised");
 
         // Create a new channel
         NetAltingChannelInput toReturn = NetChannel.net2one();
@@ -830,7 +831,7 @@ public class CNS : IamCSProcess
 
         // Failed to register channel. Destroy the channel and throw exception
         toReturn.destroy();
-        throw new IllegalArgumentException("Failed to register " + name + " with the CNS");
+        throw new ArgumentException("Failed to register " + name + " with the CNS");
     }
 
     /**
@@ -841,17 +842,17 @@ public class CNS : IamCSProcess
      * @param immunityLevel
      *            The immunity to poison the channel has
      * @return A new NetAltingChannelInput registered with the given name
-     * @throws IllegalStateException
+     * @//throws InvalidOperationException
      *             Thrown if the CNS has not been initialised
-     * @throws IllegalArgumentException
+     * @//throws ArgumentException 
      *             Thrown if the channel name is already registered
      */
     public static NetAltingChannelInput net2one(String name, int immunityLevel)
-        throws IllegalArgumentException, IllegalStateException
+       // //throws ArgumentException , InvalidOperationException
     {
         // Check if the CNS connection is initialised
         if (!CNS.initialised)
-            throw new IllegalStateException("The connection to the CNS has not been initialised");
+            throw new InvalidOperationException("The connection to the CNS has not been initialised");
 
         // Create a new channel
         NetAltingChannelInput toReturn = NetChannel.net2one(immunityLevel);
@@ -862,7 +863,7 @@ public class CNS : IamCSProcess
 
         // Failed to register channel. Destroy the channel and throw exception
         toReturn.destroy();
-        throw new IllegalArgumentException("Failed to register " + name + " with the CNS");
+        throw new ArgumentException("Failed to register " + name + " with the CNS");
     }
 
     /**
@@ -873,17 +874,17 @@ public class CNS : IamCSProcess
      * @param filter
      *            The filter used to decode incoming messages
      * @return A new NetAltingChannelInput registered with the given name
-     * @throws IllegalStateException
+     * @//throws InvalidOperationException
      *             Thrown if the CNS has not been initialised
-     * @throws IllegalArgumentException
+     * @//throws ArgumentException 
      *             Thrown if the channel name is already registered
      */
     public static NetAltingChannelInput net2one(String name, NetworkMessageFilter.FilterRx filter)
-        throws IllegalArgumentException, IllegalStateException
+       // //throws ArgumentException , InvalidOperationException
     {
         // Check if the CNS connection is initialised
         if (!CNS.initialised)
-            throw new IllegalStateException("The connection to the CNS has not been initialised");
+            throw new InvalidOperationException ("The connection to the CNS has not been initialised");
 
         // Create a new channel
         NetAltingChannelInput toReturn = NetChannel.net2one(filter);
@@ -894,7 +895,7 @@ public class CNS : IamCSProcess
 
         // Failed to register channel. Destroy the channel and throw exception
         toReturn.destroy();
-        throw new IllegalArgumentException("Failed to register " + name + " with the CNS");
+        throw new ArgumentException("Failed to register " + name + " with the CNS");
     }
 
     /**
@@ -907,17 +908,17 @@ public class CNS : IamCSProcess
      * @param filter
      *            The filter used to decode incoming messages
      * @return A new NetAltingChannelInput registered with the given name
-     * @throws IllegalStateException
+     * @//throws InvalidOperationException
      *             Thrown if the CNS has not been initialised
-     * @throws IllegalArgumentException
+     * @//throws ArgumentException 
      *             Thrown if the channel name is already registered
      */
     public static NetAltingChannelInput net2one(String name, int immunityLevel, NetworkMessageFilter.FilterRx filter)
-        throws IllegalArgumentException, IllegalStateException
+        ////throws ArgumentException , InvalidOperationException
     {
         // Check if the CNS connection is initialised
         if (!CNS.initialised)
-            throw new IllegalStateException("The connection to the CNS has not been initialised");
+            throw new InvalidOperationException ("The connection to the CNS has not been initialised");
 
         // Create a new channel
         NetAltingChannelInput toReturn = NetChannel.net2one(immunityLevel, filter);
@@ -928,7 +929,7 @@ public class CNS : IamCSProcess
 
         // Failed to register channel. Destroy the channel and throw exception
         toReturn.destroy();
-        throw new IllegalArgumentException("Failed to register " + name + " with the CNS");
+        throw new ArgumentException("Failed to register " + name + " with the CNS");
     }
 
     /**
@@ -937,17 +938,17 @@ public class CNS : IamCSProcess
      * @param name
      *            The name to register with the CNS
      * @return A new NetSharedChannelInput registered with the given name
-     * @throws IllegalStateException
+     * @//throws InvalidOperationException
      *             Thrown if the CNS has not been initialised
-     * @throws IllegalArgumentException
+     * @//throws ArgumentException 
      *             Thrown if the channel name is already registered
      */
     public static NetSharedChannelInput net2any(String name)
-        throws IllegalArgumentException, IllegalStateException
+        ////throws ArgumentException , InvalidOperationException
     {
         // Check if the CNS connection is initialised
         if (!CNS.initialised)
-            throw new IllegalStateException("The connection to the CNS has not been initialised");
+            throw new InvalidOperationException ("The connection to the CNS has not been initialised");
 
         // Create a new channel
         NetSharedChannelInput toReturn = NetChannel.net2any();
@@ -958,7 +959,7 @@ public class CNS : IamCSProcess
 
         // Failed to register channel. Destroy the channel and throw exception
         toReturn.destroy();
-        throw new IllegalArgumentException("Failed to register " + name + " with the CNS");
+        throw new ArgumentException("Failed to register " + name + " with the CNS");
     }
 
     /**
@@ -969,17 +970,17 @@ public class CNS : IamCSProcess
      * @param immunityLevel
      *            The immunity level to poison that the channel has
      * @return A new NetSharedChannelInput registered with the given name
-     * @throws IllegalStateException
+     * @//throws InvalidOperationException
      *             Thrown if the CNS has not been initialised
-     * @throws IllegalArgumentException
+     * @//throws ArgumentException 
      *             Thrown if the channel name is already registered
      */
     public static NetSharedChannelInput net2any(String name, int immunityLevel)
-        throws IllegalArgumentException, IllegalStateException
+        ////throws ArgumentException , InvalidOperationException
     {
         // Check if the CNS connection is initialised
         if (!CNS.initialised)
-            throw new IllegalStateException("The connection to the CNS has not been initialised");
+            throw new InvalidOperationException ("The connection to the CNS has not been initialised");
 
         // Create a new channel
         NetSharedChannelInput toReturn = NetChannel.net2any(immunityLevel);
@@ -990,7 +991,7 @@ public class CNS : IamCSProcess
 
         // Failed to register channel. Destroy the channel and throw exception
         toReturn.destroy();
-        throw new IllegalArgumentException("Failed to register " + name + " with the CNS");
+        throw new ArgumentException("Failed to register " + name + " with the CNS");
     }
 
     /**
@@ -1001,17 +1002,17 @@ public class CNS : IamCSProcess
      * @param filter
      *            The filter used to decode incoming messages
      * @return A new NetSharedChannelInput registered with the given name
-     * @throws IllegalStateException
+     * @//throws InvalidOperationException
      *             Thrown if the CNS has not been initialised
-     * @throws IllegalArgumentException
+     * @//throws ArgumentException 
      *             Thrown if the channel name is already registered
      */
     public static NetSharedChannelInput net2any(String name, NetworkMessageFilter.FilterRx filter)
-        throws IllegalArgumentException, IllegalStateException
+       // //throws ArgumentException , InvalidOperationException
     {
         // Check if the CNS connection is initialised
         if (!CNS.initialised)
-            throw new IllegalStateException("The connection to the CNS has not been initialised");
+            throw new InvalidOperationException ("The connection to the CNS has not been initialised");
 
         // Create a new channel
         NetSharedChannelInput toReturn = NetChannel.net2any(filter);
@@ -1022,7 +1023,7 @@ public class CNS : IamCSProcess
 
         // Failed to register channel. Destroy the channel and throw exception
         toReturn.destroy();
-        throw new IllegalArgumentException("Failed to register " + name + " with the CNS");
+        throw new ArgumentException("Failed to register " + name + " with the CNS");
     }
 
     /**
@@ -1035,17 +1036,17 @@ public class CNS : IamCSProcess
      * @param filter
      *            The filter used to decode incoming messages
      * @return A new NetSharedChannelInput registered with the given name
-     * @throws IllegalStateException
+     * @//throws InvalidOperationException
      *             Thrown if the CNS has not been initialised
-     * @throws IllegalArgumentException
+     * @//throws ArgumentException 
      *             Thrown if the channel name is already registered
      */
     public static NetSharedChannelInput net2any(String name, int immunityLevel, NetworkMessageFilter.FilterRx filter)
-        throws IllegalArgumentException, IllegalStateException
+        ////throws ArgumentException , InvalidOperationException
     {
         // Check if the CNS connection is initialised
         if (!CNS.initialised)
-            throw new IllegalStateException("The connection to the CNS has not been initialised");
+            throw new InvalidOperationException ("The connection to the CNS has not been initialised");
 
         // Create a new channel
         NetSharedChannelInput toReturn = NetChannel.net2any(immunityLevel, filter);
@@ -1056,7 +1057,7 @@ public class CNS : IamCSProcess
 
         // Failed to register channel. Destroy the channel and throw exception
         toReturn.destroy();
-        throw new IllegalArgumentException("Failed to register " + name + " with the CNS");
+        throw new ArgumentException("Failed to register " + name + " with the CNS");
     }
 
     /**
@@ -1067,17 +1068,17 @@ public class CNS : IamCSProcess
      * @param index
      *            The index to create the channel with
      * @return A new NetAltingChannelInput registered with the given name
-     * @throws IllegalStateException
+     * @//throws InvalidOperationException
      *             Thrown if the CNS has not been initialised
-     * @throws IllegalArgumentException
+     * @//throws ArgumentException 
      *             Thrown if the channel name is already registered
      */
     public static NetAltingChannelInput numberedNet2One(String name, int index)
-        throws IllegalStateException, IllegalArgumentException
+        ////throws InvalidOperationException, ArgumentException 
     {
         // Check if the CNS connection is initialised
         if (!CNS.initialised)
-            throw new IllegalStateException("The connection to the CNS has not been initialised");
+            throw new InvalidOperationException ("The connection to the CNS has not been initialised");
 
         // Create a new channel
         NetAltingChannelInput toReturn = NetChannel.numberedNet2One(index);
@@ -1088,7 +1089,7 @@ public class CNS : IamCSProcess
 
         // Failed to register channel. Destroy the channel and throw exception
         toReturn.destroy();
-        throw new IllegalArgumentException("Failed to register " + name + " with the CNS");
+        throw new ArgumentException("Failed to register " + name + " with the CNS");
     }
 
     /**
@@ -1101,17 +1102,17 @@ public class CNS : IamCSProcess
      * @param immunityLevel
      *            The immunity level to poison that the channel has
      * @return A new NetAltingChannelInput registered with the given name
-     * @throws IllegalStateException
+     * @//throws InvalidOperationException
      *             Thrown if the CNS has not been initialised
-     * @throws IllegalArgumentException
+     * @//throws ArgumentException 
      *             Thrown if the channel name is already registered
      */
     public static NetAltingChannelInput numberedNet2One(String name, int index, int immunityLevel)
-        throws IllegalStateException, IllegalArgumentException
+        ////throws InvalidOperationException, ArgumentException 
     {
         // Check if the CNS connection is initialised
         if (!CNS.initialised)
-            throw new IllegalStateException("The connection to the CNS has not been initialised");
+            throw new InvalidOperationException("The connection to the CNS has not been initialised");
 
         // Create a new channel
         NetAltingChannelInput toReturn = NetChannel.numberedNet2One(index, immunityLevel);
@@ -1122,7 +1123,7 @@ public class CNS : IamCSProcess
 
         // Failed to register channel. Destroy the channel and throw exception
         toReturn.destroy();
-        throw new IllegalArgumentException("Failed to register " + name + " with the CNS");
+        throw new ArgumentException ("Failed to register " + name + " with the CNS");
     }
 
     /**
@@ -1135,17 +1136,17 @@ public class CNS : IamCSProcess
      * @param filter
      *            The filter used to decode incoming messages
      * @return A new NetAltingChannelInput registered with the given name
-     * @throws IllegalStateException
+     * @//throws InvalidOperationException
      *             Thrown if the CNS has not been initialised
-     * @throws IllegalArgumentException
+     * @//throws ArgumentException 
      *             Thrown if the channel name is already registered
      */
     public static NetAltingChannelInput numberedNet2One(String name, int index, NetworkMessageFilter.FilterRx filter)
-        throws IllegalStateException, IllegalArgumentException
+       // //throws InvalidOperationException, ArgumentException 
     {
         // Check if the CNS connection is initialised
         if (!CNS.initialised)
-            throw new IllegalStateException("The connection to the CNS has not been initialised");
+            throw new InvalidOperationException("The connection to the CNS has not been initialised");
 
         // Create a new channel
         NetAltingChannelInput toReturn = NetChannel.numberedNet2One(index, filter);
@@ -1156,7 +1157,7 @@ public class CNS : IamCSProcess
 
         // Failed to register channel. Destroy the channel and throw exception
         toReturn.destroy();
-        throw new IllegalArgumentException("Failed to register " + name + " with the CNS");
+        throw new ArgumentException ("Failed to register " + name + " with the CNS");
     }
 
     /**
@@ -1171,18 +1172,18 @@ public class CNS : IamCSProcess
      * @param filter
      *            The filter used to decode incoming messages
      * @return A new NetAltingChannelInput registered with the given name
-     * @throws IllegalStateException
+     * @//throws InvalidOperationException
      *             Thrown if the CNS has not been initialised
-     * @throws IllegalArgumentException
+     * @//throws ArgumentException 
      *             Thrown if the channel name is already registered
      */
     public static NetAltingChannelInput numberedNet2One(String name, int index, int immunityLevel,
             NetworkMessageFilter.FilterRx filter)
-        throws IllegalStateException, IllegalArgumentException
+        ////throws InvalidOperationException, ArgumentException 
     {
         // Check if the CNS connection is initialised
         if (!CNS.initialised)
-            throw new IllegalStateException("The connection to the CNS has not been initialised");
+            throw new InvalidOperationException("The connection to the CNS has not been initialised");
 
         // Create a new channel
         NetAltingChannelInput toReturn = NetChannel.numberedNet2One(index, immunityLevel, filter);
@@ -1193,7 +1194,7 @@ public class CNS : IamCSProcess
 
         // Failed to register channel. Destroy the channel and throw exception
         toReturn.destroy();
-        throw new IllegalArgumentException("Failed to register " + name + " with the CNS");
+        throw new ArgumentException ("Failed to register " + name + " with the CNS");
     }
 
     /**
@@ -1204,17 +1205,17 @@ public class CNS : IamCSProcess
      * @param index
      *            The index to create the channel with
      * @return A new NetSharedChannelInput registered with the given name
-     * @throws IllegalStateException
+     * @//throws InvalidOperationException
      *             Thrown if the CNS has not been initialised
-     * @throws IllegalArgumentException
+     * @//throws ArgumentException 
      *             Thrown if the channel name is already registered
      */
     public static NetSharedChannelInput numberedNet2Any(String name, int index)
-        throws IllegalStateException, IllegalArgumentException
+        ////throws InvalidOperationException, ArgumentException 
     {
         // Check if the CNS connection is initialised
         if (!CNS.initialised)
-            throw new IllegalStateException("The connection to the CNS has not been initialised");
+            throw new InvalidOperationException("The connection to the CNS has not been initialised");
 
         // Create a new channel
         NetSharedChannelInput toReturn = NetChannel.numberedNet2Any(index);
@@ -1225,7 +1226,7 @@ public class CNS : IamCSProcess
 
         // Failed to register channel. Destroy the channel and throw exception
         toReturn.destroy();
-        throw new IllegalArgumentException("Failed to register " + name + " with the CNS");
+        throw new ArgumentException ("Failed to register " + name + " with the CNS");
     }
 
     /**
@@ -1238,17 +1239,17 @@ public class CNS : IamCSProcess
      * @param immunityLevel
      *            The immunity to poison that this channel has
      * @return A new NetSharedChannelInput registered with the given name
-     * @throws IllegalStateException
+     * @//throws InvalidOperationException
      *             Thrown if the CNS has not been initialised
-     * @throws IllegalArgumentException
+     * @//throws ArgumentException 
      *             Thrown if the channel name is already registered
      */
     public static NetSharedChannelInput numberedNet2Any(String name, int index, int immunityLevel)
-        throws IllegalStateException, IllegalArgumentException
+       // //throws InvalidOperationException, ArgumentException 
     {
         // Check if the CNS connection is initialised
         if (!CNS.initialised)
-            throw new IllegalStateException("The connection to the CNS has not been initialised");
+            throw new InvalidOperationException("The connection to the CNS has not been initialised");
 
         // Create a new channel
         NetSharedChannelInput toReturn = NetChannel.numberedNet2Any(index, immunityLevel);
@@ -1259,7 +1260,7 @@ public class CNS : IamCSProcess
 
         // Failed to register channel. Destroy the channel and throw exception
         toReturn.destroy();
-        throw new IllegalArgumentException("Failed to register " + name + " with the CNS");
+        throw new ArgumentException ("Failed to register " + name + " with the CNS");
     }
 
     /**
@@ -1272,17 +1273,17 @@ public class CNS : IamCSProcess
      * @param filter
      *            The filter used to decode incoming messages
      * @return A new NetSharedChannelInput registered with the given name
-     * @throws IllegalStateException
+     * @//throws InvalidOperationException
      *             Thrown if the CNS has not been initialised
-     * @throws IllegalArgumentException
+     * @//throws ArgumentException 
      *             Thrown if the channel name is already registered
      */
     public static NetSharedChannelInput numberedNet2Any(String name, int index, NetworkMessageFilter.FilterRx filter)
-        throws IllegalStateException, IllegalArgumentException
+       // //throws InvalidOperationException, ArgumentException 
     {
         // Check if the CNS connection is initialised
         if (!CNS.initialised)
-            throw new IllegalStateException("The connection to the CNS has not been initialised");
+            throw new InvalidOperationException("The connection to the CNS has not been initialised");
 
         // Create a new channel
         NetSharedChannelInput toReturn = NetChannel.numberedNet2Any(index, filter);
@@ -1293,7 +1294,7 @@ public class CNS : IamCSProcess
 
         // Failed to register channel. Destroy the channel and throw exception
         toReturn.destroy();
-        throw new IllegalArgumentException("Failed to register " + name + " with the CNS");
+        throw new ArgumentException ("Failed to register " + name + " with the CNS");
     }
 
     /**
@@ -1308,18 +1309,18 @@ public class CNS : IamCSProcess
      * @param filter
      *            The filter used to decode incoming messages
      * @return A new NetSharedChannelInput registered with the given name
-     * @throws IllegalStateException
+     * @//throws InvalidOperationException
      *             Thrown if the CNS has not been initialised
-     * @throws IllegalArgumentException
+     * @//throws ArgumentException 
      *             Thrown if the channel name is already registered
      */
     public static NetSharedChannelInput numberedNet2Any(String name, int index, int immunityLevel,
             NetworkMessageFilter.FilterRx filter)
-        throws IllegalStateException, IllegalArgumentException
+       // //throws InvalidOperationException, ArgumentException 
     {
         // Check if the CNS connection is initialised
         if (!CNS.initialised)
-            throw new IllegalStateException("The connection to the CNS has not been initialised");
+            throw new InvalidOperationException("The connection to the CNS has not been initialised");
 
         // Create a new channel
         NetSharedChannelInput toReturn = NetChannel.numberedNet2Any(index, immunityLevel, filter);
@@ -1330,7 +1331,7 @@ public class CNS : IamCSProcess
 
         // Failed to register channel. Destroy the channel and throw exception
         toReturn.destroy();
-        throw new IllegalArgumentException("Failed to register " + name + " with the CNS");
+        throw new ArgumentException ("Failed to register " + name + " with the CNS");
     }
 
     /**
@@ -1339,17 +1340,17 @@ public class CNS : IamCSProcess
      * @param name
      *            The name to resolve
      * @return A new NetChannelOutput connected to the input with the registered name
-     * @throws IllegalStateException
+     * @//throws InvalidOperationException
      *             Thrown if the connection to the CNS is not initialised
-     * @throws JCSPNetworkException
+     * @//throws JCSPNetworkException
      *             Thrown if something goes wrong in the underlying architecture
      */
     public static NetChannelOutput one2net(String name)
-        throws IllegalStateException, JCSPNetworkException
+       // //throws InvalidOperationException, JCSPNetworkException
     {
         // Check if the CNS connection is initialised
         if (!CNS.initialised)
-            throw new IllegalStateException("The connection to the CNS has not been initialised");
+            throw new InvalidOperationException("The connection to the CNS has not been initialised");
 
         // Resolve the location of the channel
         NetChannelLocation loc = CNS.service.resolve(name);
@@ -1366,17 +1367,17 @@ public class CNS : IamCSProcess
      * @param immunityLevel
      *            The immunity to poison that this channel has
      * @return A new NetChannelOutput connected to the input with the registered name
-     * @throws IllegalStateException
+     * @//throws InvalidOperationException
      *             Thrown if the connection to the CNS is not initialised
-     * @throws JCSPNetworkException
+     * @//throws JCSPNetworkException
      *             Thrown if something goes wrong in the underlying architecture
      */
     public static NetChannelOutput one2net(String name, int immunityLevel)
-        throws IllegalStateException, JCSPNetworkException
+      //  //throws InvalidOperationException, JCSPNetworkException
     {
         // Check if the CNS connection is initialised
         if (!CNS.initialised)
-            throw new IllegalStateException("The connection to the CNS has not been initialised");
+            throw new InvalidOperationException("The connection to the CNS has not been initialised");
 
         // Resolve the location of the channel
         NetChannelLocation loc = CNS.service.resolve(name);
@@ -1393,17 +1394,17 @@ public class CNS : IamCSProcess
      * @param filter
      *            The filter used to encode outgoing messages
      * @return A new NetChannelOutput connected to the input with the registered name
-     * @throws IllegalStateException
+     * @//throws InvalidOperationException
      *             Thrown if the connection to the CNS is not initialised
-     * @throws JCSPNetworkException
+     * @//throws JCSPNetworkException
      *             Thrown if something goes wrong in the underlying architecture
      */
     public static NetChannelOutput one2net(String name, NetworkMessageFilter.FilterTx filter)
-        throws IllegalStateException, JCSPNetworkException
+      //  //throws InvalidOperationException, JCSPNetworkException
     {
         // Check if the CNS connection is initialised
         if (!CNS.initialised)
-            throw new IllegalStateException("The connection to the CNS has not been initialised");
+            throw new InvalidOperationException("The connection to the CNS has not been initialised");
 
         // Resolve the location of the channel
         NetChannelLocation loc = CNS.service.resolve(name);
@@ -1422,17 +1423,17 @@ public class CNS : IamCSProcess
      * @param filter
      *            The filter used to encode outgoing messages
      * @return A new NetChannelOutput connected to the input with the registered name
-     * @throws IllegalStateException
+     * @//throws InvalidOperationException
      *             Thrown if the connection to the CNS is not initialised
-     * @throws JCSPNetworkException
+     * @//throws JCSPNetworkException
      *             Thrown if something goes wrong in the underlying architecture
      */
     public static NetChannelOutput one2net(String name, int immunityLevel, NetworkMessageFilter.FilterTx filter)
-        throws IllegalStateException, JCSPNetworkException
+      //  //throws InvalidOperationException, JCSPNetworkException
     {
         // Check if the CNS connection is initialised
         if (!CNS.initialised)
-            throw new IllegalStateException("The connection to the CNS has not been initialised");
+            throw new InvalidOperationException("The connection to the CNS has not been initialised");
 
         // Resolve the location of the channel
         NetChannelLocation loc = CNS.service.resolve(name);
@@ -1447,17 +1448,17 @@ public class CNS : IamCSProcess
      * @param name
      *            The name to resolve
      * @return A new NetSharedChannelOutput connected to the input with the registered name
-     * @throws IllegalStateException
+     * @//throws InvalidOperationException
      *             Thrown if the connection to the CNS is not initialised
-     * @throws JCSPNetworkException
+     * @//throws JCSPNetworkException
      *             Thrown if something goes wrong in the underlying architecture
      */
     public static NetSharedChannelOutput any2net(String name)
-        throws IllegalStateException, JCSPNetworkException
+      //  //throws InvalidOperationException, JCSPNetworkException
     {
         // Check if the CNS connection is initialised
         if (!CNS.initialised)
-            throw new IllegalStateException("The connection to the CNS has not been initialised");
+            throw new InvalidOperationException("The connection to the CNS has not been initialised");
 
         // Resolve the location of the channel
         NetChannelLocation loc = CNS.service.resolve(name);
@@ -1474,17 +1475,17 @@ public class CNS : IamCSProcess
      * @param immunityLevel
      *            The immunity to poison that this channel has
      * @return A new NetSharedChannelOutput connected to the input with the registered name
-     * @throws IllegalStateException
+     * @//throws InvalidOperationException
      *             Thrown if the connection to the CNS is not initialised
-     * @throws JCSPNetworkException
+     * @//throws JCSPNetworkException
      *             Thrown if something goes wrong in the underlying architecture
      */
     public static NetSharedChannelOutput any2net(String name, int immunityLevel)
-        throws IllegalStateException, JCSPNetworkException
+      //  //throws InvalidOperationException, JCSPNetworkException
     {
         // Check if the CNS connection is initialised
         if (!CNS.initialised)
-            throw new IllegalStateException("The connection to the CNS has not been initialised");
+            throw new InvalidOperationException("The connection to the CNS has not been initialised");
 
         // Resolve the location of the channel
         NetChannelLocation loc = CNS.service.resolve(name);
@@ -1501,17 +1502,17 @@ public class CNS : IamCSProcess
      * @param filter
      *            The filter used to encode outgoing messages
      * @return A new NetSharedChannelOutput connected to the input with the registered name
-     * @throws IllegalStateException
+     * @//throws InvalidOperationException
      *             Thrown if the connection to the CNS is not initialised
-     * @throws JCSPNetworkException
+     * @//throws JCSPNetworkException
      *             Thrown if something goes wrong in the underlying architecture
      */
     public static NetSharedChannelOutput any2net(String name, NetworkMessageFilter.FilterTx filter)
-        throws IllegalStateException, JCSPNetworkException
+       // //throws InvalidOperationException, JCSPNetworkException
     {
         // Check if the CNS connection is initialised
         if (!CNS.initialised)
-            throw new IllegalStateException("The connection to the CNS has not been initialised");
+            throw new InvalidOperationException("The connection to the CNS has not been initialised");
 
         // Resolve the location of the channel
         NetChannelLocation loc = CNS.service.resolve(name);
@@ -1530,17 +1531,17 @@ public class CNS : IamCSProcess
      * @param filter
      *            The filter used to encode outgoing messages
      * @return A new NetSharedChannelOutput connected to the input with the registered name
-     * @throws IllegalStateException
+     * @//throws InvalidOperationException
      *             Thrown if the connection to the CNS is not initialised
-     * @throws JCSPNetworkException
+     * @//throws JCSPNetworkException
      *             Thrown if something goes wrong in the underlying architecture
      */
     public static NetSharedChannelOutput any2net(String name, int immunityLevel, NetworkMessageFilter.FilterTx filter)
-        throws IllegalStateException, JCSPNetworkException
+      //  //throws InvalidOperationException, JCSPNetworkException
     {
         // Check if the CNS connection is initialised
         if (!CNS.initialised)
-            throw new IllegalStateException("The connection to the CNS has not been initialised");
+            throw new InvalidOperationException("The connection to the CNS has not been initialised");
 
         // Resolve the location of the channel
         NetChannelLocation loc = CNS.service.resolve(name);

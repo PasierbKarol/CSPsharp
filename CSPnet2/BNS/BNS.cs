@@ -22,6 +22,7 @@ using System.Collections;
 using CSPlang;
 using CSPnet2.Barriers;
 using CSPnet2.BNS;
+using CSPnet2.Net2Link;
 using CSPnet2.NetChannel;
 using CSPnet2.NetNode;
 
@@ -97,7 +98,7 @@ public class BNS : IamCSProcess
     /**
      * A channel used to receive incoming link lost notifications
      */
-    private readonly AltingChannelInput lostLink = NetNode.getInstance().getLinkLostEventChannel();
+    private readonly AltingChannelInput lostLink = Node.getInstance().getLinkLostEventChannel();
 
     /**
      * Private empty constructor
@@ -122,11 +123,11 @@ public class BNS : IamCSProcess
      * 
      * @param bnsNode
      *            The NodeID of the BNS Node
-     * @throws JCSPNetworkException
+     * @//throws JCSPNetworkException
      *             Thrown if something goes wrong in the underlying architecture
      */
     public static void initialise(NodeID bnsNode)
-        throws JCSPNetworkException
+        ////throws JCSPNetworkException
     {
         // First check that we are not already initialised
         if (BNS.initialised)
@@ -147,11 +148,11 @@ public class BNS : IamCSProcess
      * 
      * @param bnsNode
      *            The NodeAddress of the BNS Node
-     * @throws JCSPNetworkException
+     * @//throws JCSPNetworkException
      *             Thrown if something goes wrong in the underlying architecture
      */
     public static void initialise(NodeAddress bnsNode)
-        throws JCSPNetworkException
+        ////throws JCSPNetworkException
     {
         // First check that we are not already initialised
         if (BNS.initialised)
@@ -176,10 +177,10 @@ public class BNS : IamCSProcess
     public void run()
     {
         // Create the channel to receive incoming messages on. The index is 2.
-        NetAltingChannelInput in = NetChannel.numberedNet2One(2, new BNSNetworkMessageFilter.FilterRX());
+        NetAltingChannelInput In = NetChannel.numberedNet2One(2, new BNSNetworkMessageFilter.FilterRX());
 
         // We now wish to alternate upon this channel and the link lost channel
-        Alternative alt = new Alternative(new Guard[] { this.lostLink, in });
+        Alternative alt = new Alternative(new Guard[] { this.lostLink, In });
 
         // Loop forever
         while (true)
@@ -193,7 +194,7 @@ public class BNS : IamCSProcess
                     NodeID lostNode = (NodeID)this.lostLink.read();
 
                     // Log loss of connection
-                    Node.log.log(this.getClass(), "Lost Link to: " + lostNode.toString());
+                    Node.log.log(this.GetType(), "Lost Link to: " + lostNode.toString());
 
                     // Remove the logged client
                     this.loggedClients.remove(lostNode);
@@ -214,7 +215,7 @@ public class BNS : IamCSProcess
                         {
                             String toRemove = (String)iter.next();
                             this.registeredBarriers.remove(toRemove);
-                            Node.log.log(this.getClass(), toRemove + " deregistered");
+                            Node.log.log(this.GetType(), toRemove + " deregistered");
                         }
                     }
                     break;
@@ -223,7 +224,7 @@ public class BNS : IamCSProcess
                 case 1:
                 {
                     // Read in the message
-                    BNSMessage message = (BNSMessage)in.read();
+                    BNSMessage message = (BNSMessage)In.read();
 
                     // Now behave based on the type of the message
                     switch (message.type)
@@ -232,22 +233,22 @@ public class BNS : IamCSProcess
                         case BNSMessageProtocol.LOGON_MESSAGE:
                         {
                             // Log the logon attempt
-                            Node.log.log(this.getClass(), "Logon received from: "
+                            Node.log.log(this.GetType(), "Logon received from: "
                                                           + message.serviceLocation.getNodeID().toString());
 
                             // try-catch loop. We don't want the BNS to fail
                             try
                             {
                                 // Check if the node is already logged on
-                                NetChannelOutput out = (NetChannelOutput)this.loggedClients.get(message.serviceLocation
+                                NetChannelOutput Out = (NetChannelOutput)this.loggedClients.get(message.serviceLocation
                                         .getNodeID());
 
                                 // If out is null, no previous logon received
-                                if (out != null)
+                                if (Out != null)
                                 {
                                     // This Node is already logged on. Send fail message
                                     // Log failed attempt
-                                    Node.err.log(this.getClass(), message.serviceLocation.getNodeID().toString()
+                                    Node.err.log(this.GetType(), message.serviceLocation.getNodeID().toString()
                                                                   + " already logged on.  Rejecting");
 
                                     // Create reply channel to the Node
@@ -268,7 +269,7 @@ public class BNS : IamCSProcess
                                 {
                                     // Node hasn't previously registered
                                     // Log registration
-                                    Node.log.log(this.getClass(), message.serviceLocation.getNodeID().toString()
+                                    Node.log.log(this.GetType(), message.serviceLocation.getNodeID().toString()
                                                                   + " successfully logged on");
 
                                     // Create the reply channel
@@ -298,25 +299,25 @@ public class BNS : IamCSProcess
                         case BNSMessageProtocol.REGISTER_REQUEST:
                         {
                             // Log registration attempt
-                            Node.log.log(this.getClass(), "Registeration for " + message.name + " received");
+                            Node.log.log(this.GetType(), "Registeration for " + message.name + " received");
 
                             // Catch any JCSPNetworkException
                             try
                             {
                                 // Get the reply channel from our logged clients map
-                                NetChannelOutput out = (NetChannelOutput)this.loggedClients.get(message.serviceLocation
+                                NetChannelOutput Out = (NetChannelOutput)this.loggedClients.get(message.serviceLocation
                                         .getNodeID());
 
                                 // Check if the Node has logged on with us
-                                if (out == null)
+                                if (Out == null)
                                 {
                                     // The Node is not logged on. Send failure message
-                                    Node.err.log(this.getClass(), "Registration failed. "
+                                    Node.err.log(this.GetType(), "Registration failed. "
                                                                   + message.serviceLocation.getNodeID()
                                                                   + " not logged on");
 
                                     // Create the channel to reply to
-                                    out = NetChannel.one2net(message.serviceLocation,
+                                    Out = NetChannel.one2net(message.serviceLocation,
                                             new BNSNetworkMessageFilter.FilterTX());
 
                                     // Create the reply message
@@ -325,10 +326,10 @@ public class BNS : IamCSProcess
                                     reply.success = false;
 
                                     // Write message asynchronously to the Node
-                                    out.asyncWrite(reply);
+                                    Out.asyncWrite(reply);
 
                                     // Destroy the temporary channel
-                                    out.destroy();
+                                    Out.destroy();
                                 }
 
                                 // The Node is registered. Now check if the name is
@@ -336,7 +337,7 @@ public class BNS : IamCSProcess
                                 {
                                     // The name is already registered. Inform the register
                                     // Log the failed registration
-                                    Node.err.log(this.getClass(), "Registration failed. " + message.name
+                                    Node.err.log(this.GetType(), "Registration failed. " + message.name
                                                                   + " already registered");
 
                                     // Create reply message
@@ -345,13 +346,13 @@ public class BNS : IamCSProcess
                                     reply.success = false;
 
                                     // Write the reply asynchronously. Do not block the BNS
-                                    out.asyncWrite(reply);
+                                    Out.asyncWrite(reply);
                                 }
                                 else
                                 {
                                     // The name is not registered
                                     // Log successful registration
-                                    Node.log.log(this.getClass(), "Registration of " + message.name + " succeeded.");
+                                    Node.log.log(this.GetType(), "Registration of " + message.name + " succeeded.");
 
                                     // First check if any client end is waiting for this name
                                     ArrayList pending = (ArrayList)this.waitingResolves.get(message.name);
@@ -370,7 +371,7 @@ public class BNS : IamCSProcess
                                                 BNSMessage msg = (BNSMessage)iter.next();
 
                                                 // Log resolve completion
-                                                Node.log.log(this.getClass(), "Queued resolve of " + message.name
+                                                Node.log.log(this.GetType(), "Queued resolve of " + message.name
                                                                               + " by "
                                                                               + msg.serviceLocation.getNodeID()
                                                                               + " completed");
@@ -426,7 +427,7 @@ public class BNS : IamCSProcess
                                     registered.add(message.name);
 
                                     // Log the successful registration
-                                    Node.log.log(this.getClass(), message.name + " registered to " + message.location);
+                                    Node.log.log(this.GetType(), message.name + " registered to " + message.location);
 
                                     // Create the reply message
                                     BNSMessage reply = new BNSMessage();
@@ -434,7 +435,7 @@ public class BNS : IamCSProcess
                                     reply.success = true;
 
                                     // Write the reply asynchronously to the Node
-                                    out.asyncWrite(reply);
+                                    Out.asyncWrite(reply);
                                 }
                             }
                             catch (JCSPNetworkException jne)
@@ -448,26 +449,26 @@ public class BNS : IamCSProcess
                         case BNSMessageProtocol.RESOLVE_REQUEST:
                         {
                             // Log resolve request
-                            Node.log.log(this.getClass(), "Resolve request for " + message.name + " received");
+                            Node.log.log(this.GetType(), "Resolve request for " + message.name + " received");
 
                             // Catch any JCSPNetworkException
                             try
                             {
                                 // Check if the resolving Node is logged on
-                                NetChannelOutput out = (NetChannelOutput)this.loggedClients.get(message.serviceLocation
+                                NetChannelOutput Out = (NetChannelOutput)this.loggedClients.get(message.serviceLocation
                                         .getNodeID());
 
                                 // If the channel is null, then the Node has yet to log on with us
-                                if (out == null)
+                                if (Out == null)
                                 {
                                     // Node is not logged on
                                     // Log failed resolution
-                                    Node.err.log(this.getClass(), "Resolve failed. "
+                                    Node.err.log(this.GetType(), "Resolve failed. "
                                                                   + message.serviceLocation.getNodeID()
                                                                   + " not logged on");
 
                                     // Create connection to the receiver
-                                    out = NetChannel.one2net(message.serviceLocation,
+                                    Out = NetChannel.one2net(message.serviceLocation,
                                             new BNSNetworkMessageFilter.FilterTX());
 
                                     // Create the reply message
@@ -476,10 +477,10 @@ public class BNS : IamCSProcess
                                     reply.success = false;
 
                                     // Write message asynchronously to the Node
-                                    out.asyncWrite(reply);
+                                    Out.asyncWrite(reply);
 
                                     // Destroy the temporary channel
-                                    out.destroy();
+                                    Out.destroy();
                                 }
                                 else
                                 {
@@ -492,7 +493,7 @@ public class BNS : IamCSProcess
                                     {
                                         // The name is not registered. We need to queue the resolve until it is
                                         // Log the queueing of the resolve
-                                        Node.log.log(this.getClass(), message.name
+                                        Node.log.log(this.GetType(), message.name
                                                                       + " not registered. Queueing resolve by "
                                                                       + message.serviceLocation.getNodeID().toString());
 
@@ -514,7 +515,7 @@ public class BNS : IamCSProcess
                                     else
                                     {
                                         // The location is not null. Send it to the resolver
-                                        Node.log.log(this.getClass(), "Resolve request completed. " + message.name
+                                        Node.log.log(this.GetType(), "Resolve request completed. " + message.name
                                                                       + " location being sent to "
                                                                       + message.serviceLocation.getNodeID());
 
@@ -559,17 +560,17 @@ public class BNS : IamCSProcess
      * @param netEnrolled
      *            The number of net enrolled processes to expect
      * @return A new NetBarrier server end with the number of enrolled processes
-     * @throws IllegalArgumentException
+     * @//throws ArgumentException 
      *             Thrown if the parameters are outside the defined ranges
-     * @throws IllegalStateException
+     * @//throws InvalidOperationException
      *             Thrown if the BNS connection has not been initialised
      */
     public static NetBarrier netBarrier(String name, int localEnrolled, int netEnrolled)
-        throws IllegalArgumentException, IllegalStateException
+        ////throws ArgumentException , InvalidOperationException
     {
         // Check if the BNS connection is initialised
         if (!BNS.initialised)
-            throw new IllegalStateException("The connection to the BNS has not been initialised");
+            throw new InvalidOperationException("The connection to the BNS has not been initialised");
 
         // Create a new NetBarrier
         NetBarrier toReturn = NetBarrierEnd.netBarrier(localEnrolled, netEnrolled);
@@ -582,7 +583,7 @@ public class BNS : IamCSProcess
 
         // Registration failed. Destroy and throw exception
         toReturn.destroy();
-        throw new IllegalArgumentException("Failed to register " + name + " with the BNS");
+        throw new ArgumentException ("Failed to register " + name + " with the BNS");
     }
 
     /**
@@ -597,17 +598,17 @@ public class BNS : IamCSProcess
      * @param netEnrolled
      *            The number of remote enrollments to wait for
      * @return A new NetBarrier
-     * @throws IllegalArgumentException
+     * @//throws ArgumentException 
      *             Thrown if the parameters are outside the defined ranges
-     * @throws IllegalStateException
+     * @//throws InvalidOperationException
      *             Thrown if the connection to the BNS has not been initialised
      */
     public static NetBarrier numberedNetBarrier(String name, int index, int localEnrolled, int netEnrolled)
-        throws IllegalArgumentException, IllegalStateException
+        ////throws ArgumentException , InvalidOperationException
     {
         // Check if the BNS connection is initialised
         if (!BNS.initialised)
-            throw new IllegalStateException("The connection to the BNS has not been initialised");
+            throw new InvalidOperationException("The connection to the BNS has not been initialised");
 
         // Create a new NetBarrier
         NetBarrier toReturn = NetBarrierEnd.numberedNetBarrier(index, localEnrolled, netEnrolled);
@@ -620,7 +621,7 @@ public class BNS : IamCSProcess
 
         // Registration failed. Destroy and throw exception
         toReturn.destroy();
-        throw new IllegalArgumentException("Failed to register " + name + " with the BNS");
+        throw new ArgumentException ("Failed to register " + name + " with the BNS");
     }
 
     /**
@@ -631,19 +632,19 @@ public class BNS : IamCSProcess
      * @param enrolled
      *            The number of locally enrolled processes
      * @return A new NetBarrier client end with the number of enrolled processes
-     * @throws JCSPNetworkException
+     * @//throws JCSPNetworkException
      *             Thrown if something goes wrong in the underlying architecture
-     * @throws IllegalArgumentException
+     * @//throws ArgumentException 
      *             Thrown if the number of of local enrolled is outside the defined range
-     * @throws IllegalStateException
+     * @//throws InvalidOperationException
      *             Thrown if the connection to the BNS has not been initialised
      */
     public static NetBarrier netBarrier(String name, int enrolled)
-        throws IllegalArgumentException, IllegalStateException, JCSPNetworkException
+       // //throws ArgumentException , InvalidOperationException, JCSPNetworkException
     {
         // Check if the BNS connection is initialised
         if (!BNS.initialised)
-            throw new IllegalStateException("The connection to the BNS has not been initialised");
+            throw new InvalidOperationException("The connection to the BNS has not been initialised");
 
         // Resolve the location of the barrier
         NetBarrierLocation loc = BNS.service.resolve(name);

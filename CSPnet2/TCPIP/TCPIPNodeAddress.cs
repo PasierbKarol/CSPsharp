@@ -149,11 +149,11 @@ public sealed class TCPIPNodeAddress : NodeAddress
      * Creates a new TCPIPLink connected to a Node with this address
      * 
      * @return A new TCPIPLink connected to this address
-     * @throws JCSPNetworkException
+     * @//throws JCSPNetworkException
      *             Thrown if something goes wrong during the creation of the Link
      */
     protected Link createLink()
-        throws JCSPNetworkException
+        //throws JCSPNetworkException
     {
         return new TCPIPLink(this);
     }
@@ -162,11 +162,11 @@ public sealed class TCPIPNodeAddress : NodeAddress
      * Creates a new TCPIPLinkServer listening on this address
      * 
      * @return A new TCPIPLinkServer listening on this address
-     * @throws JCSPNetworkException
+     * @//throws JCSPNetworkException
      *             Thrown if something goes wrong during the creation of the LinkServer
      */
     protected LinkServer createLinkServer()
-        throws JCSPNetworkException
+        //throws JCSPNetworkException
     {
         return new TCPIPLinkServer(this);
     }

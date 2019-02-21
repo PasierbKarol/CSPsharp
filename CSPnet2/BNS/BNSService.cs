@@ -58,11 +58,11 @@ public sealed class BNSService
      * 
      * @param bnsNode
      *            The Node that the BNS is on
-     * @throws JCSPNetworkException
+     * @//throws JCSPNetworkException
      *             Thrown if something goes wrong in the underlying architecture
      */
     public BNSService(NodeID bnsNode)
-        throws JCSPNetworkException
+       // //throws JCSPNetworkException
     {
         // Create input and output end
         this.toBNS = NetChannel.one2net(bnsNode, 2, new BNSNetworkMessageFilter.FilterTX());
@@ -80,10 +80,10 @@ public sealed class BNSService
         // Check if we logged on OK
         if (logonReply.success == false)
         {
-            NetNode.err.log(this.getClass(), "Failed to logon to BNS");
+            Node.err.log(this.GetType(), "Failed to logon to BNS");
             throw new JCSPNetworkException("Failed to logon to BNS");
         }
-        NetNode.log.log(this.getClass(), "Logged into BNS");
+        Node.log.log(this.GetType(), "Logged into BNS");
     }
 
     /**
@@ -95,10 +95,10 @@ public sealed class BNSService
      *            Barrier to register
      * @return True if the name was registered successfully, false otherwise
      */
-    public boolean register(String name, NetBarrier bar)
+    public Boolean register(String name, NetBarrier bar)
     {
         // Ensure only one registration can happen at a time
-        synchronized (this)
+        lock (this)
         {
             // Create a new registration message
             BNSMessage message = new BNSMessage();
@@ -120,11 +120,11 @@ public sealed class BNSService
      * @param name
      *            The name to resolve from the BNS
      * @return The NetBarrierLocation of the NetBarrier declared with name
-     * @throws JCSPNetworkException
+     * @//throws JCSPNetworkException
      *             Thrown if something goes wrong in the underlying architecture
      */
     public NetBarrierLocation resolve(String name)
-        throws JCSPNetworkException
+       // //throws JCSPNetworkException
     {
         // Create a temporary channel to receive the incoming NetBarrierLocation
         NetChannelInput responseChan = NetChannel.net2one(new BNSNetworkMessageFilter.FilterRX());

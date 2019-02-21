@@ -55,11 +55,11 @@ public sealed class CNSService
      * 
      * @param cnsNode
      *            The NodeID of the Node with the CNS on it
-     * @throws JCSPNetworkException
+     * @//throws JCSPNetworkException
      *             Thrown if something goes wrong in the underlying architecture
      */
     public CNSService(NodeID cnsNode)
-        throws JCSPNetworkException
+       // //throws JCSPNetworkException
     {
         // Create the input and output channel
         this.toCNS = NetChannel.one2net(new NetChannelLocation(cnsNode, 1), new CNSNetworkMessageFilter.FilterTX());
@@ -77,10 +77,10 @@ public sealed class CNSService
         // Check if we logged on OK
         if (logonReply.success == false)
         {
-            NetNode.err.log(this.getClass(), "Failed to logon to CNS");
+            Node.err.log(this.GetType(), "Failed to logon to CNS");
             throw new JCSPNetworkException("Failed to Logon to CNS");
         }
-        NetNode.log.log(this.getClass(), "Logged into CNS");
+        Node.log.log(this.GetType(), "Logged into CNS");
     }
 
     /**
@@ -92,17 +92,17 @@ public sealed class CNSService
      *            The NetChannelInput to register with the CNS
      * @return True if the channel was successfully registered, false otherwise
      */
-    public boolean register(String name, NetChannelInput in)
+    public Boolean register(String name, NetChannelInput In)
     {
         // Ensure that only one registration can happen at a time
-        synchronized (this)
+        lock (this)
         {
             // Create a new registration message
             CNSMessage message = new CNSMessage();
             message.type = CNSMessageProtocol.REGISTER_REQUEST;
             message.name = name;
             message.location1 = (NetChannelLocation)this.fromCNS.getLocation();
-            message.location2 = (NetChannelLocation)in.getLocation();
+            message.location2 = (NetChannelLocation) In.getLocation();
             // Write registration message to the CNS
             this.toCNS.write(message);
             // Read in reply
@@ -117,25 +117,25 @@ public sealed class CNSService
      * @param name
      *            The name to resolve
      * @return The NetChannelLocation of the channel declared name
-     * @throws JCSPNetworkException
+     * @//throws JCSPNetworkException
      *             Thrown if something goes wrong in the underlying architecture
      */
     public NetChannelLocation resolve(String name)
-        throws JCSPNetworkException
+        ////throws JCSPNetworkException
     {
         // Create a temporary channel to receive the incoming NetChannelLocation
-        NetChannelInput in = NetChannel.net2one(new CNSNetworkMessageFilter.FilterRX());
+        NetChannelInput In = NetChannel.net2one(new CNSNetworkMessageFilter.FilterRX());
         // Create a resolution message
         CNSMessage message = new CNSMessage();
         message.type = CNSMessageProtocol.RESOLVE_REQUEST;
-        message.location1 = (NetChannelLocation)in.getLocation();
+        message.location1 = (NetChannelLocation) In.getLocation();
         message.name = name;
         // Write the resolution message to the CNS
         this.toCNS.write(message);
         // Read in reply
-        CNSMessage reply = (CNSMessage)in.read();
+        CNSMessage reply = (CNSMessage) In.read();
         // Destroy the temporary channel
-        in.destroy();
+        In.destroy();
         // Now return the resolved location, or throw an exception
         if (reply.success == true)
             return reply.location1;

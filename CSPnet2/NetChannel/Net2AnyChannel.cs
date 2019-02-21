@@ -56,11 +56,11 @@ sealed class Net2AnyChannel : NetSharedChannelInput
      * @param filter
      *            The filter used to convert an incoming byte array into an object
      * @return A new Net2AnyChannel
-     * @throws JCSPNetworkException
+     * @//throws JCSPNetworkException
      *             Thrown if there is a problem creating the underlying channel
      */
-    static Net2AnyChannel create(int poisonImmunity, FilterRx filter)
-        throws JCSPNetworkException
+    internal static Net2AnyChannel create(int poisonImmunity, FilterRx filter)
+        ////throws JCSPNetworkException
     {
         // Create the underlying channel
         Net2OneChannel chan = Net2OneChannel.create(poisonImmunity, filter);
@@ -78,13 +78,13 @@ sealed class Net2AnyChannel : NetSharedChannelInput
      * @param filter
      *            The filter used to convert the byte array back into an object
      * @return A new Net2AnyChannel
-     * @throws IllegalArgumentException
+     * @//throws ArgumentException 
      *             Thrown if a channel with the given index already exists
-     * @throws JCSPNetworkException
+     * @//throws JCSPNetworkException
      *             Thrown if something goes wrong during the creation of the underlying channel
      */
     static Net2AnyChannel create(int index, int poisonImmunity, FilterRx filter)
-        throws IllegalArgumentException, JCSPNetworkException
+        //throws ArgumentException , JCSPNetworkException
     {
         // Create the underlying channel
         Net2OneChannel chan = Net2OneChannel.create(index, poisonImmunity, filter);
@@ -106,15 +106,15 @@ sealed class Net2AnyChannel : NetSharedChannelInput
     /**
      * Ends an extended read operation
      * 
-     * @throws IllegalStateException
+     * @//throws InvalidOperationException
      *             Thrown if the channel is not in an extended read state
-     * @throws JCSPNetworkException
+     * @//throws JCSPNetworkException
      *             Thrown if something goes wrong in the underlying network architecture
-     * @throws NetworkPoisonException
+     * @//throws NetworkPoisonException
      *             Thrown if the underlying channel has been poisoned
      */
     public void endRead()
-        throws IllegalStateException, JCSPNetworkException, NetworkPoisonException
+        //throws InvalidOperationException, JCSPNetworkException, NetworkPoisonException
     {
         // Acquire lock on the channel to ensure exclusive access
         synchronized (this)
@@ -126,7 +126,7 @@ sealed class Net2AnyChannel : NetSharedChannelInput
             {
                 this.actualChannel.endRead();
             }
-            catch (IllegalStateException ise)
+            catch (InvalidOperationException ise)
             {
                 throw ise;
             }
@@ -149,15 +149,15 @@ sealed class Net2AnyChannel : NetSharedChannelInput
      * Reads the next message from the channel
      * 
      * @return Message read from the channel
-     * @throws JCSPNetworkException
+     * @//throws JCSPNetworkException
      *             Thrown if something goes wrong in the underlying architecture
-     * @throws IllegalStateException
+     * @//throws InvalidOperationException
      *             Thrown if the channel is in an extended read state
-     * @throws NetworkPoisonException
+     * @//throws NetworkPoisonException
      *             Thrown if the channel has been poisoned
      */
     public Object read()
-        throws JCSPNetworkException, IllegalStateException, NetworkPoisonException
+        //throws JCSPNetworkException, InvalidOperationException, NetworkPoisonException
     {
         // First, we must endure that only one process is trying to perform a read operations
         this.mutex.claim();
@@ -177,7 +177,7 @@ sealed class Net2AnyChannel : NetSharedChannelInput
             {
                 throw jne;
             }
-            catch (IllegalStateException ise)
+            catch (InvalidOperationException ise)
             {
                 throw ise;
             }
@@ -196,15 +196,15 @@ sealed class Net2AnyChannel : NetSharedChannelInput
      * Begins an extended read operation on the channel
      * 
      * @return The message read from the channel
-     * @throws JCSPNetworkException
+     * @//throws JCSPNetworkException
      *             Thrown if something goes wrong in the underlying architecture
-     * @throws NetworkPoisonException
+     * @//throws NetworkPoisonException
      *             Thrown if the channel has been poisoned
-     * @throws IllegalStateException
+     * @//throws InvalidOperationException
      *             Thrown if the channel is in an extended read state
      */
     public Object startRead()
-        throws JCSPNetworkException, NetworkPoisonException, IllegalStateException
+        //throws JCSPNetworkException, NetworkPoisonException, InvalidOperationException
     {
         // First ensure we have exclusive read access
         this.mutex.claim();
@@ -228,7 +228,7 @@ sealed class Net2AnyChannel : NetSharedChannelInput
                 this.mutex.release();
                 throw npe;
             }
-            catch (IllegalStateException ise)
+            catch (InvalidOperationException ise)
             {
                 this.mutex.release();
                 throw ise;

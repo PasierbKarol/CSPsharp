@@ -35,11 +35,11 @@ namespace CSPnet2.Net2Link
 {
     /**
      * @param address
-     * @throws IllegalArgumentException
-     * @throws JCSPNetworkException
+     * @//throws ArgumentException 
+     * @//throws JCSPNetworkException
      */
     public static /*final*/ void start(NodeAddress address)
-        throws IllegalArgumentException, JCSPNetworkException
+        //throws ArgumentException , JCSPNetworkException
     {
         NetNode.log.log(LinkServer.class, "Attempting to start Link Server on " + address);
         LinkServer linkServer = address.createLinkServer();

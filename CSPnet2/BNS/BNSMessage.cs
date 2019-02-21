@@ -35,26 +35,26 @@ namespace CSPnet2.BNS
         /**
          * The message type. See BNSMessageProtocol
          */
-        byte type = 0;
+        internal byte type = 0;
 
         /**
          * Whether the previous message was successful
          */
-        Boolean success = false;
+        internal Boolean success = false;
 
         /**
          * The location that the BNS must reply to
          */
-        NetChannelLocation serviceLocation = null;
+        internal NetChannelLocation serviceLocation = null;
 
         /**
          * The location of a resolves or registered barrier
          */
-        NetBarrierLocation location = null;
+        internal NetBarrierLocation location = null;
 
         /**
          * The name to register or resolve
          */
-        String name = "";
+        internal String name = "";
     }
 }

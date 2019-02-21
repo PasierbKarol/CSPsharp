@@ -93,11 +93,11 @@ public sealed class ObjectNetworkMessageFilter
          * @param bytes
          *            The byte representation of the object
          * @return The recreated Object
-         * @throws IOException
+         * @//throws IOException
          *             Thrown of something goes wrong during the decoding
          */
         public Object filterRX(byte[] bytes)
-            //throws IOException
+            ////throws IOException
         {
             try
             {
@@ -156,11 +156,11 @@ public sealed class ObjectNetworkMessageFilter
          * @param obj
          *            The Object to serialize
          * @return The byte array equivalent of the object
-         * @throws IOException
+         * @//throws IOException
          *             Thrown if something goes wrong during the serialization
          */
         public byte[] filterTX(Object obj)
-           // throws IOException
+           // //throws IOException
         {
             // First we reset the byte buffer to the buffer size, just in case a previous message caused it to grow
             this.baos.reset(ObjectNetworkMessageFilter.BUFFER_SIZE);

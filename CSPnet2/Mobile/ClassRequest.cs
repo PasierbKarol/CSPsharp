@@ -28,9 +28,9 @@ namespace CSPnet2.Mobile
  */
     sealed class ClassRequest
     {
-        readonly NodeID originatingNode;
-        readonly String className;
-        readonly NetChannelLocation returnLocation;
+        internal readonly NodeID originatingNode;
+        internal readonly String className;
+        internal readonly NetChannelLocation returnLocation;
 
         ClassRequest(NodeID originator, String name, NetChannelLocation response)
         {

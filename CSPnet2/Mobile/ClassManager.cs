@@ -42,7 +42,7 @@ namespace CSPnet2.Mobile
  */
 sealed class ClassManager : IamCSProcess
 {
-    static Hashtable classLoaders = new Hashtable();
+    internal static Hashtable classLoaders = new Hashtable();
 
     static NetChannelInput In = NetChannel.numberedNet2One(10);
 
@@ -53,9 +53,9 @@ sealed class ClassManager : IamCSProcess
             try
             {
                 ClassRequest req = (ClassRequest) In.read();
-                if (req.originatingNode.equals(NetNode.getInstance().getNodeID()))
+                if (req.originatingNode.equals(Node.getInstance().getNodeID()))
                 {
-                    String className = req.className.replace('.', '/') + ".class";
+                    String className = req.className.Replace('.', '/') + ".class";
                     InputStream inputStream = ClassLoader.getSystemResourceAsStream(className);
                     try
                     {
@@ -63,8 +63,8 @@ sealed class ClassManager : IamCSProcess
                         {
                             int read = 0;
                             byte[] bytes = new byte[inputStream.available()];
-                            while (read < bytes.length)
-                                read += inputStream.read(bytes, read, bytes.length - read);
+                            while (read < bytes.Length)
+                                read += inputStream.read(bytes, read, bytes.Length - read);
                             ClassData resp = new ClassData(req.className, bytes);
                             NetChannelOutput Out = NetChannel.one2net(req.returnLocation);
                             Out.asyncWrite(resp);
@@ -90,7 +90,7 @@ sealed class ClassManager : IamCSProcess
                 }
                 else
                 {
-                    DynamicClassLoader loader = (DynamicClassLoader)ClassManager.classLoaders.get(req.originatingNode);
+                    DynamicClassLoader loader = (DynamicClassLoader)ClassManager.classLoaders[req.originatingNode];
                     if (loader == null)
                     {
                         ClassData resp = new ClassData(req.className, null);

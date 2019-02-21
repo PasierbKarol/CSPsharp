@@ -47,15 +47,15 @@ sealed class DynamicClassLoader : ClassLoader
 
     readonly Hashtable classes = new Hashtable();
 
-    DynamicClassLoader(NodeID originator, NetChannelLocation requestLocation)
-    {
-        super(ClassLoader.getSystemClassLoader());
+    DynamicClassLoader(NodeID originator, NetChannelLocation requestLocation) : base(ClassLoader.getSystemClassLoader())
+        {
+        
         this.originatingNode = originator;
         this.requestClassData = NetChannel.one2net(requestLocation);
     }
 
     protected Class findClass(String className)
-        throws ClassNotFoundException, JCSPNetworkException
+        ////throws ClassNotFoundException, JCSPNetworkException
     {
         try
         {
@@ -78,12 +78,12 @@ sealed class DynamicClassLoader : ClassLoader
         }
     }
 
-    synchronized byte[] requestClass(String className)
-        throws ClassNotFoundException
+    /*synchronized*/ byte[] requestClass(String className)
+        ////throws ClassNotFoundException
     {
         try
         {
-            byte[] bytes = (byte[])classes.get(className);
+            byte[] bytes = (byte[])classes[className];
             if (bytes != null)
             {
                 return bytes;
@@ -101,7 +101,7 @@ sealed class DynamicClassLoader : ClassLoader
             {
                 throw new ClassNotFoundException(className);
             }
-            this.classes.put(className, data.bytes);
+            this.classes.Add(className, data.bytes);
             return data.bytes;
         }
         catch (JCSPNetworkException jne)

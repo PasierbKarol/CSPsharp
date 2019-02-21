@@ -124,7 +124,7 @@ public sealed class MobileChannelInput : NetChannelInput
     }
 
     private void writeObject(ObjectOutputStream output)
-        throws IOException
+        //throws IOException
     {
         output.writeObject(this.messageBoxLoc);
         output.writeObject(this.msgBoxReqLoc);
@@ -133,7 +133,7 @@ public sealed class MobileChannelInput : NetChannelInput
     }
 
     private void readObject(ObjectInputStream input)
-        throws IOException, ClassNotFoundException
+        //throws IOException, ClassNotFoundException
     {
         this.messageBoxLoc = (NetChannelLocation)input.readObject();
         this.msgBoxReqLoc = (NetChannelLocation)input.readObject();

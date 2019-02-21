@@ -18,13 +18,14 @@
 //////////////////////////////////////////////////////////////////////
 
 using System;
+using CSPnet2;
 using CSPnet2.NetNode;
 
 namespace CSPnet2.TCPIP
 {
 
-    import jcsp.net2.NodeAddress;
-import jcsp.net2.ProtocolID;
+//    import jcsp.net2.NodeAddress;
+//import jcsp.net2.ProtocolID;
 
 /**
  * Concrete implementation of a ProtocolID used to parse a string representation of a TCPIPNodeAddress into a
@@ -63,18 +64,18 @@ public sealed class TCPIPProtocolID : ProtocolID
      * @param addressString
      *            String representing the address
      * @return A new TCPIPNodeAddress object
-     * @throws IllegalArgumentException
+     * @//throws ArgumentException 
      *             Thrown if the address is not in a correct form
      */
-    protected NodeAddress parse(String addressString)
-        throws IllegalArgumentException
+    protected override NodeAddress parse(String addressString)
+       // //throws ArgumentException 
     {
         // Split address into IP and port
-        int index = addressString.indexOf("\\\\");
-        String temp = addressString.substring(index + 2);
-        index = temp.indexOf(":");
-        String address = temp.substring(0, index);
-        int port = Integer.parseInt(temp.substring(index + 1, temp.length()));
+        int index = addressString.IndexOf("\\\\");
+        String temp = addressString.Substring(index + 2);
+        index = temp.IndexOf(":");
+        String address = temp.Substring(0, index);
+        int port = Int32.Parse(temp.Substring(index + 1, temp.Length));
         return new TCPIPNodeAddress(address, port);
     }
 

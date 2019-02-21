@@ -80,7 +80,7 @@ sealed class Net2OneChannel : NetAltingChannelInput
      *            The filter on the channel used to convert read bytes into an object
      * @return A new Net2OneChannel
      */
-    static Net2OneChannel create(int poisonImmunity, NetworkMessageFilter.FilterRx filter)
+    internal static Net2OneChannel create(int poisonImmunity, NetworkMessageFilter.FilterRx filter)
     {
         // Create a new ChannelData object
         ChannelData data = new ChannelData();
@@ -89,7 +89,7 @@ sealed class Net2OneChannel : NetAltingChannelInput
         Any2OneChannel chan = Channel.any2one(new InfiniteBuffer());
 
         // Add the output end to the ChannelData object
-        data.toChannel = chan.out();
+        data.toChannel = chan.Out();
 
         // Set the immunity level
         data.immunityLevel = poisonImmunity;
@@ -98,7 +98,7 @@ sealed class Net2OneChannel : NetAltingChannelInput
         ChannelManager.getInstance().create(data);
 
         // Return a new Net2OneChannel
-        return new Net2OneChannel(chan.in(), data, filter);
+        return new Net2OneChannel(chan.In(), data, filter);
     }
 
     /**
@@ -112,11 +112,11 @@ sealed class Net2OneChannel : NetAltingChannelInput
      * @param filter
      *            The filter used to take the incoming byte array and convert it into an object
      * @return A new Net2OneChannel
-     * @throws IllegalArgumentException
+     * @//throws ArgumentException 
      *             Thrown if the index given is already allocated within the ChannelManager
      */
-    static Net2OneChannel create(int index, int poisonImmunity, NetworkMessageFilter.FilterRx filter)
-        throws IllegalArgumentException
+    internal static Net2OneChannel create(int index, int poisonImmunity, NetworkMessageFilter.FilterRx filter)
+        ////throws ArgumentException 
     {
         // Create a new ChannelData object
         ChannelData data = new ChannelData();
@@ -125,7 +125,7 @@ sealed class Net2OneChannel : NetAltingChannelInput
         Any2OneChannel chan = Channel.any2one(new InfiniteBuffer());
 
         // Add the output end to the ChannelData object
-        data.toChannel = chan.out();
+        data.toChannel = chan.Out();
 
         // Set the immunity level
         data.immunityLevel = poisonImmunity;
@@ -134,7 +134,7 @@ sealed class Net2OneChannel : NetAltingChannelInput
         ChannelManager.getInstance().create(index, data);
 
         // Return a new Net2OneChannel
-        return new Net2OneChannel(chan.in(), data, filter);
+        return new Net2OneChannel(chan.In(), data, filter);
     }
 
     /**
@@ -147,10 +147,10 @@ sealed class Net2OneChannel : NetAltingChannelInput
      *            The ChannelData object representing the networked channel.
      * @param filter
      *            The filter used to convert the incoming byte array to an object
-     * @throws JCSPNetworkException
+     * @//throws JCSPNetworkException
      */
     private Net2OneChannel(AltingChannelInput input, ChannelData chanData, FilterRx filter)
-        throws JCSPNetworkException
+        //throws JCSPNetworkException
     {
         // Set the wrapper's alting channel input so the channel can be used as a guard
         super(input);
@@ -166,15 +166,15 @@ sealed class Net2OneChannel : NetAltingChannelInput
     /**
      * Ends an extended read operation.
      * 
-     * @throws IllegalStateException
+     * @//throws InvalidOperationException
      *             Thrown if the method is called when the channel is not in an extended read state
-     * @throws JCSPNetworkException
+     * @//throws JCSPNetworkException
      *             Thrown if something goes wrong in the underlying architecture
-     * @throws NetworkPoisonException
+     * @//throws NetworkPoisonException
      *             Thrown if the channel has been poisoned
      */
     public void endRead()
-        throws IllegalStateException, JCSPNetworkException, NetworkPoisonException
+        //throws InvalidOperationException, JCSPNetworkException, NetworkPoisonException
     {
         // First check the state of the channel. These are sanity checks. Really, if the channel is in an extended
         // read state then it should not be destroyed or poisoned
@@ -206,7 +206,7 @@ sealed class Net2OneChannel : NetAltingChannelInput
         else
         {
             // We are not performing an extended read. This is a problem. Thrown an exception
-            throw new IllegalStateException("End read was called on a channel not in an extended read state");
+            throw new InvalidOperationException("End read was called on a channel not in an extended read state");
         }
     }
 
@@ -214,13 +214,13 @@ sealed class Net2OneChannel : NetAltingChannelInput
      * Checks if any data is waiting on the channel.
      * 
      * @return True if data is ready, false otherwise.
-     * @throws JCSPNetworkException
+     * @//throws JCSPNetworkException
      *             Thrown if the channel has been destroyed
-     * @throws NetworkPoisonException
+     * @//throws NetworkPoisonException
      *             Thrown if the channel has poisoned
      */
     public boolean pending()
-        throws JCSPNetworkException, NetworkPoisonException
+        //throws JCSPNetworkException, NetworkPoisonException
     {
         // First check the state of the channel.
         if (this.data.state == ChannelDataState.DESTROYED)
@@ -325,15 +325,15 @@ sealed class Net2OneChannel : NetAltingChannelInput
      * Reads the next message from the channel
      * 
      * @return The message read from the channel
-     * @throws JCSPNetworkException
+     * @//throws JCSPNetworkException
      *             Thrown if something goes wrong in the underlying architecture
-     * @throws NetworkPoisonException
+     * @//throws NetworkPoisonException
      *             Thrown if the channel is poisoned
-     * @throws IllegalStateException
+     * @//throws InvalidOperationException
      *             Thrown if the channel is in an extended read state
      */
     public Object read()
-        throws JCSPNetworkException, NetworkPoisonException, IllegalStateException
+        //throws JCSPNetworkException, NetworkPoisonException, InvalidOperationException
     {
         // First check our state
         if (this.data.state == ChannelDataState.DESTROYED)
@@ -345,7 +345,7 @@ sealed class Net2OneChannel : NetAltingChannelInput
         if (this.lastRead != null)
         {
             // We are in an extended read. Throw exception
-            throw new IllegalStateException("The channel is in an extended read state");
+            throw new InvalidOperationException("The channel is in an extended read state");
         }
 
         // We are in an OK state to perform a read.
@@ -459,15 +459,15 @@ sealed class Net2OneChannel : NetAltingChannelInput
      * Performs an extended read operation on the channel
      * 
      * @return The message read from the channel
-     * @throws JCSPNetworkException
+     * @//throws JCSPNetworkException
      *             Thrown if something goes wrong in the underlying architecture
-     * @throws IllegalStateException
+     * @//throws InvalidOperationException
      *             Thrown if the channel is already in an extended read state
-     * @throws NetworkPoisonException
+     * @//throws NetworkPoisonException
      *             Thrown if the channel is poisoned.
      */
     public Object startRead()
-        throws JCSPNetworkException, IllegalStateException, NetworkPoisonException
+        //throws JCSPNetworkException, InvalidOperationException, NetworkPoisonException
     {
         // First check our state
         if (this.data.state == ChannelDataState.DESTROYED)
@@ -479,7 +479,7 @@ sealed class Net2OneChannel : NetAltingChannelInput
         if (this.lastRead != null)
         {
             // We are in an extended read. Throw exception
-            throw new IllegalStateException("The channel is in an extended read state");
+            throw new InvalidOperationException("The channel is in an extended read state");
         }
 
         // We are in an OK state to perform a read.

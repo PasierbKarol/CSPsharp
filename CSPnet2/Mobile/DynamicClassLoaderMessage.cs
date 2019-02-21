@@ -24,8 +24,6 @@ using CSPnet2.NetNode;
 
 namespace CSPnet2.Mobile
 {
-
-
 //import jcsp.lang.ProcessManager;
 //import jcsp.net2.NetChannelLocation;
 //import jcsp.net2.NodeID;
@@ -35,22 +33,23 @@ namespace CSPnet2.Mobile
  */
 
     [Serializable]
-sealed class DynamicClassLoaderMessage{
-    static
+    sealed class DynamicClassLoaderMessage
     {
-        ClassManager classManager = new ClassManager();
-        new ProcessManager(classManager).start();
-    }
+        static DynamicClassLoaderMessage()
+        {
+            ClassManager classManager = new ClassManager();
+            new ProcessManager(classManager).start();
+        }
 
-    readonly NodeID originatingNode;
-    readonly NetChannelLocation requestLocation;
-    readonly byte[] bytes;
+        internal readonly NodeID originatingNode;
+        internal readonly NetChannelLocation requestLocation;
+        internal readonly byte[] bytes;
 
-    DynamicClassLoaderMessage(NodeID originator, NetChannelLocation request, byte[] classData)
-    {
-        this.originatingNode = originator;
-        this.requestLocation = request;
-        this.bytes = classData;
+        DynamicClassLoaderMessage(NodeID originator, NetChannelLocation request, byte[] classData)
+        {
+            this.originatingNode = originator;
+            this.requestLocation = request;
+            this.bytes = classData;
+        }
     }
-}
 }

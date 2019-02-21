@@ -85,7 +85,7 @@ public sealed class RawNetworkMessageFilter
          * @param obj
          *            The object to send. This must be a byte array
          * @return The same byte array as sent in
-         * @throws IOException
+         * @//throws IOException
          *             Thrown if the sent object is not a byte array
          */
         public byte[] filterTX(Object obj)

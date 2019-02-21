@@ -48,7 +48,7 @@ namespace CSPnet2.Barriers
      * @param netEnrolled
      *            The number of net enrolled processes to expect
      * @return A new NetBarrier server end with the number of enrolled processes
-     * @throws IllegalArgumentException
+     * @//throws ArgumentException 
      *             Thrown if the parameters are outside the defined ranges
      */
     public static NetBarrier netBarrier(int localEnrolled, int netEnrolled)
@@ -77,7 +77,7 @@ namespace CSPnet2.Barriers
      * @param netEnrolled
      *            The number of remote enrollments to wait for
      * @return A new NetBarrier
-     * @throws IllegalArgumentException
+     * @//throws ArgumentException 
      *             Thrown if the parameters are outside the defined ranges
      */
     public static NetBarrier numberedNetBarrier(int index, int localEnrolled, int netEnrolled)
@@ -104,9 +104,9 @@ namespace CSPnet2.Barriers
      * @param enrolled
      *            The number of locally enrolled processes
      * @return A new NetBarrier client end with the number of enrolled processes
-     * @throws JCSPNetworkException
+     * @//throws JCSPNetworkException
      *             Thrown if something goes wrong in the underlying architecture
-     * @throws IllegalArgumentException
+     * @//throws ArgumentException 
      *             Thrown if the number of of local enrolled is outside the defined range
      */
     public static NetBarrier netBarrier(NetBarrierLocation loc, int enrolled)
@@ -140,9 +140,9 @@ namespace CSPnet2.Barriers
      * @param enrolled
      *            The number of locally enrolled processes
      * @return A new client end of a NetBarrier
-     * @throws JCSPNetworkException
+     * @//throws JCSPNetworkException
      *             Thrown is something goes wrong in the underlying architecture
-     * @throws IllegalArgumentException
+     * @//throws ArgumentException 
      *             Thrown if the number of enrolled is outside the defined range
      */
     public static NetBarrier netBarrier(NodeID nodeID, int vbn, int enrolled)
@@ -179,9 +179,9 @@ namespace CSPnet2.Barriers
      * @param enrolled
      *            The number of locally enrolled processes
      * @return A new client end of a NetBarrier
-     * @throws JCSPNetworkException
+     * @//throws JCSPNetworkException
      *             Thrown if something goes wrong in the underlying architecture
-     * @throws IllegalArgumentException
+     * @//throws ArgumentException 
      *             Thrown if the number of enrolled processes is outside the defined range.
      */
     public static NetBarrier netBarrier(NodeAddress addr, int vbn, int enrolled)

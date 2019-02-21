@@ -54,7 +54,7 @@ public sealed class NetAltingConnectionClient : AltingConnectionClient, NetConne
     private readonly ConnectionData data;
 
     static NetAltingConnectionClient create(NetConnectionLocation loc, NetworkMessageFilter.FilterTx filterTX, NetworkMessageFilter.FilterRx filterRX)
-        //throws JCSPNetworkException
+        ////throws JCSPNetworkException
     {
         // Create the connection data structure
         ConnectionData data = new ConnectionData();
@@ -118,7 +118,7 @@ ConnectionData connData, NetConnectionLocation loc, NetworkMessageFilter.FilterT
     }
 
     public Boolean isOpen()
-        //throws IllegalStateException, JCSPNetworkException
+        ////throws InvalidOperationException, JCSPNetworkException
     {
         if (this.data.state == ConnectionDataState.CLIENT_STATE_MADE_REQ)
             throw new InvalidOperationException ("Can only call isOpen after a reply has been received from the server");
@@ -130,7 +130,7 @@ ConnectionData connData, NetConnectionLocation loc, NetworkMessageFilter.FilterT
     }
 
     public Object reply()
-        //throws IllegalStateException, JCSPNetworkException
+        ////throws InvalidOperationException, JCSPNetworkException
     {
         if (this.data.state != ConnectionDataState.CLIENT_STATE_MADE_REQ)
             throw new InvalidOperationException ("Can only call reply() after a request()");
@@ -201,7 +201,7 @@ ConnectionData connData, NetConnectionLocation loc, NetworkMessageFilter.FilterT
     }
 
     public void request(Object obj)
-       // throws IllegalStateException, JCSPNetworkException
+       // //throws InvalidOperationException, JCSPNetworkException
     {
         if (this.data.state == ConnectionDataState.CLIENT_STATE_MADE_REQ)
             throw new InvalidOperationException ("Cannot call request(Object) twice without calling reply()");

@@ -33,26 +33,26 @@ namespace CSPnet2.CNS
         /**
          * The message type. See CNSMessageProtocol
          */
-        byte type = 0;
+        internal byte type = 0;
 
         /**
          * Whether the previous message was successful
          */
-        Boolean success = false;
+        internal Boolean success = false;
 
         /**
          * Location parameter. Usually the location to register
          */
-        NetChannelLocation location1 = null;
+        internal NetChannelLocation location1 = null;
 
         /**
          * Location parameter. Usually the reply location
          */
-        NetChannelLocation location2 = null;
+        internal NetChannelLocation location2 = null;
 
         /**
          * Name to register or resolve
          */
-        String name = "";
+        internal String name = "";
     }
 }

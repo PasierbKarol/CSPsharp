@@ -50,29 +50,28 @@ public sealed class CodeLoadingChannelFilter
         }
 
         public Object filterRX(byte[] bytes)
-            throws IOException
+            ////throws IOException
         {
             try
             {
                 Object message = this.objectFilter.filterRX(bytes);
-                if (!(message instanceof DynamicClassLoaderMessage))
+                if (!(message is DynamicClassLoaderMessage))
                 {
                     return message;
                 }
 
                 DynamicClassLoaderMessage loaderMessage = (DynamicClassLoaderMessage)message;
-                byte[] bytesWithHeader = new byte[4 + loaderMessage.bytes.length];
+                byte[] bytesWithHeader = new byte[4 + loaderMessage.bytes.Length];
                 byte[] header = { -84, -19, 0, 5 };
                 System.arraycopy(header, 0, bytesWithHeader, 0, 4);
-                System.arraycopy(loaderMessage.bytes, 0, bytesWithHeader, 4, loaderMessage.bytes.length);
+                System.arraycopy(loaderMessage.bytes, 0, bytesWithHeader, 4, loaderMessage.bytes.Length);
                 ByteArrayInputStream bais = new ByteArrayInputStream(bytesWithHeader);
-                DynamicClassLoader loader = (DynamicClassLoader) ClassManager.classLoaders
-                        .get(loaderMessage.originatingNode);
+                DynamicClassLoader loader = (DynamicClassLoader) ClassManager.classLoaders[loaderMessage.originatingNode];
 
                 if (loader == null)
                 {
                     loader = new DynamicClassLoader(loaderMessage.originatingNode, loaderMessage.requestLocation);
-                    ClassManager.classLoaders.put(loaderMessage.originatingNode, loader);
+                    ClassManager.classLoaders.Add(loaderMessage.originatingNode, loader);
                 }
 
                 DynamicObjectInputStream dois = new DynamicObjectInputStream(bais, loader);
@@ -87,7 +86,7 @@ public sealed class CodeLoadingChannelFilter
         }
     }
 
-    public static final class FilterTX : NetworkMessageFilter.FilterTx
+    public static /*final*/ class FilterTX : NetworkMessageFilter.FilterTx
     {
         private readonly ObjectNetworkMessageFilter.FilterTX internalFilter = new ObjectNetworkMessageFilter.FilterTX();
 
@@ -97,20 +96,20 @@ public sealed class CodeLoadingChannelFilter
         }
 
         public byte[] filterTX(Object obj)
-            throws IOException
+            ////throws IOException
         {
-            ClassLoader loader = obj.getClass().getClassLoader();
+            ClassLoader loader = obj.GetType().getClassLoader();
             byte[] bytes = this.internalFilter.filterTX(obj);
             if (loader == ClassLoader.getSystemClassLoader() || loader == null)
             {
                 DynamicClassLoaderMessage message = new DynamicClassLoaderMessage(Node.getInstance().getNodeID(),
-                        (NetChannelLocation) ClassManager.in.getLocation(), bytes);
+                        (NetChannelLocation) ClassManager.In.getLocation(), bytes);
                 byte[] wrappedData = this.internalFilter.filterTX(message);
                 return wrappedData;
             }
             DynamicClassLoader dcl = (DynamicClassLoader)loader;
             DynamicClassLoaderMessage message = new DynamicClassLoaderMessage(dcl.originatingNode,
-                    (NetChannelLocation) ClassManager.in.getLocation(), bytes);
+                    (NetChannelLocation) ClassManager.In.getLocation(), bytes);
             byte[] wrappedData = this.internalFilter.filterTX(message);
             return wrappedData;
         }

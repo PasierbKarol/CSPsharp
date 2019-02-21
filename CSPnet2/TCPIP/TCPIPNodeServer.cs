@@ -43,10 +43,10 @@ public sealed class TCPIPNodeServer
 {
     /**
      * @param args
-     * @throws Exception
+     * @//throws Exception
      */
     public static void main(String[] args)
-        throws Exception
+        //throws Exception
     {
         Node.getInstance().setLog(System.out);
         NetNode.getInstance().setErr(System.err);

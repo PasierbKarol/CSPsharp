@@ -58,7 +58,7 @@ sealed class ConnectionManager
     }
 
     /*synchronized*/ internal void create(int idx, ConnectionData data)
-        //throws IllegalArgumentException
+        ////throws ArgumentException 
     {
         int objIndex = idx;
         if (this.connections[objIndex] != null)

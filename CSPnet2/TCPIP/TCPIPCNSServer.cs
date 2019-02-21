@@ -41,10 +41,10 @@ public sealed class TCPIPCNSServer
 {
     /**
      * @param args
-     * @throws Exception
+     * @//throws Exception
      */
     public static void main(String[] args)
-        throws Exception
+        //throws Exception
     {
         // Get the local IP addresses
         InetAddress[] local = InetAddress.getAllByName(InetAddress.getLocalHost().getHostName());

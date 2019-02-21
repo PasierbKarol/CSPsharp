@@ -43,9 +43,9 @@ namespace CSPnet2.NetChannel
          * 
          * @param obj
          *            The object to send to the input end
-         * @throws JCSPNetworkException
+         * @//throws JCSPNetworkException
          *             Thrown if something goes wrong in the underlying architecture
-         * @throws NetworkPoisonException
+         * @//throws NetworkPoisonException
          *             Thrown if the channel is poisoned
          */
 

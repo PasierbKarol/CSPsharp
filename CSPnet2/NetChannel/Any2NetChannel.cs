@@ -46,11 +46,11 @@ namespace CSPnet2
          * @param filter
          *            The filter used to convert the object being sent into bytes
          * @return A new Any2NetChannel connected to the input end.
-         * @throws JCSPNetworkException
+         * @//throws JCSPNetworkException
          *             Thrown if a connection to the Node cannot be made.
          */
-        static Any2NetChannel create(NetChannelLocation loc, int immunity, NetworkMessageFilter.FilterTx filter)
-        throws JCSPNetworkException { One2NetChannel channel = One2NetChannel. create(loc, immunity, filter);
+       internal static Any2NetChannel create(NetChannelLocation loc, int immunity, NetworkMessageFilter.FilterTx filter)
+        ////throws JCSPNetworkException { One2NetChannel channel = One2NetChannel. create(loc, immunity, filter);
         return new Any2NetChannel(channel);
     }
 
@@ -93,13 +93,13 @@ return this.chan.getLocation();
  * 
  * @param object
  *            The Object to write to the channel
- * @throws JCSPNetworkException
+ * @//throws JCSPNetworkException
  *             Thrown if something happens in the underlying architecture
- * @throws PoisonException
+ * @//throws PoisonException
  *             Thrown if the channel has been poisoned.
  */
 public void write(Object object)
-throws JCSPNetworkException, PoisonException
+//throws JCSPNetworkException, PoisonException
 {
 synchronized (this)
 {
@@ -111,13 +111,13 @@ this.chan.write(object);
  * 
  * @param object
  *            The object to write to the channel
- * @throws JCSPNetworkException
+ * @//throws JCSPNetworkException
  *             Thrown if something happens in the underlying architecture
- * @throws PoisonException
+ * @//throws PoisonException
  *             Thrown is the channel has been poisoned
  */
 public void asyncWrite(Object object)
-throws JCSPNetworkException, PoisonException
+//throws JCSPNetworkException, PoisonException
 {
 synchronized (this)
 {

@@ -41,7 +41,7 @@ namespace CSPnet2.NetNode
         /**
          * The NodeAddress where the CNS / BNS is located
          */
-        protected NodeAddress cnsAddress;
+        internal NodeAddress cnsAddress;
 
         /**
          * Initialises a Node
@@ -49,12 +49,12 @@ namespace CSPnet2.NetNode
          * @param node
          *            The Node to initialise
          * @return A new NodeAddress for the Node
-         * @throws JCSPNetworkException
+         * @//throws JCSPNetworkException
          *             Thrown if something goes wrong during the initialisation
          */
 
         /// <summary>what this does</summary>
         /// <exception cref="JCSPNetworkException">some scenario</exception>
-        protected abstract NodeAddress initNode(Node node);
+        internal abstract NodeAddress initNode(Node node);
     }
 }

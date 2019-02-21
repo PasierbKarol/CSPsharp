@@ -18,6 +18,8 @@
 //////////////////////////////////////////////////////////////////////
 
 using System;
+using System.IO;
+using CSPnet2.NetChannel;
 
 namespace CSPnet2.CNS
 {
@@ -48,7 +50,7 @@ sealed class CNSNetworkMessageFilter
      * 
      * @author Kevin Chalmers
      */
-    static final class FilterTX
+    static /*final*/ class FilterTX
         : NetworkMessageFilter.FilterTx
     {
         /**
@@ -61,10 +63,10 @@ sealed class CNSNetworkMessageFilter
          */
         private readonly DataOutputStream dos;
 
-        /**
-         * Creates a new CNS encoding filter
-         */
-        FilterTX()
+            /**
+             * Creates a new CNS encoding filter
+             */
+        internal FilterTX()
         {
             this.baos = new ByteArrayOutputStream(8192);
             this.dos = new DataOutputStream(this.baos);
@@ -76,14 +78,14 @@ sealed class CNSNetworkMessageFilter
          * @param obj
          *            The CNSMessage to convert
          * @return The byte equivalent of the CNSMessage
-         * @throws IOException
+         * @//throws IOException
          *             Thrown if something goes wrong during the conversion
          */
         public byte[] filterTX(Object obj)
-            throws IOException
+            ////throws IOException
         {
             // First ensure we have a CNSMessage
-            if (!(obj instanceof CNSMessage))
+            if (!(obj is CNSMessage))
                 throw new IOException("Attempted to send a non CNSMessage on a CNSMessage channel");
             CNSMessage msg = (CNSMessage)obj;
 
@@ -114,8 +116,7 @@ sealed class CNSNetworkMessageFilter
      * 
      * @author Kevin Chalmers
      */
-    static sealed class FilterRX
-        : NetworkMessageFilter.FilterRx
+    static /*sealed*/ class FilterRX : NetworkMessageFilter.FilterRx
     {
         /**
          * The input end to read the message back from
@@ -141,11 +142,11 @@ sealed class CNSNetworkMessageFilter
          * @param bytes
          *            The byte equivalent of a CNSMessage
          * @return The recreated CNSMessage
-         * @throws IOException
+         * @//throws IOException
          *             Thrown if something goes wrong during the recreation
          */
         public Object filterRX(byte[] bytes)
-            throws IOException
+            ////throws IOException
         {
             this.byteIn = new ByteArrayInputStream(bytes);
             this.dis = new DataInputStream(byteIn);

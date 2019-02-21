@@ -71,12 +71,12 @@ namespace CSPnet2.NetChannel
          * @param loc
          *            The location to connect the output end to
          * @return A new NetChannelOutput connected to the input end at the given location
-         * @throws JCSPNetworkException
+         * @//throws JCSPNetworkException
          *             Thrown if something goes wrong in the underlying architecture
          */
         public static NetChannelOutput createOne2Net(NetChannelLocation loc)
 
-        throws JCSPNetworkException {
+        //throws JCSPNetworkException {
             return factory.one2net(loc);
     }
 
@@ -87,11 +87,11 @@ namespace CSPnet2.NetChannel
      * @param loc
      *            The location to connect the output end to
      * @return A new NetSharedChannelOutput connected to the input end at the given location
-     * @throws JCSPNetworkException
+     * @//throws JCSPNetworkException
      *             Thrown if something goes wrong in the underlying architecture
      */
     public static NetSharedChannelOutput createAny2Net(NetChannelLocation loc)
-    throws JCSPNetworkException
+    //throws JCSPNetworkException
     {
     return factory.any2net(loc);
 }
@@ -192,11 +192,11 @@ return factory.net2any(immunityLevel, filter);
  * @param index
  *            The index to create the channel with
  * @return A new NetAltingChannelInput
- * @throws IllegalArgumentException
+ * @//throws ArgumentException 
  *             Thrown if a channel with the given index already exists
  */
 public static NetAltingChannelInput numberedNet2One(int index)
-throws IllegalArgumentException
+//throws ArgumentException 
 {
 return factory.numberedNet2One(index);
 }
@@ -208,11 +208,11 @@ return factory.numberedNet2One(index);
  * @param immunityLevel
  *            The immunity to poison that the channel has
  * @return A new NetAltingChannelInput
- * @throws IllegalArgumentException
+ * @//throws ArgumentException 
  *             Thrown if a channel with the given index already exists
  */
 public static NetAltingChannelInput numberedNet2One(int index, int immunityLevel)
-throws IllegalArgumentException
+//throws ArgumentException 
 {
 return factory.numberedNet2One(index, immunityLevel);
 }
@@ -224,11 +224,11 @@ return factory.numberedNet2One(index, immunityLevel);
  * @param filter
  *            The filter used to decode incoming messages
  * @return A new NetAltingChannelInput
- * @throws IllegalArgumentException
+ * @//throws ArgumentException 
  *             Thrown if a channel with the given index already exists
  */
 public static NetAltingChannelInput numberedNet2One(int index, NetworkMessageFilter.FilterRx filter)
-throws IllegalArgumentException
+//throws ArgumentException 
 {
 return factory.numberedNet2One(index, filter);
 }
@@ -243,12 +243,12 @@ return factory.numberedNet2One(index, filter);
  * @param filter
  *            The filter used to decode incoming messages
  * @return A new NetAltingChannelInput
- * @throws IllegalArgumentException
+ * @//throws ArgumentException 
  *             Thrown if a channel with the given index already exists
  */
 public static NetAltingChannelInput numberedNet2One(int index, int immunityLevel,
 NetworkMessageFilter.FilterRx filter)
-throws IllegalArgumentException
+//throws ArgumentException 
 {
 return factory.numberedNet2One(index, immunityLevel, filter);
 }
@@ -258,11 +258,11 @@ return factory.numberedNet2One(index, immunityLevel, filter);
  * @param index
  *            The index to create the channel with
  * @return A new NetSharedChannelInput
- * @throws IllegalArgumentException
+ * @//throws ArgumentException 
  *             Thrown if a channel with the given index already exists
  */
 public static NetSharedChannelInput numberedNet2Any(int index)
-throws IllegalArgumentException
+//throws ArgumentException 
 {
 return factory.numberedNet2Any(index);
 }
@@ -274,11 +274,11 @@ return factory.numberedNet2Any(index);
  * @param immunityLevel
  *            The immunity to poison the channel has
  * @return A new NetSharedChannelInput
- * @throws IllegalArgumentException
+ * @//throws ArgumentException 
  *             Thrown if a channel with the given index already exists
  */
 public static NetSharedChannelInput numberedNet2Any(int index, int immunityLevel)
-throws IllegalArgumentException
+//throws ArgumentException 
 {
 return factory.numberedNet2Any(index, immunityLevel);
 }
@@ -290,11 +290,11 @@ return factory.numberedNet2Any(index, immunityLevel);
  * @param filter
  *            The filter used to decode incoming messages
  * @return A new NetSharedChannelInput
- * @throws IllegalArgumentException
+ * @//throws ArgumentException 
  *             Thrown if a channel with the given index already exists
  */
 public static NetSharedChannelInput numberedNet2Any(int index, NetworkMessageFilter.FilterRx filter)
-throws IllegalArgumentException
+//throws ArgumentException 
 {
 return factory.numberedNet2Any(index, filter);
 }
@@ -309,12 +309,12 @@ return factory.numberedNet2Any(index, filter);
  * @param filter
  *            The filter used to decode incoming messages
  * @return A new NetSharedChannelInput
- * @throws IllegalArgumentException
+ * @//throws ArgumentException 
  *             Thrown if a channel with the given index already exists.
  */
 public static NetSharedChannelInput numberedNet2Any(int index, int immunityLevel,
 NetworkMessageFilter.FilterRx filter)
-throws IllegalArgumentException
+//throws ArgumentException 
 {
 return factory.numberedNet2Any(index, immunityLevel, filter);
 }
@@ -324,11 +324,11 @@ return factory.numberedNet2Any(index, immunityLevel, filter);
  * @param loc
  *            The location of the input end of the channel
  * @return A new NetChannelOutput
- * @throws JCSPNetworkException
+ * @//throws JCSPNetworkException
  *             Thrown if something goes wrong in the underlying architecture
  */
 public static NetChannelOutput one2net(NetChannelLocation loc)
-throws JCSPNetworkException
+//throws JCSPNetworkException
 {
 return factory.one2net(loc);
 }
@@ -341,11 +341,11 @@ return factory.one2net(loc);
  * @param immunityLevel
  *            The immunity to poison that this channel has
  * @return A new NetChannelOutput
- * @throws JCSPNetworkException
+ * @//throws JCSPNetworkException
  *             Thrown if something goes wrong in the underlying architecture
  */
 public static NetChannelOutput one2net(NetChannelLocation loc, int immunityLevel)
-throws JCSPNetworkException
+//throws JCSPNetworkException
 {
 return factory.one2net(loc, immunityLevel);
 }
@@ -358,11 +358,11 @@ return factory.one2net(loc, immunityLevel);
  * @param filter
  *            The filter used to encode outgoing messages
  * @return A new NetChannelOutput
- * @throws JCSPNetworkException
+ * @//throws JCSPNetworkException
  *             Thrown if something goes wrong in the underlying architecture
  */
 public static NetChannelOutput one2net(NetChannelLocation loc, NetworkMessageFilter.FilterTx filter)
-throws JCSPNetworkException
+//throws JCSPNetworkException
 {
 return factory.one2net(loc, filter);
 }
@@ -377,12 +377,12 @@ return factory.one2net(loc, filter);
  * @param filter
  *            The filter used to encode outgoing messages
  * @return A new NetChannelOutput
- * @throws JCSPNetworkException
+ * @//throws JCSPNetworkException
  *             Thrown if something goes wrong in the underlying architecture
  */
 public static NetChannelOutput one2net(NetChannelLocation loc, int immunityLevel,
 NetworkMessageFilter.FilterTx filter)
-throws JCSPNetworkException
+//throws JCSPNetworkException
 {
 return factory.one2net(loc, immunityLevel, filter);
 }
@@ -392,11 +392,11 @@ return factory.one2net(loc, immunityLevel, filter);
  * @param loc
  *            The location of the input end of the channel
  * @return A new NetSharedChannelInput
- * @throws JCSPNetworkException
+ * @//throws JCSPNetworkException
  *             Thrown if something goes wrong in the underlying architecture
  */
 public static NetSharedChannelOutput any2net(NetChannelLocation loc)
-throws JCSPNetworkException
+//throws JCSPNetworkException
 {
 return factory.any2net(loc);
 }
@@ -409,11 +409,11 @@ return factory.any2net(loc);
  * @param immunityLevel
  *            The immunity to poison that the channel has
  * @return A new NetSharedChannelInput
- * @throws JCSPNetworkException
+ * @//throws JCSPNetworkException
  *             Thrown if something goes wrong in the underlying architecture
  */
 public static NetSharedChannelOutput any2net(NetChannelLocation loc, int immunityLevel)
-throws JCSPNetworkException
+//throws JCSPNetworkException
 {
 return factory.any2net(loc, immunityLevel);
 }
@@ -426,11 +426,11 @@ return factory.any2net(loc, immunityLevel);
  * @param filter
  *            The filter used to encode outgoing messages
  * @return A new NetSharedChannelOutput
- * @throws JCSPNetworkException
+ * @//throws JCSPNetworkException
  *             Thrown if something goes wrong in the underlying architecture
  */
 public static NetSharedChannelOutput any2net(NetChannelLocation loc, NetworkMessageFilter.FilterTx filter)
-throws JCSPNetworkException
+//throws JCSPNetworkException
 {
 return factory.any2net(loc, filter);
 }
@@ -445,12 +445,12 @@ return factory.any2net(loc, filter);
  * @param filter
  *            The filter used to encode outgoing messages
  * @return A new NetSharedChannelOutput
- * @throws JCSPNetworkException
+ * @//throws JCSPNetworkException
  *             Thrown if something goes wrong in the underlying architecture
  */
 public static NetSharedChannelOutput any2net(NetChannelLocation loc, int immunityLevel,
 NetworkMessageFilter.FilterTx filter)
-throws JCSPNetworkException
+//throws JCSPNetworkException
 {
 return factory.any2net(loc, immunityLevel, filter);
 }
@@ -462,11 +462,11 @@ return factory.any2net(loc, immunityLevel, filter);
  * @param vcn
  *            The Virtual Channel Number of the input channel
  * @return A new NetChannelOutput
- * @throws JCSPNetworkException
+ * @//throws JCSPNetworkException
  *             Thrown if something goes wrong in the underlying architecture
  */
 public static NetChannelOutput one2net(NodeID nodeID, int vcn)
-throws JCSPNetworkException
+//throws JCSPNetworkException
 {
 return factory.one2net(nodeID, vcn);
 }
@@ -481,11 +481,11 @@ return factory.one2net(nodeID, vcn);
  * @param immunityLevel
  *            The immunity to poison of the channel
  * @return A new NetChannelOutput
- * @throws JCSPNetworkException
+ * @//throws JCSPNetworkException
  *             Thrown if something goes wrong in the underlying architecture
  */
 public static NetChannelOutput one2net(NodeID nodeID, int vcn, int immunityLevel)
-throws JCSPNetworkException
+//throws JCSPNetworkException
 {
 return factory.one2net(nodeID, vcn, immunityLevel);
 }
@@ -500,11 +500,11 @@ return factory.one2net(nodeID, vcn, immunityLevel);
  * @param filter
  *            The filter to encode outgoing messages
  * @return A new NetChannelOutput
- * @throws JCSPNetworkException
+ * @//throws JCSPNetworkException
  *             Thrown if something goes wrong with the underlying architecture
  */
 public static NetChannelOutput one2net(NodeID nodeID, int vcn, NetworkMessageFilter.FilterTx filter)
-throws JCSPNetworkException
+//throws JCSPNetworkException
 {
 return factory.one2net(nodeID, vcn, filter);
 }
@@ -521,12 +521,12 @@ return factory.one2net(nodeID, vcn, filter);
  * @param filter
  *            The filter that encodes the outgoing messages
  * @return A new NetChannelOutput
- * @throws JCSPNetworkException
+ * @//throws JCSPNetworkException
  *             Thrown if something goes wrong with the underlying architecture
  */
 public static NetChannelOutput one2net(NodeID nodeID, int vcn, int immunityLevel,
 NetworkMessageFilter.FilterTx filter)
-throws JCSPNetworkException
+//throws JCSPNetworkException
 {
 return factory.one2net(nodeID, vcn, immunityLevel, filter);
 }
@@ -538,11 +538,11 @@ return factory.one2net(nodeID, vcn, immunityLevel, filter);
  * @param vcn
  *            The Virtual Channel Number of the input channel
  * @return A new NetSharedChannelOutput
- * @throws JCSPNetworkException
+ * @//throws JCSPNetworkException
  *             Thrown if something goes wrong in the underlying architecture
  */
 public static NetSharedChannelOutput any2net(NodeID nodeID, int vcn)
-throws JCSPNetworkException
+//throws JCSPNetworkException
 {
 return factory.any2net(nodeID, vcn);
 }
@@ -557,11 +557,11 @@ return factory.any2net(nodeID, vcn);
  * @param immunityLevel
  *            The immunity to poison that the channel has
  * @return A new NetSharedChannelOutput
- * @throws JCSPNetworkException
+ * @//throws JCSPNetworkException
  *             Thrown if something goes wrong in the underlying architecture
  */
 public static NetSharedChannelOutput any2net(NodeID nodeID, int vcn, int immunityLevel)
-throws JCSPNetworkException
+//throws JCSPNetworkException
 {
 return factory.any2net(nodeID, vcn, immunityLevel);
 }
@@ -576,11 +576,11 @@ return factory.any2net(nodeID, vcn, immunityLevel);
  * @param filter
  *            The filter used to encode the outgoing messages
  * @return A new NetSharedChannelOutput
- * @throws JCSPNetworkException
+ * @//throws JCSPNetworkException
  *             Thrown if something goes wrong in the underlying architecture
  */
 public static NetSharedChannelOutput any2net(NodeID nodeID, int vcn, NetworkMessageFilter.FilterTx filter)
-throws JCSPNetworkException
+//throws JCSPNetworkException
 {
 return factory.any2net(nodeID, vcn, filter);
 }
@@ -597,12 +597,12 @@ return factory.any2net(nodeID, vcn, filter);
  * @param filter
  *            The filter used to encode outgoing messages
  * @return A new NetSharedChannelOutput
- * @throws JCSPNetworkException
+ * @//throws JCSPNetworkException
  *             Thrown if something goes wrong in the underlying architecture
  */
 public static NetSharedChannelOutput any2net(NodeID nodeID, int vcn, int immunityLevel,
 NetworkMessageFilter.FilterTx filter)
-throws JCSPNetworkException
+//throws JCSPNetworkException
 {
 return factory.any2net(nodeID, vcn, immunityLevel, filter);
 }
@@ -614,11 +614,11 @@ return factory.any2net(nodeID, vcn, immunityLevel, filter);
  * @param vcn
  *            The Virtual Channel Number of the input channel
  * @return A new NetChannelOutput
- * @throws JCSPNetworkException
+ * @//throws JCSPNetworkException
  *             Thrown if something goes wrong in the underlying architecture
  */
 public static NetChannelOutput one2net(NodeAddress nodeAddr, int vcn)
-throws JCSPNetworkException
+//throws JCSPNetworkException
 {
 return factory.one2net(nodeAddr, vcn);
 }
@@ -633,11 +633,11 @@ return factory.one2net(nodeAddr, vcn);
  * @param immunityLevel
  *            The immunity to poison the channel has
  * @return A new NetChannelOutput
- * @throws JCSPNetworkException
+ * @//throws JCSPNetworkException
  *             Thrown if something goes wrong in the underlying architecture
  */
 public static NetChannelOutput one2net(NodeAddress nodeAddr, int vcn, int immunityLevel)
-throws JCSPNetworkException
+//throws JCSPNetworkException
 {
 return factory.one2net(nodeAddr, vcn, immunityLevel);
 }
@@ -652,11 +652,11 @@ return factory.one2net(nodeAddr, vcn, immunityLevel);
  * @param filter
  *            The filter used to encode outgoing messages
  * @return A new NetChannelOutput
- * @throws JCSPNetworkException
+ * @//throws JCSPNetworkException
  *             Thrown if something goes wrong in the underlying architecture
  */
 public static NetChannelOutput one2net(NodeAddress nodeAddr, int vcn, NetworkMessageFilter.FilterTx filter)
-throws JCSPNetworkException
+//throws JCSPNetworkException
 {
 return factory.one2net(nodeAddr, vcn, filter);
 }
@@ -673,12 +673,12 @@ return factory.one2net(nodeAddr, vcn, filter);
  * @param filter
  *            The filter used to encode outgoing messages
  * @return A new NetChannelOutput
- * @throws JCSPNetworkException
+ * @//throws JCSPNetworkException
  *             Thrown if something goes wrong in the underlying architecture
  */
 public static NetChannelOutput one2net(NodeAddress nodeAddr, int vcn, int immunityLevel,
 NetworkMessageFilter.FilterTx filter)
-throws JCSPNetworkException
+//throws JCSPNetworkException
 {
 return factory.one2net(nodeAddr, vcn, immunityLevel, filter);
 }
@@ -690,11 +690,11 @@ return factory.one2net(nodeAddr, vcn, immunityLevel, filter);
  * @param vcn
  *            The Virtual Channel Number of the input channel
  * @return A new NetSharedChannelOutput
- * @throws JCSPNetworkException
+ * @//throws JCSPNetworkException
  *             Thrown if something goes wrong in the underlying architecture
  */
 public static NetSharedChannelOutput any2net(NodeAddress nodeAddr, int vcn)
-throws JCSPNetworkException
+//throws JCSPNetworkException
 {
 return factory.any2net(nodeAddr, vcn);
 }
@@ -709,11 +709,11 @@ return factory.any2net(nodeAddr, vcn);
  * @param immunityLevel
  *            The immunity to poison that the channel has
  * @return A new NetSharedChannelOutput
- * @throws JCSPNetworkException
+ * @//throws JCSPNetworkException
  *             Thrown if something goes wrong in the underlying architecture
  */
 public static NetSharedChannelOutput any2net(NodeAddress nodeAddr, int vcn, int immunityLevel)
-throws JCSPNetworkException
+//throws JCSPNetworkException
 {
 return factory.any2net(nodeAddr, vcn, immunityLevel);
 }
@@ -728,11 +728,11 @@ return factory.any2net(nodeAddr, vcn, immunityLevel);
  * @param filter
  *            The immunity to poison that the channel has
  * @return A new NetSharedChannelOutput
- * @throws JCSPNetworkException
+ * @//throws JCSPNetworkException
  *             Thrown if something goes wrong in the underlying architecture
  */
 public static NetSharedChannelOutput any2net(NodeAddress nodeAddr, int vcn, NetworkMessageFilter.FilterTx filter)
-throws JCSPNetworkException
+//throws JCSPNetworkException
 {
 return factory.any2net(nodeAddr, vcn, filter);
 }
@@ -749,12 +749,12 @@ return factory.any2net(nodeAddr, vcn, filter);
  * @param filter
  *            The filter used to encode outgoing messages
  * @return A new NetSharedChannelOutput
- * @throws JCSPNetworkException
+ * @//throws JCSPNetworkException
  *             Thrown if something goes wrong in the underlying architecture
  */
 public static NetSharedChannelOutput any2net(NodeAddress nodeAddr, int vcn, int immunityLevel,
 NetworkMessageFilter.FilterTx filter)
-throws JCSPNetworkException
+//throws JCSPNetworkException
 {
 return factory.any2net(nodeAddr, vcn, immunityLevel, filter);
 }

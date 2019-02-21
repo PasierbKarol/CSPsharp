@@ -104,11 +104,11 @@ sealed class BarrierManager
      *            The index to use for the barrier
      * @param bd
      *            The BarrierData representing the barrier
-     * @throws IllegalArgumentException
+     * @//throws ArgumentException 
      *             If a barrier of the given index already exists.
      */
     /*synchronized*/ internal void create(int idx, BarrierData bd)
-        //throws IllegalArgumentException
+        ////throws ArgumentException 
     {
         int objIndex = idx;
 

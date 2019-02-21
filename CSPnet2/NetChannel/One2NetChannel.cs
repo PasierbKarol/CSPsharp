@@ -19,7 +19,7 @@
 
 using System;
 using CSPlang;
-using CSPnet2.Link;
+using CSPnet2.Net2Link;
 using CSPutil;
 
 namespace CSPnet2.NetChannel
@@ -103,11 +103,11 @@ sealed class One2NetChannel : NetChannelOutput
      * @param filter
      *            The filter used to encode outgoing messages
      * @return A new One2NetChannel
-     * @throws JCSPNetworkException
+     * @//throws JCSPNetworkException
      *             Thrown if the connection to the remote Node fails
      */
-    static One2NetChannel create(NetChannelLocation loc, int immunity, NetworkMessageFilter.FilterTx filter)
-        throws JCSPNetworkException
+   internal static One2NetChannel create(NetChannelLocation loc, int immunity, NetworkMessageFilter.FilterTx filter)
+        ////throws JCSPNetworkException
     {
         // Create the channel data structure
         ChannelData data = new ChannelData();
@@ -130,7 +130,7 @@ sealed class One2NetChannel : NetChannelOutput
         if (loc.getNodeID().equals(NetNode.getInstance().getNodeID()))
         {
             toLink = ChannelManager.getInstance().getChannel(loc.getVCN()).toChannel;
-            return new One2NetChannel(chan.in(), toLink, null, data, loc, immunity, filter);
+            return new One2NetChannel(chan.In(), toLink, null, data, loc, immunity, filter);
         }
 
         // Connect to remote node if necessary
@@ -147,7 +147,7 @@ sealed class One2NetChannel : NetChannelOutput
         toLink = link.getTxChannel();
 
         // Return new channel
-        return new One2NetChannel(chan.in(), toLink, link, data, loc, immunity, filter);
+        return new One2NetChannel(chan.In(), toLink, link, data, loc, immunity, filter);
     }
 
     /**
@@ -286,13 +286,13 @@ sealed class One2NetChannel : NetChannelOutput
      * 
      * @param object
      *            The object to send to the input end.
-     * @throws JCSPNetworkException
+     * @//throws JCSPNetworkException
      *             Thrown if something goes wrong in the network architecture
-     * @throws PoisonException
+     * @//throws PoisonException
      *             Thrown if the channel has been poisoned
      */
     public void write(Object object)
-        throws JCSPNetworkException, PoisonException
+        //throws JCSPNetworkException, PoisonException
     {
         // First we do a state check, and throw an exception if necessary
         if (this.data.state == ChannelDataState.DESTROYED)
@@ -471,13 +471,13 @@ sealed class One2NetChannel : NetChannelOutput
      * 
      * @param object
      *            The object being written to the channel
-     * @throws JCSPNetworkException
+     * @//throws JCSPNetworkException
      *             Thrown when something goes wrong in the network architecture
-     * @throws PoisonException
+     * @//throws PoisonException
      *             Thrown if the channel is poisoned
      */
     public void asyncWrite(Object object)
-        throws JCSPNetworkException, PoisonException
+        //throws JCSPNetworkException, PoisonException
     {
         // First we do a state check, and throw an exception if necessary
         if (this.data.state == ChannelDataState.DESTROYED)

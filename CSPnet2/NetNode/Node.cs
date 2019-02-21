@@ -20,6 +20,8 @@
 using System;
 using CSPlang;
 using CSPnet2.Net2Link;
+using CSPnet2.CNS;
+using CSPnet2.BNS;
 
 namespace CSPnet2.NetNode
 {
@@ -102,10 +104,10 @@ public sealed class Node
     /**
      * @param addr
      * @return NodeKey for this Node
-     * @throws JCSPNetworkException
+     * @//throws JCSPNetworkException
      */
     public NodeKey init(NodeAddress addr)
-        //throws JCSPNetworkException
+        ////throws JCSPNetworkException
     {
         return this.init("", addr);
     }
@@ -114,12 +116,12 @@ public sealed class Node
      * @param name
      * @param addr
      * @return NodeKey for this Node
-     * @throws JCSPNetworkException
+     * @//throws JCSPNetworkException
      */
     public NodeKey init(String name, NodeAddress addr)
-        //throws JCSPNetworkException
+        ////throws JCSPNetworkException
     {
-        Node.log.log(this.getClass(), "Node initialisation begun");
+        Node.log.log(this.GetType(), "Node initialisation begun");
         if (this.initialized)
             throw new JCSPNetworkException("Node already initialised");
         this.initialized = true;
@@ -127,19 +129,19 @@ public sealed class Node
         this.nodeID = new NodeID(name, addr);
         this.nk = new NodeKey();
         NodeAddress.installProtocol(addr.getProtocol(), addr.getProtocolID());
-        Node.log.log(this.getClass(), "Node initialisation complete");
+        Node.log.log(this.GetType(), "Node initialisation complete");
         return this.nk;
     }
 
     /**
      * @param factory
      * @return NodeKey for this Node
-     * @throws JCSPNetworkException
+     * @//throws JCSPNetworkException
      */
     public NodeKey init(NodeFactory factory)
-        //throws JCSPNetworkException
+        ////throws JCSPNetworkException
     {
-        Node.log.log(this.getClass(), "Node initialisation begun");
+        Node.log.log(this.GetType(), "Node initialisation begun");
         if (this.initialized)
             throw new JCSPNetworkException("Node already initialised");
         NodeAddress localAddr = factory.initNode(this);

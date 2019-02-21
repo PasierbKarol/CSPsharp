@@ -202,11 +202,11 @@ public sealed class NetBarrier : CSPBarrier, Networked
      *            The channel into the NetBarrier from the Link
      * @param toLink
      *            The channel connecting the client end of a NetBarrierer to its Link
-     * @throws IllegalArgumentException
+     * @//throws ArgumentException 
      *             Thrown if the number of local enrolled processes is less than 1, or remote enrolled is less than 0
      */
     private NetBarrier(BarrierData barData, int numToEnroll, int netNumToEnroll, NetBarrierLocation serverLocation, AltingChannelInput inToBar, ChannelOutput toLink)
-        //throws IllegalArgumentException
+        ////throws ArgumentException 
     {
         // First do some sanity checks
         if (numToEnroll < 1)
@@ -277,11 +277,11 @@ public sealed class NetBarrier : CSPBarrier, Networked
      * @param remoteEnroll
      *            The number of remote processes to wait for enrolls from
      * @return A new NetBarrier
-     * @throws IllegalArgumentException
+     * @//throws ArgumentException 
      *             Thrown if the number of enrolled processes is outside the defined ranges
      */
     internal static NetBarrier create(int localEnroll, int remoteEnroll)
-        //throws IllegalArgumentException
+        ////throws ArgumentException 
     {
         // First, the sanity checks
         if (localEnroll < 1)
@@ -314,11 +314,11 @@ public sealed class NetBarrier : CSPBarrier, Networked
      * @param barrierIndex
      *            The index to create the barrier with
      * @return A new NetBarrier
-     * @throws IllegalArgumentException
+     * @//throws ArgumentException 
      *             Thrown if the any of the arguments are outside the desired ranges.
      */
     internal static NetBarrier create(int localEnroll, int remoteEnroll, int barrierIndex)
-        //throws IllegalArgumentException
+        ////throws ArgumentException 
     {
         // First, the sanity checks.
         if (localEnroll < 1)
@@ -349,13 +349,13 @@ public sealed class NetBarrier : CSPBarrier, Networked
      * @param localEnroll
      *            The number of locally enrolled processes
      * @return A new NetBarrier client end
-     * @throws JCSPNetworkException
+     * @//throws JCSPNetworkException
      *             Thrown if something goes wrong in the underlying architecture
-     * @throws IllegalArgumentException
+     * @//throws ArgumentException 
      *             Thrown if local enrolled is less than 1
      */
     internal static NetBarrier create(NetBarrierLocation loc, int localEnroll)
-        //throws JCSPNetworkException, IllegalArgumentException
+        ////throws JCSPNetworkException, ArgumentException 
     {
         // First, the sanity check.
         if (localEnroll < 1)
@@ -436,14 +436,14 @@ public sealed class NetBarrier : CSPBarrier, Networked
     }
 
     /**
-     * Performs a SYNC operation with the Barrier throws JCSPNetworkException Thrown if something goes wrong in the
+     * Performs a SYNC operation with the Barrier //throws JCSPNetworkException Thrown if something goes wrong in the
      * underlying architecture
      * 
-     * @throws JCSPNetworkException
+     * @//throws JCSPNetworkException
      *             Thrown if something goes wrong in the underlying architecture
      */
     public void sync()
-        //throws JCSPNetworkException
+        ////throws JCSPNetworkException
     {
         // First check our state
         if (this.data.state == BarrierDataState.BROKEN)
@@ -716,11 +716,11 @@ public sealed class NetBarrier : CSPBarrier, Networked
     /**
      * Enrolls locally with the Barrier
      * 
-     * @throws JCSPNetworkException
+     * @//throws JCSPNetworkException
      *             Thrown if the barrier is not a state where it can be enrolled with
      */
     public void enroll()
-        //throws JCSPNetworkException
+        ////throws JCSPNetworkException
     {
         // First check our state
         if (this.data.state == BarrierDataState.BROKEN)
@@ -756,11 +756,11 @@ public sealed class NetBarrier : CSPBarrier, Networked
     /**
      * Resigns an local process from the barrier
      * 
-     * @throws JCSPNetworkException
+     * @//throws JCSPNetworkException
      *             Thrown if something bad happens within the underlying architecture
      */
     public void resign()
-        //throws JCSPNetworkException
+        ////throws JCSPNetworkException
     {
         // First check our state
         if (this.data.state == BarrierDataState.BROKEN)
@@ -881,11 +881,11 @@ public sealed class NetBarrier : CSPBarrier, Networked
     /**
      * Destroys the Barrier
      * 
-     * @throws JCSPNetworkException
+     * @//throws JCSPNetworkException
      *             Thrown if something goes wrong in the underlying architecture
      */
     public void destroy()
-        //throws JCSPNetworkException
+        ////throws JCSPNetworkException
     {
         // First check our state and change it accordingly
         if (this.data.state == BarrierDataState.BROKEN)

@@ -75,11 +75,11 @@ public sealed class TCPIPNodeFactory : NodeFactory
      * @param node
      *            The Node to initialise
      * @return A new NodeAddress which the Node is registered at
-     * @throws JCSPNetworkException
+     * @//throws JCSPNetworkException
      *             Thrown if something goes wrong during the Node initialisation process
      */
     protected NodeAddress initNode(NetNode node)
-        throws JCSPNetworkException
+        //throws JCSPNetworkException
     {
         // First install TCPIPProtocolID
         NodeAddress.installProtocol("tcpip", TCPIPProtocolID.getInstance());

@@ -39,7 +39,7 @@ namespace CSPnet2
          * @param addressString
          *            String representation of an address
          * @return A new NodeAddress object
-         * @throws IllegalArgumentException
+         * @//throws ArgumentException 
          *             Thrown if the string is in an incorrect form
          */
 

@@ -19,6 +19,7 @@
 
 using System;
 using System.Collections;
+using CSPlang;
 using CSPnet2.Net2Link;
 
 namespace CSPnet2.NetNode
@@ -128,18 +129,18 @@ public abstract class NodeAddress : Comparable
          * Creates a Link connected to this address
          * 
          * @return A new Link connected to this address
-         * @throws JCSPNetworkException
+         * @//throws JCSPNetworkException
          *             If something goes wrong during the creation of the Link
          */
         /// <summary>what this does</summary>
         /// <exception cref="JCSPNetworkException">some scenario</exception>
-        protected abstract Link createLink();
+        internal abstract Link createLink();
 
         /**
          * Creates a LinkServer listening on this address
          * 
          * @return A new LinkServer listening on this address
-         * @throws JCSPNetworkException
+         * @//throws JCSPNetworkException
          *             If something goes wrong during the creation of the LinkServer
          */
 
@@ -152,7 +153,7 @@ public abstract class NodeAddress : Comparable
      * 
      * @return the ProtocolID for this address type
      */
-    protected abstract ProtocolID getProtocolID();
+    internal abstract ProtocolID getProtocolID();
 
         /**
          * Parses a string representation of a NodeAddress back to its object form
@@ -160,13 +161,13 @@ public abstract class NodeAddress : Comparable
          * @param str
          *            The string to parse
          * @return A new NodeAddress created from a String form
-         * @throws IllegalArgumentException
+         * @//throws ArgumentException 
          *             Thrown if the string is not for a recognised protocol.
          */
 
 
         public static NodeAddress parse(String str)
-//        throws IllegalArgumentException
+//        //throws ArgumentException 
     {
         int index = str.IndexOf("\\\\");
         ProtocolID protocol = (ProtocolID)NodeAddress.installedProtocols.get(str.Substring(0, index));

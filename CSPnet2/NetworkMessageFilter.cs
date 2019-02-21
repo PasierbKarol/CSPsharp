@@ -48,7 +48,7 @@ namespace CSPnet2
              * @param bytes
              *            The bytes to be decoded
              * @return The recreated Object
-             * @throws IOException
+             * @//throws IOException
              *             Thrown if something goes wrong during the decoding
              */
 
@@ -71,7 +71,7 @@ namespace CSPnet2
              * @param obj
              *            The object to convert into bytes
              * @return The byte array representation of the Object
-             * @throws IOException
+             * @//throws IOException
              *             Thrown if something goes wrong during the encoding
              */
             /// <summary>what this does</summary>

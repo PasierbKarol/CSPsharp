@@ -80,7 +80,7 @@ public sealed class MobileChannelOutput : NetChannelOutput
     }
 
     public void asyncWrite(Object obj)
-        throws JCSPNetworkException, NetworkPoisonException
+        //throws JCSPNetworkException, NetworkPoisonException
     {
         this.actualOut.asyncWrite(obj);
     }
@@ -91,14 +91,14 @@ public sealed class MobileChannelOutput : NetChannelOutput
     }
 
     private void writeObject(ObjectOutputStream output)
-        throws IOException
+        //throws IOException
     {
         output.writeObject(this.msgBoxLocation);
         this.actualOut.destroy();
     }
 
     private void readObject(ObjectInputStream input)
-        throws IOException, ClassNotFoundException
+        //throws IOException, ClassNotFoundException
     {
         this.msgBoxLocation = (NetChannelLocation)input.readObject();
         this.actualOut = NetChannel.one2net(this.msgBoxLocation);

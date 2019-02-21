@@ -98,16 +98,16 @@ sealed class ChannelManager
      *            The index to use for the channel
      * @param cd
      *            The ChannelData for the channel
-     * @throws IllegalArgumentException
+     * @//throws ArgumentException 
      *             If a channel of the given index already exists.
      */
     synchronized void create(int idx, ChannelData cd)
-        throws IllegalArgumentException
+        //throws ArgumentException 
     {
         // First check that a channel of the given index does not exist. If it does, throw an exception
         Integer objIndex = new Integer(idx);
         if (this.channels.get(objIndex) != null)
-            throw new IllegalArgumentException("Channel of given number already exists.");
+            throw new ArgumentException ("Channel of given number already exists.");
 
         // Set the index of the channel data
         cd.vcn = idx;

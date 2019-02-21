@@ -35,14 +35,14 @@ namespace CSPnet2.NetNode
          * @param clazz
          * @param message
          */
-        public /*synchronized*/ void log(Class clazz, String message)
+        public /*synchronized*/ void log(Type clazz, String message) //changed Java Class to Object
         {
             if (this.logger == null)
                 return;
             DateTime date = new DateTime(CSPTimeMillis.CurrentTimeMillis());
             try
             {
-                this.logger.println("(" + date.ToString() + ")-" + clazz.getName() + ":");
+                this.logger.println("(" + date.ToString() + ")-" + clazz.GetType().Name + ":");
                 this.logger.println("\t\"" + message + "\"");
                 this.logger.flush();
             }
