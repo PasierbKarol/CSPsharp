@@ -67,7 +67,7 @@ public sealed class TCPIPProtocolID : ProtocolID
      * @//throws ArgumentException 
      *             Thrown if the address is not in a correct form
      */
-    protected override NodeAddress parse(String addressString)
+    internal override NodeAddress parse(String addressString)
        // //throws ArgumentException 
     {
         // Split address into IP and port

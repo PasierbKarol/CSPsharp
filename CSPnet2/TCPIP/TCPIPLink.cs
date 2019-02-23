@@ -172,9 +172,9 @@ public sealed class TCPIPLink : Link
             // general
             this.sock.setTcpNoDelay(!TCPIPLink.NAGLE);
             // Create the input and output streams for the Link
-            this.rxStream = new DataInputStream(new BufferedInputStream(this.sock.getInputStream(),
+            this.rxStream = new BinaryReader(new BufferedInputStream(this.sock.getInputStream(),
                     TCPIPLink.BUFFER_SIZE));
-            this.txStream = new DataOutputStream(new BufferedOutputStream(this.sock.getOutputStream(),
+            this.txStream = new BinaryWriter(new BufferedOutputStream(this.sock.getOutputStream(),
                     TCPIPLink.BUFFER_SIZE));
             // Set the remote address
             this.remoteAddress = address;
@@ -201,7 +201,7 @@ public sealed class TCPIPLink : Link
      * @//throws JCSPNetworkException
      *             Thrown if there is a problem during the connection
      */
-    TCPIPLink(Socket socket, NodeID nodeID)
+    internal TCPIPLink(Socket socket, NodeID nodeID)
         //throws JCSPNetworkException
     {
         try
@@ -211,8 +211,8 @@ public sealed class TCPIPLink : Link
             // Set TcpNoDelay
             socket.setTcpNoDelay(!TCPIPLink.NAGLE);
             // Set the input and output streams for the Link
-            this.rxStream = new DataInputStream(new BufferedInputStream(socket.getInputStream(), TCPIPLink.BUFFER_SIZE));
-            this.txStream = new DataOutputStream(new BufferedOutputStream(socket.getOutputStream(),
+            this.rxStream = new BinaryReader(new BufferedInputStream(socket.getInputStream(), TCPIPLink.BUFFER_SIZE));
+            this.txStream = new BinaryWriter(new BufferedOutputStream(socket.getOutputStream(),
                     TCPIPLink.BUFFER_SIZE));
             // Set the NodeID
             this.remoteID = nodeID;
@@ -239,7 +239,7 @@ public sealed class TCPIPLink : Link
      * @//throws JCSPNetworkException
      *             Thrown if something goes wrong during the connection
      */
-    public Boolean connect()
+    public override Boolean connect()
         //throws JCSPNetworkException
     {
         // First check if we are connected.
@@ -252,11 +252,11 @@ public sealed class TCPIPLink : Link
         try
         {
             // Write the string representation of our NodeID to the remote Node
-            this.txStream.writeUTF(Node.getInstance().getNodeID().toString());
-            this.txStream.flush();
+            this.txStream.Write(Node.getInstance().getNodeID().toString());
+            this.txStream.Flush();
 
             // Read in the response from the opposite Node
-            String response = this.rxStream.readUTF();
+            String response = this.rxStream.ReadString();
 
             // Either the connection has been accepted (no connection to this Node exists on the opposite Node) or
             // it has not. The opposite Node sends OK in the first instance.
@@ -268,7 +268,7 @@ public sealed class TCPIPLink : Link
             }
 
             // Read in Remote NodeID as string
-            String nodeIDString = this.rxStream.readUTF();
+            String nodeIDString = this.rxStream.ReadString();
             NodeID otherID = NodeID.parse(nodeIDString);
 
             // First check we have a tcpip Node connection. This should always be the case
@@ -302,7 +302,7 @@ public sealed class TCPIPLink : Link
      * @//throws JCSPNetworkException
      *             Thrown if anything goes wrong during the creation process.
      */
-    protected Boolean createResources()
+    protected override Boolean createResources()
         //throws JCSPNetworkException
     {
         // Just return true
@@ -312,7 +312,7 @@ public sealed class TCPIPLink : Link
     /**
      * Destroys any resources used by the Link
      */
-    protected override void destroyResources()
+    public override void destroyResources()
     {
         try
         {
@@ -323,10 +323,10 @@ public sealed class TCPIPLink : Link
                 if (this.sock != null)
                 {
                     // Close the streams
-                    this.txStream.close();
-                    this.rxStream.close();
+                    this.txStream.Close();
+                    this.rxStream.Close();
                     // Close the socket
-                    this.sock.close();
+                    this.sock.Close();
                     // Set the socket to null
                     this.sock = null;
                     // Remove the Link from the LinkManager

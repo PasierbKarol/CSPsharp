@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using CSPutil;
 
@@ -13,7 +14,7 @@ namespace CSPnet2.NetNode
         /**
          * 
          */
-        private readonly PrintWriter logger;
+        private readonly StreamWriter logger;
 
         /**
          * 
@@ -26,9 +27,9 @@ namespace CSPnet2.NetNode
         /**
          * @param stream
          */
-        Logger(OutputStream stream)
+        internal Logger(StreamWriter stream)
         {
-            this.logger = new PrintWriter(stream);
+            this.logger = stream;
         }
 
         /**
@@ -42,9 +43,9 @@ namespace CSPnet2.NetNode
             DateTime date = new DateTime(CSPTimeMillis.CurrentTimeMillis());
             try
             {
-                this.logger.println("(" + date.ToString() + ")-" + clazz.GetType().Name + ":");
-                this.logger.println("\t\"" + message + "\"");
-                this.logger.flush();
+                this.logger.WriteLine("(" + date.ToString() + ")-" + clazz.GetType().Name + ":");
+                this.logger.WriteLine("\t\"" + message + "\"");
+                this.logger.Flush();
             }
             catch (Exception e)
             {

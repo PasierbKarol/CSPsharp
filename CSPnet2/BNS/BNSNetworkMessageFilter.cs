@@ -41,33 +41,34 @@ namespace CSPnet2.BNS
  * @see NetworkMessageFilter
  * @author Kevin Chalmers
  */
-sealed class BNSNetworkMessageFilter
+ sealed class BNSNetworkMessageFilter
 {
     /**
      * The encoding filter used to convert a BNSMessage into bytes
      * 
      * @author Kevin Chalmers
      */
-    /*static*/ sealed class FilterTX : NetworkMessageFilter.FilterTx;
+
+    /*static*/ internal sealed class FilterTX : NetworkMessageFilter.FilterTx
     {
 
         /**
          * The byte stream we will use to retrieve the byte message from
          */
-        private readonly ByteArrayOutputStream baos;
+        private readonly MemoryStream baos;
 
         /**
          * the data stream used to write the parts of the BNSMessage to
          */
-        private readonly DataOutputStream dos;
+        private readonly BinaryWriter dos;
 
         /**
          * Creates a new BNSMessage encoding filter
          */
-        FilterTX()
+        internal FilterTX()
         {
-            this.baos = new ByteArrayOutputStream(8192);
-            this.dos = new DataOutputStream(this.baos);
+            this.baos = new MemoryStream(8192);
+            this.dos = new BinaryWriter(this.baos);
         }
 
         /**
@@ -89,23 +90,24 @@ sealed class BNSNetworkMessageFilter
             BNSMessage msg = (BNSMessage)obj;
 
             // Now reset the byte stream
-            this.baos.reset();
+            //this.baos.reset();
+            this.baos.Dispose();
             // Write the parts of the BNSMessage to the stream
-            this.dos.writeByte(msg.type);
-            this.dos.writeBoolean(msg.success);
+            this.dos.Write(msg.type);
+            this.dos.Write(msg.success);
             if (msg.serviceLocation != null)
-                this.dos.writeUTF(msg.serviceLocation.toString());
+                this.dos.Write(msg.serviceLocation.toString());
             else
-                this.dos.writeUTF("null");
+                this.dos.Write("null");
             if (msg.location != null)
-                this.dos.writeUTF(msg.location.toString());
+                this.dos.Write(msg.location.toString());
             else
-                this.dos.writeUTF("null");
-            this.dos.writeUTF(msg.name);
+                this.dos.Write("null");
+            this.dos.Write(msg.name);
             // flush the stream
-            this.dos.flush();
+            this.dos.Flush();
             // Get the bytes
-            return this.baos.toByteArray();
+            return this.baos.ToArray();
         }
 
     }
@@ -115,22 +117,22 @@ sealed class BNSNetworkMessageFilter
      * 
      * @author Kevin Chalmers
      */
-    /*static*/ sealed class FilterRX : NetworkMessageFilter.FilterRx
+    /*static*/ internal sealed class FilterRX : NetworkMessageFilter.FilterRx
     {
         /**
          * The input end of the pipe to read the message back
          */
-        private ByteArrayInputStream byteIn;
+        private MemoryStream byteIn;
 
         /**
          * The data input stream used to read in parts of the message
          */
-        private DataInputStream dis;
+        private BinaryReader dis;
 
         /**
          * Creates a new decoding BNSMessageFilter
          */
-        FilterRX()
+        internal FilterRX()
         {
             // Nothing to do.
         }
@@ -147,16 +149,16 @@ sealed class BNSNetworkMessageFilter
         public Object filterRX(byte[] bytes)
             ////throws IOException
         {
-            this.byteIn = new ByteArrayInputStream(bytes);
-            this.dis = new DataInputStream(byteIn);
+            this.byteIn = new MemoryStream(bytes);
+            this.dis = new BinaryReader(byteIn);
 
             // Recreate the message
             BNSMessage msg = new BNSMessage();
-            msg.type = this.dis.readByte();
-            msg.success = this.dis.readBoolean();
-            msg.serviceLocation = NetChannelLocation.parse(this.dis.readUTF());
-            msg.location = NetBarrierLocation.parse(this.dis.readUTF());
-            msg.name = this.dis.readUTF();
+            msg.type = this.dis.ReadByte();
+            msg.success = this.dis.ReadBoolean();
+            msg.serviceLocation = NetChannelLocation.parse(this.dis.ReadString());
+            msg.location = NetBarrierLocation.parse(this.dis.ReadString());
+            msg.name = this.dis.ReadString();
             return msg;
         }
 

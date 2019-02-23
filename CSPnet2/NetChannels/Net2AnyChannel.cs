@@ -59,7 +59,7 @@ sealed class Net2AnyChannel : NetSharedChannelInput
      * @//throws JCSPNetworkException
      *             Thrown if there is a problem creating the underlying channel
      */
-    internal static Net2AnyChannel create(int poisonImmunity, FilterRx filter)
+    internal static Net2AnyChannel create(int poisonImmunity, NetworkMessageFilter.FilterRx filter)
         ////throws JCSPNetworkException
     {
         // Create the underlying channel
@@ -83,11 +83,23 @@ sealed class Net2AnyChannel : NetSharedChannelInput
      * @//throws JCSPNetworkException
      *             Thrown if something goes wrong during the creation of the underlying channel
      */
-    static Net2AnyChannel create(int index, int poisonImmunity, FilterRx filter)
-        //throws ArgumentException , JCSPNetworkException
+    internal static Net2AnyChannel create(int index, int poisonImmunity, NetworkMessageFilter.FilterRx filter)
     {
         // Create the underlying channel
-        Net2OneChannel chan = Net2OneChannel.create(index, poisonImmunity, filter);
+        Net2OneChannel chan = null;
+
+        try
+        {
+            chan = Net2OneChannel.create(index, poisonImmunity, filter);
+            }
+        catch (ArgumentException e)
+        {
+            Console.WriteLine(e);
+        }
+        catch (JCSPNetworkException e)
+        {
+            Console.WriteLine(e);
+        }
         // Return a new instance of Net2AnyChannel
         return new Net2AnyChannel(chan);
     }
@@ -277,7 +289,7 @@ sealed class Net2AnyChannel : NetSharedChannelInput
      * @param decoder
      *            The new message filter to use
      */
-    public void setDecoder(FilterRx decoder)
+    public void setDecoder(NetworkMessageFilter.FilterRx decoder)
     {
         lock (this)
         {

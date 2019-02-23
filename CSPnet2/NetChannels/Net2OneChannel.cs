@@ -18,6 +18,7 @@
 //////////////////////////////////////////////////////////////////////
 
 using System;
+using System.IO;
 using CSPlang;
 using CSPlang.Any2;
 using CSPutil;
@@ -27,12 +28,7 @@ namespace CSPnet2.NetChannels
 {
 
 //    import java.io.IOException;
-//
-//import jcsp.lang.AltingChannelInput;
-//import jcsp.lang.Any2OneChannel;
-//import jcsp.lang.Channel;
-//import jcsp.net2.NetworkMessageFilter.FilterRx;
-//import jcsp.util.InfiniteBuffer;
+
 
 /**
  * A concrete implementation of a NetAltingChannelInput. This is a hidden class created by the architecture. To create
@@ -150,7 +146,7 @@ sealed class Net2OneChannel : NetAltingChannelInput
      *            The filter used to convert the incoming byte array to an object
      * @//throws JCSPNetworkException
      */
-    private Net2OneChannel(AltingChannelInput input, ChannelData chanData, FilterRx filter) : base(input)
+    private Net2OneChannel(AltingChannelInput input, ChannelData chanData, NetworkMessageFilter.FilterRx filter) : base(input)
         //throws JCSPNetworkException
     {
         // Set the wrapper's alting channel input so the channel can be used as a guard
@@ -651,7 +647,7 @@ sealed class Net2OneChannel : NetAltingChannelInput
      * @param decoder
      *            The message filter to use
      */
-    public void setDecoder(FilterRx decoder)
+    public void setDecoder(NetworkMessageFilter.FilterRx decoder)
     {
         this.messageFilter = decoder;
     }

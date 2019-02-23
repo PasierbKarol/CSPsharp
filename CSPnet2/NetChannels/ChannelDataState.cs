@@ -42,42 +42,42 @@ namespace CSPnet2.NetChannels
     /**
      * Signifies that the channel has not been activated yet.
      */
-    internal static readonly byte INACTIVE = 0;
+    internal /*static*/ const byte INACTIVE = 0;
 
     /**
      * Signifies that the channel has been started and is a input end.
      */
-    internal static readonly byte OK_INPUT = 1;
+    internal /*static*/ const byte OK_INPUT = 1;
 
     /**
      * Signified that the channel has been started and is a output end.
      */
-    internal static readonly byte OK_OUTPUT = 2;
+    internal /*static*/ const byte OK_OUTPUT = 2;
 
     /**
      * Signifies that the channel has been destroyed.
      */
-    internal static readonly byte DESTROYED = 3;
+    internal /*static*/ const byte DESTROYED = 3;
 
     /**
      * Signifies that the channel is broken. This is from the original JCSP model, and may be unnecessary as Destroyed
      * and Poisoned may cover this.
      */
-    internal static readonly byte BROKEN = 4;
+    internal /*static*/ const byte BROKEN = 4;
 
     /**
      * Signifies that the channel has recently moved and has yet to be reestablished at a new location.
      */
-    internal static readonly byte MOVING = 5;
+    internal /*static*/ const byte MOVING = 5;
 
     /**
      * Signifies that the channel has moved to a new location and that this new location is available.
      */
-    internal static readonly byte MOVED = 6;
+    internal /*static*/ const byte MOVED = 6;
 
     /**
      * Signifies that the channel has been poisoned.
      */
-    internal static readonly byte POISONED = 7;
+    internal /*static*/ const byte POISONED = 7;
 }
 }

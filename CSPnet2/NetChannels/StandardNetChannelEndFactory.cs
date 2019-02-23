@@ -301,7 +301,7 @@ namespace CSPnet2.NetChannels
     public NetSharedChannelInput numberedNet2Any(int index, NetworkMessageFilter.FilterRx filter)
         ////throws ArgumentException 
     {
-        return Net2AnyChannel.create(index, Integer.MAX_VALUE, filter);
+        return Net2AnyChannel.create(index, Int32.MaxValue, filter);
     }
 
     /**
@@ -336,7 +336,7 @@ namespace CSPnet2.NetChannels
     public NetChannelOutput one2net(NetChannelLocation loc)
         //throws JCSPNetworkException
     {
-        return One2NetChannel.create(loc, Integer.MAX_VALUE, new ObjectNetworkMessageFilter.FilterTX());
+        return One2NetChannel.create(loc, Int32.MaxValue, new ObjectNetworkMessageFilter.FilterTX());
     }
 
     /**
@@ -372,7 +372,7 @@ namespace CSPnet2.NetChannels
     public NetChannelOutput one2net(NetChannelLocation loc, NetworkMessageFilter.FilterTx filter)
         //throws JCSPNetworkException
     {
-        return One2NetChannel.create(loc, Integer.MAX_VALUE, filter);
+        return One2NetChannel.create(loc, Int32.MaxValue, filter);
     }
 
     /**
@@ -407,7 +407,7 @@ namespace CSPnet2.NetChannels
     public NetSharedChannelOutput any2net(NetChannelLocation loc)
         //throws JCSPNetworkException
     {
-        return Any2NetChannel.create(loc, Integer.MAX_VALUE, new ObjectNetworkMessageFilter.FilterTX());
+        return Any2NetChannel.create(loc, Int32.MaxValue, new ObjectNetworkMessageFilter.FilterTX());
     }
 
     /**
@@ -443,7 +443,7 @@ namespace CSPnet2.NetChannels
     public NetSharedChannelOutput any2net(NetChannelLocation loc, NetworkMessageFilter.FilterTx filter)
         //throws JCSPNetworkException
     {
-        return Any2NetChannel.create(loc, Integer.MAX_VALUE, filter);
+        return Any2NetChannel.create(loc, Int32.MaxValue, filter);
     }
 
     /**

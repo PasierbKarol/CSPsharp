@@ -1,4 +1,3 @@
-
 //////////////////////////////////////////////////////////////////////
 //                                                                  //
 //  JCSP ("CSP for Java") Libraries                                 //
@@ -28,19 +27,12 @@ using CSPnet2.NetNode;
 namespace CSPnet2.TCPIP
 {
 
-//    import java.io.DataInputStream;
-//import java.io.DataOutputStream;
 //import java.io.IOException;
 //import java.net.Inet4Address;
 //import java.net.InetAddress;
 //import java.net.ServerSocket;
 //import java.net.Socket;
-//
-//import jcsp.lang.ProcessManager;
-//import jcsp.net2.JCSPNetworkException;
-//import jcsp.net2.LinkServer;
-//import jcsp.net2.Node;
-//import jcsp.net2.NodeID;
+
 
 /**
  * Concrete implementation of a LinkServer that listens on a TCP/IP based ServerSocket. For information on LinkServer,
@@ -80,7 +72,7 @@ public sealed class TCPIPLinkServer : LinkServer
      * @param serverSocket
      *            The ServerSocket to create the LinkServer with
      */
-    TCPIPLinkServer(ServerSocket serverSocket)
+    internal TCPIPLinkServer(ServerSocket serverSocket)
     {
         // We need to set the NodeAddress. Create from ServerSocket address and port
         this.listeningAddress = new TCPIPNodeAddress(serverSocket.getInetAddress().getHostAddress(), serverSocket
@@ -215,17 +207,17 @@ public sealed class TCPIPLinkServer : LinkServer
                 incoming.setTcpNoDelay(true);
 
                 // Now we want to receive the connecting Node's NodeID
-                DataInputStream inStream = new DataInputStream(incoming.getInputStream());
+                BinaryReader inStream = new BinaryReader(incoming.getInputStream());
 
                 // Receive remote NodeID and parse
-                String otherID = inStream.readUTF();
+                String otherID = inStream.ReadString();
                 NodeID remoteID = NodeID.parse(otherID);
 
                 // First check we have a tcpip Node connection
                 if (remoteID.getNodeAddress() is TCPIPNodeAddress)
                 {
                     // Create an output stream from the Socket
-                    DataOutputStream outStream = new DataOutputStream(incoming.getOutputStream());
+                    BinaryWriter outStream = new BinaryWriter(incoming.getOutputStream());
 
                     // Now Log that we have received a connection
                     Node.log.log(this.GetType(), "Received connection from: " + remoteID.toString());
@@ -236,12 +228,12 @@ public sealed class TCPIPLinkServer : LinkServer
                         // No existing connection to incoming Node exists. Keep connection
 
                         // Write OK to the connecting Node
-                        outStream.writeUTF("OK");
-                        outStream.flush();
+                        outStream.Write("OK");
+                        outStream.Flush();
 
                         // Send out our NodeID
-                        outStream.writeUTF(Node.getInstance().getNodeID().toString());
-                        outStream.flush();
+                        outStream.Write(Node.getInstance().getNodeID().toString());
+                        outStream.Flush();
 
                         // Create Link, register, and start.
                         TCPIPLink link = new TCPIPLink(incoming, remoteID);
@@ -257,28 +249,28 @@ public sealed class TCPIPLinkServer : LinkServer
                                                       + " already exists.  Informing remote Node.");
 
                         // Write EXISTS to the remote Node
-                        outStream.writeUTF("EXISTS");
-                        outStream.flush();
+                        outStream.Write("EXISTS");
+                        outStream.Flush();
 
                         // Send out NodeID. We do this so the opposite Node can find its own connection
-                        outStream.writeUTF(Node.getInstance().getNodeID().toString());
-                        outStream.flush();
+                        outStream.Write(Node.getInstance().getNodeID().toString());
+                        outStream.Flush();
 
                         // Close socket
-                        incoming.close();
+                        incoming.Close();
                     }
                 }
 
                 // Address is not a TCPIP address. Close socket. This will cause an exception on the opposite Node
                 else
-                    incoming.close();
+                    incoming.Close();
             }
         }
         catch (IOException ioe)
         {
             // We can't really recover from this. This may happen if the network connection was lost.
             // Log and fail
-            Node.err.log(this.GetType(), "TCPIPLinkServer failed.  " + ioe.getMessage());
+            Node.err.log(this.GetType(), "TCPIPLinkServer failed.  " + ioe.Message);
         }
     }
 

@@ -27,15 +27,8 @@ namespace CSPnet2.Mobile
 //    import java.io.IOException;
 //import java.io.ObjectInputStream;
 //import java.io.ObjectOutputStream;
-//import java.io.Serializable;
-//
-//import jcsp.lang.ProcessManager;
-//import jcsp.net2.NetAltingChannelInput;
-//import jcsp.net2.NetChannel;
-//import jcsp.net2.NetChannelInput;
-//import jcsp.net2.NetChannelLocation;
-//import jcsp.net2.NetChannelOutput;
-//import jcsp.net2.NetLocation;
+
+
 //import jcsp.net2.NetworkMessageFilter;
 //import jcsp.net2.ObjectNetworkMessageFilter;
 //import jcsp.net2.NetworkMessageFilter.FilterRx;
@@ -49,9 +42,11 @@ public sealed class MobileChannelInput : NetChannelInput
 
     private NetChannelLocation msgBoxReqLoc;
 
-    private transient NetChannelInput actualIn;
+    [NonSerialized]
+    private /*transient*/ NetChannelInput actualIn;
 
-    private transient NetChannelOutput toMessageBox;
+    [NonSerialized]
+    private /*transient*/ NetChannelOutput toMessageBox;
 
     public MobileChannelInput()
     {

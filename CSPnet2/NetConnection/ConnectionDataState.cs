@@ -26,22 +26,22 @@ namespace CSPnet2.NetConnection
      */
     sealed class ConnectionDataState
 {
-    internal static readonly byte INACTIVE = 0;
+    internal /*static*/ const byte INACTIVE = 0;
 
-    internal static readonly byte CLIENT_STATE_CLOSED = 1;
+    internal /*static*/ const byte CLIENT_STATE_CLOSED = 1;
 
-    internal static readonly byte CLIENT_STATE_OPEN = 2;
+    internal /*static*/ const byte CLIENT_STATE_OPEN = 2;
 
-    internal static readonly byte CLIENT_STATE_MADE_REQ = 3;
+    internal /*static*/ const byte CLIENT_STATE_MADE_REQ = 3;
 
-    internal static readonly byte SERVER_STATE_CLOSED = 4;
+    internal /*static*/ const byte SERVER_STATE_CLOSED = 4;
 
-    internal static readonly byte SERVER_STATE_OPEN = 5;
+    internal /*static*/ const byte SERVER_STATE_OPEN = 5;
 
-    internal static readonly byte SERVER_STATE_RECEIVED = 6;
+    internal /*static*/ const byte SERVER_STATE_RECEIVED = 6;
 
-    internal static readonly byte DESTROYED = 7;
+    internal /*static*/ const byte DESTROYED = 7;
 
-    internal static readonly byte BROKEN = 8;
+    internal /*static*/ const byte BROKEN = 8;
 }
 }

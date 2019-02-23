@@ -26,13 +26,7 @@ namespace CSPnet2.Mobile
 //    import java.io.IOException;
 //import java.io.ObjectInputStream;
 //import java.io.ObjectOutputStream;
-//import java.io.Serializable;
-//
-//import jcsp.net2.JCSPNetworkException;
-//import jcsp.net2.NetChannel;
-//import jcsp.net2.NetChannelLocation;
-//import jcsp.net2.NetChannelOutput;
-//import jcsp.net2.NetLocation;
+
 //import jcsp.net2.NetworkPoisonException;
 //import jcsp.net2.NetworkMessageFilter.FilterTx;
 
@@ -45,7 +39,8 @@ public sealed class MobileChannelOutput : NetChannelOutput
 {
     private NetChannelLocation msgBoxLocation;
 
-    private transient NetChannelOutput actualOut;
+    [NonSerialized]
+    private /*transient*/ NetChannelOutput actualOut;
 
     public MobileChannelOutput(NetChannelLocation loc)
     {

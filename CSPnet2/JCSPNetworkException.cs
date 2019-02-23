@@ -45,5 +45,11 @@ namespace CSPnet2
         public JCSPNetworkException(String message) : base(message)
         {
         }
+
+        internal void StackTrace()
+        {
+            Console.WriteLine("Stack trace " + base.StackTrace);
+            throw new NotImplementedException();
+        }
     }
 }

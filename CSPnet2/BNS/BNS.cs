@@ -19,9 +19,9 @@
 
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using CSPlang;
 using CSPnet2.Barriers;
-using CSPnet2.BNS;
 using CSPnet2.Net2Link;
 using CSPnet2.NetChannels;
 using CSPnet2.NetNode;
@@ -32,23 +32,7 @@ namespace CSPnet2.BNS
 //    import java.util.ArrayList;
 //import java.util.HashMap;
 //import java.util.Iterator;
-//
-//import jcsp.lang.Alternative;
-//import jcsp.lang.AltingChannelInput;
-//import jcsp.lang.CSProcess;
-//import jcsp.lang.Guard;
-//import jcsp.net2.JCSPNetworkException;
-//import jcsp.net2.Link;
-//import jcsp.net2.LinkFactory;
-//import jcsp.net2.NetAltingChannelInput;
-//import jcsp.net2.NetBarrier;
-//import jcsp.net2.NetBarrierEnd;
-//import jcsp.net2.NetBarrierLocation;
-//import jcsp.net2.NetChannel;
-//import jcsp.net2.NetChannelOutput;
-//import jcsp.net2.Node;
-//import jcsp.net2.NodeAddress;
-//import jcsp.net2.NodeID;
+
 
 /**
  * This is the main process for the Barrier Name Server. For a more in depth discussion of name servers, see CNS.
@@ -78,22 +62,22 @@ public class BNS : IamCSProcess
     /**
      * Map of registered barriers; name->location
      */
-    private readonly HashMap registeredBarriers = new HashMap();
+    private readonly Dictionary<string, NetBarrierLocation> registeredBarriers = new Dictionary<string, NetBarrierLocation>();
 
     /**
      * Map of barriers registered to a Node; NodeID-><list of barriers>
      */
-    private readonly HashMap barrierRegister = new HashMap();
+    private readonly Dictionary<NodeID, ArrayList> barrierRegister = new Dictionary<NodeID, ArrayList>();
 
     /**
      * Map of currently waiting resolves; name->reply-location
      */
-    private readonly HashMap waitingResolves = new HashMap();
+    private readonly Dictionary<string, ArrayList> waitingResolves = new Dictionary<string, ArrayList>();
 
     /**
      * Map of currently logged clients; NodeID->reply-channel
      */
-    private readonly HashMap loggedClients = new HashMap();
+    private readonly Dictionary<NodeID, NetChannelOutput> loggedClients = new Dictionary<NodeID, NetChannelOutput>();
 
     /**
      * A channel used to receive incoming link lost notifications
@@ -177,7 +161,7 @@ public class BNS : IamCSProcess
     public void run()
     {
         // Create the channel to receive incoming messages on. The index is 2.
-        NetAltingChannelInput In = NetChannels.numberedNet2One(2, new BNSNetworkMessageFilter.FilterRX());
+        NetAltingChannelInput In = NetChannel.numberedNet2One(2, new BNSNetworkMessageFilter.FilterRX());
 
         // We now wish to alternate upon this channel and the link lost channel
         Alternative alt = new Alternative(new Guard[] { this.lostLink, In });
@@ -197,10 +181,10 @@ public class BNS : IamCSProcess
                     Node.log.log(this.GetType(), "Lost Link to: " + lostNode.toString());
 
                     // Remove the logged client
-                    this.loggedClients.remove(lostNode);
+                    this.loggedClients.Remove(lostNode);
 
                     // Next get the ArrayList of any barriers registered by that Node
-                    ArrayList registeredBars = (ArrayList)this.barrierRegister.get(lostNode);
+                    ArrayList registeredBars = (ArrayList)this.barrierRegister[lostNode];
 
                     // If this ArrayList is null, we have no registrations
                     if (registeredBars != null)
@@ -208,13 +192,13 @@ public class BNS : IamCSProcess
                         // There are registered barriers
 
                         // Remove the list from the Hashmap
-                        this.barrierRegister.remove(lostNode);
+                        this.barrierRegister.Remove(lostNode);
 
                         // Now remove all the barriers registered by the Node
-                        for (Iterator iter = registeredBars.iterator(); iter.hasNext();)
+                        for (IEnumerator enumerator = registeredBars.GetEnumerator(); enumerator.MoveNext();)
                         {
-                            String toRemove = (String)iter.next();
-                            this.registeredBarriers.remove(toRemove);
+                            String toRemove = (String)enumerator.Current;
+                            this.registeredBarriers.Remove(toRemove);
                             Node.log.log(this.GetType(), toRemove + " deregistered");
                         }
                     }
@@ -240,8 +224,7 @@ public class BNS : IamCSProcess
                             try
                             {
                                 // Check if the node is already logged on
-                                NetChannelOutput Out = (NetChannelOutput)this.loggedClients.get(message.serviceLocation
-                                        .getNodeID());
+                                NetChannelOutput Out = (NetChannelOutput)this.loggedClients[message.serviceLocation.getNodeID()];
 
                                 // If out is null, no previous logon received
                                 if (Out != null)
@@ -252,7 +235,7 @@ public class BNS : IamCSProcess
                                                                   + " already logged on.  Rejecting");
 
                                     // Create reply channel to the Node
-                                    NetChannelOutput toNewRegister = NetChannels.one2net(message.serviceLocation,
+                                    NetChannelOutput toNewRegister = NetChannel.one2net(message.serviceLocation,
                                             new BNSNetworkMessageFilter.FilterTX());
 
                                     // Create the reply message
@@ -273,11 +256,11 @@ public class BNS : IamCSProcess
                                                                   + " successfully logged on");
 
                                     // Create the reply channel
-                                    NetChannelOutput toNewRegister = NetChannels.one2net(message.serviceLocation,
+                                    NetChannelOutput toNewRegister = NetChannel.one2net(message.serviceLocation,
                                             new BNSNetworkMessageFilter.FilterTX());
 
                                     // Add the Node and reply channel to the logged clients map
-                                    this.loggedClients.put(message.serviceLocation.getNodeID(), toNewRegister);
+                                    this.loggedClients.Add(message.serviceLocation.getNodeID(), toNewRegister);
 
                                     // Create a reply message
                                     BNSMessage reply = new BNSMessage();
@@ -305,8 +288,7 @@ public class BNS : IamCSProcess
                             try
                             {
                                 // Get the reply channel from our logged clients map
-                                NetChannelOutput Out = (NetChannelOutput)this.loggedClients.get(message.serviceLocation
-                                        .getNodeID());
+                                NetChannelOutput Out = (NetChannelOutput)this.loggedClients[message.serviceLocation.getNodeID()];
 
                                 // Check if the Node has logged on with us
                                 if (Out == null)
@@ -317,7 +299,7 @@ public class BNS : IamCSProcess
                                                                   + " not logged on");
 
                                     // Create the channel to reply to
-                                    Out = NetChannels.one2net(message.serviceLocation,
+                                    Out = NetChannel.one2net(message.serviceLocation,
                                             new BNSNetworkMessageFilter.FilterTX());
 
                                     // Create the reply message
@@ -333,7 +315,7 @@ public class BNS : IamCSProcess
                                 }
 
                                 // The Node is registered. Now check if the name is
-                                else if (this.registeredBarriers.containsKey(message.name))
+                                else if (this.registeredBarriers.ContainsKey(message.name))
                                 {
                                     // The name is already registered. Inform the register
                                     // Log the failed registration
@@ -350,17 +332,18 @@ public class BNS : IamCSProcess
                                 }
                                 else
                                 {
+                                    BNSMessage reply;
                                     // The name is not registered
                                     // Log successful registration
-                                    Node.log.log(this.GetType(), "Registration of " + message.name + " succeeded.");
+                                        Node.log.log(this.GetType(), "Registration of " + message.name + " succeeded.");
 
                                     // First check if any client end is waiting for this name
-                                    ArrayList pending = (ArrayList)this.waitingResolves.get(message.name);
+                                    ArrayList pending = (ArrayList)this.waitingResolves[message.name];
 
                                     if (pending != null)
                                     {
                                         // We have waiting resolves. Complete
-                                        for (Iterator iter = pending.iterator(); iter.hasNext();)
+                                        for (IEnumerator enumerator = pending.GetEnumerator(); enumerator.MoveNext();)
                                         {
                                             NetChannelOutput toPending = null;
 
@@ -368,7 +351,7 @@ public class BNS : IamCSProcess
                                             try
                                             {
                                                 // Get the next waiting message
-                                                BNSMessage msg = (BNSMessage)iter.next();
+                                                BNSMessage msg = (BNSMessage)enumerator.Current;
 
                                                 // Log resolve completion
                                                 Node.log.log(this.GetType(), "Queued resolve of " + message.name
@@ -377,11 +360,11 @@ public class BNS : IamCSProcess
                                                                               + " completed");
 
                                                 // Create channel to the resolver
-                                                toPending = NetChannels.one2net(msg.serviceLocation,
+                                                toPending = NetChannel.one2net(msg.serviceLocation,
                                                         new BNSNetworkMessageFilter.FilterTX());
 
                                                 // Create the reply message
-                                                BNSMessage reply = new BNSMessage();
+                                                reply = new BNSMessage();
                                                 reply.type = BNSMessageProtocol.RESOLVE_REPLY;
                                                 reply.location = message.location;
                                                 reply.success = true;
@@ -404,15 +387,14 @@ public class BNS : IamCSProcess
                                         }
 
                                         // Remove the name from the pending resolves
-                                        this.waitingResolves.remove(message.name);
+                                        this.waitingResolves.Remove(message.name);
                                     }
 
                                     // We have completed any pending resolves. Now register the barrier
-                                    this.registeredBarriers.put(message.name, message.location);
+                                    this.registeredBarriers.Add(message.name, message.location);
 
                                     // Now add the registered barrier to the barriers registered by this Node
-                                    ArrayList registered = (ArrayList)this.barrierRegister.get(message.serviceLocation
-                                            .getNodeID());
+                                    ArrayList registered = (ArrayList)this.barrierRegister[message.serviceLocation.getNodeID()];
 
                                     // If the ArrayList is null, we have no previous registrations
                                     if (registered == null)
@@ -420,17 +402,17 @@ public class BNS : IamCSProcess
                                         // Create a new ArrayList to store the registered names
                                         registered = new ArrayList();
                                         // Add it to the barrier register
-                                        this.barrierRegister.put(message.location.getNodeID(), registered);
+                                        this.barrierRegister.Add(message.location.getNodeID(), registered);
                                     }
 
                                     // Add the name to the ArrayList
-                                    registered.add(message.name);
+                                    registered.Add(message.name);
 
                                     // Log the successful registration
                                     Node.log.log(this.GetType(), message.name + " registered to " + message.location);
 
                                     // Create the reply message
-                                    BNSMessage reply = new BNSMessage();
+                                    reply = new BNSMessage();
                                     reply.type = BNSMessageProtocol.REGISTER_REPLY;
                                     reply.success = true;
 
@@ -455,8 +437,7 @@ public class BNS : IamCSProcess
                             try
                             {
                                 // Check if the resolving Node is logged on
-                                NetChannelOutput Out = (NetChannelOutput)this.loggedClients.get(message.serviceLocation
-                                        .getNodeID());
+                                NetChannelOutput Out = (NetChannelOutput)this.loggedClients[message.serviceLocation.getNodeID()];
 
                                 // If the channel is null, then the Node has yet to log on with us
                                 if (Out == null)
@@ -468,7 +449,7 @@ public class BNS : IamCSProcess
                                                                   + " not logged on");
 
                                     // Create connection to the receiver
-                                    Out = NetChannels.one2net(message.serviceLocation,
+                                    Out = NetChannel.one2net(message.serviceLocation,
                                             new BNSNetworkMessageFilter.FilterTX());
 
                                     // Create the reply message
@@ -485,8 +466,7 @@ public class BNS : IamCSProcess
                                 else
                                 {
                                     // Node is logged on. Now check if the name is already registered
-                                    NetBarrierLocation loc = (NetBarrierLocation)this.registeredBarriers
-                                            .get(message.name);
+                                    NetBarrierLocation loc = (NetBarrierLocation)this.registeredBarriers[message.name];
 
                                     // If the location is null, then the name has not yet been registered
                                     if (loc == null)
@@ -498,7 +478,7 @@ public class BNS : IamCSProcess
                                                                       + message.serviceLocation.getNodeID().toString());
 
                                         // Check if any other resolvers are waiting for the channel
-                                        ArrayList pending = (ArrayList)this.waitingResolves.get(message.name);
+                                        ArrayList pending = (ArrayList)this.waitingResolves[message.name];
 
                                         // If the ArrayList is null, no one else is waiting
                                         if (pending == null)
@@ -506,11 +486,11 @@ public class BNS : IamCSProcess
                                             // No one else is waiting. Create a new list and add it to the waiting
                                             // resolves
                                             pending = new ArrayList();
-                                            this.waitingResolves.put(message.name, pending);
+                                            this.waitingResolves.Add(message.name, pending);
                                         }
 
                                         // Add this resolve message to the list of waiting resolvers
-                                        pending.add(message);
+                                        pending.Add(message);
                                     }
                                     else
                                     {
@@ -520,7 +500,7 @@ public class BNS : IamCSProcess
                                                                       + message.serviceLocation.getNodeID());
 
                                         // Create channel to the resolver
-                                        NetChannelOutput toPending = NetChannels.one2net(message.serviceLocation,
+                                        NetChannelOutput toPending = NetChannel.one2net(message.serviceLocation,
                                                 new BNSNetworkMessageFilter.FilterTX());
 
                                         // Create the reply message

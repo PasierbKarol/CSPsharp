@@ -166,7 +166,7 @@ public sealed class TCPIPNodeAddress : NodeAddress
      * @//throws JCSPNetworkException
      *             Thrown if something goes wrong during the creation of the LinkServer
      */
-    protected override LinkServer createLinkServer()
+    internal override LinkServer createLinkServer()
         //throws JCSPNetworkException
     {
         return new TCPIPLinkServer(this);

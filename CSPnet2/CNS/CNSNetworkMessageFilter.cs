@@ -28,9 +28,7 @@ namespace CSPnet2.CNS
 //import java.io.DataInputStream;
 //import java.io.DataOutputStream;
 //import java.io.IOException;
-//
-//import jcsp.net2.NetChannelLocation;
-//import jcsp.net2.NetworkMessageFilter;
+
 
 /**
  * This filter is used by the CNS and CNSService to transmit messages between one another in a manner that is platform
@@ -55,20 +53,20 @@ sealed class CNSNetworkMessageFilter
         /**
          * The byte stream we will use to retrieve the byte message from
          */
-        private readonly ByteArrayOutputStream baos;
+        private readonly MemoryStream baos;
 
         /**
          * The data stream, used to write the parts of the CNSMessage to
          */
-        private readonly DataOutputStream dos;
+        private readonly BinaryWriter dos;
 
             /**
              * Creates a new CNS encoding filter
              */
         internal FilterTX()
         {
-            this.baos = new ByteArrayOutputStream(8192);
-            this.dos = new DataOutputStream(this.baos);
+            this.baos = new MemoryStream(8192);
+            this.dos = new BinaryWriter(this.baos);
         }
 
         /**
@@ -89,23 +87,24 @@ sealed class CNSNetworkMessageFilter
             CNSMessage msg = (CNSMessage)obj;
 
             // Now reset the byte stream
-            this.baos.reset();
+            //this.baos.reset();
+            this.baos.Dispose();
             // Write the parts of the CNSMessage to the stream
-            this.dos.writeByte(msg.type);
-            this.dos.writeBoolean(msg.success);
+            this.dos.Write(msg.type);
+            this.dos.Write(msg.success);
             if (msg.location1 != null)
-                this.dos.writeUTF(msg.location1.toString());
+                this.dos.Write(msg.location1.toString());
             else
-                this.dos.writeUTF("null");
+                this.dos.Write("null");
             if (msg.location2 != null)
-                this.dos.writeUTF(msg.location2.toString());
+                this.dos.Write(msg.location2.toString());
             else
-                this.dos.writeUTF("null");
-            this.dos.writeUTF(msg.name);
+                this.dos.Write("null");
+            this.dos.Write(msg.name);
             // Flush the stream
-            this.dos.flush();
+            this.dos.Flush();
             // Get the bytes
-            return this.baos.toByteArray();
+            return this.baos.ToArray();
         }
 
     }
@@ -120,12 +119,12 @@ sealed class CNSNetworkMessageFilter
         /**
          * The input end to read the message back from
          */
-        private ByteArrayInputStream byteIn;
+        private MemoryStream byteIn;
 
         /**
          * The data input stream used to read in the parts of the message
          */
-        private DataInputStream dis;
+        private BinaryReader dis;
 
         /**
          * Creates a new decoding CNSMessage filter
@@ -147,16 +146,16 @@ sealed class CNSNetworkMessageFilter
         public Object filterRX(byte[] bytes)
             ////throws IOException
         {
-            this.byteIn = new ByteArrayInputStream(bytes);
-            this.dis = new DataInputStream(byteIn);
+            this.byteIn = new MemoryStream(bytes);
+            this.dis = new BinaryReader(byteIn);
 
             // Recreate the message
             CNSMessage msg = new CNSMessage();
-            msg.type = this.dis.readByte();
-            msg.success = this.dis.readBoolean();
-            msg.location1 = NetChannelLocation.parse(this.dis.readUTF());
-            msg.location2 = NetChannelLocation.parse(this.dis.readUTF());
-            msg.name = this.dis.readUTF();
+            msg.type = this.dis.ReadByte();
+            msg.success = this.dis.ReadBoolean();
+            msg.location1 = NetChannelLocation.parse(this.dis.ReadString());
+            msg.location2 = NetChannelLocation.parse(this.dis.ReadString());
+            msg.name = this.dis.ReadString();
             return msg;
         }
 

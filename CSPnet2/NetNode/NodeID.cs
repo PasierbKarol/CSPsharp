@@ -18,7 +18,10 @@
 //////////////////////////////////////////////////////////////////////
 
 using System;
+using System.Diagnostics;
 using CSPutil;
+using System.Runtime.InteropServices;
+
 
 namespace CSPnet2.NetNode
 {
@@ -39,7 +42,7 @@ namespace CSPnet2.NetNode
      */
 
     [Serializable]
-    public sealed class NodeID : Comparable
+    public sealed class NodeID : IComparable<NodeID>
     {
     /**
      * The SUID of this class
@@ -82,7 +85,9 @@ namespace CSPnet2.NetNode
     internal NodeID(String nodeName, NodeAddress nodeAddress)
     {
         this.time = CSPTimeMillis.CurrentTimeMillis();
-        this.mem = System.Runtime.getRuntime().freeMemory();
+        //this.mem = System.Runtime.GetRuntime().freeMemory();
+        //this.mem = GC.GetTotalMemory(true);
+        this.mem = Process.GetCurrentProcess().PrivateMemorySize64;
         //this.hashCode = new Object().hashCode();
         this.hashCode = new Object().GetHashCode();
         this.name = nodeName;
@@ -118,43 +123,10 @@ namespace CSPnet2.NetNode
      * @param arg0
      * @return -1, 0 or 1 if less than, equal, or greater than the other NodeID
      */
-    public int compareTo(/*final*/ Object arg0)
-    {
-        // Check if other object is a NodeID. If not throw exception
-        if (!(arg0 is NodeID))
-        throw new ArgumentException("Attempting to compare NodeID to an object that is not a NodeID");
-
-        NodeID other = (NodeID) arg0;
-
-        // Compare to other NodeID values
-        if (other.time < this.time)
-            return 1;
-        else if (other.time > this.time)
-            return -1;
-        else
-        {
-            // Time part is equal
-            if (other.mem < this.mem)
-                return 1;
-            else if (other.mem > this.mem)
-                return -1;
-            else
-            {
-                // Memory part is equal
-                if (other.hashCode < this.hashCode)
-                    return 1;
-                else if (other.hashCode > this.hashCode)
-                    return -1;
-                else
-                {
-                    // Hashcode part is equal
-                    if (!(other.name.Equals(this.name)))
-                        return this.name.CompareTo(other.name);
-                    return this.address.compareTo(other.address);
-                }
-            }
-        }
-    }
+    //public int compareTo(/*final*/ Object arg0)
+    //{
+        
+    //}
 
     /**
      * Checks if the given object is equal to this NodeID
@@ -162,9 +134,9 @@ namespace CSPnet2.NetNode
      * @param arg0
      * @return True if equal, false otherwise
      */
-    public Boolean equals(Object arg0)
+    public Boolean equals(NodeID arg0)
     {
-        return this.compareTo(arg0) == 0;
+        return this.CompareTo(arg0) == 0;
     }
 
     /**
@@ -230,5 +202,42 @@ namespace CSPnet2.NetNode
         // Return the NodeID
         return new NodeID(time, mem, hashCode, name, addr);
     }
+
+        public int CompareTo(NodeID that)
+        {
+            // Check if other object is a NodeID. If not throw exception
+            //if (!(arg0 is NodeID))
+            //    throw new ArgumentException("Attempting to compare NodeID to an object that is not a NodeID");
+
+            // Compare to other NodeID values
+            if (that.time < this.time)
+                return 1;
+            else if (that.time > this.time)
+                return -1;
+            else
+            {
+                // Time part is equal
+                if (that.mem < this.mem)
+                    return 1;
+                else if (that.mem > this.mem)
+                    return -1;
+                else
+                {
+                    // Memory part is equal
+                    if (that.hashCode < this.hashCode)
+                        return 1;
+                    else if (that.hashCode > this.hashCode)
+                        return -1;
+                    else
+                    {
+                        // Hashcode part is equal
+                        if (!(that.name.Equals(this.name)))
+                            return this.name.CompareTo(that.name);
+                        return this.address.CompareTo(that.address);
+                    }
+                }
+            }
+            return 0;
+        }
     }
 }

@@ -41,12 +41,12 @@ namespace CSPnet2.Net2Link
     public static /*final*/ void start(NodeAddress address)
         //throws ArgumentException , JCSPNetworkException
     {
-        NetNode.log.log(LinkServer.class, "Attempting to start Link Server on " + address);
+        Node.log.log(typeof(LinkServer), "Attempting to start Link Server on " + address);
         LinkServer linkServer = address.createLinkServer();
         ProcessManager linkServProc = new ProcessManager(linkServer);
         linkServProc.setPriority(Link.LINK_PRIORITY);
         linkServProc.start();
-        NetNode.log.log(LinkServer.class, "Link Server started on " + address);
+        Node.log.log(typeof(LinkServer), "Link Server started on " + address);
     }
 
     /**
@@ -65,6 +65,11 @@ namespace CSPnet2.Net2Link
     protected /*final*/ Boolean registerLink(Link link)
     {
         return LinkManager.getInstance().registerLink(link);
+    }
+
+    public void run()
+    {
+        throw new NotImplementedException();
     }
 }
 }

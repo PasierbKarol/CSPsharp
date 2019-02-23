@@ -18,6 +18,7 @@
 //////////////////////////////////////////////////////////////////////
 
 using System;
+using System.IO;
 using CSPlang;
 using CSPnet2.NetNode;
 
@@ -29,12 +30,8 @@ namespace CSPnet2.TCPIP
 //import java.net.InetAddress;
 //import java.net.ServerSocket;
 //import java.net.UnknownHostException;
-//
-//import jcsp.lang.ProcessManager;
-//import jcsp.net2.JCSPNetworkException;
-//import jcsp.net2.Node;
-//import jcsp.net2.NodeAddress;
-//import jcsp.net2.NodeFactory;
+
+
 
 /**
  * Used to initialise a Node. This is kept for backward compatibility. See Node for more information.
@@ -155,7 +152,7 @@ public sealed class TCPIPNodeFactory : NodeFactory
         }
         catch (IOException ioe)
         {
-            throw new JCSPNetworkException("Failed to open new Server Socket.\n" + ioe.getMessage());
+            throw new JCSPNetworkException("Failed to open new Server Socket.\n" + ioe.Message);
         }
     }
 }

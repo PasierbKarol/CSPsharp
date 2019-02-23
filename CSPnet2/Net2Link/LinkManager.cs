@@ -26,14 +26,6 @@ using CSPutil;
 namespace CSPnet2.Net2Link
 {
 
-    //    import java.util.ArrayList;
-    //import java.util.Hashtable;
-    //import java.util.Iterator;
-    //
-    //import jcsp.lang.AltingChannelInput;
-    //import jcsp.lang.Channel;
-    //import jcsp.lang.ChannelOutput;
-    //import jcsp.lang.One2OneChannel;
     //import jcsp.util.InfiniteBuffer;
 
     /**
@@ -90,21 +82,23 @@ namespace CSPnet2.Net2Link
      * @param link
      *            The Link that has been lost.
      */
-    /*synchronized*/ void lostLink(Link link)
+    /*synchronized*/ internal void lostLink(Link link)
     {
-        // First remove the Link from the links table, using the Link's NodeID
-        Link removed = (Link)links.Remove(link.remoteID);
+            // First remove the Link from the links table, using the Link's NodeID
+            NodeID removedNodeID = link.remoteID;
+        links.Remove(link.remoteID);
+        bool removed = links.Contains(link.remoteID);
 
         // Now check if the Link was indeed removed. Unlikely to happened, but the Link may have been previously removed
         // meaning we have achieved nothing
         if (removed != null)
         {
             // Log the Link Lost
-            Node.log.log(this.getClass(), "Link lost to: " + removed.remoteID);
+            Node.log.log(this.GetType(), "Link lost to: " + removedNodeID);
 
             // Now inform any process listening on a Link Lost channel
-            for (Iterator iter = eventChans.iterator(); iter.hasNext();)
-                ((ChannelOutput)iter.next()).write(removed.remoteID);
+            for (IEnumerator enumerator = eventChans.GetEnumerator(); enumerator.MoveNext();)
+                ((ChannelOutput)enumerator.Current).write(removedNodeID);
         }
     }
 
@@ -115,10 +109,10 @@ namespace CSPnet2.Net2Link
      *            The Link to register.
      * @return True if a Link to the Node does not yet exist, false otherwise.
      */
-    /*synchronized*/ Boolean registerLink(Link link)
+    /*synchronized*/ internal Boolean registerLink(Link link)
     {
         // Log the registration attempt
-        Node.log.log(this.getClass(), "Trying to register Link to: " + link.remoteID);
+        Node.log.log(this.GetType(), "Trying to register Link to: " + link.remoteID);
 
         // Retrieve the NodeID for the Link
         NodeID remoteID = link.remoteID;
@@ -127,7 +121,7 @@ namespace CSPnet2.Net2Link
         if (links.ContainsKey(remoteID))
         {
             // Connection to the Node already exists. Log.
-            Node.err.log(this.getClass(), "Failed to register Link to " + link.remoteID
+            Node.err.log(this.GetType(), "Failed to register Link to " + link.remoteID
                                           + ". Connection to Node already exists");
 
             // Return false.
@@ -135,7 +129,7 @@ namespace CSPnet2.Net2Link
         }
 
         // Link registration successful. Log.
-        Node.log.log(this.getClass(), "Link established to: " + link.remoteID);
+        Node.log.log(this.GetType(), "Link established to: " + link.remoteID);
 
         // Add the Link to the links table
         links.Add(link.remoteID, link);
@@ -161,7 +155,7 @@ namespace CSPnet2.Net2Link
      * 
      * @return A input end for receiving Link Lost Events.
      */
-    /*synchronized*/ AltingChannelInput getLinkLostEventChannel()
+    /*synchronized*/ internal AltingChannelInput getLinkLostEventChannel()
     {
         // Create a new infinitely buffered one to one channel
         One2OneChannel eventChan = Channel.one2one(new InfiniteBuffer());

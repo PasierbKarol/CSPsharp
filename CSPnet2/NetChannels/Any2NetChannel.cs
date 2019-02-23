@@ -50,8 +50,16 @@ namespace CSPnet2.NetChannels
          *             Thrown if a connection to the Node cannot be made.
          */
         internal static Any2NetChannel create(NetChannelLocation loc, int immunity, NetworkMessageFilter.FilterTx filter)
-            ////throws JCSPNetworkException { One2NetChannel channel = One2NetChannel. create(loc, immunity, filter);
         {
+            One2NetChannel channel = null;
+            try
+            {
+                channel = One2NetChannel.create(loc, immunity, filter);
+            }
+            catch (JCSPNetworkException e)
+            {
+                Console.WriteLine(e);
+            }
             return new Any2NetChannel(channel);
         }
 
@@ -145,7 +153,7 @@ namespace CSPnet2.NetChannels
  * @param encoder
  *            The new message filter to use
  */
-        public void setEncoder(FilterTx encoder)
+        public void setEncoder(NetworkMessageFilter.FilterTx encoder)
         {
             lock (this)
             {

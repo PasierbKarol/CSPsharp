@@ -39,51 +39,51 @@ namespace CSPnet2.BNS
         /**
          * A message sent from a BNSService to a BNS to log on
          */
-        static readonly byte LOGON_MESSAGE = 1;
+        internal /*static*/ const byte LOGON_MESSAGE = 1;
 
         /**
          * Reply from server after a log on
          */
-        static readonly byte LOGON_REPLY_MESSAGE = 2;
+        internal /*static*/ const byte LOGON_REPLY_MESSAGE = 2;
 
         /**
          * Register a name with the BNS
          */
-        static readonly byte REGISTER_REQUEST = 3;
+        internal /*static*/ const byte REGISTER_REQUEST = 3;
 
         /**
          * Resolve a name from the NS
          */
-        static readonly byte RESOLVE_REQUEST = 4;
+        internal /*static*/ const byte RESOLVE_REQUEST = 4;
 
         /**
          * *** Not currently used ***
          */
-        static readonly byte LEASE_REQUEST = 5;
+        internal /*static*/ const byte LEASE_REQUEST = 5;
 
         /**
          * *** Not currently used ***
          */
-        static readonly byte DEREGISTER_REQUEST = 6;
+        internal /*static*/ const byte DEREGISTER_REQUEST = 6;
 
         /**
          * Reply from a registration request
          */
-        static readonly byte REGISTER_REPLY = 7;
+        internal /*static*/ const byte REGISTER_REPLY = 7;
 
         /**
          * Reply from a resolve request
          */
-        static readonly byte RESOLVE_REPLY = 8;
+        internal /*static*/ const byte RESOLVE_REPLY = 8;
 
         /**
          * *** Not currently used ***
          */
-        static readonly byte LEASE_REPLY = 9;
+        internal /*static*/ const byte LEASE_REPLY = 9;
 
         /**
          * *** Not currently used ***
          */
-        static readonly byte DEREGISTER_REPLY = 10;
+        internal /*static*/ const byte DEREGISTER_REPLY = 10;
     }
 }

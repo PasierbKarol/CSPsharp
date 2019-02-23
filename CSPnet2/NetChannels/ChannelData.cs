@@ -30,7 +30,7 @@ namespace CSPnet2.NetChannels
  * @see jcsp.net2.NetChannelOutput
  * @author Kevin Chalmers
  */
-    sealed class ChannelData
+    public sealed class ChannelData
     {
         /**
          * The virtual channel number. A unique number on the Node for identifying a channel.

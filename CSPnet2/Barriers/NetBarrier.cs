@@ -31,13 +31,7 @@ using CSPutil;
 namespace CSPnet2.Barriers
 {
 //    import java.util.LinkedList;
-//import jcsp.lang.AltingChannelInput;
-//import jcsp.lang.Any2OneChannel;
-//import jcsp.lang.Barrier;
-//import jcsp.lang.Channel;
-//import jcsp.lang.ChannelOutput;
-//import jcsp.lang.ProcessInterruptedException;
-//import jcsp.util.InfiniteBuffer;
+
 
 /**
  * This class is a networked implementation of the standard JCSP Barrier.
@@ -155,7 +149,7 @@ public sealed class NetBarrier : CSPBarrier, Networked
     /**
      * A queue of waiting network ends waiting for a SYNC message
      */
-    private readonly LinkedList<> waitingEnds = new LinkedList();
+    private readonly LinkedList<NetworkMessage> waitingEnds = new LinkedList<NetworkMessage>();
 
     /**
      * The number of initial network enrolls that this barrier must wait for.
@@ -536,7 +530,7 @@ public sealed class NetBarrier : CSPBarrier, Networked
                         }
 
                         // Otherwise we can add the message to the waiting ends.
-                        this.waitingEnds.add(msg);
+                        this.waitingEnds.AddLast(msg);
 
                         break;
                 }
@@ -685,7 +679,7 @@ public sealed class NetBarrier : CSPBarrier, Networked
                         case NetworkProtocol.SYNC:
                             // A client end has synced with us. Decrement netCountdown and add the message to the queue
                             this.netCountDown--;
-                            this.waitingEnds.add(message);
+                            this.waitingEnds.AddLast(message);
 
                             break;
                     }
@@ -699,9 +693,9 @@ public sealed class NetBarrier : CSPBarrier, Networked
 
 
                 // Iterate through the list of waiting ends and send them all a RELEASE message
-                for (; !this.waitingEnds.isEmpty();)
+                for (; this.waitingEnds.Count > 0;)
                 {
-                    NetworkMessage waitingMessage = (NetworkMessage)this.waitingEnds.getFirst();
+                    NetworkMessage waitingMessage = (NetworkMessage)this.waitingEnds.First;
                     NetworkMessage reply = new NetworkMessage();
                     reply.type = NetworkProtocol.RELEASE;
                     reply.attr1 = waitingMessage.attr2;
@@ -820,15 +814,15 @@ public sealed class NetBarrier : CSPBarrier, Networked
                         if (message.type == NetworkProtocol.SYNC)
                         {
                             // Add the message to the queue of SYNCers
-                            this.waitingEnds.add(message);
+                            this.waitingEnds.AddLast(message);
                         }
                     }
 
                     // Now we must inform all SYNCing ends that we are broken. Iterate through list of waiting ends
                     // and send the REJECT_BARRIER message
-                    for (; !this.waitingEnds.isEmpty();)
+                    for (; this.waitingEnds.Count > 0;)
                     {
-                        NetworkMessage waitingMessage = (NetworkMessage)this.waitingEnds.getFirst();
+                        NetworkMessage waitingMessage = (NetworkMessage)this.waitingEnds.First;
                         NetworkMessage reply = new NetworkMessage();
                         reply.type = NetworkProtocol.REJECT_BARRIER;
                         reply.attr1 = waitingMessage.attr2;
@@ -935,14 +929,14 @@ public sealed class NetBarrier : CSPBarrier, Networked
                     if (message.type == NetworkProtocol.SYNC)
                     {
                         // Add the message to the queue of SYNCers
-                        this.waitingEnds.add(message);
+                        this.waitingEnds.AddLast(message);
                     }
                 }
 
                 // Now iterate through all the waiting SYNCs and send them a REJECT_BARRIER message
-                for (; !this.waitingEnds.isEmpty();)
+                for (; this.waitingEnds.Count > 0;)
                 {
-                    NetworkMessage waitingMessage = (NetworkMessage)this.waitingEnds.getFirst();
+                    NetworkMessage waitingMessage = (NetworkMessage)this.waitingEnds.First;
                     NetworkMessage reply = new NetworkMessage();
                     reply.type = NetworkProtocol.REJECT_BARRIER;
                     reply.attr1 = waitingMessage.attr2;

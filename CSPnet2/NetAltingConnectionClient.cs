@@ -31,14 +31,6 @@ using CSPutil;
 namespace CSPnet2
 {
 
-//    import java.io.IOException;
-//
-//import jcsp.lang.AltingChannelInput;
-//import jcsp.lang.AltingConnectionClient;
-//import jcsp.lang.Any2OneChannel;
-//import jcsp.lang.Channel;
-//import jcsp.lang.ChannelOutput;
-//import jcsp.util.InfiniteBuffer;
 
 public sealed class NetAltingConnectionClient : AltingConnectionClient, NetConnectionClient
 {

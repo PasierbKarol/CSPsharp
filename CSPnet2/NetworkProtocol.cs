@@ -40,122 +40,122 @@ namespace CSPnet2
         /**
          * A SEND message from an output end to an input end
          */
-        internal static readonly byte SEND = 1;
+        internal /*static*/ const byte SEND = 1;
 
         /**
          * An ACKnowledgment that releases an output end after a write
          */
-        internal static readonly byte ACK = 2;
+        internal /*static*/ const byte ACK = 2;
 
         /**
          * An ENROLLment from a client end of a NetBarrier to a server end
          */
-        internal static readonly byte ENROLL = 3;
+        internal /*static*/ const byte ENROLL = 3;
 
         /**
          * A RESIGNation of a client end of a NetBarrier from a server end
          */
-        internal static readonly byte RESIGN = 4;
+        internal /*static*/ const byte RESIGN = 4;
 
         /**
          * A SYNChronization message sent from a client end of a NetBarrier to a server end when the client's local
          * processes have all synchronised
          */
-        internal static readonly byte SYNC = 5;
+        internal /*static*/ const byte SYNC = 5;
 
         /**
          * RELEASEs a waiting client end of a NetBarrier when the server end has completely been synced with
          */
-        internal static readonly byte RELEASE = 6;
+        internal /*static*/ const byte RELEASE = 6;
 
         /**
          * Rejects a message sent from a NetBarrier.
          */
-        internal static readonly byte REJECT_BARRIER = 7;
+        internal /*static*/ const byte REJECT_BARRIER = 7;
 
         /**
          * Rejects a message sent from a NetChannelOutput
          */
-        internal static readonly byte REJECT_CHANNEL = 8;
+        internal /*static*/ const byte REJECT_CHANNEL = 8;
 
         /**
          * Signifies that a Link has been lost
          */
-        internal static readonly byte LINK_LOST = 9;
+        internal /*static*/ const byte LINK_LOST = 9;
 
         /**
          * Mobility message. Still to be defined
          */
-        internal static readonly byte MOVED = 10;
+        internal /*static*/ const byte MOVED = 10;
 
         /**
          * Mobility message. Still to be defined
          */
-        internal static readonly byte ARRIVED = 11;
+        internal /*static*/ const byte ARRIVED = 11;
 
         /**
          * A POISON message sent to poison a channel end
          */
-        internal static readonly byte POISON = 12;
+        internal /*static*/ const byte POISON = 12;
 
         /**
          * An Asynchronous send operation
          */
-        internal static readonly byte ASYNC_SEND = 13;
+        internal /*static*/ const byte ASYNC_SEND = 13;
 
         /**
          * The initial message sent from a client connection end to a server end
          */
-        internal static readonly byte OPEN = 14;
+        internal /*static*/ const byte OPEN = 14;
 
         /**
          * The subsequent communications from a client connection before closing
          */
-        internal static readonly byte REQUEST = 15;
+        internal /*static*/ const byte REQUEST = 15;
 
         /**
          * The reply from the server end of a connection
          */
-        internal static readonly byte REPLY = 16;
+        internal /*static*/ const byte REPLY = 16;
 
         /**
          * A reply from the server end of a connection which also closes the connection
          */
-        internal static readonly byte REPLY_AND_CLOSE = 17;
+        internal /*static*/ const byte REPLY_AND_CLOSE = 17;
 
         /**
          * An asynchronous open message
          */
-        internal static readonly byte ASYNC_OPEN = 18;
+        internal /*static*/ const byte ASYNC_OPEN = 18;
 
         /**
          * An asynchronous request to a connection server
          */
-        internal static readonly byte ASYNC_REQUEST = 19;
+        internal /*static*/ const byte ASYNC_REQUEST = 19;
 
         /**
          * An asynchronous reply from the server
          */
-        internal static readonly byte ASYNC_REPLY = 20;
+        internal /*static*/ const byte ASYNC_REPLY = 20;
 
         /**
          * An asynchronous reply and close
          */
-        internal static readonly byte ASYNC_REPLY_AND_CLOSE = 21;
+        internal /*static*/ const byte ASYNC_REPLY_AND_CLOSE = 21;
 
         /**
          * An acknowledgement of the initial OPEN or REQUEST by a client connection end
          */
-        internal static readonly byte REQUEST_ACK = 22;
+        internal /*static*/ const byte REQUEST_ACK = 22;
 
         /**
          * An acknowledgement of a connection server REPLY
          */
-        internal static readonly byte REPLY_ACK = 23;
+        internal /*static*/ const byte REPLY_ACK = 23;
 
         /**
          * Rejects a message from a networked connection
          */
-        internal static readonly byte REJECT_CONNECTION = 24;
+        internal /*static*/ const byte REJECT_CONNECTION = 24;
     }
 }

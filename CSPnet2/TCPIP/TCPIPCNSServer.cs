@@ -26,8 +26,7 @@ namespace CSPnet2.TCPIP
 
 //    import java.net.Inet4Address;
 //import java.net.InetAddress;
-//import jcsp.net2.bns.BNS;
-//import jcsp.net2.cns.CNS;
+
 
 /**
  * This is the original (now deprecated) server program for use by
@@ -45,7 +44,9 @@ public sealed class TCPIPCNSServer
         //throws Exception
     {
         // Get the local IP addresses
+        //InetAddress[] local = InetAddress.getAllByName(InetAddress.getLocalHost().getHostName());
         InetAddress[] local = InetAddress.getAllByName(InetAddress.getLocalHost().getHostName());
+        //InetAddress toUse = InetAddress.getLocalHost();
         InetAddress toUse = InetAddress.getLocalHost();
 
         // We basically have four types of addresses to worry about. Loopback (127), link local (169),
@@ -99,7 +100,7 @@ public sealed class TCPIPCNSServer
         // Initialise the Node
         Node.getInstance().init(localAddr);
         // Start CNS and BNS
-        IamCSProcess[] processes = { CNS.getInstance(), BNS.getInstance() };
+        IamCSProcess[] processes = { CNS.CNS.getInstance(), BNS.BNS.getInstance() };
         new CSPParallel(processes).run();
     }
 }

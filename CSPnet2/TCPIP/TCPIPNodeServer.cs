@@ -18,6 +18,7 @@
 //////////////////////////////////////////////////////////////////////
 
 using System;
+using System.IO;
 using CSPnet2.BNS;
 using CSPnet2.CNS;
 using CSPnet2.NetNode;
@@ -28,12 +29,8 @@ namespace CSPnet2.TCPIP
 
 //    import java.net.Inet4Address;
 //import java.net.InetAddress;
-//
-//import jcsp.lang.CSProcess;
-//import jcsp.lang.Parallel;
-//import jcsp.net2.Node;
-//import jcsp.net2.bns.BNS;
-//import jcsp.net2.cns.CNS;
+
+
 
 /**
  * The new name for the TCPIPCNSServer. Use this class instead.
@@ -49,8 +46,9 @@ public sealed class TCPIPNodeServer
     public static void main(String[] args)
         //throws Exception
     {
-        Node.getInstance().setLog(System.out);
-        Node.getInstance().setErr(System.err);
+        Node.getInstance().setLog(new StreamWriter(Console.OpenStandardOutput()));
+        Node.getInstance().setErr(new StreamWriter(Console.OpenStandardError()));
+
         // Get the local IP addresses
         InetAddress[] local = InetAddress.getAllByName(InetAddress.getLocalHost().getHostName());
         InetAddress toUse = InetAddress.getLocalHost();
@@ -106,7 +104,7 @@ public sealed class TCPIPNodeServer
         // Initialise the Node
         Node.getInstance().init(localAddr);
         // Start CNS and BNS
-        IamCSProcess[] processes = { CNS.getInstance(), BNS.getInstance() };
+        IamCSProcess[] processes = { CNS.CNS.getInstance(), BNS.BNS.getInstance() };
         new CSPParallel(processes).run();
     }
 }

@@ -40,51 +40,51 @@ namespace CSPnet2.CNS
     /**
      * A message sent from a CNSService to a CNS allowing logging on
      */
-    internal static readonly byte LOGON_MESSAGE = 1;
+    internal /*static*/ const byte LOGON_MESSAGE = 1;
 
     /**
      * The reply from a Logon
      */
-    internal static readonly byte LOGON_REPLY_MESSAGE = 2;
+    internal /*static*/ const byte LOGON_REPLY_MESSAGE = 2;
 
     /**
      * Register a name with the CNS
      */
-    internal static readonly byte REGISTER_REQUEST = 3;
+    internal /*static*/ const byte REGISTER_REQUEST = 3;
 
     /**
      * Resolve a location from the CNS
      */
-    internal static readonly byte RESOLVE_REQUEST = 4;
+    internal /*static*/ const byte RESOLVE_REQUEST = 4;
 
     /**
      * *** Not currently used ***
      */
-    internal static readonly byte LEASE_REQUEST = 5;
+    internal /*static*/ const byte LEASE_REQUEST = 5;
 
     /**
      * *** Not currently used ***
      */
-    internal static readonly byte DEREGISTER_REQUEST = 6;
+    internal /*static*/ const byte DEREGISTER_REQUEST = 6;
 
     /**
      * A reply from a registration request
      */
-    internal static readonly byte REGISTER_REPLY = 7;
+    internal /*static*/ const byte REGISTER_REPLY = 7;
 
     /**
      * A reply from a resolve request
      */
-    internal static readonly byte RESOLVE_REPLY = 8;
+    internal /*static*/ const byte RESOLVE_REPLY = 8;
 
     /**
      * *** Not currently used ***
      */
-    internal static readonly byte LEASE_REPLY = 9;
+    internal /*static*/ const byte LEASE_REPLY = 9;
 
     /**
      * *** Not currently used ***
      */
-    internal static readonly byte DEREGISTER_REPLY = 10;
+    internal /*static*/ const byte DEREGISTER_REPLY = 10;
 }
 }

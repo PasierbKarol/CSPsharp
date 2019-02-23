@@ -24,16 +24,6 @@ using CSPnet2.NetNode;
 
 namespace CSPnet2.Mobile
 {
-//    import jcsp.lang.Alternative;
-//import jcsp.lang.CSProcess;
-//import jcsp.lang.Guard;
-//import jcsp.net2.JCSPNetworkException;
-//import jcsp.net2.NetAltingChannelInput;
-//import jcsp.net2.NetChannel;
-//import jcsp.net2.NetChannelLocation;
-//import jcsp.net2.NetChannelOutput;
-//import jcsp.net2.NetworkMessageFilter;
-//import jcsp.net2.Node;
 
     sealed class MessageBox : IamCSProcess
     {

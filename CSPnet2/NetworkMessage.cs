@@ -18,6 +18,7 @@
 //////////////////////////////////////////////////////////////////////
 
 using System;
+using System.Collections.Generic;
 using CSPlang;
 
 namespace CSPnet2
@@ -54,5 +55,10 @@ namespace CSPnet2
          * ChannelOutput to the Link so that acknowledgements can be sent.
          */
         internal ChannelOutput toLink = null;
+
+        public static explicit operator NetworkMessage(LinkedListNode<NetworkMessage> v)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

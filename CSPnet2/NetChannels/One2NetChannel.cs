@@ -27,14 +27,7 @@ using CSPutil;
 namespace CSPnet2.NetChannels
 {
 //    import java.io.IOException;
-//
-//import jcsp.lang.AltingChannelInput;
-//import jcsp.lang.Channel;
-//import jcsp.lang.ChannelOutput;
-//import jcsp.lang.One2OneChannel;
-//import jcsp.lang.PoisonException;
-//import jcsp.net2.NetworkMessageFilter.FilterTx;
-//import jcsp.util.InfiniteBuffer;
+
 
 /**
  * An outputting end of a networked channel (TX). This is a concrete implementation created internally by JCSP. For

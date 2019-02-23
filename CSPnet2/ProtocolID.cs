@@ -45,6 +45,6 @@ namespace CSPnet2
 
         /// <summary>what this does</summary>
         /// <exception cref="ArgumentException">some scenario</exception>
-        protected abstract NodeAddress parse(String addressString);
+        internal abstract NodeAddress parse(String addressString);
     }
 }

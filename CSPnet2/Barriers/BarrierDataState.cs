@@ -39,31 +39,31 @@ namespace CSPnet2.Barriers
         /**
          * Barrier is inactive. It has not been initialised yet.
          */
-        internal static readonly byte INACTIVE = 0;
+        internal /*static*/ const byte INACTIVE = 0;
 
         /**
          * Barrier is in OK state, and is a server end. Has been initialised.
          */
-        internal static readonly byte OK_SERVER = 1;
+        internal /*static*/ const byte OK_SERVER = 1;
 
         /**
          * Barrier is in OK state, and is a client end. Has been initialised
          */
-        internal static readonly byte OK_CLIENT = 2;
+        internal /*static*/ const byte OK_CLIENT = 2;
 
         /**
          * Barrier is broken.
          */
-        internal static readonly byte BROKEN = 3;
+        internal /*static*/ const byte BROKEN = 3;
 
         /**
          * Barrier has been destroyed
          */
-        internal static readonly byte DESTROYED = 4;
+        internal /*static*/ const byte DESTROYED = 4;
 
         /**
          * Barrier has resigned from the server front end.
          */
-        internal static readonly byte RESIGNED = 5;
+        internal /*static*/ const byte RESIGNED = 5;
     }
 }

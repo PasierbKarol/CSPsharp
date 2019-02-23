@@ -18,6 +18,7 @@
 //////////////////////////////////////////////////////////////////////
 
 using System;
+using System.IO;
 using CSPlang;
 using CSPnet2.Net2Link;
 using CSPnet2.CNS;
@@ -28,11 +29,8 @@ namespace CSPnet2.NetNode
 
 //    import java.io.OutputStream;
 //import java.io.PrintWriter;
-//import java.util.Date;
-//
-//import jcsp.lang.AltingChannelInput;
-//import jcsp.net2.bns.BNS;
-//import jcsp.net2.cns.CNS;
+
+
 
 /**
  * @author Kevin Chalmers
@@ -149,8 +147,9 @@ public sealed class Node
         this.initialized = true;
         this.nk = new NodeKey();
         Link toServer = LinkFactory.getLink(factory.cnsAddress);
-        CNS.initialise(toServer.remoteID);
-        BNS.initialise(toServer.remoteID);
+        
+        CNS.CNS.initialise(toServer.remoteID);
+        BNS.BNS.initialise(toServer.remoteID);
         return this.nk;
     }
 
@@ -165,7 +164,7 @@ public sealed class Node
     /**
      * @param stream
      */
-    public void setLog(OutputStream stream)
+    public void setLog(StreamWriter stream)
     {
         log = new Logger(stream);
     }
@@ -173,7 +172,7 @@ public sealed class Node
     /**
      * @param stream
      */
-    public void setErr(OutputStream stream)
+    public void setErr(StreamWriter stream)
     {
         err = new Logger(stream);
     }

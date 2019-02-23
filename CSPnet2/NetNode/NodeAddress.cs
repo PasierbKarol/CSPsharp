@@ -36,7 +36,7 @@ namespace CSPnet2.NetNode
  */
 
 [Serializable]
-public abstract class NodeAddress : Comparable
+public abstract class NodeAddress : IComparable<NodeAddress>
 {
     /**
      * String representing the protocol in used
@@ -108,22 +108,24 @@ public abstract class NodeAddress : Comparable
         return (this.protocol.Equals(other.protocol) && this.address.Equals(other.address));
     }
 
-    /**
-     * Compares this NodeAddress to another
-     * 
-     * @param arg0
-     *            The NodeAddress to compare to
-     * @return 1 if object is greater than this one, 0 if they are equal, -1 otherwise
-     */
-    public int compareTo(/*final*/ Object arg0)
-    {
-        if (!(arg0 is NodeAddress))
-            return -1;
-        NodeAddress other = (NodeAddress)arg0;
-        if (!this.protocol.Equals(other.protocol))
-            return this.protocol.CompareTo(other.protocol);
-        return this.address.CompareTo(other.address);
-    }
+        /**
+         * Compares this NodeAddress to another
+         * 
+         * @param arg0
+         *            The NodeAddress to compare to
+         * @return 1 if object is greater than this one, 0 if they are equal, -1 otherwise
+         */
+        
+    
+    /*public int compareTo(/*final#1# Object arg0)
+        {
+            if (!(arg0 is NodeAddress))
+                return -1;
+            NodeAddress other = (NodeAddress)arg0;
+            if (!this.protocol.Equals(other.protocol))
+                return this.protocol.CompareTo(other.protocol);
+            return this.address.CompareTo(other.address);
+        }*/
 
         /**
          * Creates a Link connected to this address
@@ -146,7 +148,7 @@ public abstract class NodeAddress : Comparable
 
     /// <summary>what this does</summary>
     /// <exception cref="JCSPNetworkException">some scenario</exception>
-    protected abstract LinkServer createLinkServer();
+    internal abstract LinkServer createLinkServer();
 
     /**
      * Retrieves the correct protocol handler for the implemented address type. This is used during Node initialisation
@@ -170,7 +172,7 @@ public abstract class NodeAddress : Comparable
 //        //throws ArgumentException 
     {
         int index = str.IndexOf("\\\\");
-        ProtocolID protocol = (ProtocolID)NodeAddress.installedProtocols.get(str.Substring(0, index));
+        ProtocolID protocol = (ProtocolID)NodeAddress.installedProtocols[str.Substring(0, index)];
         if (protocol != null)
         {
             return protocol.parse(str.Substring(index+4));
@@ -189,8 +191,18 @@ public abstract class NodeAddress : Comparable
     public /*synchronized*/ static void installProtocol(String name, ProtocolID protocol)
     {
         if (!NodeAddress.installedProtocols.ContainsKey(name))
-            NodeAddress.installedProtocols.put(name, protocol);
+            NodeAddress.installedProtocols.Add(name, protocol);
         // If the protocol is already installed, we do nothing.
     }
+
+    public int CompareTo(NodeAddress other)
+    {
+            //if (!(arg0 is NodeAddress))
+            //    return -1;
+
+        if (!this.protocol.Equals(other.protocol))
+            return this.protocol.CompareTo(other.protocol);
+        return this.address.CompareTo(other.address);
+        }
 }
 }

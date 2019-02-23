@@ -25,15 +25,6 @@ using CSPnet2.NetNode;
 namespace CSPnet2.BNS
 {
 
-//    import jcsp.net2.JCSPNetworkException;
-//import jcsp.net2.NetBarrier;
-//import jcsp.net2.NetBarrierLocation;
-//import jcsp.net2.NetChannel;
-//import jcsp.net2.NetChannelInput;
-//import jcsp.net2.NetChannelLocation;
-//import jcsp.net2.NetChannelOutput;
-//import jcsp.net2.Node;
-//import jcsp.net2.NodeID;
 
 /**
  * This is the service object used to register and resolve barrier names with a Barrier Name Server. This provides a
