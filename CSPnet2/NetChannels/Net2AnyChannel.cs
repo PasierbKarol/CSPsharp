@@ -22,8 +22,6 @@ using System;
 namespace CSPnet2.NetChannels
 {
 
-    //import jcsp.net2.NetworkMessageFilter.FilterRx;
-
 /**
  * This class is a concrete implementation of a NetSharedChannelInput, and acts as a wrapper to a Net2OneChannel,
  * allowing safe shared access. This class is internal to the JCSP architecture. To create an instance of this class,

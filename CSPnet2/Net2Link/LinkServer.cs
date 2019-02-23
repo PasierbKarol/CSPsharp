@@ -24,8 +24,6 @@ using CSPnet2.NetNode;
 namespace CSPnet2.Net2Link
 {
 
-    //import jcsp.lang.ProcessManager;
-
     /**
      * Abstract class defining the LinkServer.
      * 

@@ -26,8 +26,6 @@ using CSPutil;
 
 namespace CSPnet2.NetChannels
 {
-//    import java.io.IOException;
-
 
 /**
  * An outputting end of a networked channel (TX). This is a concrete implementation created internally by JCSP. For

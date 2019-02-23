@@ -24,14 +24,6 @@ using CSPnet2.NetNode;
 namespace CSPnet2.CNS
 {
 
-//    import jcsp.net2.JCSPNetworkException;
-//import jcsp.net2.NetChannel;
-//import jcsp.net2.NetChannelInput;
-//import jcsp.net2.NetChannelLocation;
-//import jcsp.net2.NetChannelOutput;
-//import jcsp.net2.Node;
-//import jcsp.net2.NodeID;
-
 /**
  * This is the service object used to register and resolve channel names with a Channel Name Server. This provides a
  * client front end.

@@ -23,12 +23,6 @@ using CSPnet2.NetChannels;
 
 namespace CSPnet2.CNS
 {
-//    import java.io.ByteArrayInputStream;
-//import java.io.ByteArrayOutputStream;
-//import java.io.DataInputStream;
-//import java.io.DataOutputStream;
-//import java.io.IOException;
-
 
 /**
  * This filter is used by the CNS and CNSService to transmit messages between one another in a manner that is platform

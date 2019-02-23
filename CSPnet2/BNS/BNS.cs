@@ -29,11 +29,6 @@ using CSPnet2.NetNode;
 namespace CSPnet2.BNS
 {
 
-//    import java.util.ArrayList;
-//import java.util.HashMap;
-//import java.util.Iterator;
-
-
 /**
  * This is the main process for the Barrier Name Server. For a more in depth discussion of name servers, see CNS.
  * 

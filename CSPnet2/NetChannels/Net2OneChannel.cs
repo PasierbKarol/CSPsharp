@@ -27,9 +27,6 @@ using CSPnet2.NetNode;
 namespace CSPnet2.NetChannels
 {
 
-//    import java.io.IOException;
-
-
 /**
  * A concrete implementation of a NetAltingChannelInput. This is a hidden class created by the architecture. To create
  * an instance of this object, use the NetChannel factory, or the CNS.

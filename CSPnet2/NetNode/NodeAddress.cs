@@ -24,7 +24,6 @@ using CSPnet2.Net2Link;
 
 namespace CSPnet2.NetNode
 {
-   // import java.util.Hashtable;
 
 /**
  * This abstract class defines encapsulates the address of a Node within a JCSP networked system. Specific protocols

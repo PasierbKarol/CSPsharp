@@ -25,8 +25,6 @@ using CSPnet2.NetNode;
 namespace CSPnet2.Net2Link
 {
 
-    //import jcsp.lang.ProcessManager;
-
     /**
      * This class is used to create a new Link from a given NodeID or NodeAddress.
      * <p>

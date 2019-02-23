@@ -27,11 +27,6 @@ using CSPnet2.BNS;
 namespace CSPnet2.NetNode
 {
 
-//    import java.io.OutputStream;
-//import java.io.PrintWriter;
-
-
-
 /**
  * @author Kevin Chalmers
  */

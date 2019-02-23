@@ -25,12 +25,6 @@ using CSPnet2.NetChannels;
 namespace CSPnet2.BNS
 {
 
-//    import java.io.ByteArrayInputStream;
-//import java.io.ByteArrayOutputStream;
-//import java.io.DataInputStream;
-//import java.io.DataOutputStream;
-//import java.io.IOException;
-
 /**
  * This filter is used by the BNS and BNSService to transmit messages between one another in a manner that is platform
  * independent. This is an internal class to JCSP and is created automatically by the BNS and BNSService. For more
