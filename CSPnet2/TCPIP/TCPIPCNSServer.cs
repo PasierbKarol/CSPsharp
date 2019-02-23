@@ -18,16 +18,14 @@
 //////////////////////////////////////////////////////////////////////
 
 using System;
+using CSPlang;
+using CSPnet2.NetNode;
 
 namespace CSPnet2.TCPIP
 {
 
 //    import java.net.Inet4Address;
 //import java.net.InetAddress;
-//
-//import jcsp.lang.CSProcess;
-//import jcsp.lang.Parallel;
-//import jcsp.net2.Node;
 //import jcsp.net2.bns.BNS;
 //import jcsp.net2.cns.CNS;
 
@@ -56,10 +54,10 @@ public sealed class TCPIPCNSServer
         int current = 0;
 
         // Loop until we have checked all the addresses
-        for (int i = 0; i < local.length; i++)
+        for (int i = 0; i < local.Length; i++)
         {
             // Ensure we have an IPv4 address
-            if (local[i] instanceof Inet4Address)
+            if (local[i] is Inet4Address)
             {
                 // Get the first byte of the address
                 byte first = local[i].getAddress()[0];
@@ -99,10 +97,10 @@ public sealed class TCPIPCNSServer
         // Create a local address object
         TCPIPNodeAddress localAddr = new TCPIPNodeAddress(toUse.getHostAddress(), 7890);
         // Initialise the Node
-        NetNode.getInstance().init(localAddr);
+        Node.getInstance().init(localAddr);
         // Start CNS and BNS
-        CSProcess[] processes = { CNS.getInstance(), BNS.getInstance() };
-        new Parallel(processes).run();
+        IamCSProcess[] processes = { CNS.getInstance(), BNS.getInstance() };
+        new CSPParallel(processes).run();
     }
 }
 }

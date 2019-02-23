@@ -19,9 +19,8 @@
 
 using System;
 using CSPlang;
-using CSPnet2.NetChannel;
 
-namespace CSPnet2.NetChannel
+namespace CSPnet2.NetChannels
 {
 /**
  * A class that is used to keep track of the state of a network channel. For a description of networked channels, see

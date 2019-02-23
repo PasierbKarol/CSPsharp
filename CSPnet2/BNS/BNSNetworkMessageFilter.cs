@@ -20,7 +20,7 @@
 using System;
 using System.IO;
 using CSPnet2.Barriers;
-using CSPnet2.NetChannel;
+using CSPnet2.NetChannels;
 
 namespace CSPnet2.BNS
 {
@@ -30,10 +30,6 @@ namespace CSPnet2.BNS
 //import java.io.DataInputStream;
 //import java.io.DataOutputStream;
 //import java.io.IOException;
-//
-//import jcsp.net2.NetBarrierLocation;
-//import jcsp.net2.NetChannelLocation;
-//import jcsp.net2.NetworkMessageFilter;
 
 /**
  * This filter is used by the BNS and BNSService to transmit messages between one another in a manner that is platform
@@ -52,7 +48,7 @@ sealed class BNSNetworkMessageFilter
      * 
      * @author Kevin Chalmers
      */
-    static /*final*/ class FilterTX : NetworkMessageFilter.FilterTx
+    /*static*/ sealed class FilterTX : NetworkMessageFilter.FilterTx;
     {
 
         /**
@@ -119,7 +115,7 @@ sealed class BNSNetworkMessageFilter
      * 
      * @author Kevin Chalmers
      */
-    static /*final*/ class FilterRX : NetworkMessageFilter.FilterRx
+    /*static*/ sealed class FilterRX : NetworkMessageFilter.FilterRx
     {
         /**
          * The input end of the pipe to read the message back

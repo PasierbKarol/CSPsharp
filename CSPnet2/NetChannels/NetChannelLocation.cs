@@ -20,7 +20,7 @@
 using System;
 using CSPnet2.NetNode;
 
-namespace CSPnet2.NetChannel
+namespace CSPnet2.NetChannels
 {
     /**
      * This class is a data structure representing the location of a NetChannelInput in a network. The NetChannelLocation

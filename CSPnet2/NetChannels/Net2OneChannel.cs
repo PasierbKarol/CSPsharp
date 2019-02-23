@@ -23,7 +23,7 @@ using CSPlang.Any2;
 using CSPutil;
 using CSPnet2.NetNode;
 
-namespace CSPnet2.NetChannel
+namespace CSPnet2.NetChannels
 {
 
 //    import java.io.IOException;

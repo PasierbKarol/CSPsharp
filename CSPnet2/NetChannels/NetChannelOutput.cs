@@ -20,7 +20,7 @@
 using System;
 using CSPlang;
 
-namespace CSPnet2.NetChannel
+namespace CSPnet2.NetChannels
 {
     /**
      * An interface defining a ChannelOutput that is networked. For information on how to an object of this type, see

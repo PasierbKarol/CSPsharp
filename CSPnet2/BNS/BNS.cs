@@ -23,7 +23,7 @@ using CSPlang;
 using CSPnet2.Barriers;
 using CSPnet2.BNS;
 using CSPnet2.Net2Link;
-using CSPnet2.NetChannel;
+using CSPnet2.NetChannels;
 using CSPnet2.NetNode;
 
 namespace CSPnet2.BNS
@@ -177,7 +177,7 @@ public class BNS : IamCSProcess
     public void run()
     {
         // Create the channel to receive incoming messages on. The index is 2.
-        NetAltingChannelInput In = NetChannel.numberedNet2One(2, new BNSNetworkMessageFilter.FilterRX());
+        NetAltingChannelInput In = NetChannels.numberedNet2One(2, new BNSNetworkMessageFilter.FilterRX());
 
         // We now wish to alternate upon this channel and the link lost channel
         Alternative alt = new Alternative(new Guard[] { this.lostLink, In });
@@ -252,7 +252,7 @@ public class BNS : IamCSProcess
                                                                   + " already logged on.  Rejecting");
 
                                     // Create reply channel to the Node
-                                    NetChannelOutput toNewRegister = NetChannel.one2net(message.serviceLocation,
+                                    NetChannelOutput toNewRegister = NetChannels.one2net(message.serviceLocation,
                                             new BNSNetworkMessageFilter.FilterTX());
 
                                     // Create the reply message
@@ -273,7 +273,7 @@ public class BNS : IamCSProcess
                                                                   + " successfully logged on");
 
                                     // Create the reply channel
-                                    NetChannelOutput toNewRegister = NetChannel.one2net(message.serviceLocation,
+                                    NetChannelOutput toNewRegister = NetChannels.one2net(message.serviceLocation,
                                             new BNSNetworkMessageFilter.FilterTX());
 
                                     // Add the Node and reply channel to the logged clients map
@@ -317,7 +317,7 @@ public class BNS : IamCSProcess
                                                                   + " not logged on");
 
                                     // Create the channel to reply to
-                                    Out = NetChannel.one2net(message.serviceLocation,
+                                    Out = NetChannels.one2net(message.serviceLocation,
                                             new BNSNetworkMessageFilter.FilterTX());
 
                                     // Create the reply message
@@ -377,7 +377,7 @@ public class BNS : IamCSProcess
                                                                               + " completed");
 
                                                 // Create channel to the resolver
-                                                toPending = NetChannel.one2net(msg.serviceLocation,
+                                                toPending = NetChannels.one2net(msg.serviceLocation,
                                                         new BNSNetworkMessageFilter.FilterTX());
 
                                                 // Create the reply message
@@ -468,7 +468,7 @@ public class BNS : IamCSProcess
                                                                   + " not logged on");
 
                                     // Create connection to the receiver
-                                    Out = NetChannel.one2net(message.serviceLocation,
+                                    Out = NetChannels.one2net(message.serviceLocation,
                                             new BNSNetworkMessageFilter.FilterTX());
 
                                     // Create the reply message
@@ -520,7 +520,7 @@ public class BNS : IamCSProcess
                                                                       + message.serviceLocation.getNodeID());
 
                                         // Create channel to the resolver
-                                        NetChannelOutput toPending = NetChannel.one2net(message.serviceLocation,
+                                        NetChannelOutput toPending = NetChannels.one2net(message.serviceLocation,
                                                 new BNSNetworkMessageFilter.FilterTX());
 
                                         // Create the reply message

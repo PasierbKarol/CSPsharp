@@ -22,7 +22,7 @@ using System.Collections;
 using System.IO;
 using CSPlang;
 using CSPnet2.Mobile;
-using CSPnet2.NetChannel;
+using CSPnet2.NetChannels;
 using CSPnet2.NetNode;
 
 namespace CSPnet2.Mobile
@@ -44,7 +44,7 @@ sealed class ClassManager : IamCSProcess
 {
     internal static Hashtable classLoaders = new Hashtable();
 
-    static NetChannelInput In = NetChannel.numberedNet2One(10);
+    internal static NetChannelInput In = NetChannel.numberedNet2One(10);
 
     public void run()
     {
@@ -66,7 +66,7 @@ sealed class ClassManager : IamCSProcess
                             while (read < bytes.Length)
                                 read += inputStream.read(bytes, read, bytes.Length - read);
                             ClassData resp = new ClassData(req.className, bytes);
-                            NetChannelOutput Out = NetChannel.one2net(req.returnLocation);
+                            NetChannelOutput Out = NetChannels.one2net(req.returnLocation);
                             Out.asyncWrite(resp);
                             Out.destroy();
                             Out = null;
@@ -74,7 +74,7 @@ sealed class ClassManager : IamCSProcess
                         else
                         {
                             ClassData resp = new ClassData(req.className, null);
-                            NetChannelOutput Out = NetChannel.one2net(req.returnLocation);
+                            NetChannelOutput Out = NetChannels.one2net(req.returnLocation);
                             Out.asyncWrite(resp);
                             Out.destroy();
                             Out = null;
@@ -83,7 +83,7 @@ sealed class ClassManager : IamCSProcess
                     catch (IOException ioe)
                     {
                         ClassData resp = new ClassData(req.className, null);
-                        NetChannelOutput Out = NetChannel.one2net(req.returnLocation);
+                        NetChannelOutput Out = NetChannels.one2net(req.returnLocation);
                         Out.asyncWrite(resp);
                         Out.destroy();
                     }
@@ -94,7 +94,7 @@ sealed class ClassManager : IamCSProcess
                     if (loader == null)
                     {
                         ClassData resp = new ClassData(req.className, null);
-                        NetChannelOutput Out = NetChannel.one2net(req.returnLocation);
+                        NetChannelOutput Out = NetChannels.one2net(req.returnLocation);
                         Out.asyncWrite(resp);
                         Out.destroy();
                     }
@@ -104,14 +104,14 @@ sealed class ClassManager : IamCSProcess
                         {
                             byte[] bytes = loader.requestClass(req.className);
                             ClassData resp = new ClassData(req.className, bytes);
-                            NetChannelOutput Out = NetChannel.one2net(req.returnLocation);
+                            NetChannelOutput Out = NetChannels.one2net(req.returnLocation);
                             Out.asyncWrite(resp);
                             Out.destroy();
                         }
                         catch (ClassNotFoundException cnf)
                         {
                             ClassData resp = new ClassData(req.className, null);
-                            NetChannelOutput Out = NetChannel.one2net(req.returnLocation);
+                            NetChannelOutput Out = NetChannels.one2net(req.returnLocation);
                             Out.asyncWrite(resp);
                             Out.destroy();
                         }

@@ -19,7 +19,7 @@
 
 using System;
 using System.Collections;
-using CSPnet2.NetChannel;
+using CSPnet2.NetChannels;
 using CSPnet2.NetNode;
 
 namespace CSPnet2.Mobile
@@ -67,7 +67,7 @@ sealed class DynamicClassLoader : ClassLoader
             try
             {
                 byte[] bytes = this.requestClass(className);
-                Class toReturn = this.defineClass(className, bytes, 0, bytes.length);
+                Class toReturn = this.defineClass(className, bytes, 0, bytes.Length);
                 this.resolveClass(toReturn);
                 return toReturn;
             }

@@ -21,7 +21,7 @@ using System;
 using CSPnet2.Net2Link;
 using CSPnet2.NetNode;
 
-namespace CSPnet2.NetChannel
+namespace CSPnet2.NetChannels
 {
 
     /**

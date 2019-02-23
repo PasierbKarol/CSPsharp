@@ -19,7 +19,7 @@
 
 using CSPnet2.NetNode;
 
-namespace CSPnet2.NetChannel
+namespace CSPnet2.NetChannels
 {
     /**
      * This interface defines the methods that any networked channel factory must implement. For a concrete implementation,

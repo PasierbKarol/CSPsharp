@@ -20,7 +20,7 @@
 using System;
 using CSPlang;
 using CSPlang.Alting;
-using CSPnet2.NetChannel;
+using CSPnet2.NetChannels;
 
 namespace CSPnet2
 {

@@ -27,8 +27,8 @@ namespace CSPnet2.Mobile
     [Serializable]
     sealed class ClassData
     {
-        readonly String className;
-        readonly byte[] bytes;
+        internal readonly String className;
+        internal readonly byte[] bytes;
 
         internal ClassData(String name, byte[] classBytes)
         {

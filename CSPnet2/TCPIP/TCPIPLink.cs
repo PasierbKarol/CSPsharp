@@ -18,7 +18,10 @@
 //////////////////////////////////////////////////////////////////////
 
 using System;
+using System.IO;
 using System.Net.Sockets;
+using CSPnet2.Net2Link;
+using CSPnet2.NetNode;
 
 namespace CSPnet2.TCPIP
 {
@@ -33,10 +36,7 @@ namespace CSPnet2.TCPIP
 //import java.net.Socket;
 //
 //import jcsp.net2.JCSPNetworkException;
-//import jcsp.net2.Link;
-//import jcsp.net2.Node;
-//import jcsp.net2.NodeAddress;
-//import jcsp.net2.NodeID;
+
 
 /**
  * A concrete implementation of a Link that operates over a TCP/IP based socket connection. For information on Link, see
@@ -69,7 +69,7 @@ namespace CSPnet2.TCPIP
  * @see TCPIPNodeAddress
  * @author Kevin Chalmers
  */
-public sealed class TCPIPLink : Link.Link
+public sealed class TCPIPLink : Link
 {
     /**
      * Defines the size of the buffer to place on the incoming and outgoing streams. This is a rather large size, and
@@ -107,7 +107,7 @@ public sealed class TCPIPLink : Link.Link
         {
             // First check if we have an ip address in the string. If not, we assume that this is to be connected
             // to the local machine but to a different JVM
-            if (address.getIpAddress().equals(""))
+            if (address.getIpAddress().Equals(""))
             {
                 // Get the local IP addresses
                 InetAddress[] local = InetAddress.getAllByName(InetAddress.getLocalHost().getHostName());
@@ -119,10 +119,10 @@ public sealed class TCPIPLink : Link.Link
                 int current = 0;
 
                 // Loop until we have checked all the addresses
-                for (int i = 0; i < local.length; i++)
+                for (int i = 0; i < local.Length; i++)
                 {
                     // Ensure we have an IPv4 address
-                    if (local[i] instanceof Inet4Address)
+                    if (local[i] is Inet4Address)
                     {
                         // Get the first byte of the address
                         byte first = local[i].getAddress()[0];
@@ -181,12 +181,12 @@ public sealed class TCPIPLink : Link.Link
             // We are not connected, so set connected to false.
             this.connected = false;
             // Log Node connection
-            NetNode.log.log(this.getClass(), "Link created to " + address.toString());
+            Node.log.log(this.GetType(), "Link created to " + address.toString());
         }
         catch (IOException ioe)
         {
             // Something went wrong during connection. Log and throw exception
-            NetNode.err.log(this.getClass(), "Failed to create Link to " + address.toString());
+            Node.err.log(this.GetType(), "Failed to create Link to " + address.toString());
             throw new JCSPNetworkException("Failed to create TCPIPLink to: " + address.getAddress());
         }
     }
@@ -221,13 +221,13 @@ public sealed class TCPIPLink : Link.Link
             // Set connected to true
             this.connected = true;
             // Log Link creation and Link connection
-            Node.log.log(this.getClass(), "Link created to " + nodeID.toString());
-            Node.log.log(this.getClass(), "Link to " + nodeID.toString() + " connected");
+            Node.log.log(this.GetType(), "Link created to " + nodeID.toString());
+            Node.log.log(this.GetType(), "Link to " + nodeID.toString() + " connected");
         }
         catch (IOException ioe)
         {
             // Something went wrong during the creation. Log and throw exception
-            Node.err.log(this.getClass(), "Failed to create Link to " + nodeID.toString());
+            Node.err.log(this.GetType(), "Failed to create Link to " + nodeID.toString());
             throw new JCSPNetworkException("Failed to create TCPIPLink to: " + nodeID.getNodeAddress().getAddress());
         }
     }
@@ -239,7 +239,7 @@ public sealed class TCPIPLink : Link.Link
      * @//throws JCSPNetworkException
      *             Thrown if something goes wrong during the connection
      */
-    public boolean connect()
+    public Boolean connect()
         //throws JCSPNetworkException
     {
         // First check if we are connected.
@@ -247,7 +247,7 @@ public sealed class TCPIPLink : Link.Link
             return true;
 
         // Flag to determine if we are connected at the end of the process.
-        boolean toReturn = false;
+        Boolean toReturn = false;
 
         try
         {
@@ -260,10 +260,10 @@ public sealed class TCPIPLink : Link.Link
 
             // Either the connection has been accepted (no connection to this Node exists on the opposite Node) or
             // it has not. The opposite Node sends OK in the first instance.
-            if (response.equalsIgnoreCase("OK"))
+            if (response.Equals("OK", StringComparison.OrdinalIgnoreCase))
             {
                 // The connection is to be kept. Log, and set toReturn to true
-                Node.log.log(this.getClass(), "Link to " + this.remoteAddress.toString() + " connected");
+                Node.log.log(this.GetType(), "Link to " + this.remoteAddress.toString() + " connected");
                 toReturn = true;
             }
 
@@ -272,7 +272,7 @@ public sealed class TCPIPLink : Link.Link
             NodeID otherID = NodeID.parse(nodeIDString);
 
             // First check we have a tcpip Node connection. This should always be the case
-            if (otherID.getNodeAddress() instanceof TCPIPNodeAddress)
+            if (otherID.getNodeAddress() is TCPIPNodeAddress)
             {
                 // Set address and NodeID. If we are not connected then this NodeID can be used to
                 // get the actual Link from the LinkManager
@@ -284,13 +284,13 @@ public sealed class TCPIPLink : Link.Link
                 return toReturn;
             }
             // We do not have a tcpip? Should never really happen however. Log and throw Exception
-            Node.err.log(this.getClass(), "Tried to connect a TCPIPLink to a non TCPIP connection");
+            Node.err.log(this.GetType(), "Tried to connect a TCPIPLink to a non TCPIP connection");
             throw new JCSPNetworkException("Tried to connect a TCPIPLink to a non TCPIP connection");
         }
         catch (IOException ioe)
         {
             // Something went wrong during the connection process. Log and throw exception.
-            Node.err.log(this.getClass(), "Failed to connect TCPIPLink to: " + this.remoteAddress.getAddress());
+            Node.err.log(this.GetType(), "Failed to connect TCPIPLink to: " + this.remoteAddress.getAddress());
             throw new JCSPNetworkException("Failed to connect TCPIPLink to: " + this.remoteAddress.getAddress());
         }
     }
@@ -302,7 +302,7 @@ public sealed class TCPIPLink : Link.Link
      * @//throws JCSPNetworkException
      *             Thrown if anything goes wrong during the creation process.
      */
-    protected boolean createResources()
+    protected Boolean createResources()
         //throws JCSPNetworkException
     {
         // Just return true
@@ -312,12 +312,12 @@ public sealed class TCPIPLink : Link.Link
     /**
      * Destroys any resources used by the Link
      */
-    protected void destroyResources()
+    protected override void destroyResources()
     {
         try
         {
             // We must ensure only one process can call destroy at any time
-            synchronized (this)
+            lock (this)
             {
                 // Check that the socket is still in existence
                 if (this.sock != null)

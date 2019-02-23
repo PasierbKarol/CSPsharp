@@ -78,7 +78,7 @@ public sealed class TCPIPNodeFactory : NodeFactory
      * @//throws JCSPNetworkException
      *             Thrown if something goes wrong during the Node initialisation process
      */
-    protected NodeAddress initNode(NetNode node)
+    protected NodeAddress initNode(Node node)
         //throws JCSPNetworkException
     {
         // First install TCPIPProtocolID
@@ -95,10 +95,10 @@ public sealed class TCPIPNodeFactory : NodeFactory
             int current = 0;
 
             // Loop until we have checked all the addresses
-            for (int i = 0; i < local.length; i++)
+            for (int i = 0; i < local.Length; i++)
             {
                 // Ensure we have an IPv4 address
-                if (local[i] instanceof Inet4Address)
+                if (local[i] is Inet4Address)
                 {
                     // Get the first byte of the address
                     byte first = local[i].getAddress()[0];

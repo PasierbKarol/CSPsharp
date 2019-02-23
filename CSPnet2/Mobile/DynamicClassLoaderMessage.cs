@@ -19,7 +19,7 @@
 
 using System;
 using CSPlang;
-using CSPnet2.NetChannel;
+using CSPnet2.NetChannels;
 using CSPnet2.NetNode;
 
 namespace CSPnet2.Mobile
@@ -45,7 +45,7 @@ namespace CSPnet2.Mobile
         internal readonly NetChannelLocation requestLocation;
         internal readonly byte[] bytes;
 
-        DynamicClassLoaderMessage(NodeID originator, NetChannelLocation request, byte[] classData)
+        internal DynamicClassLoaderMessage(NodeID originator, NetChannelLocation request, byte[] classData)
         {
             this.originatingNode = originator;
             this.requestLocation = request;

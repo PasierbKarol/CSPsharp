@@ -18,6 +18,7 @@
 //////////////////////////////////////////////////////////////////////
 
 using System;
+using System.IO;
 
 namespace CSPnet2
 {
@@ -30,7 +31,7 @@ namespace CSPnet2
  * 
  * @author Kevin Chalmers
  */
-sealed class ResettableByteArrayOutputStream : ByteArrayOutputStream
+sealed class ResettableByteArrayOutputStream : MemoryStream //ByteArrayOutputStream
 {
     /**
      * Creates a new ResettableByteArrayOutputStream
@@ -38,7 +39,7 @@ sealed class ResettableByteArrayOutputStream : ByteArrayOutputStream
      * @param size
      *            The size of the internal buffer
      */
-    ResettableByteArrayOutputStream(int size) : base(size)
+    internal ResettableByteArrayOutputStream(int size) : base(size)
     {
     }
 
@@ -48,7 +49,7 @@ sealed class ResettableByteArrayOutputStream : ByteArrayOutputStream
      * @param size
      *            The size to reset the internal buffer to
      */
-    void reset(int size)
+    internal void reset(int size)
     {
         this.reset();
         if (this.buf.length != size)

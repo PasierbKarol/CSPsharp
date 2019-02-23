@@ -21,7 +21,7 @@ using System;
 using System.IO;
 using CSPnet2;
 using CSPnet2.Mobile;
-using CSPnet2.NetChannel;
+using CSPnet2.NetChannels;
 using CSPnet2.NetNode;
 
 namespace CSPnet2.Mobile
@@ -40,7 +40,7 @@ namespace CSPnet2.Mobile
  */
 public sealed class CodeLoadingChannelFilter
 {
-    public static /*final*/ class FilterRX : NetworkMessageFilter.FilterRx
+    public /*static*/ sealed class FilterRX : NetworkMessageFilter.FilterRx
     {
         private readonly ObjectNetworkMessageFilter.FilterRX objectFilter = new ObjectNetworkMessageFilter.FilterRX();
 
@@ -86,7 +86,7 @@ public sealed class CodeLoadingChannelFilter
         }
     }
 
-    public static /*final*/ class FilterTX : NetworkMessageFilter.FilterTx
+    public /*static*/ sealed class FilterTX : NetworkMessageFilter.FilterTx
     {
         private readonly ObjectNetworkMessageFilter.FilterTX internalFilter = new ObjectNetworkMessageFilter.FilterTX();
 
@@ -98,19 +98,21 @@ public sealed class CodeLoadingChannelFilter
         public byte[] filterTX(Object obj)
             ////throws IOException
         {
+            DynamicClassLoaderMessage message;
+            byte[] wrappedData;
             ClassLoader loader = obj.GetType().getClassLoader();
             byte[] bytes = this.internalFilter.filterTX(obj);
             if (loader == ClassLoader.getSystemClassLoader() || loader == null)
             {
-                DynamicClassLoaderMessage message = new DynamicClassLoaderMessage(Node.getInstance().getNodeID(),
+                message = new DynamicClassLoaderMessage(Node.getInstance().getNodeID(),
                         (NetChannelLocation) ClassManager.In.getLocation(), bytes);
-                byte[] wrappedData = this.internalFilter.filterTX(message);
+                wrappedData = this.internalFilter.filterTX(message);
                 return wrappedData;
             }
             DynamicClassLoader dcl = (DynamicClassLoader)loader;
-            DynamicClassLoaderMessage message = new DynamicClassLoaderMessage(dcl.originatingNode,
+            message = new DynamicClassLoaderMessage(dcl.originatingNode,
                     (NetChannelLocation) ClassManager.In.getLocation(), bytes);
-            byte[] wrappedData = this.internalFilter.filterTX(message);
+            wrappedData = this.internalFilter.filterTX(message);
             return wrappedData;
         }
 

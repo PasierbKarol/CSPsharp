@@ -19,7 +19,7 @@
 
 using CSPnet2.NetNode;
 
-namespace CSPnet2.NetChannel
+namespace CSPnet2.NetChannels
 {
     /**
      * A static factory object used to create networked channels. This class basically wraps around a
@@ -27,10 +27,9 @@ namespace CSPnet2.NetChannel
      * 
      * @see NetChannelEndFactory
      * @see StandardNetChannelEndFactory
-     * @deprecated To conform with the core package naming scheme, the class NetChannel has also been provided
      * @author Kevin Chalmers
      */
-    public sealed class NetChannelEnd
+    public sealed class NetChannel
     {
         /**
          * The factory used to create the networked channels
@@ -40,7 +39,7 @@ namespace CSPnet2.NetChannel
         /**
          * Empty, private default constructor. This is a static access class.
          */
-        private NetChannelEnd()
+        private NetChannel()
         {
             // Empty constructor
         }
@@ -78,6 +77,7 @@ namespace CSPnet2.NetChannel
          *             Thrown if something goes wrong in the underlying architecture
          */
         public static NetChannelOutput createOne2Net(NetChannelLocation loc)
+
             //throws JCSPNetworkException
         {
             return factory.one2net(loc);

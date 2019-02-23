@@ -19,7 +19,7 @@
 
 using System;
 
-namespace CSPnet2.NetChannel
+namespace CSPnet2.NetChannels
 {
 
     /**

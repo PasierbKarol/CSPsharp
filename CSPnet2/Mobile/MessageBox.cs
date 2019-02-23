@@ -19,7 +19,8 @@
 
 using System;
 using CSPlang;
-using CSPnet2.NetChannel;
+using CSPnet2.NetChannels;
+using CSPnet2.NetNode;
 
 namespace CSPnet2.Mobile
 {
@@ -46,7 +47,7 @@ namespace CSPnet2.Mobile
 
         private readonly NetChannelLocation inputEndLoc = null;
 
-        MessageBox(NetAltingChannelInput intoBox, NetAltingChannelInput requestChannel,
+        internal MessageBox(NetAltingChannelInput intoBox, NetAltingChannelInput requestChannel,
             NetworkMessageFilter.FilterTx encodingFilter)
         {
             this.In = intoBox;
@@ -63,7 +64,7 @@ namespace CSPnet2.Mobile
                     MobileChannelMessage msg = (MobileChannelMessage) fromInputEnd.read();
                     if (msg.type == MobileChannelMessage.REQUEST)
                     {
-                        if (!msg.inputLocation.equals(this.inputEndLoc))
+                        if (!msg.inputLocation.Equals(this.inputEndLoc))
                         {
                             if (this.toInputEnd != null)
                             {
@@ -78,7 +79,7 @@ namespace CSPnet2.Mobile
                     }
                     else if (msg.type == MobileChannelMessage.CHECK)
                     {
-                        if (!msg.inputLocation.equals(this.inputEndLoc))
+                        if (!msg.inputLocation.Equals(this.inputEndLoc))
                         {
                             if (this.toInputEnd != null)
                             {
@@ -134,7 +135,7 @@ namespace CSPnet2.Mobile
                     this.toInputEnd.destroy();
                 }
 
-                NetNode.err.log(this.getClass(), "Message box threw exception during comms.  Destroying");
+                Node.err.log(this.getClass(), "Message box threw exception during comms.  Destroying");
             }
         }
     }

@@ -18,6 +18,7 @@
 //////////////////////////////////////////////////////////////////////
 
 using System;
+using System.IO;
 
 namespace CSPnet2
 {
@@ -30,7 +31,7 @@ namespace CSPnet2
  * 
  * @author Kevin Chalmers
  */
-sealed class ResettableByteArrayInputStream : ByteArrayInputStream
+sealed class ResettableByteArrayInputStream : MemoryStream //ByteArrayInputStream
 {
     /**
      * Creates a new ResettableByteArrayInputStream
@@ -38,7 +39,7 @@ sealed class ResettableByteArrayInputStream : ByteArrayInputStream
      * @param bytes
      *            The byte array to read data from
      */
-    ResettableByteArrayInputStream(byte[] bytes) : base(bytes)
+    internal ResettableByteArrayInputStream(byte[] bytes) : base(bytes)
     {
     }
 
@@ -48,10 +49,10 @@ sealed class ResettableByteArrayInputStream : ByteArrayInputStream
      * @param bytes
      *            The byte array to replace the existing internal one
      */
-    void reset(byte[] bytes)
+    internal void reset(byte[] bytes)
     {
         this.buf = bytes;
-        this.count = bytes.length;
+        this.count = bytes.Length;
         this.pos = 0;
     }
 }

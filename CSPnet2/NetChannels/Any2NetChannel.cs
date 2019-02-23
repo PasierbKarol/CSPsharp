@@ -17,10 +17,9 @@
 //                                                                  //
 //////////////////////////////////////////////////////////////////////
 
-using CSPnet2.NetChannel;
 using System;
 
-namespace CSPnet2
+namespace CSPnet2.NetChannels
 {
     /***********************************************************************************************************************
      * An outputting network channel (TX) that can be safely shared amongst multiple writers (Any2Net). This is the concrete

@@ -20,7 +20,7 @@
 using System;
 using System.Collections;
 
-namespace CSPnet2.NetChannel
+namespace CSPnet2.NetChannels
 {
 
 /**

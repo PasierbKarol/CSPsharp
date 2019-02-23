@@ -18,7 +18,7 @@
 //////////////////////////////////////////////////////////////////////
 
 using System;
-using CSPnet2.NetChannel;
+using CSPnet2.NetChannels;
 
 namespace CSPnet2.CNS
 {

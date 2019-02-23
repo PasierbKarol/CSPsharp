@@ -19,7 +19,7 @@
 
 using CSPlang.Shared;
 
-namespace CSPnet2.NetChannel
+namespace CSPnet2.NetChannels
 {
 /**
  * Defines a networked ChannelOutput that is safe to be used by multiple concurrent processes. For more information see

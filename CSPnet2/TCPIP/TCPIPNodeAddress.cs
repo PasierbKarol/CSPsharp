@@ -19,6 +19,7 @@
 //////////////////////////////////////////////////////////////////////
 
 using System;
+using CSPnet2.Net2Link;
 using CSPnet2.NetNode;
 
 namespace CSPnet2.TCPIP
@@ -108,7 +109,7 @@ public sealed class TCPIPNodeAddress : NodeAddress
      * @param portNumber
      *            The port number to use
      */
-    void setPort(int portNumber)
+    internal void setPort(int portNumber)
     {
         this.port = portNumber;
     }
@@ -129,7 +130,7 @@ public sealed class TCPIPNodeAddress : NodeAddress
      * @param ipAddr
      *            The IP address to use
      */
-    void setIpAddress(String ipAddr)
+    internal void setIpAddress(String ipAddr)
     {
         this.ip = ipAddr;
     }
@@ -140,7 +141,7 @@ public sealed class TCPIPNodeAddress : NodeAddress
      * @param str
      *            The String to set as the address
      */
-    void setAddress(String str)
+    internal void setAddress(String str)
     {
         this.address = str;
     }
@@ -152,7 +153,7 @@ public sealed class TCPIPNodeAddress : NodeAddress
      * @//throws JCSPNetworkException
      *             Thrown if something goes wrong during the creation of the Link
      */
-    protected Link createLink()
+    internal override Link createLink()
         //throws JCSPNetworkException
     {
         return new TCPIPLink(this);
@@ -165,7 +166,7 @@ public sealed class TCPIPNodeAddress : NodeAddress
      * @//throws JCSPNetworkException
      *             Thrown if something goes wrong during the creation of the LinkServer
      */
-    protected LinkServer createLinkServer()
+    protected override LinkServer createLinkServer()
         //throws JCSPNetworkException
     {
         return new TCPIPLinkServer(this);
@@ -176,7 +177,7 @@ public sealed class TCPIPNodeAddress : NodeAddress
      * 
      * @return TCPIPProtocolID
      */
-    protected ProtocolID getProtocolID()
+    internal override ProtocolID getProtocolID()
     {
         return TCPIPProtocolID.getInstance();
     }

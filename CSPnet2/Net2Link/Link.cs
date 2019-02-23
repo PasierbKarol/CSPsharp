@@ -23,7 +23,7 @@ using System.Threading.Tasks;
 using CSPlang;
 using CSPlang.Any2;
 using CSPnet2.Barriers;
-using CSPnet2.NetChannel;
+using CSPnet2.NetChannels;
 using CSPnet2.NetNode;
 
 namespace CSPnet2.Net2Link

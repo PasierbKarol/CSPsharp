@@ -40,7 +40,7 @@ public sealed class RawNetworkMessageFilter
      * 
      * @author Kevin Chalmers
      */
-    public static /*final*/ class FilterRX : NetworkMessageFilter.FilterRx
+    public /*static*/ sealed class FilterRX : NetworkMessageFilter.FilterRx
     {
         /**
          * Creates a new RawNetworkMessageFilter.FilterRX
@@ -69,7 +69,7 @@ public sealed class RawNetworkMessageFilter
      * 
      * @author Kevin Chalmers
      */
-    public static /*final*/ class FilterTX : NetworkMessageFilter.FilterTx
+    public /*static*/ sealed class FilterTX : NetworkMessageFilter.FilterTx
     {
         /**
          * Creates a new output filter

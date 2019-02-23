@@ -18,7 +18,7 @@
 //////////////////////////////////////////////////////////////////////
 
 using System;
-using CSPnet2.NetChannel;
+using CSPnet2.NetChannels;
 
 namespace CSPnet2.Mobile
 {
@@ -29,16 +29,16 @@ namespace CSPnet2.Mobile
     [Serializable]
     sealed class MobileChannelMessage
     {
-        static readonly int REQUEST = 1;
+        internal static readonly int REQUEST = 1;
 
-        static readonly int CHECK = 2;
+        internal static readonly int CHECK = 2;
 
-        static readonly int CHECK_RESPONSE = 3;
+        internal static readonly int CHECK_RESPONSE = 3;
 
-        int type = -1;
+        internal int type = -1;
 
-        Boolean ready = false;
+        internal Boolean ready = false;
 
-        NetChannelLocation inputLocation = null;
+        internal NetChannelLocation inputLocation = null;
     }
 }

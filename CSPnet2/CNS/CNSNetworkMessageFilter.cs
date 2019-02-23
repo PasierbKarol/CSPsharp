@@ -19,7 +19,7 @@
 
 using System;
 using System.IO;
-using CSPnet2.NetChannel;
+using CSPnet2.NetChannels;
 
 namespace CSPnet2.CNS
 {
@@ -50,8 +50,7 @@ sealed class CNSNetworkMessageFilter
      * 
      * @author Kevin Chalmers
      */
-    static /*final*/ class FilterTX
-        : NetworkMessageFilter.FilterTx
+    /*static*/ internal sealed class FilterTX : NetworkMessageFilter.FilterTx
     {
         /**
          * The byte stream we will use to retrieve the byte message from
@@ -116,7 +115,7 @@ sealed class CNSNetworkMessageFilter
      * 
      * @author Kevin Chalmers
      */
-    static /*sealed*/ class FilterRX : NetworkMessageFilter.FilterRx
+    /*static*/ internal sealed class FilterRX : NetworkMessageFilter.FilterRx
     {
         /**
          * The input end to read the message back from
@@ -131,7 +130,7 @@ sealed class CNSNetworkMessageFilter
         /**
          * Creates a new decoding CNSMessage filter
          */
-        FilterRX()
+        internal FilterRX()
         {
             // Nothing to do
         }

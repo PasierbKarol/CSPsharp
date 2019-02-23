@@ -23,6 +23,7 @@ using CSPlang;
 using CSPnet2.CNS;
 using CSPnet2.Net2Link;
 using CSPnet2.NetChannel;
+using CSPnet2.NetChannels;
 using CSPnet2.NetNode;
 
 namespace CSPnet2.CNS

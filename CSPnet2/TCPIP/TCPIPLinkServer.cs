@@ -19,7 +19,11 @@
 //////////////////////////////////////////////////////////////////////
 
 using System;
-using CSPnet2.Link;
+using System.IO;
+using System.Net.Sockets;
+using CSPlang;
+using CSPnet2.Net2Link;
+using CSPnet2.NetNode;
 
 namespace CSPnet2.TCPIP
 {
@@ -98,7 +102,7 @@ public sealed class TCPIPLinkServer : LinkServer
         try
         {
             // First check if we have an ip address in the string
-            if (address.getIpAddress().equals(""))
+            if (address.getIpAddress().Equals(""))
             {
                 // Get the local IP addresses
                 InetAddress[] local = InetAddress.getAllByName(InetAddress.getLocalHost().getHostName());
@@ -110,10 +114,10 @@ public sealed class TCPIPLinkServer : LinkServer
                 int current = 0;
 
                 // Loop until we have checked all the addresses
-                for (int i = 0; i < local.length; i++)
+                for (int i = 0; i < local.Length; i++)
                 {
                     // Ensure we have an IPv4 address
-                    if (local[i] instanceof Inet4Address)
+                    if (local[i] is Inet4Address)
                     {
                         // Get the first byte of the address
                         byte first = local[i].getAddress()[0];
@@ -197,7 +201,7 @@ public sealed class TCPIPLinkServer : LinkServer
     public void run()
     {
         // Log start of Link Server
-        Node.log.log(this.getClass(), "TCPIP Link Server started on " + this.listeningAddress.getAddress());
+        Node.log.log(this.GetType(), "TCPIP Link Server started on " + this.listeningAddress.getAddress());
         try
         {
             // Now we loop until something goes wrong
@@ -206,7 +210,7 @@ public sealed class TCPIPLinkServer : LinkServer
                 // Receive incoming connection
                 Socket incoming = this.serv.accept();
                 // Log
-                Node.log.log(this.getClass(), "Received new incoming connection");
+                Node.log.log(this.GetType(), "Received new incoming connection");
                 // Set TcpNoDelay
                 incoming.setTcpNoDelay(true);
 
@@ -218,13 +222,13 @@ public sealed class TCPIPLinkServer : LinkServer
                 NodeID remoteID = NodeID.parse(otherID);
 
                 // First check we have a tcpip Node connection
-                if (remoteID.getNodeAddress() instanceof TCPIPNodeAddress)
+                if (remoteID.getNodeAddress() is TCPIPNodeAddress)
                 {
                     // Create an output stream from the Socket
                     DataOutputStream outStream = new DataOutputStream(incoming.getOutputStream());
 
                     // Now Log that we have received a connection
-                    Node.log.log(this.getClass(), "Received connection from: " + remoteID.toString());
+                    Node.log.log(this.GetType(), "Received connection from: " + remoteID.toString());
 
                     // Check if already connected
                     if (requestLink(remoteID) == null)
@@ -249,7 +253,7 @@ public sealed class TCPIPLinkServer : LinkServer
                         // We already have a connection to the incoming Node
 
                         // Log failed connection
-                        Node.log.log(this.getClass(), "Connection to " + remoteID
+                        Node.log.log(this.GetType(), "Connection to " + remoteID
                                                       + " already exists.  Informing remote Node.");
 
                         // Write EXISTS to the remote Node
@@ -274,7 +278,7 @@ public sealed class TCPIPLinkServer : LinkServer
         {
             // We can't really recover from this. This may happen if the network connection was lost.
             // Log and fail
-            Node.err.log(this.getClass(), "TCPIPLinkServer failed.  " + ioe.getMessage());
+            Node.err.log(this.GetType(), "TCPIPLinkServer failed.  " + ioe.getMessage());
         }
     }
 

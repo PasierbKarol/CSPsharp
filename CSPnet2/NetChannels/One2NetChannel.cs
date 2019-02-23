@@ -24,7 +24,7 @@ using CSPnet2.Net2Link;
 using CSPnet2.NetNode;
 using CSPutil;
 
-namespace CSPnet2.NetChannel
+namespace CSPnet2.NetChannels
 {
 //    import java.io.IOException;
 //

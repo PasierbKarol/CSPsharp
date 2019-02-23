@@ -17,21 +17,28 @@
 //                                                                  //
 //////////////////////////////////////////////////////////////////////
 
-using CSPlang.Shared;
+using CSPlang;
 
-namespace CSPnet2.NetChannel
+namespace CSPnet2.NetChannels
 {
     /**
-     * Defines a networked ChannelInput that is safe to be used by multiple concurrent processes. For more information see
-     * NetChannelInput and SharedChannelInput. To create an instance, see the relevant factory method.
+     * This interface defines a ChannelInput that is also networked. For information on ChannelInput see the relevant class.
+     * For information on how to create a NetChannelInput, see the relevant factory class
      * 
-     * @see NetChannelInput
-     * @see SharedChannelInput
+     * @see ChannelInput
+     * @see Networked
      * @see NetChannel
      * @author Kevin Chalmers (updated from Quickstone Technologies)
      */
-    public interface NetSharedChannelInput : SharedChannelInput, NetChannelInput
+    public interface NetChannelInput : ChannelInput, Networked
     {
-        // Nothing new to declare
+        /**
+         * Sets the underlying decoder for the channel
+         * 
+         * @param decoder
+         *            The new decoder to use.
+         */
+        /*public*/
+        void setDecoder(NetworkMessageFilter.FilterRx decoder);
     }
 }

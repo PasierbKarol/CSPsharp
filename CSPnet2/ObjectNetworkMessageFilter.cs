@@ -49,7 +49,7 @@ public sealed class ObjectNetworkMessageFilter
 /**
  * Static classes are sealed by default in C#
  */
-    public static /*sealed*/ class FilterRX : NetworkMessageFilter.FilterRx
+    public /*static*/ sealed class FilterRX : NetworkMessageFilter.FilterRx
     {
         /**
          * These four bytes represent the normal header expected in Java for object streams
@@ -120,7 +120,7 @@ public sealed class ObjectNetworkMessageFilter
      * 
      * @author Kevin Chalmers
      */
-    public static /*final*/ class FilterTX : NetworkMessageFilter.FilterTx
+    public /*static*/ sealed class FilterTX : NetworkMessageFilter.FilterTx
     {
         /**
          * The output stream to get the bytes from

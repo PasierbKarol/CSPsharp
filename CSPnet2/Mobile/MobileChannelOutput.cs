@@ -18,7 +18,7 @@
 //////////////////////////////////////////////////////////////////////
 
 using System;
-using CSPnet2.NetChannel;
+using CSPnet2.NetChannels;
 
 namespace CSPnet2.Mobile
 {
@@ -59,9 +59,9 @@ public sealed class MobileChannelOutput : NetChannelOutput
         this.actualOut = NetChannel.one2net(loc, encoder);
     }
 
-    public void write(Object object)
+    public void write(Object _object)
     {
-        this.actualOut.write(object);
+        this.actualOut.write(_object);
     }
 
     public void destroy()
