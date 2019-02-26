@@ -26,17 +26,6 @@ using CSPnet2.NetNode;
 namespace CSPnet2.TCPIP
 {
 
-//    import java.io.BufferedInputStream;
-//import java.io.BufferedOutputStream;
-//import java.io.DataInputStream;
-//import java.io.DataOutputStream;
-//import java.io.IOException;
-//import java.net.Inet4Address;
-//import java.net.InetAddress;
-//import java.net.Socket;
-//
-//import jcsp.net2.JCSPNetworkException;
-
 
 /**
  * A concrete implementation of a Link that operates over a TCP/IP based socket connection. For information on Link, see

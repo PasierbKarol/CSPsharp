@@ -25,21 +25,12 @@ using CSPnet2.NetNode;
 namespace CSPnet2.Mobile
 {
 
-//    import java.util.Hashtable;
-//
-//import jcsp.net2.JCSPNetworkException;
-//import jcsp.net2.NetChannel;
-//import jcsp.net2.NetChannelInput;
-//import jcsp.net2.NetChannelLocation;
-//import jcsp.net2.NetChannelOutput;
-//import jcsp.net2.NodeID;
-
-/**
+    /**
  * @author Kevin
  */
 sealed class DynamicClassLoader : ClassLoader
 {
-    readonly NodeID originatingNode;
+    internal readonly NodeID originatingNode;
 
     NetChannelOutput requestClassData;
 
@@ -47,7 +38,7 @@ sealed class DynamicClassLoader : ClassLoader
 
     readonly Hashtable classes = new Hashtable();
 
-    DynamicClassLoader(NodeID originator, NetChannelLocation requestLocation) : base(ClassLoader.getSystemClassLoader())
+    internal DynamicClassLoader(NodeID originator, NetChannelLocation requestLocation) : base(ClassLoader.getSystemClassLoader())
         {
         
         this.originatingNode = originator;
@@ -62,7 +53,8 @@ sealed class DynamicClassLoader : ClassLoader
             Class clazz = Class.forName(className, false, ClassLoader.getSystemClassLoader());
             return clazz;
         }
-        catch (ClassNotFoundException cnfe)
+        //catch (ClassNotFoundException cnfe)
+        catch (Exception cnfe)
         {
             try
             {
@@ -71,14 +63,15 @@ sealed class DynamicClassLoader : ClassLoader
                 this.resolveClass(toReturn);
                 return toReturn;
             }
-            catch (ClassNotFoundException cnf)
+            //catch (ClassNotFoundException cnf)
+            catch (Exception cnf)
             {
                 throw cnf;
             }
         }
     }
 
-    /*synchronized*/ byte[] requestClass(String className)
+    /*synchronized*/ internal byte[] requestClass(String className)
         ////throws ClassNotFoundException
     {
         try
@@ -90,7 +83,8 @@ sealed class DynamicClassLoader : ClassLoader
             }
             if (this.requestClassData == null)
             {
-                throw new ClassNotFoundException(className);
+                //throw new ClassNotFoundException(className);
+                throw new Exception(className);
             }
 
             ClassRequest req = new ClassRequest(this.originatingNode, className,
@@ -99,7 +93,8 @@ sealed class DynamicClassLoader : ClassLoader
             ClassData data = (ClassData)classDataResponse.read();
             if (data.bytes == null)
             {
-                throw new ClassNotFoundException(className);
+                //throw new ClassNotFoundException(className);
+                throw new Exception(className);
             }
             this.classes.Add(className, data.bytes);
             return data.bytes;
@@ -110,7 +105,8 @@ sealed class DynamicClassLoader : ClassLoader
             this.classDataResponse = null;
             this.requestClassData.destroy();
             this.requestClassData = null;
-            throw new ClassNotFoundException(className);
+            //throw new ClassNotFoundException(className);
+            throw new Exception(className);
         }
     }
 }

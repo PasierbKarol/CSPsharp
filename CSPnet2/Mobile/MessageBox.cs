@@ -125,7 +125,7 @@ namespace CSPnet2.Mobile
                     this.toInputEnd.destroy();
                 }
 
-                Node.err.log(this.getClass(), "Message box threw exception during comms.  Destroying");
+                Node.err.log(this.GetType(), "Message box threw exception during comms.  Destroying");
             }
         }
     }

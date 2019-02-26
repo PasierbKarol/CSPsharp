@@ -24,9 +24,6 @@ using CSPnet2.NetNode;
 namespace CSPnet2.TCPIP
 {
 
-//    import jcsp.net2.NodeAddress;
-//import jcsp.net2.ProtocolID;
-
 /**
  * Concrete implementation of a ProtocolID used to parse a string representation of a TCPIPNodeAddress into a
  * TCPIPNodeAddress object.

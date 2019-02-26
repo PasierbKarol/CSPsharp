@@ -24,10 +24,6 @@ using CSPnet2.NetNode;
 
 namespace CSPnet2.Mobile
 {
-//import jcsp.lang.ProcessManager;
-//import jcsp.net2.NetChannelLocation;
-//import jcsp.net2.NodeID;
-
 /**
  * @author Kevin
  */

@@ -18,32 +18,34 @@
 //////////////////////////////////////////////////////////////////////
 
 using System;
+using System.IO;
+using System.Reflection;
 
 namespace CSPnet2.Mobile
 {
-
-//    import java.io.IOException;
-//import java.io.InputStream;
-//import java.io.ObjectInputStream;
-//import java.io.ObjectStreamClass;
-
 /**
  * @author Kevin
  */
-sealed class DynamicObjectInputStream : ObjectInputStream
-{
-    readonly DynamicClassLoader dcl;
-
-    DynamicObjectInputStream(InputStream inputStream, DynamicClassLoader loader) : base(inputStream)
-        ////throws IOException
+    sealed class DynamicObjectInputStream : ObjectInputStream
     {
-        this.dcl = loader;
-    }
+        readonly DynamicClassLoader dcl;
 
-    protected Class resolveClass(ObjectStreamClass desc)
-        ////throws IOException, ClassNotFoundException
-    {
-        return dcl.loadClass(desc.getName());
+        //internal DynamicObjectInputStream(InputStream inputStream, DynamicClassLoader loader) : base(inputStream)
+        internal DynamicObjectInputStream(MemoryStream inputStream, DynamicClassLoader loader) // : base(inputStream)
+            ////throws IOException
+        {
+            this.dcl = loader;
+        }
+
+        //protected Class resolveClass(ObjectStreamClass desc)
+        protected T resolveClass<T>()
+            ////throws IOException, ClassNotFoundException
+        {
+            //return dcl.loadClass(typeof(T).Name);
+            Assembly assembly = Assembly.LoadFrom(System.Reflection.Assembly.GetExecutingAssembly().GetName().Name);
+            Type type = assembly.GetType(typeof(T).Name);
+            object x = Activator.CreateInstance(type);
+            return  (T)x;
+        }
     }
-}
 }

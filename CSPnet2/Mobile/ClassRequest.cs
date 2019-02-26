@@ -32,7 +32,7 @@ namespace CSPnet2.Mobile
         internal readonly String className;
         internal readonly NetChannelLocation returnLocation;
 
-        ClassRequest(NodeID originator, String name, NetChannelLocation response)
+        internal ClassRequest(NodeID originator, String name, NetChannelLocation response)
         {
             this.originatingNode = originator;
             this.className = name;

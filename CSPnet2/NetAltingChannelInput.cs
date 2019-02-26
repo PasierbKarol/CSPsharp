@@ -49,6 +49,7 @@ namespace CSPnet2
 
         public NetLocation getLocation()
         {
+            
             throw new NotImplementedException();
         }
 

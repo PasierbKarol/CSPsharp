@@ -23,117 +23,103 @@ using CSPnet2.NetChannels;
 
 namespace CSPnet2.Mobile
 {
-
-//    import java.io.IOException;
-//import java.io.ObjectInputStream;
-//import java.io.ObjectOutputStream;
-
-
-//import jcsp.net2.NetworkMessageFilter;
-//import jcsp.net2.ObjectNetworkMessageFilter;
-//import jcsp.net2.NetworkMessageFilter.FilterRx;
-
-
     [Serializable]
-public sealed class MobileChannelInput : NetChannelInput
-{
-
-    private NetChannelLocation messageBoxLoc;
-
-    private NetChannelLocation msgBoxReqLoc;
-
-    [NonSerialized]
-    private /*transient*/ NetChannelInput actualIn;
-
-    [NonSerialized]
-    private /*transient*/ NetChannelOutput toMessageBox;
-
-    public MobileChannelInput()
+    public sealed class MobileChannelInput : NetChannelInput
     {
-        NetAltingChannelInput toMsgBox = NetChannel.net2one();
-        NetAltingChannelInput msgBoxReq = NetChannel.net2one();
-        MessageBox msgBox = new MessageBox(toMsgBox, msgBoxReq, new ObjectNetworkMessageFilter.FilterTX());
-        new ProcessManager(msgBox).start();
-        this.messageBoxLoc = (NetChannelLocation)toMsgBox.getLocation();
-        this.msgBoxReqLoc = (NetChannelLocation)msgBoxReq.getLocation();
-        this.actualIn = NetChannel.net2one();
-        this.toMessageBox = NetChannel.one2net(this.msgBoxReqLoc);
-    }
+        private NetChannelLocation messageBoxLoc;
 
-    public MobileChannelInput(NetworkMessageFilter.FilterTx encoder, NetworkMessageFilter.FilterRx decoder)
-    {
-        NetAltingChannelInput toMsgBox = NetChannel.net2one(decoder);
-        NetAltingChannelInput msgBoxReq = NetChannel.net2one();
-        MessageBox msgBox = new MessageBox(toMsgBox, msgBoxReq, encoder);
-        new ProcessManager(msgBox).start();
-        this.messageBoxLoc = (NetChannelLocation)toMsgBox.getLocation();
-        this.msgBoxReqLoc = (NetChannelLocation)msgBoxReq.getLocation();
-        this.actualIn = NetChannel.net2one(decoder);
-        this.toMessageBox = NetChannel.one2net(this.msgBoxReqLoc);
-    }
+        private NetChannelLocation msgBoxReqLoc;
 
-    public void endRead()
-    {
-        this.actualIn.endRead();
-    }
+        [NonSerialized] private /*transient*/ NetChannelInput actualIn;
 
-    public Object read()
-    {
-        MobileChannelMessage msg = new MobileChannelMessage();
-        msg.type = MobileChannelMessage.REQUEST;
-        msg.inputLocation = (NetChannelLocation)this.actualIn.getLocation();
-        this.toMessageBox.write(msg);
-        Object toReturn = this.actualIn.read();
-        return toReturn;
-    }
+        [NonSerialized] private /*transient*/ NetChannelOutput toMessageBox;
 
-    public Object startRead()
-    {
-        MobileChannelMessage msg = new MobileChannelMessage();
-        msg.type = MobileChannelMessage.REQUEST;
-        msg.inputLocation = (NetChannelLocation)this.actualIn.getLocation();
-        this.toMessageBox.write(msg);
-        Object toReturn = this.actualIn.startRead();
-        return toReturn;
-    }
+        public MobileChannelInput()
+        {
+            NetAltingChannelInput toMsgBox = NetChannel.net2one();
+            NetAltingChannelInput msgBoxReq = NetChannel.net2one();
+            MessageBox msgBox = new MessageBox(toMsgBox, msgBoxReq, new ObjectNetworkMessageFilter.FilterTX());
+            new ProcessManager(msgBox).start();
+            this.messageBoxLoc = (NetChannelLocation) toMsgBox.getLocation();
+            this.msgBoxReqLoc = (NetChannelLocation) msgBoxReq.getLocation();
+            this.actualIn = NetChannel.net2one();
+            this.toMessageBox = NetChannel.one2net(this.msgBoxReqLoc);
+        }
 
-    public void poison(int strength)
-    {
-        this.actualIn.poison(strength);
-    }
+        public MobileChannelInput(NetworkMessageFilter.FilterTx encoder, NetworkMessageFilter.FilterRx decoder)
+        {
+            NetAltingChannelInput toMsgBox = NetChannel.net2one(decoder);
+            NetAltingChannelInput msgBoxReq = NetChannel.net2one();
+            MessageBox msgBox = new MessageBox(toMsgBox, msgBoxReq, encoder);
+            new ProcessManager(msgBox).start();
+            this.messageBoxLoc = (NetChannelLocation) toMsgBox.getLocation();
+            this.msgBoxReqLoc = (NetChannelLocation) msgBoxReq.getLocation();
+            this.actualIn = NetChannel.net2one(decoder);
+            this.toMessageBox = NetChannel.one2net(this.msgBoxReqLoc);
+        }
 
-    public void destroy()
-    {
-        this.actualIn.destroy();
-        this.toMessageBox.destroy();
-    }
+        public void endRead()
+        {
+            this.actualIn.endRead();
+        }
 
-    public NetLocation getLocation()
-    {
-        return this.messageBoxLoc;
-    }
+        public Object read()
+        {
+            MobileChannelMessage msg = new MobileChannelMessage();
+            msg.type = MobileChannelMessage.REQUEST;
+            msg.inputLocation = (NetChannelLocation) this.actualIn.getLocation();
+            this.toMessageBox.write(msg);
+            Object toReturn = this.actualIn.read();
+            return toReturn;
+        }
 
-    public void setDecoder(NetworkMessageFilter.FilterRx decoder)
-    {
-        this.actualIn.setDecoder(decoder);
-    }
+        public Object startRead()
+        {
+            MobileChannelMessage msg = new MobileChannelMessage();
+            msg.type = MobileChannelMessage.REQUEST;
+            msg.inputLocation = (NetChannelLocation) this.actualIn.getLocation();
+            this.toMessageBox.write(msg);
+            Object toReturn = this.actualIn.startRead();
+            return toReturn;
+        }
 
-    private void writeObject(ObjectOutputStream output)
-        //throws IOException
-    {
-        output.writeObject(this.messageBoxLoc);
-        output.writeObject(this.msgBoxReqLoc);
-        this.actualIn.destroy();
-        this.toMessageBox.destroy();
-    }
+        public void poison(int strength)
+        {
+            this.actualIn.poison(strength);
+        }
 
-    private void readObject(ObjectInputStream input)
-        //throws IOException, ClassNotFoundException
-    {
-        this.messageBoxLoc = (NetChannelLocation)input.readObject();
-        this.msgBoxReqLoc = (NetChannelLocation)input.readObject();
-        this.actualIn = NetChannel.net2one();
-        this.toMessageBox = NetChannel.one2net(this.messageBoxLoc);
+        public void destroy()
+        {
+            this.actualIn.destroy();
+            this.toMessageBox.destroy();
+        }
+
+        public NetLocation getLocation()
+        {
+            return this.messageBoxLoc;
+        }
+
+        public void setDecoder(NetworkMessageFilter.FilterRx decoder)
+        {
+            this.actualIn.setDecoder(decoder);
+        }
+
+        //private void writeObject(ObjectOutputStream output)
+        //    //throws IOException
+        //{
+        //    output.writeObject(this.messageBoxLoc);
+        //    output.writeObject(this.msgBoxReqLoc);
+        //    this.actualIn.destroy();
+        //    this.toMessageBox.destroy();
+        //}
+
+        //private void readObject(ObjectInputStream input)
+        //    //throws IOException, ClassNotFoundException
+        //{
+        //    this.messageBoxLoc = (NetChannelLocation)input.readObject();
+        //    this.msgBoxReqLoc = (NetChannelLocation)input.readObject();
+        //    this.actualIn = NetChannel.net2one();
+        //    this.toMessageBox = NetChannel.one2net(this.messageBoxLoc);
+        //}
     }
-}
 }

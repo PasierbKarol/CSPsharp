@@ -19,18 +19,13 @@
 
 using System;
 using System.IO;
+using System.Net;
+using System.Net.Sockets;
 using CSPlang;
 using CSPnet2.NetNode;
 
 namespace CSPnet2.TCPIP
 {
-
-//    import java.io.IOException;
-//import java.net.Inet4Address;
-//import java.net.InetAddress;
-//import java.net.ServerSocket;
-//import java.net.UnknownHostException;
-
 
 
 /**
@@ -75,7 +70,7 @@ public sealed class TCPIPNodeFactory : NodeFactory
      * @//throws JCSPNetworkException
      *             Thrown if something goes wrong during the Node initialisation process
      */
-    protected NodeAddress initNode(Node node)
+    internal override NodeAddress initNode(Node node)
         //throws JCSPNetworkException
     {
         // First install TCPIPProtocolID
@@ -83,8 +78,10 @@ public sealed class TCPIPNodeFactory : NodeFactory
         try
         {
             // Get the local IP addresses
-            InetAddress[] local = InetAddress.getAllByName(InetAddress.getLocalHost().getHostName());
-            InetAddress toUse = InetAddress.getLocalHost();
+            //InetAddress[] local = InetAddress.getAllByName(InetAddress.getLocalHost().getHostName());
+            IPAddress[] local = IPAddress.getAllByName(IPAddress.getLocalHost().getHostName());
+                //InetAddress toUse = InetAddress.getLocalHost();
+            IPAddress toUse = IPAddress.();
 
             // We basically have four types of addresses to worry about. Loopback (127), link local (169),
             // local (192) and (possibly) global. Grade each 1, 2, 3, 4 and use highest scoring address. In all
@@ -132,11 +129,15 @@ public sealed class TCPIPNodeFactory : NodeFactory
                 }
             }
 
-            // Create a new ServerSocket listening on this address
-            ServerSocket serv = new ServerSocket(0, 10, toUse);
+                // Create a new ServerSocket listening on this address
+            TcpClient serv = new TcpClient(0, 10, toUse);
+            //TcpListener serv = new TcpListener(0, 10, toUse);
+            //Socket serv = new Socket(0, 10, toUse);
+            //ServerSocket serv = new ServerSocket(0, 10, toUse);
 
             // Create the local address
-            TCPIPNodeAddress localAddr = new TCPIPNodeAddress(toUse.getHostAddress(), serv.getLocalPort());
+            //TCPIPNodeAddress localAddr = new TCPIPNodeAddress(toUse.getHostAddress(), serv.getLocalPort());
+            TCPIPNodeAddress localAddr = new TCPIPNodeAddress(toUse.getHostAddress(), serv.Client.LocalEndPoint);
 
             // Create and start the LinkServer
             TCPIPLinkServer server = new TCPIPLinkServer(serv);

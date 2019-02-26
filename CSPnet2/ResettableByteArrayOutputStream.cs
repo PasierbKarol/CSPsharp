@@ -51,9 +51,10 @@ sealed class ResettableByteArrayOutputStream : MemoryStream //ByteArrayOutputStr
      */
     internal void reset(int size)
     {
-        this.reset();
-        if (this.buf.length != size)
-            this.buf = new byte[size];
+        //this.reset();
+        this.Dispose();
+//        if (this.buf.length != size)
+//            this.buf = new byte[size];
     }
 }
 }

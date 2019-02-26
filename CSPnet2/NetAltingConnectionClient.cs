@@ -178,7 +178,7 @@ ConnectionData connData, NetConnectionLocation loc, NetworkMessageFilter.FilterT
                         {
                             this.data.state = ConnectionDataState.BROKEN;
                             ConnectionManager.getInstance().removeConnection(this.data);
-                            Node.err.log(this.getClass(), "Connection " + this.data.vconnn
+                            Node.err.log(this.GetType(), "Connection " + this.data.vconnn
                                                           + " received unexpected message");
                             throw new JCSPNetworkException("NetAltingConnectionClient received unexpected message");
                         }
@@ -214,7 +214,7 @@ ConnectionData connData, NetConnectionLocation loc, NetworkMessageFilter.FilterT
                     ConnectionManager.getInstance().removeConnection(this.data);
                     throw new JCSPNetworkException("Link to server Node lost.  Send cannot complete");
                 }
-                Node.err.log(this.getClass(), "Connection " + this.data.vconnn + " reports unexpected message");
+                Node.err.log(this.GetType(), "Connection " + this.data.vconnn + " reports unexpected message");
                 throw new JCSPNetworkException("NetAltingConnecionClient received an unexpected message");
             }
         }
@@ -292,7 +292,7 @@ ConnectionData connData, NetConnectionLocation loc, NetworkMessageFilter.FilterT
         }
         else
         {
-            Node.err.log(this.getClass(), "Connection " + this.data.vconnn + " reports unexpected message.");
+            Node.err.log(this.GetType(), "Connection " + this.data.vconnn + " reports unexpected message.");
             throw new JCSPNetworkException("NetAltingConnectionClient received an unexpected message");
         }
     }
@@ -352,6 +352,16 @@ ConnectionData connData, NetConnectionLocation loc, NetworkMessageFilter.FilterT
     /*final*/ ConnectionData getConnectionData()
     {
         return this.data;
+    }
+
+    public override bool enable(Alternative alt)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override bool disable()
+    {
+        throw new NotImplementedException();
     }
 }
 }

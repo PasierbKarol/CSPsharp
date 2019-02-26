@@ -51,9 +51,9 @@ sealed class ResettableByteArrayInputStream : MemoryStream //ByteArrayInputStrea
      */
     internal void reset(byte[] bytes)
     {
-        this.buf = bytes;
-        this.count = bytes.Length;
-        this.pos = 0;
+//        this.buf = bytes;
+//        this.count = bytes.Length;
+//        this.pos = 0;
     }
 }
 }

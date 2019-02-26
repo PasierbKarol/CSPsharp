@@ -27,10 +27,6 @@ using CSPnet2.NetNode;
 namespace CSPnet2.Mobile
 {
 
-//    import java.io.IOException;
-//import java.io.InputStream;
-
-
 /**
  * @author Kevin
  */
@@ -102,7 +98,8 @@ sealed class ClassManager : IamCSProcess
                             Out.asyncWrite(resp);
                             Out.destroy();
                         }
-                        catch (ClassNotFoundException cnf)
+                        //catch (ClassNotFoundException cnf)
+                        catch (Exception cnf)
                         {
                             ClassData resp = new ClassData(req.className, null);
                             NetChannelOutput Out = NetChannel.one2net(req.returnLocation);

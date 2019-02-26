@@ -22,82 +22,72 @@ using CSPnet2.NetChannels;
 
 namespace CSPnet2.Mobile
 {
-
-//    import java.io.IOException;
-//import java.io.ObjectInputStream;
-//import java.io.ObjectOutputStream;
-
-//import jcsp.net2.NetworkPoisonException;
-//import jcsp.net2.NetworkMessageFilter.FilterTx;
-
 /**
  * @author Kevin
  */
 
     [Serializable]
-public sealed class MobileChannelOutput : NetChannelOutput
-{
-    private NetChannelLocation msgBoxLocation;
-
-    [NonSerialized]
-    private /*transient*/ NetChannelOutput actualOut;
-
-    public MobileChannelOutput(NetChannelLocation loc)
+    public sealed class MobileChannelOutput : NetChannelOutput
     {
-        this.msgBoxLocation = loc;
-        this.actualOut = NetChannel.one2net(loc);
-    }
+        private NetChannelLocation msgBoxLocation;
 
-    public MobileChannelOutput(NetChannelLocation loc, NetworkMessageFilter.FilterTx encoder)
-    {
-        this.msgBoxLocation = loc;
-        this.actualOut = NetChannel.one2net(loc, encoder);
-    }
+        [NonSerialized] private /*transient*/ NetChannelOutput actualOut;
 
-    public void write(Object _object)
-    {
-        this.actualOut.write(_object);
-    }
+        public MobileChannelOutput(NetChannelLocation loc)
+        {
+            this.msgBoxLocation = loc;
+            this.actualOut = NetChannel.one2net(loc);
+        }
 
-    public void destroy()
-    {
-        this.actualOut.destroy();
-    }
+        public MobileChannelOutput(NetChannelLocation loc, NetworkMessageFilter.FilterTx encoder)
+        {
+            this.msgBoxLocation = loc;
+            this.actualOut = NetChannel.one2net(loc, encoder);
+        }
 
-    public NetLocation getLocation()
-    {
-        return this.actualOut.getLocation();
-    }
+        public void write(Object _object)
+        {
+            this.actualOut.write(_object);
+        }
 
-    public void poison(int strength)
-    {
-        this.actualOut.poison(strength);
-    }
+        public void destroy()
+        {
+            this.actualOut.destroy();
+        }
 
-    public void asyncWrite(Object obj)
-        //throws JCSPNetworkException, NetworkPoisonException
-    {
-        this.actualOut.asyncWrite(obj);
-    }
+        public NetLocation getLocation()
+        {
+            return this.actualOut.getLocation();
+        }
 
-    public void setEncoder(NetworkMessageFilter.FilterTx encoder)
-    {
-        this.actualOut.setEncoder(encoder);
-    }
+        public void poison(int strength)
+        {
+            this.actualOut.poison(strength);
+        }
 
-    private void writeObject(ObjectOutputStream output)
-        //throws IOException
-    {
-        output.writeObject(this.msgBoxLocation);
-        this.actualOut.destroy();
-    }
+        public void asyncWrite(Object obj)
+            //throws JCSPNetworkException, NetworkPoisonException
+        {
+            this.actualOut.asyncWrite(obj);
+        }
 
-    private void readObject(ObjectInputStream input)
-        //throws IOException, ClassNotFoundException
-    {
-        this.msgBoxLocation = (NetChannelLocation)input.readObject();
-        this.actualOut = NetChannel.one2net(this.msgBoxLocation);
-    }
+        public void setEncoder(NetworkMessageFilter.FilterTx encoder)
+        {
+            this.actualOut.setEncoder(encoder);
+        }
 
-}
+        //private void writeObject(ObjectOutputStream output)
+        //    //throws IOException
+        //{
+        //    output.writeObject(this.msgBoxLocation);
+        //    this.actualOut.destroy();
+        //}
+
+        //private void readObject(ObjectInputStream input)
+        //    //throws IOException, ClassNotFoundException
+        //{
+        //    this.msgBoxLocation = (NetChannelLocation)input.readObject();
+        //    this.actualOut = NetChannel.one2net(this.msgBoxLocation);
+        //}
+    }
 }

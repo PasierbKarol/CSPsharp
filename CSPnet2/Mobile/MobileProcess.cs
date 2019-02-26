@@ -32,8 +32,6 @@ using CSPlang;
 namespace CSPnet2.Mobile
 {
 
-//    import java.io.*;
-
 /**
  *
  * <p>Title: MobileProcess</p>

@@ -27,11 +27,6 @@ using CSPlang;
 namespace CSPnet2.TCPIP
 {
 
-//    import java.net.Inet4Address;
-//import java.net.InetAddress;
-
-
-
 /**
  * The new name for the TCPIPCNSServer. Use this class instead.
  * 

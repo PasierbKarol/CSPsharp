@@ -19,17 +19,13 @@
 //////////////////////////////////////////////////////////////////////
 
 using System;
+using System.Net;
 using CSPnet2.Net2Link;
 using CSPnet2.NetNode;
 
 namespace CSPnet2.TCPIP
 {
 
-//    import jcsp.net2.JCSPNetworkException;
-//import jcsp.net2.Link;
-//import jcsp.net2.LinkServer;
-//import jcsp.net2.NodeAddress;
-//import jcsp.net2.ProtocolID;
 
 /**
  * A concrete implementation of a NodeAddress that is designed for TCP/IP connections.
@@ -62,6 +58,16 @@ public sealed class TCPIPNodeAddress : NodeAddress
      * @param portNumber
      *            The port number part of the NodeAddress
      */
+    
+
+    public TCPIPNodeAddress(String ipAddress, EndPoint portNumber)
+    {
+        this.ip = ipAddress;
+        this.port = Int32.Parse(portNumber.AddressFamily.ToString());
+        this.protocol = "tcpip";
+        this.address = ipAddress + ":" + portNumber;
+    }
+
     public TCPIPNodeAddress(String ipAddress, int portNumber)
     {
         this.ip = ipAddress;
@@ -70,13 +76,13 @@ public sealed class TCPIPNodeAddress : NodeAddress
         this.address = ipAddress + ":" + portNumber;
     }
 
-    /**
-     * Creates a new TCPIPNodeAddress using the local IP address and a given port number. Allows a
-     * 
-     * @param portNumber
-     *            The port number to use
-     */
-    public TCPIPNodeAddress(int portNumber)
+        /**
+         * Creates a new TCPIPNodeAddress using the local IP address and a given port number. Allows a
+         * 
+         * @param portNumber
+         *            The port number to use
+         */
+        public TCPIPNodeAddress(int portNumber)
     {
         this.port = portNumber;
         this.ip = "";

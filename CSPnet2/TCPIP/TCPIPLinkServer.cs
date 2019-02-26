@@ -27,12 +27,6 @@ using CSPnet2.NetNode;
 namespace CSPnet2.TCPIP
 {
 
-//import java.io.IOException;
-//import java.net.Inet4Address;
-//import java.net.InetAddress;
-//import java.net.ServerSocket;
-//import java.net.Socket;
-
 
 /**
  * Concrete implementation of a LinkServer that listens on a TCP/IP based ServerSocket. For information on LinkServer,
@@ -59,7 +53,8 @@ public sealed class TCPIPLinkServer : LinkServer
     /**
      * The ServerSocket that this class wraps around. The process listens on this connection
      */
-    private readonly ServerSocket serv;
+    //private readonly ServerSocket serv;
+    private readonly TcpListener serv;
 
     /**
      * The NodeAddress that this LinkServer is listening on. This should be the same as the Node's address.

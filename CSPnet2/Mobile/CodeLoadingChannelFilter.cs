@@ -27,14 +27,6 @@ using CSPnet2.NetNode;
 namespace CSPnet2.Mobile
 {
 
-//    import java.io.ByteArrayInputStream;
-//import java.io.IOException;
-//
-//import jcsp.net2.NetChannelLocation;
-//import jcsp.net2.NetworkMessageFilter;
-//import jcsp.net2.Node;
-//import jcsp.net2.ObjectNetworkMessageFilter;
-
 /**
  * @author Kevin
  */
@@ -79,7 +71,8 @@ public sealed class CodeLoadingChannelFilter
                 Object toReturn = dois.readObject();
                 return toReturn;
             }
-            catch (ClassNotFoundException cnfe)
+            //catch (ClassNotFoundException cnfe)
+            catch (Exception cnfe)
             {
                 throw new IOException("Failed to load class");
             }
