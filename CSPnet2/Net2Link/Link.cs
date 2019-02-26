@@ -29,6 +29,8 @@ using CSPnet2.NetNode;
 
 namespace CSPnet2.Net2Link
 {
+
+
     /**
      * Abstract class representing a Link. This class defines the two processes (Link TX, Link RX) where the network
      * protocol is of key importance. Specific technology protocols (e.g. TCP/IP) must extend this class, providing the
