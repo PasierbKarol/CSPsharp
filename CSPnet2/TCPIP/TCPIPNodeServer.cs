@@ -18,7 +18,10 @@
 //////////////////////////////////////////////////////////////////////
 
 using System;
+using System.Diagnostics;
 using System.IO;
+using System.Net;
+using System.Net.Sockets;
 using CSPnet2.BNS;
 using CSPnet2.CNS;
 using CSPnet2.NetNode;
@@ -26,81 +29,100 @@ using CSPlang;
 
 namespace CSPnet2.TCPIP
 {
-
 /**
  * The new name for the TCPIPCNSServer. Use this class instead.
  * 
  * @author Kevin Chalmers
  */
-public sealed class TCPIPNodeServer
-{
-    /**
-     * @param args
-     * @//throws Exception
-     */
-    public static void main(String[] args)
-        //throws Exception
+    public sealed class TCPIPNodeServer
     {
-        Node.getInstance().setLog(new StreamWriter(Console.OpenStandardOutput()));
-        Node.getInstance().setErr(new StreamWriter(Console.OpenStandardError()));
-
-        // Get the local IP addresses
-        InetAddress[] local = InetAddress.getAllByName(InetAddress.getLocalHost().getHostName());
-        InetAddress toUse = InetAddress.getLocalHost();
-
-        // We basically have four types of addresses to worry about. Loopback (127), link local (169),
-        // local (192) and (possibly) global. Grade each 1, 2, 3, 4 and use highest scoring address. In all
-        // cases use first address of that score.
-        int current = 0;
-
-        // Loop until we have checked all the addresses
-        for (int i = 0; i < local.Length; i++)
+        /**
+         * @param args
+         * @//throws Exception
+         */
+        public static void main(String[] args)
+            //throws Exception
         {
-            // Ensure we have an IPv4 address
-            if (local[i] is Inet4Address)
-            {
-                // Get the first byte of the address
-                byte first = local[i].getAddress()[0];
+            Node.getInstance().setLog(new StreamWriter(Console.OpenStandardOutput()));
+            Node.getInstance().setErr(new StreamWriter(Console.OpenStandardError()));
 
-                // Now check the value
-                if (first == (byte)127 && current < 1)
+            // Get the local IP addresses
+            IPAddress[] localIPAddresses;
+            IPAddress ipAddresstoUse = null;
+
+
+            var host = Dns.GetHostEntry(Dns.GetHostName());
+            localIPAddresses = host.AddressList;
+            foreach (var ip in host.AddressList)
+            {
+                if (ip.AddressFamily == AddressFamily.InterNetwork)
                 {
-                    // We have a Loopback address
-                    current = 1;
-                    // Set the address to use
-                    toUse = local[i];
-                }
-                else if (first == (byte)169 && current < 2)
-                {
-                    // We have a link local address
-                    current = 2;
-                    // Set the address to use
-                    toUse = local[i];
-                }
-                else if (first == (byte)192 && current < 3)
-                {
-                    // We have a local address
-                    current = 3;
-                    // Set the address to use
-                    toUse = local[i];
-                }
-                else
-                {
-                    // Assume the address is globally accessible and use by default.
-                    toUse = local[i];
-                    // Break from the loop
-                    break;
+                    ipAddresstoUse = ip;
+                    Debug.WriteLine("Local IPAddress found: " + ipAddresstoUse.ToString());
+                    //Check if there is a connection - Karol Pasierb
+                    var connectionExisit = System.Net.NetworkInformation.NetworkInterface.GetIsNetworkAvailable();
+                    Debug.WriteLine("Connection status " + connectionExisit);
                 }
             }
-        }
 
-        // Create a local address object
-        TCPIPNodeAddress localAddr = new TCPIPNodeAddress(toUse.getHostAddress(), 7890);
-        // Initialise the Node
-        Node.getInstance().init(localAddr);
-        // Start CNS and BNS
-        IamCSProcess[] processes = { CNS.CNS.getInstance(), BNS.BNS.getInstance() };
-        new CSPParallel(processes).run();
+            if (ipAddresstoUse == null)
+            {
+                throw new Exception("No network adapters with an IPv4 address in the system!");
+            }
+
+            // We basically have four types of addresses to worry about. Loopback (127), link local (169),
+            // local (192) and (possibly) global. Grade each 1, 2, 3, 4 and use highest scoring address. In all
+            // cases use first address of that score.
+            int current = 0;
+
+            // Loop until we have checked all the addresses
+            for (int i = 0; i < localIPAddresses.Length; i++)
+            {
+                // Ensure we have an IPv4 address
+                if (localIPAddresses[i] is IPAddress)
+                {
+                    // Get the first byte of the address
+                    //byte first = localIPAddresses[i].getAddress()[0];
+                    byte first = localIPAddresses[i].GetAddressBytes()[0];
+                    // Now check the value
+                    if (first == (byte) 127 && current < 1)
+                    {
+                        // We have a Loopback address
+                        current = 1;
+                        // Set the address to use
+                        ipAddresstoUse = localIPAddresses[i];
+                    }
+                    else if (first == (byte) 169 && current < 2)
+                    {
+                        // We have a link local address
+                        current = 2;
+                        // Set the address to use
+                        ipAddresstoUse = localIPAddresses[i];
+                    }
+                    else if (first == (byte) 192 && current < 3)
+                    {
+                        // We have a local address
+                        current = 3;
+                        // Set the address to use
+                        ipAddresstoUse = localIPAddresses[i];
+                    }
+                    else
+                    {
+                        // Assume the address is globally accessible and use by default.
+                        ipAddresstoUse = localIPAddresses[i];
+                        // Break from the loop
+                        break;
+                    }
+                }
+            }
+
+            // Create a local address object
+            TCPIPNodeAddress localAddr = new TCPIPNodeAddress(ipAddresstoUse.ToString(), 7890);
+            // Initialise the Node
+            Node.getInstance().init(localAddr);
+            // Start CNS and BNS
+            IamCSProcess[] processes = {CNS.CNS.getInstance(), BNS.BNS.getInstance()};
+            new CSPParallel(processes).run();
+        }
     }
-}
 }

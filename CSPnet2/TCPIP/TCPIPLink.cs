@@ -18,15 +18,15 @@
 //////////////////////////////////////////////////////////////////////
 
 using System;
+using System.Diagnostics;
 using System.IO;
+using System.Net;
 using System.Net.Sockets;
 using CSPnet2.Net2Link;
 using CSPnet2.NetNode;
 
 namespace CSPnet2.TCPIP
 {
-
-
 /**
  * A concrete implementation of a Link that operates over a TCP/IP based socket connection. For information on Link, see
  * the relative documentation.
@@ -58,287 +58,326 @@ namespace CSPnet2.TCPIP
  * @see TCPIPNodeAddress
  * @author Kevin Chalmers
  */
-public sealed class TCPIPLink : Link
-{
-    /**
-     * Defines the size of the buffer to place on the incoming and outgoing streams. This is a rather large size, and
-     * for certain implementations, this may be reduced. It is unlikely that any sent object will be this large.
-     */
-    public static int BUFFER_SIZE = 8192;
-
-    /**
-     * Flag to determine whether the Nagle algorithm should be activated. Default is false (off).
-     */
-    public static Boolean NAGLE = false;
-
-    /**
-     * The socket connected to the remote Node.
-     */
-    private Socket sock;
-
-    /**
-     * The address of the remote Node.
-     */
-    private TCPIPNodeAddress remoteAddress;
-
-    /**
-     * Creates a new TCPIPLink
-     * 
-     * @param address
-     *            The address of the remote Node to connect to
-     * @//throws JCSPNetworkException
-     *             Thrown if something goes wrong during the creation process
-     */
-    public TCPIPLink(TCPIPNodeAddress address)
-        //throws JCSPNetworkException
+    public sealed class TCPIPLink : Link
     {
-        try
+        /**
+         * Defines the size of the buffer to place on the incoming and outgoing streams. This is a rather large size, and
+         * for certain implementations, this may be reduced. It is unlikely that any sent object will be this large.
+         */
+        public static int BUFFER_SIZE = 8192;
+
+        /**
+         * Flag to determine whether the Nagle algorithm should be activated. Default is false (off).
+         */
+        public static Boolean NAGLE = false;
+
+        /**
+         * The socket connected to the remote Node.
+         */
+        private Socket sock;
+
+        /**
+         * The address of the remote Node.
+         */
+        private TCPIPNodeAddress remoteAddress;
+
+        /**
+         * Creates a new TCPIPLink
+         * 
+         * @param address
+         *            The address of the remote Node to connect to
+         * @//throws JCSPNetworkException
+         *             Thrown if something goes wrong during the creation process
+         */
+        public TCPIPLink(TCPIPNodeAddress address)
+            //throws JCSPNetworkException
         {
-            // First check if we have an ip address in the string. If not, we assume that this is to be connected
-            // to the local machine but to a different JVM
-            if (address.getIpAddress().Equals(""))
+            try
             {
-                // Get the local IP addresses
-                InetAddress[] local = InetAddress.getAllByName(InetAddress.getLocalHost().getHostName());
-                InetAddress toUse = InetAddress.getLocalHost();
-
-                // We basically have four types of addresses to worry about. Loopback (127), link local (169),
-                // local (192) and (possibly) global. Grade each 1, 2, 3, 4 and use highest scoring address. In all
-                // cases use first address of that score.
-                int current = 0;
-
-                // Loop until we have checked all the addresses
-                for (int i = 0; i < local.Length; i++)
+                IPAddress[] localIPAddresses;
+                IPAddress ipAddresstoUse = null;
+                // First check if we have an ip address in the string. If not, we assume that this is to be connected
+                // to the local machine but to a different JVM
+                if (address.getIpAddress().Equals(""))
                 {
-                    // Ensure we have an IPv4 address
-                    if (local[i] is Inet4Address)
-                    {
-                        // Get the first byte of the address
-                        byte first = local[i].getAddress()[0];
+                    // Get the local IP addresses
 
-                        // Now check the value
-                        if (first == (byte)127 && current < 1)
+                    //--------------------------- KAROL
+                    var host = Dns.GetHostEntry(Dns.GetHostName());
+                    localIPAddresses = host.AddressList;
+                    foreach (var ip in host.AddressList)
+                    {
+                        if (ip.AddressFamily == AddressFamily.InterNetwork)
                         {
-                            // We have a Loopback address
-                            current = 1;
-                            // Set the address to use
-                            toUse = local[i];
-                        }
-                        else if (first == (byte)169 && current < 2)
-                        {
-                            // We have a link local address
-                            current = 2;
-                            // Set the address to use
-                            toUse = local[i];
-                        }
-                        else if (first == (byte)192 && current < 3)
-                        {
-                            // We have a local address
-                            current = 3;
-                            // Set the address to use
-                            toUse = local[i];
-                        }
-                        else
-                        {
-                            // Assume the address is globally accessible and use by default.
-                            toUse = local[i];
-                            // Break from the loop
-                            break;
+                            ipAddresstoUse = ip;
+                            Debug.WriteLine("Local IPAddress found: " + ipAddresstoUse.ToString());
+                            //Check if there is a connection - Karol Pasierb
+                            var connectionExisit =
+                                System.Net.NetworkInformation.NetworkInterface.GetIsNetworkAvailable();
+                            Debug.WriteLine("Connection status " + connectionExisit);
                         }
                     }
+
+                    if (ipAddresstoUse == null)
+                    {
+                        throw new Exception("No network adapters with an IPv4 address in the system!");
+                    }
+
+                    // We basically have four types of addresses to worry about. Loopback (127), link local (169),
+                    // local (192) and (possibly) global. Grade each 1, 2, 3, 4 and use highest scoring address. In all
+                    // cases use first address of that score.
+                    int current = 0;
+
+                    // Loop until we have checked all the addresses
+                    for (int i = 0; i < localIPAddresses.Length; i++)
+                    {
+                        // Ensure we have an IPv4 address
+                        if (localIPAddresses[i] is IPAddress)
+                        {
+                            // Get the first byte of the address
+                            //byte first = localIPAddresses[i].getAddress()[0];
+                            byte first = localIPAddresses[i].GetAddressBytes()[0];
+
+                            // Now check the value
+                            if (first == (byte) 127 && current < 1)
+                            {
+                                // We have a Loopback address
+                                current = 1;
+                                // Set the address to use
+                                ipAddresstoUse = localIPAddresses[i];
+                            }
+                            else if (first == (byte) 169 && current < 2)
+                            {
+                                // We have a link local address
+                                current = 2;
+                                // Set the address to use
+                                ipAddresstoUse = localIPAddresses[i];
+                            }
+                            else if (first == (byte) 192 && current < 3)
+                            {
+                                // We have a local address
+                                current = 3;
+                                // Set the address to use
+                                ipAddresstoUse = localIPAddresses[i];
+                            }
+                            else
+                            {
+                                // Assume the address is globally accessible and use by default.
+                                ipAddresstoUse = localIPAddresses[i];
+                                // Break from the loop
+                                break;
+                            }
+                        }
+                    }
+
+                    // Now set the IP address of the address
+                    address.setIpAddress(ipAddresstoUse.ToString());
+
+                    // Set the address part.
+                    address.setAddress(address.getIpAddress() + ":" + address.getPort());
                 }
 
-                // Now set the IP address of the address
-                address.setIpAddress(toUse.getHostAddress());
+                // Connect the socket to the server socket on the remote Node
+                //this.sock = new Socket(address.getIpAddress(), address.getPort());
+                this.sock = new Socket(ipAddresstoUse.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
+                
+                // Set TcpNoDelay. Off should improve performance for smaller packet sizes, which JCSP should have in
+                // general
+                //this.sock.setTcpNoDelay(!TCPIPLink.NAGLE);
+                this.sock.NoDelay = !TCPIPLink.NAGLE;
+                
+                // Create the input and output streams for the Link
+                //this.rxStream = new BinaryReader(new BufferedInputStream(this.sock.getInputStream(), TCPIPLink.BUFFER_SIZE));
+                this.rxStream = new BinaryReader(new NetworkStream(this.sock));
+                //this.txStream = new BinaryWriter(new BufferedOutputStream(this.sock.getOutputStream(), TCPIPLink.BUFFER_SIZE));
+                this.txStream = new BinaryWriter(new NetworkStream(this.sock));
 
-                // Set the address part.
-                address.setAddress(address.getIpAddress() + ":" + address.getPort());
+                // Set the remote address
+                this.remoteAddress = address;
+                
+                // We are not connected, so set connected to false.
+                this.connected = false;
+                
+                // Log Node connection
+                Node.log.log(this.GetType(), "Link created to " + address.toString());
             }
-
-            // Connect the socket to the server socket on the remote Node
-            this.sock = new Socket(address.getIpAddress(), address.getPort());
-            // Set TcpNoDelay. Off should improve performance for smaller packet sizes, which JCSP should have in
-            // general
-            this.sock.setTcpNoDelay(!TCPIPLink.NAGLE);
-            // Create the input and output streams for the Link
-            this.rxStream = new BinaryReader(new BufferedInputStream(this.sock.getInputStream(),
-                    TCPIPLink.BUFFER_SIZE));
-            this.txStream = new BinaryWriter(new BufferedOutputStream(this.sock.getOutputStream(),
-                    TCPIPLink.BUFFER_SIZE));
-            // Set the remote address
-            this.remoteAddress = address;
-            // We are not connected, so set connected to false.
-            this.connected = false;
-            // Log Node connection
-            Node.log.log(this.GetType(), "Link created to " + address.toString());
-        }
-        catch (IOException ioe)
-        {
-            // Something went wrong during connection. Log and throw exception
-            Node.err.log(this.GetType(), "Failed to create Link to " + address.toString());
-            throw new JCSPNetworkException("Failed to create TCPIPLink to: " + address.getAddress());
-        }
-    }
-
-    /**
-     * Creates new TCPIPLink from a Socket. This is used internally by JCSP
-     * 
-     * @param socket
-     *            The socket to create the TCPIPLink with
-     * @param nodeID
-     *            The NodeID of the remote Node
-     * @//throws JCSPNetworkException
-     *             Thrown if there is a problem during the connection
-     */
-    internal TCPIPLink(Socket socket, NodeID nodeID)
-        //throws JCSPNetworkException
-    {
-        try
-        {
-            // Set the sock property
-            this.sock = socket;
-            // Set TcpNoDelay
-            socket.setTcpNoDelay(!TCPIPLink.NAGLE);
-            // Set the input and output streams for the Link
-            this.rxStream = new BinaryReader(new BufferedInputStream(socket.getInputStream(), TCPIPLink.BUFFER_SIZE));
-            this.txStream = new BinaryWriter(new BufferedOutputStream(socket.getOutputStream(),
-                    TCPIPLink.BUFFER_SIZE));
-            // Set the NodeID
-            this.remoteID = nodeID;
-            // Set the remote address
-            this.remoteAddress = (TCPIPNodeAddress)this.remoteID.getNodeAddress();
-            // Set connected to true
-            this.connected = true;
-            // Log Link creation and Link connection
-            Node.log.log(this.GetType(), "Link created to " + nodeID.toString());
-            Node.log.log(this.GetType(), "Link to " + nodeID.toString() + " connected");
-        }
-        catch (IOException ioe)
-        {
-            // Something went wrong during the creation. Log and throw exception
-            Node.err.log(this.GetType(), "Failed to create Link to " + nodeID.toString());
-            throw new JCSPNetworkException("Failed to create TCPIPLink to: " + nodeID.getNodeAddress().getAddress());
-        }
-    }
-
-    /**
-     * Connects the Link to the remote Node. Exchanges the NodeIDs
-     * 
-     * @return True if the Link successfully connected to the remote Link
-     * @//throws JCSPNetworkException
-     *             Thrown if something goes wrong during the connection
-     */
-    public override Boolean connect()
-        //throws JCSPNetworkException
-    {
-        // First check if we are connected.
-        if (this.connected)
-            return true;
-
-        // Flag to determine if we are connected at the end of the process.
-        Boolean toReturn = false;
-
-        try
-        {
-            // Write the string representation of our NodeID to the remote Node
-            this.txStream.Write(Node.getInstance().getNodeID().toString());
-            this.txStream.Flush();
-
-            // Read in the response from the opposite Node
-            String response = this.rxStream.ReadString();
-
-            // Either the connection has been accepted (no connection to this Node exists on the opposite Node) or
-            // it has not. The opposite Node sends OK in the first instance.
-            if (response.Equals("OK", StringComparison.OrdinalIgnoreCase))
+            catch (IOException ioe)
             {
-                // The connection is to be kept. Log, and set toReturn to true
-                Node.log.log(this.GetType(), "Link to " + this.remoteAddress.toString() + " connected");
-                toReturn = true;
+                // Something went wrong during connection. Log and throw exception
+                Node.err.log(this.GetType(), "Failed to create Link to " + address.toString());
+                throw new JCSPNetworkException("Failed to create TCPIPLink to: " + address.getAddress());
             }
+        }
 
-            // Read in Remote NodeID as string
-            String nodeIDString = this.rxStream.ReadString();
-            NodeID otherID = NodeID.parse(nodeIDString);
-
-            // First check we have a tcpip Node connection. This should always be the case
-            if (otherID.getNodeAddress() is TCPIPNodeAddress)
+        /**
+         * Creates new TCPIPLink from a Socket. This is used internally by JCSP
+         * 
+         * @param socket
+         *            The socket to create the TCPIPLink with
+         * @param nodeID
+         *            The NodeID of the remote Node
+         * @//throws JCSPNetworkException
+         *             Thrown if there is a problem during the connection
+         */
+        internal TCPIPLink(Socket socket, NodeID nodeID)
+            //throws JCSPNetworkException
+        {
+            try
             {
-                // Set address and NodeID. If we are not connected then this NodeID can be used to
-                // get the actual Link from the LinkManager
-                this.remoteAddress = (TCPIPNodeAddress)otherID.getNodeAddress();
-                this.remoteID = otherID;
+                // Set the sock property
+                this.sock = socket;
+                // Set TcpNoDelay
+                //socket.setTcpNoDelay(!TCPIPLink.NAGLE);
+                socket.NoDelay = !TCPIPLink.NAGLE;
+                // Set the input and output streams for the Link
+                //this.rxStream = new BinaryReader(new BufferedInputStream(socket.getInputStream(), TCPIPLink.BUFFER_SIZE));
+                //this.txStream = new BinaryWriter(new BufferedOutputStream(socket.getOutputStream(), TCPIPLink.BUFFER_SIZE));
 
-                // Set connected to toReturn
-                this.connected = toReturn;
-                return toReturn;
+
+                //this.rxStream = new BinaryReader(new BufferedInputStream(this.sock.getInputStream(), TCPIPLink.BUFFER_SIZE));
+                this.rxStream = new BinaryReader(new NetworkStream(this.sock));
+                //this.txStream = new BinaryWriter(new BufferedOutputStream(this.sock.getOutputStream(), TCPIPLink.BUFFER_SIZE));
+                this.txStream = new BinaryWriter(new NetworkStream(this.sock));
+
+
+                // Set the NodeID
+                this.remoteID = nodeID;
+                // Set the remote address
+                this.remoteAddress = (TCPIPNodeAddress) this.remoteID.getNodeAddress();
+                // Set connected to true
+                this.connected = true;
+                // Log Link creation and Link connection
+                Node.log.log(this.GetType(), "Link created to " + nodeID.toString());
+                Node.log.log(this.GetType(), "Link to " + nodeID.toString() + " connected");
             }
-            // We do not have a tcpip? Should never really happen however. Log and throw Exception
-            Node.err.log(this.GetType(), "Tried to connect a TCPIPLink to a non TCPIP connection");
-            throw new JCSPNetworkException("Tried to connect a TCPIPLink to a non TCPIP connection");
-        }
-        catch (IOException ioe)
-        {
-            // Something went wrong during the connection process. Log and throw exception.
-            Node.err.log(this.GetType(), "Failed to connect TCPIPLink to: " + this.remoteAddress.getAddress());
-            throw new JCSPNetworkException("Failed to connect TCPIPLink to: " + this.remoteAddress.getAddress());
-        }
-    }
-
-    /**
-     * Creates any required resources. For TCP/IP there is none.
-     * 
-     * @return True if all resources were created OK. Always the case in TCP/IP
-     * @//throws JCSPNetworkException
-     *             Thrown if anything goes wrong during the creation process.
-     */
-    protected override Boolean createResources()
-        //throws JCSPNetworkException
-    {
-        // Just return true
-        return true;
-    }
-
-    /**
-     * Destroys any resources used by the Link
-     */
-    public override void destroyResources()
-    {
-        try
-        {
-            // We must ensure only one process can call destroy at any time
-            lock (this)
+            catch (IOException ioe)
             {
-                // Check that the socket is still in existence
-                if (this.sock != null)
+                // Something went wrong during the creation. Log and throw exception
+                Node.err.log(this.GetType(), "Failed to create Link to " + nodeID.toString());
+                throw new JCSPNetworkException("Failed to create TCPIPLink to: " +
+                                               nodeID.getNodeAddress().getAddress());
+            }
+        }
+
+        /**
+         * Connects the Link to the remote Node. Exchanges the NodeIDs
+         * 
+         * @return True if the Link successfully connected to the remote Link
+         * @//throws JCSPNetworkException
+         *             Thrown if something goes wrong during the connection
+         */
+        public override Boolean connect()
+            //throws JCSPNetworkException
+        {
+            // First check if we are connected.
+            if (this.connected)
+                return true;
+
+            // Flag to determine if we are connected at the end of the process.
+            Boolean toReturn = false;
+
+            try
+            {
+                // Write the string representation of our NodeID to the remote Node
+                this.txStream.Write(Node.getInstance().getNodeID().toString());
+                this.txStream.Flush();
+
+                // Read in the response from the opposite Node
+                String response = this.rxStream.ReadString();
+
+                // Either the connection has been accepted (no connection to this Node exists on the opposite Node) or
+                // it has not. The opposite Node sends OK in the first instance.
+                if (response.Equals("OK", StringComparison.OrdinalIgnoreCase))
                 {
-                    // Close the streams
-                    this.txStream.Close();
-                    this.rxStream.Close();
-                    // Close the socket
-                    this.sock.Close();
-                    // Set the socket to null
-                    this.sock = null;
-                    // Remove the Link from the LinkManager
-                    this.lostLink();
+                    // The connection is to be kept. Log, and set toReturn to true
+                    Node.log.log(this.GetType(), "Link to " + this.remoteAddress.toString() + " connected");
+                    toReturn = true;
                 }
+
+                // Read in Remote NodeID as string
+                String nodeIDString = this.rxStream.ReadString();
+                NodeID otherID = NodeID.parse(nodeIDString);
+
+                // First check we have a tcpip Node connection. This should always be the case
+                if (otherID.getNodeAddress() is TCPIPNodeAddress)
+                {
+                    // Set address and NodeID. If we are not connected then this NodeID can be used to
+                    // get the actual Link from the LinkManager
+                    this.remoteAddress = (TCPIPNodeAddress) otherID.getNodeAddress();
+                    this.remoteID = otherID;
+
+                    // Set connected to toReturn
+                    this.connected = toReturn;
+                    return toReturn;
+                }
+
+                // We do not have a tcpip? Should never really happen however. Log and throw Exception
+                Node.err.log(this.GetType(), "Tried to connect a TCPIPLink to a non TCPIP connection");
+                throw new JCSPNetworkException("Tried to connect a TCPIPLink to a non TCPIP connection");
+            }
+            catch (IOException ioe)
+            {
+                // Something went wrong during the connection process. Log and throw exception.
+                Node.err.log(this.GetType(), "Failed to connect TCPIPLink to: " + this.remoteAddress.getAddress());
+                throw new JCSPNetworkException("Failed to connect TCPIPLink to: " + this.remoteAddress.getAddress());
             }
         }
-        catch (Exception e)
+
+        /**
+         * Creates any required resources. For TCP/IP there is none.
+         * 
+         * @return True if all resources were created OK. Always the case in TCP/IP
+         * @//throws JCSPNetworkException
+         *             Thrown if anything goes wrong during the creation process.
+         */
+        protected override Boolean createResources()
+            //throws JCSPNetworkException
         {
-            // Hopefully nothing bad has happened. If it has, we still need to
-            // register the Link as lost
-            this.lostLink();
+            // Just return true
+            return true;
+        }
+
+        /**
+         * Destroys any resources used by the Link
+         */
+        public override void destroyResources()
+        {
+            try
+            {
+                // We must ensure only one process can call destroy at any time
+                lock (this)
+                {
+                    // Check that the socket is still in existence
+                    if (this.sock != null)
+                    {
+                        // Close the streams
+                        this.txStream.Close();
+                        this.rxStream.Close();
+                        // Close the socket
+                        this.sock.Close();
+                        // Set the socket to null
+                        this.sock = null;
+                        // Remove the Link from the LinkManager
+                        this.lostLink();
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                // Hopefully nothing bad has happened. If it has, we still need to
+                // register the Link as lost
+                this.lostLink();
+            }
+        }
+
+        /**
+         * Gets the NodeAddress of the Node that this Link is connected to
+         * 
+         * @return The NodeAddress of the remotely connected Node
+         */
+        public NodeAddress getRemoteAddress()
+        {
+            return this.remoteAddress;
         }
     }
-
-    /**
-     * Gets the NodeAddress of the Node that this Link is connected to
-     * 
-     * @return The NodeAddress of the remotely connected Node
-     */
-    public NodeAddress getRemoteAddress()
-    {
-        return this.remoteAddress;
-    }
-}
 }
