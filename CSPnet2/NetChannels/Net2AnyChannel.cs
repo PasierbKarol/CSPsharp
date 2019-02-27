@@ -33,7 +33,7 @@ namespace CSPnet2.NetChannels
  * @author Kevin Chalmers (updated from Quickstone Technologies)
  * @author Neil Brown (for the extended read operations)
  */
-sealed class Net2AnyChannel : NetSharedChannelInput
+    public sealed class Net2AnyChannel : NetSharedChannelInput
 {
 
     /**

@@ -129,7 +129,7 @@ namespace CSPlang
             //Call to this reset method to avoid code duplication
             reset(process, cspBarrier);
             //this.process = process;
-            //this._cspBarrier = cspBarrier;
+            this._cspBarrier = cspBarrier;
             //this.name = process.ToString();
             //setName(process.ToString());
         }
