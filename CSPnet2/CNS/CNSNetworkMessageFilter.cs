@@ -87,11 +87,11 @@ sealed class CNSNetworkMessageFilter
             this.dos.Write(msg.type);
             this.dos.Write(msg.success);
             if (msg.location1 != null)
-                this.dos.Write(msg.location1.toString());
+                this.dos.Write(msg.location1.LocationToString());
             else
                 this.dos.Write("null");
             if (msg.location2 != null)
-                this.dos.Write(msg.location2.toString());
+                this.dos.Write(msg.location2.LocationToString());
             else
                 this.dos.Write("null");
             this.dos.Write(msg.name);

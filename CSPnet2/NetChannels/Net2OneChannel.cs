@@ -36,7 +36,7 @@ namespace CSPnet2.NetChannels
  * @see NetChannel
  * @author Kevin Chalmers (updated from Quickstone Technologies)
  */
-sealed class Net2OneChannel : NetAltingChannelInput
+    public sealed class Net2OneChannel : NetAltingChannelInput
 {
     /**
      * The input channel coming into the networked channel input object from Links or locally connected net channel
@@ -74,7 +74,7 @@ sealed class Net2OneChannel : NetAltingChannelInput
      *            The filter on the channel used to convert read bytes into an object
      * @return A new Net2OneChannel
      */
-    internal static Net2OneChannel create(int poisonImmunity, NetworkMessageFilter.FilterRx filter)
+    public static Net2OneChannel create(int poisonImmunity, NetworkMessageFilter.FilterRx filter)
     {
         // Create a new ChannelData object
         ChannelData data = new ChannelData();
@@ -573,15 +573,20 @@ sealed class Net2OneChannel : NetAltingChannelInput
      * 
      * @return Location of this channel
      */
-    public NetLocation getLocation()
+    public override NetLocation getLocation()
     {
         return this.location;
     }
 
-    /**
-     * Destroys the underlying channel
-     */
-    public void destroy()
+    public override String GetLocationAsString()
+    {
+        return this.location.LocationToString();
+    }
+
+        /**
+         * Destroys the underlying channel
+         */
+        public override void destroy()
     {
         // First acquire a lock on the channel
         lock (this.data)
@@ -644,7 +649,7 @@ sealed class Net2OneChannel : NetAltingChannelInput
      * @param decoder
      *            The message filter to use
      */
-    public void setDecoder(NetworkMessageFilter.FilterRx decoder)
+    public override void setDecoder(NetworkMessageFilter.FilterRx decoder)
     {
         this.messageFilter = decoder;
     }

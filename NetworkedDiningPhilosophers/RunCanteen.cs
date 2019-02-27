@@ -7,7 +7,7 @@ using CSPnet2.TCPIP;
 
 namespace NetworkedDiningPhilosophers
 {
-    class Program
+    class RunCanteen
     {
         static void Main(string[] args)
         {
@@ -18,10 +18,10 @@ namespace NetworkedDiningPhilosophers
             var canteenNodeAddr = new TCPIPNodeAddress(canteenNodeIP, 3000);
             Node.getInstance().init(canteenNodeAddr);
             var cooked = NetChannel.net2one();
-            Console.WriteLine("cooked location = " + cooked.getLocation());
+            Console.WriteLine("cooked location = " + cooked.GetLocationAsString());
 
             var getOne = NetChannel.net2one();
-            Console.WriteLine("getOne location = " + getOne.getLocation());
+            Console.WriteLine("getOne location = " + getOne.GetLocationAsString());
 
             getOne.read(); // signal from the philosophers;
             var philosopherAddr = new TCPIPNodeAddress(philosopherNodeIP, 3002);

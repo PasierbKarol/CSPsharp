@@ -47,20 +47,22 @@ namespace CSPnet2
         {
         }
 
-        public NetLocation getLocation()
-        {
-            
-            throw new NotImplementedException();
-        }
+        public abstract NetLocation getLocation();
 
-        public void destroy()
-        {
-            throw new NotImplementedException();
-        }
+        public abstract String GetLocationAsString();
+        //{
 
-        public void setDecoder(NetworkMessageFilter.FilterRx decoder)
-        {
-            throw new NotImplementedException();
-        }
+        //    throw new NotImplementedException();
+        //}
+
+        public abstract void destroy();
+        //{
+        //    throw new NotImplementedException();
+        //}
+
+        public abstract void setDecoder(NetworkMessageFilter.FilterRx decoder);
+        //{
+        //    throw new NotImplementedException();
+        //}
     }
 }
