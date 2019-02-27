@@ -266,6 +266,11 @@ namespace CSPnet2.NetChannels
             return this.remoteLocation;
         }
 
+        public String GetLocationAsString()
+        {
+            return this.remoteLocation.LocationToString();
+        }
+
         /**
          * Gets the local NetChannelLocation that represents this channel.
          * 

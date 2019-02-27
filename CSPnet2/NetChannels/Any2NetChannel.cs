@@ -98,16 +98,21 @@ namespace CSPnet2.NetChannels
             return this.chan.getLocation();
         }
 
-/**
- * Writes an object to the underlying channel.
- * 
- * @param object
- *            The Object to write to the channel
- * @//throws JCSPNetworkException
- *             Thrown if something happens in the underlying architecture
- * @//throws PoisonException
- *             Thrown if the channel has been poisoned.
- */
+        public String GetLocationAsString()
+        {
+            return this.chan.GetLocationAsString();
+        }
+
+        /**
+         * Writes an object to the underlying channel.
+         * 
+         * @param object
+         *            The Object to write to the channel
+         * @//throws JCSPNetworkException
+         *             Thrown if something happens in the underlying architecture
+         * @//throws PoisonException
+         *             Thrown if the channel has been poisoned.
+         */
         public void write(Object _object)
 //throws JCSPNetworkException, PoisonException
         {

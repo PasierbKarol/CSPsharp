@@ -33,5 +33,6 @@ namespace CSPnet2.NetChannels
     public interface NetSharedChannelInput : SharedChannelInput, NetChannelInput
     {
         // Nothing new to declare
+        string GetLocationAsString();
     }
 }

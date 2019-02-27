@@ -270,10 +270,15 @@ sealed class Net2AnyChannel : NetSharedChannelInput
         return this.actualChannel.getLocation();
     }
 
-    /**
-     * Destroys the channel
-     */
-    public void destroy()
+    public  String GetLocationAsString()
+    {
+        return this.actualChannel.GetLocationAsString();
+    }
+
+        /**
+         * Destroys the channel
+         */
+        public void destroy()
     {
         lock (this)
         {

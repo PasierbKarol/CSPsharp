@@ -33,5 +33,6 @@ namespace CSPnet2.NetChannels
     public interface NetSharedChannelOutput : NetChannelOutput, SharedChannelOutput
     {
         // Nothing to add
+        string GetLocationAsString();
     }
 }
