@@ -183,7 +183,7 @@ namespace CSPlang
         {
             this.process = process;
             thread = new ParThread();
-
+            
             //    {
 
             //        public void run()

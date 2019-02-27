@@ -90,8 +90,10 @@ namespace CSPnet2.TCPIP
         {
             try
             {
-                IPAddress localIPAddresstoUse = GetLocalIpAddress(); 
-                IPAddress[] localIPAddresses = getAllLocalIpAddresses();
+                IPAddress localIPAddresstoUse = IPAddressGetterForNET2.GetOnlyLocalIPAddress(); 
+                IPAddress[] localIPAddresses = IPAddressGetterForNET2.GetAllLocalAddresses();
+
+
                 // First check if we have an ip address in the string
                 if (address.getIpAddress().Equals(""))
                 {
@@ -200,30 +202,6 @@ namespace CSPnet2.TCPIP
                 throw new JCSPNetworkException("Failed to create TCPIPLinkServer on: " + address.getAddress());
             }
         }
-
-        private IPAddress[] getAllLocalIpAddresses()
-        {
-            return Dns.GetHostEntry(Dns.GetHostName()).AddressList;
-        }
-
-        //get IPAddress - Karol Pasierb
-        public IPAddress GetLocalIpAddress()
-        {
-            var host = getAllLocalIpAddresses();
-            foreach (var ip in host)
-            {
-                if (ip.AddressFamily == AddressFamily.InterNetwork)
-                {
-                    Debug.WriteLine("Local IPAddress found: " + ip.ToString());
-                    //Check if there is a connection - Karol Pasierb
-                    var connectionExisit = System.Net.NetworkInformation.NetworkInterface.GetIsNetworkAvailable();
-                    Debug.WriteLine("Connection status " + connectionExisit);
-                    return ip;
-                }
-            }
-                throw new Exception("No network adapters with an IPv4 address in the system!");
-        }
-
 
         /**
          * The run method for the TCPIPLinkServer process

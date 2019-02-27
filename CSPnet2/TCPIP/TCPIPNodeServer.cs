@@ -47,28 +47,9 @@ namespace CSPnet2.TCPIP
             Node.getInstance().setErr(new StreamWriter(Console.OpenStandardError()));
 
             // Get the local IP addresses
-            IPAddress[] localIPAddresses;
-            IPAddress ipAddresstoUse = null;
-
-
-            var host = Dns.GetHostEntry(Dns.GetHostName());
-            localIPAddresses = host.AddressList;
-            foreach (var ip in host.AddressList)
-            {
-                if (ip.AddressFamily == AddressFamily.InterNetwork)
-                {
-                    ipAddresstoUse = ip;
-                    Debug.WriteLine("Local IPAddress found: " + ipAddresstoUse.ToString());
-                    //Check if there is a connection - Karol Pasierb
-                    var connectionExisit = System.Net.NetworkInformation.NetworkInterface.GetIsNetworkAvailable();
-                    Debug.WriteLine("Connection status " + connectionExisit);
-                }
-            }
-
-            if (ipAddresstoUse == null)
-            {
-                throw new Exception("No network adapters with an IPv4 address in the system!");
-            }
+            IPAddress[] localIPAddresses = IPAddressGetterForNET2.GetAllLocalAddresses();
+            IPAddress ipAddresstoUse = IPAddressGetterForNET2.GetOnlyLocalIPAddress();
+            
 
             // We basically have four types of addresses to worry about. Loopback (127), link local (169),
             // local (192) and (possibly) global. Grade each 1, 2, 3, 4 and use highest scoring address. In all
