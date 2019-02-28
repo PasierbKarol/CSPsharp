@@ -61,6 +61,7 @@ namespace CSPnet2.TCPIP
          * The NodeAddress that this LinkServer is listening on. This should be the same as the Node's address.
          */
         readonly TCPIPNodeAddress listeningAddress;
+        readonly EndPoint remotEndPoint;
 
         /**
          * Creates LinkServer by wrapping round an existing ServerSocket. Used internally by JCSP
@@ -171,6 +172,8 @@ namespace CSPnet2.TCPIP
                     //this.serv = new ServerSocket(0, 0, socketAddress);
                     //this.serv = new TcpListener(localIPAddresstoUse.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
                     this.serv = new Socket(localIPAddresstoUse.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
+                    this.serv.Bind(socketAddress);
+                   // this.serv.Listen(0);
 
 
                     // Assign the port to the address
@@ -187,14 +190,20 @@ namespace CSPnet2.TCPIP
                 {
                     // Create an IP address from the NodeAddress
                     //InetAddress inetAddress = InetAddress.getByName(address.getIpAddress());
-                    IPEndPoint inetAddress = new IPEndPoint(localIPAddresstoUse, 10); 
+                    IPEndPoint inetAddress = new IPEndPoint(address.getIpAddress(), address.getPort()); 
 
                     // Now create the ServerSocket
                     //this.serv = new ServerSocket(address.getPort(), 10, inetAddress);
-                    IPEndPoint ipEndpoint = new IPEndPoint(localIPAddresstoUse, address.getPort());
+                    //IPEndPoint ipEndpoint = new IPEndPoint(localIPAddresstoUse, address.getPort());
                     this.serv = new Socket(localIPAddresstoUse.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
+
+                    //Bind server to the ip address - Karol Pasierb
+                    this.serv.Bind(inetAddress);
+                    this.serv.Listen(10); //backlog 10 for the queue  - Karol Pasierb
+
                     // Set listeningAddress
                     this.listeningAddress = address;
+                    this.remotEndPoint = inetAddress;
                 }
             }
             catch (IOException ioe)
@@ -206,7 +215,7 @@ namespace CSPnet2.TCPIP
         /**
          * The run method for the TCPIPLinkServer process
          */
-        public void run()
+        public override void run()
         {
             // Log start of Link Server
             Node.log.log(this.GetType(), "TCPIP Link Server started on " + this.listeningAddress.getAddress());
@@ -218,6 +227,8 @@ namespace CSPnet2.TCPIP
                     // Receive incoming connection
                     //Socket incoming = this.serv.accept();
                     Socket incoming = this.serv.Accept();
+                    //this.serv.Connect(remotEndPoint);
+                    //Socket incoming = this.serv;
                     // Log
                     Node.log.log(this.GetType(), "Received new incoming connection");
                     // Set TcpNoDelay

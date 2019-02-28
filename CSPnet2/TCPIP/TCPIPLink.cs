@@ -99,7 +99,7 @@ namespace CSPnet2.TCPIP
 
                 // First check if we have an ip address in the string. If not, we assume that this is to be connected
                 // to the local machine but to a different JVM
-                if (address.getIpAddress().Equals(""))
+                if (address.GetIpAddressAsString().Equals(""))
                 {                     
                     // We basically have four types of addresses to worry about. Loopback (127), link local (169),
                     // local (192) and (possibly) global. Grade each 1, 2, 3, 4 and use highest scoring address. In all
@@ -152,11 +152,11 @@ namespace CSPnet2.TCPIP
                     address.setIpAddress(ipAddresstoUse.ToString());
 
                     // Set the address part.
-                    address.setAddress(address.getIpAddress() + ":" + address.getPort());
+                    address.setAddress(address.GetIpAddressAsString() + ":" + address.getPort());
                 }
 
                 // Connect the socket to the server socket on the remote Node
-                //this.sock = new Socket(address.getIpAddress(), address.getPort());
+                //this.sock = new Socket(address.GetIpAddressAsString(), address.getPort());
                 this.sock = new Socket(ipAddresstoUse.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
                 
                 // Set TcpNoDelay. Off should improve performance for smaller packet sizes, which JCSP should have in

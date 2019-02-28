@@ -41,6 +41,7 @@ namespace CSPnet2.TCPIP
          * The IP address part of the address
          */
         private String ip;
+        private IPAddress ipAddress;
 
         /**
          * The port part of the address
@@ -122,9 +123,14 @@ namespace CSPnet2.TCPIP
          * 
          * @return The IP Address part of the address
          */
-        public /*final*/ String getIpAddress()
+        public /*final*/ String GetIpAddressAsString()
         {
             return this.ip;
+        }
+
+        public /*final*/ IPAddress GetIpAddress()
+        {
+            return this.ipAddress;
         }
 
         /**
@@ -136,6 +142,11 @@ namespace CSPnet2.TCPIP
         internal void setIpAddress(String ipAddr)
         {
             this.ip = ipAddr;
+        }
+
+        internal void setIpAddress(IPAddress ipAddr)
+        {
+            this.ipAddress = ipAddr;
         }
 
         /**

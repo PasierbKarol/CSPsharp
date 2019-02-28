@@ -23,51 +23,49 @@ using CSPnet2.NetNode;
 
 namespace CSPnet2.Net2Link
 {
-
     /**
      * Abstract class defining the LinkServer.
      * 
      * @author Kevin Chalmers
      */
     public abstract class LinkServer : IamCSProcess
-{
-    /**
-     * @param address
-     * @//throws ArgumentException 
-     * @//throws JCSPNetworkException
-     */
-    public static /*final*/ void start(NodeAddress address)
-        //throws ArgumentException , JCSPNetworkException
     {
-        Node.log.log(typeof(LinkServer), "Attempting to start Link Server on " + address);
-        LinkServer linkServer = address.createLinkServer();
-        ProcessManager linkServProc = new ProcessManager(linkServer);
-        linkServProc.setPriority(Link.LINK_PRIORITY);
-        linkServProc.start();
-        Node.log.log(typeof(LinkServer), "Link Server started on " + address);
-    }
+        /**
+         * @param address
+         * @//throws ArgumentException 
+         * @//throws JCSPNetworkException
+         */
+        public static /*final*/ void start(NodeAddress address)
+            //throws ArgumentException , JCSPNetworkException
+        {
+            Node.log.log(typeof(LinkServer), "Attempting to start Link Server on " + address);
+            LinkServer linkServer = address.createLinkServer();
+            //ProcessManager linkServProc = new ProcessManager(linkServer);
+            //linkServProc.setPriority(Link.LINK_PRIORITY);
+            //linkServProc.start();
+            new ProcessManager(linkServer).start();
+            Node.log.log(typeof(LinkServer), "Link Server started on " + address);
+        }
 
-    /**
-     * @param nodeID
-     * @return The Link connected to the Node with the corresponding NodeID, or null if no such Node exists
-     */
-    protected /*final*/ Link requestLink(NodeID nodeID)
-    {
-        return LinkManager.getInstance().requestLink(nodeID);
-    }
+        /**
+         * @param nodeID
+         * @return The Link connected to the Node with the corresponding NodeID, or null if no such Node exists
+         */
+        protected /*final*/ Link requestLink(NodeID nodeID)
+        {
+            return LinkManager.getInstance().requestLink(nodeID);
+        }
 
-    /**
-     * @param link
-     * @return True if the Link to the Node was successfully registered, false otherwise
-     */
-    protected /*final*/ Boolean registerLink(Link link)
-    {
-        return LinkManager.getInstance().registerLink(link);
-    }
+        /**
+         * @param link
+         * @return True if the Link to the Node was successfully registered, false otherwise
+         */
+        protected /*final*/ Boolean registerLink(Link link)
+        {
+            return LinkManager.getInstance().registerLink(link);
+        }
 
-    public void run()
-    {
-        throw new NotImplementedException();
+        public abstract void run();
+
     }
-}
 }

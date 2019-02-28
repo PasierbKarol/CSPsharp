@@ -182,27 +182,8 @@ namespace CSPlang
         public ProcessManager(IamCSProcess process)
         {
             this.process = process;
-            thread = new ParThread();
-            
-            //    {
-
-            //        public void run()
-            //        {
-            /*try
-            {
-                //CSPParallel.addToAllParThreads(this);
-                //this.process.run();
-            }
-            catch (Exception e)
-            {
-                CSPParallel.uncaughtException("jcsp.lang.ProcessManager", e);
-            }
-            finally
-            {
-                CSPParallel.removeFromAllParThreads(this);
-            }*/
-            //}
-            //};
+            //thread = new ParThread();
+            thread = new ParThread(this.process, new CSPBarrier());
             //thread.setDaemon(true);
             thread.run();
 

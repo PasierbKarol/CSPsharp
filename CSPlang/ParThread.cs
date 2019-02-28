@@ -27,6 +27,7 @@
 //////////////////////////////////////////////////////////////////////
 
 using System;
+using System.Collections;
 using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
@@ -181,13 +182,14 @@ namespace CSPlang
                     try
                     {
                         process.run();
+                        //_cspBarrier.enroll();
                     }
                     catch (Exception e)
                     {
                         CSPParallel.uncaughtException("jcsp.lang.CSPParallel", e);
                     }
 
-                    _cspBarrier.resign();
+                    //_cspBarrier.resign();
                     park.sync();
                 }
             }

@@ -14,7 +14,6 @@ namespace CSPnet2
             return Dns.GetHostEntry(Dns.GetHostName()).AddressList;
         }
 
-        //get IPAddress - Karol Pasierb
         public static IPAddress GetOnlyLocalIPAddress()
         {
             var host = GetAllLocalAddresses();

@@ -291,10 +291,9 @@ namespace CSPlang
                     allParThreads.TryAdd(_byte, newThread);
                 }
             }
-            catch (ThreadInterruptedException)
+            catch (ThreadInterruptedException ex)
             {
-
-                throw;
+                Console.WriteLine("Thread interrupted " + ex);
             }
         }
 
