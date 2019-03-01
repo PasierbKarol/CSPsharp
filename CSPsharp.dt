@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<DevTrackerData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" SolutionTotalEditTime="PT18H58M37.7380476S" SolutionTotalViewTime="P1DT1H50M26.9161823S" SolutionTotalDebugTime="PT2H20M34.1758231S">
+<DevTrackerData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" SolutionTotalEditTime="PT19H19M46.804785S" SolutionTotalViewTime="P1DT3H10M22.3889854S" SolutionTotalDebugTime="PT2H30M58.7085147S">
   <FileVersion>
     <Major>1</Major>
     <Minor>0</Minor>
@@ -7,34 +7,14 @@
   <SolutionFolder>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp</SolutionFolder>
   <SessionTimeList />
   <LastSessionTimeList>
-    <DevTrackerDataItem ViewActiveTime="PT8.8826644S" EditActiveTime="PT0S">
-      <ModifiedDate>0001-01-01T00:00:00</ModifiedDate>
-      <EditedCount>0</EditedCount>
-      <ViewedCount>1</ViewedCount>
-      <Item>Debug Mode</Item>
-      <ItemType>DebugModeItem</ItemType>
-      <ProjectName />
-      <CreatedDate>2019-02-28T11:25:26.1721862+00:00</CreatedDate>
-      <ViewedBy>Karol</ViewedBy>
-    </DevTrackerDataItem>
-    <DevTrackerDataItem ViewActiveTime="PT39.2294913S" EditActiveTime="PT0S">
-      <ModifiedDate>0001-01-01T00:00:00</ModifiedDate>
-      <EditedCount>0</EditedCount>
-      <ViewedCount>1</ViewedCount>
-      <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CSPnet2\TCPIP\TCPIPLink.cs</Item>
-      <ItemType>ProjectItem</ItemType>
-      <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CSPnet2\CSPnet2.csproj</ProjectName>
-      <CreatedDate>2019-02-28T14:01:25.2576955+00:00</CreatedDate>
-      <ViewedBy>Karol</ViewedBy>
-    </DevTrackerDataItem>
-    <DevTrackerDataItem ViewActiveTime="PT5M28.6619552S" EditActiveTime="PT0S">
+    <DevTrackerDataItem ViewActiveTime="PT13.5138341S" EditActiveTime="PT0S">
       <ModifiedDate>0001-01-01T00:00:00</ModifiedDate>
       <EditedCount>0</EditedCount>
       <ViewedCount>1</ViewedCount>
       <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CSPnet2\TCPIP\TCPIPLinkServer.cs</Item>
       <ItemType>ProjectItem</ItemType>
       <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CSPnet2\CSPnet2.csproj</ProjectName>
-      <CreatedDate>2019-02-28T11:24:39.9617598+00:00</CreatedDate>
+      <CreatedDate>2019-03-01T11:14:37.3077227+00:00</CreatedDate>
       <ViewedBy>Karol</ViewedBy>
     </DevTrackerDataItem>
   </LastSessionTimeList>
@@ -5592,11 +5572,11 @@
       <CreatedDate>2019-02-20T14:12:36.6662979+00:00</CreatedDate>
       <ViewedBy>Karol</ViewedBy>
     </DevTrackerDataItem>
-    <DevTrackerDataItem ViewActiveTime="PT55M33.3464788S" EditActiveTime="PT50M47.0341098S">
+    <DevTrackerDataItem ViewActiveTime="PT55M46.8264032S" EditActiveTime="PT50M47.0341098S">
       <ModifiedDate>2019-02-28T13:54:06.8419072+00:00</ModifiedDate>
       <ModifiedBy>Karol</ModifiedBy>
       <EditedCount>7</EditedCount>
-      <ViewedCount>9</ViewedCount>
+      <ViewedCount>10</ViewedCount>
       <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CSPnet2\TCPIP\TCPIPLinkServer.cs</Item>
       <ItemType>ProjectItem</ItemType>
       <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CSPnet2\CSPnet2.csproj</ProjectName>
@@ -5755,6 +5735,16 @@
     </DevTrackerDataItem>
   </TotalTimeList>
   <HistoryTimeList>
+    <DevTrackerDataItem ViewActiveTime="PT13.5088473S" EditActiveTime="PT0S">
+      <ModifiedDate>0001-01-01T00:00:00</ModifiedDate>
+      <EditedCount>0</EditedCount>
+      <ViewedCount>1</ViewedCount>
+      <Item>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CSPnet2\TCPIP\TCPIPLinkServer.cs</Item>
+      <ItemType>ProjectItem</ItemType>
+      <ProjectName>D:\Moje Dokumenty\Visual Studio 2017\Projects\CSPsharp\CSPnet2\CSPnet2.csproj</ProjectName>
+      <CreatedDate>2019-03-01T11:14:37.3077227+00:00</CreatedDate>
+      <ViewedBy>Karol</ViewedBy>
+    </DevTrackerDataItem>
     <DevTrackerDataItem ViewActiveTime="PT39.223507S" EditActiveTime="PT0S">
       <ModifiedDate>0001-01-01T00:00:00</ModifiedDate>
       <EditedCount>0</EditedCount>

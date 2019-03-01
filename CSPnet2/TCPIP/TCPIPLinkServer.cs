@@ -95,14 +95,12 @@ namespace CSPnet2.TCPIP
         {
             try
             {
-                IPAddress localIPAddresstoUse = IPAddressGetterForNET2.GetOnlyLocalIPAddress(); 
-                IPAddress[] localIPAddresses = IPAddressGetterForNET2.GetAllLocalAddresses();
-                address.setIpAddress(localIPAddresstoUse);
-
-
                 // First check if we have an ip address in the string
                 if (address.GetIpAddressAsString().Equals(""))
                 {
+                    IPAddress localIPAddresstoUse = IPAddressGetterForNET2.GetOnlyLocalIPAddress();
+                    IPAddress[] localIPAddresses = IPAddressGetterForNET2.GetAllLocalAddresses();
+                    address.setIpAddress(localIPAddresstoUse);
                     // Get the local IP addresses
                     //InetAddress[] local = InetAddress.getAllByName(InetAddress.getLocalHost().getHostName());
                     //InetAddress toUse = InetAddress.getLocalHost();
@@ -170,20 +168,21 @@ namespace CSPnet2.TCPIP
                     // No port number supplied. Get one as we create the ServerSocket
                     //InetAddress socketAddress = InetAddress.getByName(address.GetIpAddressAsString());
                     //SocketAddress socketAddress = new SocketAddress(AddressFamily.InterNetwork);
-                    IPEndPoint socketAddress = new IPEndPoint(localIPAddresstoUse, 0); //port 0 as in Java's implementation
+                    IPEndPoint socketEndPoint = new IPEndPoint(IPAddress.Parse(address.GetIpAddressAsString()), 0); //port 0 as in Java's implementation
+                    IPAddress serverAddress = IPAddress.Parse(address.GetIpAddressAsString());
 
 
                     // Create the server socket with a random port
                     //this.serv = new ServerSocket(0, 0, socketAddress);
                     //this.serv = new TcpListener(localIPAddresstoUse.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
-                    this.serv = new Socket(localIPAddresstoUse.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
-                    this.serv.Bind(socketAddress);
+                    this.serv = new Socket(serverAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
+                    this.serv.Bind(socketEndPoint);
                     this.serv.Listen(0);
 
 
                     // Assign the port to the address
                     //address.setPort(this.serv.getLocalPort());
-                    address.setPort(socketAddress.Port);
+                    address.setPort(socketEndPoint.Port);
 
                     // And set the address
                     address.setAddress(address.GetIpAddressAsString() + ":" + address.getPort());
@@ -195,12 +194,12 @@ namespace CSPnet2.TCPIP
                 {
                     // Create an IP address from the NodeAddress
                     //InetAddress inetAddress = InetAddress.getByName(address.GetIpAddressAsString());
-                    IPEndPoint inetAddress = new IPEndPoint(address.GetIpAddress(), address.getPort()); 
+                    IPEndPoint inetAddress = new IPEndPoint(IPAddress.Parse(address.GetIpAddressAsString()), address.getPort()); 
 
                     // Now create the ServerSocket
                     //this.serv = new ServerSocket(address.getPort(), 10, inetAddress);
                     //IPEndPoint ipEndpoint = new IPEndPoint(localIPAddresstoUse, address.getPort());
-                    this.serv = new Socket(localIPAddresstoUse.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
+                    this.serv = new Socket(inetAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
 
                     //Bind server to the ip address - Karol Pasierb
                     this.serv.Bind(inetAddress);

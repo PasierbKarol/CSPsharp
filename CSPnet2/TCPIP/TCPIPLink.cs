@@ -94,13 +94,15 @@ namespace CSPnet2.TCPIP
         {
             try
             {
-                IPAddress[] localIPAddresses = IPAddressGetterForNET2.GetAllLocalAddresses();
-                IPAddress ipAddresstoUse =IPAddressGetterForNET2.GetOnlyLocalIPAddress();
+                
 
                 // First check if we have an ip address in the string. If not, we assume that this is to be connected
                 // to the local machine but to a different JVM
                 if (address.GetIpAddressAsString().Equals(""))
-                {                     
+                {
+
+                    IPAddress[] localIPAddresses = IPAddressGetterForNET2.GetAllLocalAddresses();
+                    IPAddress ipAddresstoUse = IPAddressGetterForNET2.GetOnlyLocalIPAddress();
                     // We basically have four types of addresses to worry about. Loopback (127), link local (169),
                     // local (192) and (possibly) global. Grade each 1, 2, 3, 4 and use highest scoring address. In all
                     // cases use first address of that score.
@@ -157,13 +159,15 @@ namespace CSPnet2.TCPIP
 
                 // Connect the socket to the server socket on the remote Node
                 //this.sock = new Socket(address.GetIpAddressAsString(), address.getPort());
-                this.sock = new Socket(ipAddresstoUse.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
-                
+                IPAddress clientAddress = IPAddress.Parse(address.GetIpAddressAsString());
+                this.sock = new Socket(clientAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
+                EndPoint clientEndPoint = (IPEndPoint)new IPEndPoint(IPAddress.Parse(address.GetIpAddressAsString()), address.getPort());
+                                
                 // Set TcpNoDelay. Off should improve performance for smaller packet sizes, which JCSP should have in
                 // general
                 //this.sock.setTcpNoDelay(!TCPIPLink.NAGLE);
                 this.sock.NoDelay = !TCPIPLink.NAGLE;
-                
+                this.sock.Connect(clientEndPoint);
                 // Create the input and output streams for the Link
                 //this.rxStream = new BinaryReader(new BufferedInputStream(this.sock.getInputStream(), TCPIPLink.BUFFER_SIZE));
                 this.rxStream = new BinaryReader(new NetworkStream(this.sock));

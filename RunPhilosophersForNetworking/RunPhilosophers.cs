@@ -25,6 +25,7 @@ namespace RunPhilosophersForNetworking
             Console.WriteLine("getOne location = " + getOne.GetLocationAsString());
 
             getOne.write(0);
+            Console.WriteLine("Wrote signal to the canteen");
 
             List<Philosopher> philosophersList = new List<Philosopher>();
             for (int i = 0; i < 4; i++)

@@ -25,8 +25,12 @@ namespace NetworkedDiningPhilosophers
 
             Console.WriteLine("Waiting for read from the philosophers...");
             getOne.read(); // signal from the philosophers;
+            Console.WriteLine("Read signal from philosophers.\nCreating philosophers channel.");
             var philosopherAddr = new TCPIPNodeAddress(philosopherNodeIP, 3002);
+            Console.WriteLine("Philosophers Address in canteen created.");
             var gotOne = NetChannel.one2net(philosopherAddr, 50);
+            Console.WriteLine("Philosophers channel in canteen created.");
+
 
             IamCSProcess[] processList =
             {
