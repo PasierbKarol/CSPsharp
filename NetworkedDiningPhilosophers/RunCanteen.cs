@@ -23,6 +23,7 @@ namespace NetworkedDiningPhilosophers
             var getOne = NetChannel.net2one();
             Console.WriteLine("getOne location = " + getOne.GetLocationAsString());
 
+            Console.WriteLine("Waiting for read from the philosophers...");
             getOne.read(); // signal from the philosophers;
             var philosopherAddr = new TCPIPNodeAddress(philosopherNodeIP, 3002);
             var gotOne = NetChannel.one2net(philosopherAddr, 50);

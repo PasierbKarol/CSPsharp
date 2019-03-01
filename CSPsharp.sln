@@ -29,7 +29,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CSPnet2", "CSPnet2\CSPnet2.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetworkedDiningPhilosophers", "NetworkedDiningPhilosophers\NetworkedDiningPhilosophers.csproj", "{3C4C63AD-69C9-48B1-AB20-1A565AAC7915}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RunPhilosophersForNetworking", "RunPhilosophersForNetworking\RunPhilosophersForNetworking.csproj", "{2640EFB8-95D5-4DF1-89B8-F3F8C489EDE3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RunPhilosophersForNetworking", "RunPhilosophersForNetworking\RunPhilosophersForNetworking.csproj", "{2640EFB8-95D5-4DF1-89B8-F3F8C489EDE3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RunChefForPhilosophersNetworking", "RunChefForPhilosophersNetworking\RunChefForPhilosophersNetworking.csproj", "{A4939732-CB5B-44B1-8C67-DAEA9219250A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -93,6 +95,10 @@ Global
 		{2640EFB8-95D5-4DF1-89B8-F3F8C489EDE3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2640EFB8-95D5-4DF1-89B8-F3F8C489EDE3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2640EFB8-95D5-4DF1-89B8-F3F8C489EDE3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A4939732-CB5B-44B1-8C67-DAEA9219250A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A4939732-CB5B-44B1-8C67-DAEA9219250A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A4939732-CB5B-44B1-8C67-DAEA9219250A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A4939732-CB5B-44B1-8C67-DAEA9219250A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
