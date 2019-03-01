@@ -22,6 +22,8 @@ using System.Diagnostics;
 using System.IO;
 using System.Net;
 using System.Net.Sockets;
+using System.Text;
+using System.Threading;
 using CSPlang;
 using CSPnet2.Net2Link;
 using CSPnet2.NetNode;
@@ -61,7 +63,9 @@ namespace CSPnet2.TCPIP
          * The NodeAddress that this LinkServer is listening on. This should be the same as the Node's address.
          */
         readonly TCPIPNodeAddress listeningAddress;
-        readonly EndPoint remotEndPoint;
+        readonly EndPoint remotEndPoint; //Karol Pasierb
+        public static ManualResetEvent allDone = new ManualResetEvent(false); //Karol Pasierb
+        private static Socket incoming = null;
 
         /**
          * Creates LinkServer by wrapping round an existing ServerSocket. Used internally by JCSP
@@ -93,10 +97,11 @@ namespace CSPnet2.TCPIP
             {
                 IPAddress localIPAddresstoUse = IPAddressGetterForNET2.GetOnlyLocalIPAddress(); 
                 IPAddress[] localIPAddresses = IPAddressGetterForNET2.GetAllLocalAddresses();
+                address.setIpAddress(localIPAddresstoUse);
 
 
                 // First check if we have an ip address in the string
-                if (address.getIpAddress().Equals(""))
+                if (address.GetIpAddressAsString().Equals(""))
                 {
                     // Get the local IP addresses
                     //InetAddress[] local = InetAddress.getAllByName(InetAddress.getLocalHost().getHostName());
@@ -153,17 +158,17 @@ namespace CSPnet2.TCPIP
 
                     // Now set the IP address of the address
                     //address.setIpAddress(toUse.getHostAddress());
-                    address.setIpAddress(localIPAddresstoUse.ToString());
+                    address.setIpAddress(localIPAddresstoUse);
 
                     // Set the address part now, but it may change if we have to get a port number
-                    address.setAddress(address.getIpAddress() + ":" + address.getPort());
+                    address.setAddress(address.GetIpAddressAsString() + ":" + address.getPort());
                 }
 
                 // Now check if the address has a port number
                 if (address.getPort() == 0)
                 {
                     // No port number supplied. Get one as we create the ServerSocket
-                    //InetAddress socketAddress = InetAddress.getByName(address.getIpAddress());
+                    //InetAddress socketAddress = InetAddress.getByName(address.GetIpAddressAsString());
                     //SocketAddress socketAddress = new SocketAddress(AddressFamily.InterNetwork);
                     IPEndPoint socketAddress = new IPEndPoint(localIPAddresstoUse, 0); //port 0 as in Java's implementation
 
@@ -173,7 +178,7 @@ namespace CSPnet2.TCPIP
                     //this.serv = new TcpListener(localIPAddresstoUse.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
                     this.serv = new Socket(localIPAddresstoUse.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
                     this.serv.Bind(socketAddress);
-                   // this.serv.Listen(0);
+                    this.serv.Listen(0);
 
 
                     // Assign the port to the address
@@ -181,7 +186,7 @@ namespace CSPnet2.TCPIP
                     address.setPort(socketAddress.Port);
 
                     // And set the address
-                    address.setAddress(address.getIpAddress() + ":" + address.getPort());
+                    address.setAddress(address.GetIpAddressAsString() + ":" + address.getPort());
 
                     // Set the listening address
                     this.listeningAddress = address;
@@ -189,8 +194,8 @@ namespace CSPnet2.TCPIP
                 else
                 {
                     // Create an IP address from the NodeAddress
-                    //InetAddress inetAddress = InetAddress.getByName(address.getIpAddress());
-                    IPEndPoint inetAddress = new IPEndPoint(address.getIpAddress(), address.getPort()); 
+                    //InetAddress inetAddress = InetAddress.getByName(address.GetIpAddressAsString());
+                    IPEndPoint inetAddress = new IPEndPoint(address.GetIpAddress(), address.getPort()); 
 
                     // Now create the ServerSocket
                     //this.serv = new ServerSocket(address.getPort(), 10, inetAddress);
@@ -227,75 +232,11 @@ namespace CSPnet2.TCPIP
                     // Receive incoming connection
                     //Socket incoming = this.serv.accept();
                     Socket incoming = this.serv.Accept();
-                    //this.serv.Connect(remotEndPoint);
-                    //Socket incoming = this.serv;
-                    // Log
-                    Node.log.log(this.GetType(), "Received new incoming connection");
-                    // Set TcpNoDelay
-                    //incoming.setTcpNoDelay(true);
-                    incoming.NoDelay = true;
+                    //var ir = new AsyncCallback(AcceptCallback);
+                    /*Socket incoming = */ //this.serv.BeginAccept(ir, this.serv );
+                    IPEndPoint remoteEndPoint = (IPEndPoint)incoming.RemoteEndPoint;
+                    Console.WriteLine("Accepted connection from {0}:{1}.", remoteEndPoint.Address, remoteEndPoint.Port);
 
-                    // Now we want to receive the connecting Node's NodeID
-                    //BinaryReader inStream = new BinaryReader(incoming.getInputStream());
-                    NetworkStream networkStream = new NetworkStream(incoming);
-                    //BinaryReader inStream = new BinaryReader(networkStream).ReadBytes(100);
-
-                    // Receive remote NodeID and parse
-                    String otherID = new BinaryReader(networkStream).ReadString(); //https://stackoverflow.com/questions/10810479/what-does-binaryreader-do-if-the-bytes-i-am-reading-arent-present-yet
-                    NodeID remoteID = NodeID.parse(otherID);
-
-                    // First check we have a tcpip Node connection
-                    if (remoteID.getNodeAddress() is TCPIPNodeAddress)
-                    {
-                        // Create an output stream from the Socket
-                        //BinaryWriter outStream = new BinaryWriter(incoming.getOutputStream());
-                        BinaryWriter outStream = new BinaryWriter(networkStream);
-
-                        // Now Log that we have received a connection
-                        Node.log.log(this.GetType(), "Received connection from: " + remoteID.toString());
-
-                        // Check if already connected
-                        if (requestLink(remoteID) == null)
-                        {
-                            // No existing connection to incoming Node exists. Keep connection
-
-                            // Write OK to the connecting Node
-                            outStream.Write("OK");
-                            outStream.Flush();
-
-                            // Send out our NodeID
-                            outStream.Write(Node.getInstance().getNodeID().toString());
-                            outStream.Flush();
-
-                            // Create Link, register, and start.
-                            TCPIPLink link = new TCPIPLink(incoming, remoteID);
-                            registerLink(link);
-                            new ProcessManager(link).start();
-                        }
-                        else
-                        {
-                            // We already have a connection to the incoming Node
-
-                            // Log failed connection
-                            Node.log.log(this.GetType(), "Connection to " + remoteID
-                                                                          + " already exists.  Informing remote Node.");
-
-                            // Write EXISTS to the remote Node
-                            outStream.Write("EXISTS");
-                            outStream.Flush();
-
-                            // Send out NodeID. We do this so the opposite Node can find its own connection
-                            outStream.Write(Node.getInstance().getNodeID().toString());
-                            outStream.Flush();
-
-                            // Close socket
-                            incoming.Close();
-                        }
-                    }
-
-                    // Address is not a TCPIP address. Close socket. This will cause an exception on the opposite Node
-                    else
-                        incoming.Close();
                 }
             }
             catch (IOException ioe)
@@ -305,5 +246,178 @@ namespace CSPnet2.TCPIP
                 Node.err.log(this.GetType(), "TCPIPLinkServer failed.  " + ioe.Message);
             }
         }
+
+        public void AcceptCallback(IAsyncResult ar)
+        {
+            // Signal the main thread to continue.  
+            allDone.Set();
+
+            // Get the socket that handles the client request.  
+            Socket listener = (Socket)ar.AsyncState;
+            Socket handler = listener.EndAccept(ar);
+            incoming = handler;
+
+
+            IPEndPoint remoteEndPoint = (IPEndPoint)incoming.RemoteEndPoint;
+            Console.WriteLine("Accepted connection from {0}:{1}.", remoteEndPoint.Address, remoteEndPoint.Port);
+
+            //Socket incoming = this.serv;
+            // Log
+            Node.log.log(this.GetType(), "Received new incoming connection");
+            // Set TcpNoDelay
+            //incoming.setTcpNoDelay(true);
+            //incoming.NoDelay = true;
+
+            // Now we want to receive the connecting Node's NodeID
+            //BinaryReader inStream = new BinaryReader(incoming.getInputStream());
+            NetworkStream networkStream = new NetworkStream(incoming);
+            //BinaryReader inStream = new BinaryReader(networkStream).ReadBytes(100);
+
+            // Receive remote NodeID and parse
+            String otherID = new BinaryReader(networkStream).ReadString(); //https://stackoverflow.com/questions/10810479/what-does-binaryreader-do-if-the-bytes-i-am-reading-arent-present-yet
+            NodeID remoteID = NodeID.parse(otherID);
+
+            // First check we have a tcpip Node connection
+            if (remoteID.getNodeAddress() is TCPIPNodeAddress)
+            {
+                // Create an output stream from the Socket
+                //BinaryWriter outStream = new BinaryWriter(incoming.getOutputStream());
+                BinaryWriter outStream = new BinaryWriter(networkStream);
+
+                // Now Log that we have received a connection
+                Node.log.log(this.GetType(), "Received connection from: " + remoteID.toString());
+
+                // Check if already connected
+                if (requestLink(remoteID) == null)
+                {
+                    // No existing connection to incoming Node exists. Keep connection
+
+                    // Write OK to the connecting Node
+                    outStream.Write("OK");
+                    outStream.Flush();
+
+                    // Send out our NodeID
+                    outStream.Write(Node.getInstance().getNodeID().toString());
+                    outStream.Flush();
+
+                    // Create Link, register, and start.
+                    TCPIPLink link = new TCPIPLink(incoming, remoteID);
+                    registerLink(link);
+                    new ProcessManager(link).start();
+                }
+                else
+                {
+                    // We already have a connection to the incoming Node
+
+                    // Log failed connection
+                    Node.log.log(this.GetType(), "Connection to " + remoteID
+                                                                  + " already exists.  Informing remote Node.");
+
+                    // Write EXISTS to the remote Node
+                    outStream.Write("EXISTS");
+                    outStream.Flush();
+
+                    // Send out NodeID. We do this so the opposite Node can find its own connection
+                    outStream.Write(Node.getInstance().getNodeID().toString());
+                    outStream.Flush();
+
+                    // Close socket
+                    incoming.Close();
+                }
+            }
+
+            // Address is not a TCPIP address. Close socket. This will cause an exception on the opposite Node
+            else
+                incoming.Close();
+
+
+            // Create the state object.  
+            StateObject state = new StateObject();
+            state.workSocket = handler;
+            handler.BeginReceive(state.buffer, 0, StateObject.BufferSize, 0,
+                new AsyncCallback(ReadCallback), state);
+        }
+
+        public static void ReadCallback(IAsyncResult ar)
+        {
+            String content = String.Empty;
+
+            // Retrieve the state object and the handler socket  
+            // from the asynchronous state object.  
+            StateObject state = (StateObject)ar.AsyncState;
+            Socket handler = state.workSocket;
+
+            // Read data from the client socket.   
+            int bytesRead = handler.EndReceive(ar);
+
+            if (bytesRead > 0)
+            {
+                // There  might be more data, so store the data received so far.  
+                state.sb.Append(Encoding.ASCII.GetString(
+                    state.buffer, 0, bytesRead));
+
+                // Check for end-of-file tag. If it is not there, read   
+                // more data.  
+                content = state.sb.ToString();
+                if (content.IndexOf("<EOF>") > -1)
+                {
+                    // All the data has been read from the   
+                    // client. Display it on the console.  
+                    Console.WriteLine("Read {0} bytes from socket. \n Data : {1}",
+                        content.Length, content);
+                    // Echo the data back to the client.  
+                    Send(handler, content);
+                }
+                else
+                {
+                    // Not all data received. Get more.  
+                    handler.BeginReceive(state.buffer, 0, StateObject.BufferSize, 0,
+                        new AsyncCallback(ReadCallback), state);
+                }
+            }
+        }
+
+        private static void Send(Socket handler, String data)
+        {
+            // Convert the string data to byte data using ASCII encoding.  
+            byte[] byteData = Encoding.ASCII.GetBytes(data);
+
+            // Begin sending the data to the remote device.  
+            handler.BeginSend(byteData, 0, byteData.Length, 0,
+                new AsyncCallback(SendCallback), handler);
+        }
+
+        private static void SendCallback(IAsyncResult ar)
+        {
+            try
+            {
+                // Retrieve the socket from the state object.  
+                Socket handler = (Socket)ar.AsyncState;
+
+                // Complete sending the data to the remote device.  
+                int bytesSent = handler.EndSend(ar);
+                Console.WriteLine("Sent {0} bytes to client.", bytesSent);
+
+                handler.Shutdown(SocketShutdown.Both);
+                handler.Close();
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+            }
+        }
+    }
+
+    public class StateObject
+    {
+        // Client  socket.  
+        public Socket workSocket = null;
+        // Size of receive buffer.  
+        public const int BufferSize = 1024;
+        // Receive buffer.  
+        public byte[] buffer = new byte[BufferSize];
+        // Received data string.  
+        public StringBuilder sb = new StringBuilder();
     }
 }

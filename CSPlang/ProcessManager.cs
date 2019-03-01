@@ -27,6 +27,7 @@
 //////////////////////////////////////////////////////////////////////
 
 using System;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -185,11 +186,9 @@ namespace CSPlang
             //thread = new ParThread();
             thread = new ParThread(this.process, new CSPBarrier());
             //thread.setDaemon(true);
-            thread.run();
-
-
-
-            thread.IsBackground = true;
+            //thread.IsBackground = true;
+            //thread.run();
+            Debug.WriteLine("Process manager thread is created and it is in background. " + thread.IsBackground + " and is alive " + thread.IsAlive);
         }
 
         //}}}
@@ -215,7 +214,7 @@ namespace CSPlang
          *
          * @param priority   the priority at which to start the process.
          */
-        public void start(int priority)
+        public void Start(int priority)
         {
             thread.setPriority(priority);
             start();
@@ -228,7 +227,7 @@ namespace CSPlang
          * 
          * @deprecated
          */
-        public void stop()
+        public void Stop()
         {
             interrupt();
         }
@@ -245,7 +244,7 @@ namespace CSPlang
         /**
          * Join the managed process (that is wait for it to terminate).
          */
-        public void join()
+        public void Join()
         {
             try
             {
@@ -304,7 +303,7 @@ namespace CSPlang
          * @return the priority at which the <code>ProcessManager</code> object's
          *          process will be run.
          */
-        public int getPriority()
+        public int GetPriority()
         {
             return thread.Priority;
         }
