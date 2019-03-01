@@ -237,6 +237,74 @@ namespace CSPnet2.TCPIP
                     IPEndPoint remoteEndPoint = (IPEndPoint)incoming.RemoteEndPoint;
                     Console.WriteLine("Accepted connection from {0}:{1}.", remoteEndPoint.Address, remoteEndPoint.Port);
 
+
+                    // Log
+                    Node.log.log(this.GetType(), "Received new incoming connection");
+                    // Set TcpNoDelay
+                    //incoming.setTcpNoDelay(true);
+                    incoming.NoDelay = true;
+
+                    // Now we want to receive the connecting Node's NodeID
+                    //BinaryReader inStream = new BinaryReader(incoming.getInputStream());
+                    NetworkStream networkStream = new NetworkStream(incoming);
+                    //BinaryReader inStream = new BinaryReader(networkStream).ReadBytes(100);
+
+                    // Receive remote NodeID and parse
+                    String otherID = new BinaryReader(networkStream).ReadString(); //https://stackoverflow.com/questions/10810479/what-does-binaryreader-do-if-the-bytes-i-am-reading-arent-present-yet
+                    NodeID remoteID = NodeID.parse(otherID);
+
+                    // First check we have a tcpip Node connection
+                    if (remoteID.getNodeAddress() is TCPIPNodeAddress)
+                    {
+                        // Create an output stream from the Socket
+                        //BinaryWriter outStream = new BinaryWriter(incoming.getOutputStream());
+                        BinaryWriter outStream = new BinaryWriter(networkStream);
+
+                        // Now Log that we have received a connection
+                        Node.log.log(this.GetType(), "Received connection from: " + remoteID.toString());
+
+                        // Check if already connected
+                        if (requestLink(remoteID) == null)
+                        {
+                            // No existing connection to incoming Node exists. Keep connection
+
+                            // Write OK to the connecting Node
+                            outStream.Write("OK");
+                            outStream.Flush();
+
+                            // Send out our NodeID
+                            outStream.Write(Node.getInstance().getNodeID().toString());
+                            outStream.Flush();
+
+                            // Create Link, register, and start.
+                            TCPIPLink link = new TCPIPLink(incoming, remoteID);
+                            registerLink(link);
+                            new ProcessManager(link).start();
+                        }
+                        else
+                        {
+                            // We already have a connection to the incoming Node
+
+                            // Log failed connection
+                            Node.log.log(this.GetType(), "Connection to " + remoteID
+                                                                          + " already exists.  Informing remote Node.");
+
+                            // Write EXISTS to the remote Node
+                            outStream.Write("EXISTS");
+                            outStream.Flush();
+
+                            // Send out NodeID. We do this so the opposite Node can find its own connection
+                            outStream.Write(Node.getInstance().getNodeID().toString());
+                            outStream.Flush();
+
+                            // Close socket
+                            incoming.Close();
+                        }
+                    }
+
+                    // Address is not a TCPIP address. Close socket. This will cause an exception on the opposite Node
+                    else
+                        incoming.Close();
                 }
             }
             catch (IOException ioe)
@@ -262,73 +330,7 @@ namespace CSPnet2.TCPIP
             Console.WriteLine("Accepted connection from {0}:{1}.", remoteEndPoint.Address, remoteEndPoint.Port);
 
             //Socket incoming = this.serv;
-            // Log
-            Node.log.log(this.GetType(), "Received new incoming connection");
-            // Set TcpNoDelay
-            //incoming.setTcpNoDelay(true);
-            //incoming.NoDelay = true;
-
-            // Now we want to receive the connecting Node's NodeID
-            //BinaryReader inStream = new BinaryReader(incoming.getInputStream());
-            NetworkStream networkStream = new NetworkStream(incoming);
-            //BinaryReader inStream = new BinaryReader(networkStream).ReadBytes(100);
-
-            // Receive remote NodeID and parse
-            String otherID = new BinaryReader(networkStream).ReadString(); //https://stackoverflow.com/questions/10810479/what-does-binaryreader-do-if-the-bytes-i-am-reading-arent-present-yet
-            NodeID remoteID = NodeID.parse(otherID);
-
-            // First check we have a tcpip Node connection
-            if (remoteID.getNodeAddress() is TCPIPNodeAddress)
-            {
-                // Create an output stream from the Socket
-                //BinaryWriter outStream = new BinaryWriter(incoming.getOutputStream());
-                BinaryWriter outStream = new BinaryWriter(networkStream);
-
-                // Now Log that we have received a connection
-                Node.log.log(this.GetType(), "Received connection from: " + remoteID.toString());
-
-                // Check if already connected
-                if (requestLink(remoteID) == null)
-                {
-                    // No existing connection to incoming Node exists. Keep connection
-
-                    // Write OK to the connecting Node
-                    outStream.Write("OK");
-                    outStream.Flush();
-
-                    // Send out our NodeID
-                    outStream.Write(Node.getInstance().getNodeID().toString());
-                    outStream.Flush();
-
-                    // Create Link, register, and start.
-                    TCPIPLink link = new TCPIPLink(incoming, remoteID);
-                    registerLink(link);
-                    new ProcessManager(link).start();
-                }
-                else
-                {
-                    // We already have a connection to the incoming Node
-
-                    // Log failed connection
-                    Node.log.log(this.GetType(), "Connection to " + remoteID
-                                                                  + " already exists.  Informing remote Node.");
-
-                    // Write EXISTS to the remote Node
-                    outStream.Write("EXISTS");
-                    outStream.Flush();
-
-                    // Send out NodeID. We do this so the opposite Node can find its own connection
-                    outStream.Write(Node.getInstance().getNodeID().toString());
-                    outStream.Flush();
-
-                    // Close socket
-                    incoming.Close();
-                }
-            }
-
-            // Address is not a TCPIP address. Close socket. This will cause an exception on the opposite Node
-            else
-                incoming.Close();
+            
 
 
             // Create the state object.  
