@@ -239,6 +239,7 @@ namespace CSPnet2.TCPIP
 
                     // Log
                     Node.log.log(this.GetType(), "Received new incoming connection");
+                    Console.WriteLine("\n\nReceived new incoming connection");
                     // Set TcpNoDelay
                     //incoming.setTcpNoDelay(true);
                     incoming.NoDelay = true;
@@ -250,6 +251,7 @@ namespace CSPnet2.TCPIP
 
                     // Receive remote NodeID and parse
                     String otherID = new BinaryReader(networkStream).ReadString(); //https://stackoverflow.com/questions/10810479/what-does-binaryreader-do-if-the-bytes-i-am-reading-arent-present-yet
+                    Console.WriteLine("\n\nRead otherID  " + otherID);
                     NodeID remoteID = NodeID.parse(otherID);
 
                     // First check we have a tcpip Node connection
@@ -261,6 +263,7 @@ namespace CSPnet2.TCPIP
 
                         // Now Log that we have received a connection
                         Node.log.log(this.GetType(), "Received connection from: " + remoteID.toString());
+                        Console.WriteLine("\n\nReceived connection from: " + remoteID.toString());
 
                         // Check if already connected
                         if (requestLink(remoteID) == null)

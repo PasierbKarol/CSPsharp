@@ -25,7 +25,6 @@ using System.Runtime.InteropServices;
 
 namespace CSPnet2.NetNode
 {
-
     /**
      * This class is used to uniquely identify a Node within the entire JCSP network of Nodes in operation. This is to allow
      * ease to identify individual Nodes when IDs come in, and to quickly find them within tables of other Links to allow
@@ -44,164 +43,166 @@ namespace CSPnet2.NetNode
     [Serializable]
     public sealed class NodeID : IComparable<NodeID>
     {
-    /**
-     * The SUID of this class
-     */
-    private static readonly long serialVersionUID = 1L;
+        /**
+         * The SUID of this class
+         */
+        private static readonly long serialVersionUID = 1L;
 
-    /**
-     * Current time in milliseconds
-     */
-    private readonly long time;
+        /**
+         * Current time in milliseconds
+         */
+        private readonly long time;
 
-    /**
-     * Current amount of free memory to the JVM
-     */
-    private readonly long mem;
+        /**
+         * Current amount of free memory to the JVM
+         */
+        private readonly long mem;
 
-    /**
-     * Hash code of a object
-     */
-    private readonly int hashCode;
+        /**
+         * Hash code of a object
+         */
+        private readonly int hashCode;
 
-    /**
-     * Name of the Node
-     */
-    private readonly String name;
+        /**
+         * Name of the Node
+         */
+        private readonly String name;
 
-    /**
-     * Address of the Node
-     */
-    private readonly NodeAddress address;
+        /**
+         * Address of the Node
+         */
+        private readonly NodeAddress address;
 
-    /**
-     * Constructor taking the name and the address of the Node
-     * 
-     * @param nodeName
-     *            Symbolic name of the Node
-     * @param nodeAddress
-     *            Symbolic address of the Node
-     */
-    internal NodeID(String nodeName, NodeAddress nodeAddress)
-    {
-        this.time = CSPTimeMillis.CurrentTimeMillis();
-        //this.mem = System.Runtime.GetRuntime().freeMemory();
-        //this.mem = GC.GetTotalMemory(true);
-        this.mem = Process.GetCurrentProcess().PrivateMemorySize64;
-        //this.hashCode = new Object().hashCode();
-        this.hashCode = new Object().GetHashCode();
-        this.name = nodeName;
-        this.address = nodeAddress;
-    }
-
-    /**
-     * Constructor taking the full details for a remote Node connection
-     * 
-     * @param long1
-     *            The time component of the remote Node
-     * @param long2
-     *            The memory component of the remote Node
-     * @param int1
-     *            The hashCode component of the remote Node
-     * @param nodeName
-     *            The name component of the remote Node
-     * @param nodeAddress
-     *            The NodeAddress component of the remote Node
-     */
-    public NodeID(long long1, long long2, int int1, String nodeName, NodeAddress nodeAddress)
-    {
-        this.time = long1;
-        this.mem = long2;
-        this.hashCode = int1;
-        this.name = nodeName;
-        this.address = nodeAddress;
-    }
-
-    /**
-     * Compares this NodeID with another NodeID.
-     * 
-     * @param arg0
-     * @return -1, 0 or 1 if less than, equal, or greater than the other NodeID
-     */
-    //public int compareTo(/*final*/ Object arg0)
-    //{
-        
-    //}
-
-    /**
-     * Checks if the given object is equal to this NodeID
-     * 
-     * @param arg0
-     * @return True if equal, false otherwise
-     */
-    public Boolean equals(NodeID arg0)
-    {
-        return this.CompareTo(arg0) == 0;
-    }
-
-    /**
-     * Returns the hashCode for this object
-     * 
-     * @return Hashcode for the NodeID
-     */
-    public int HashCode()
-    {
-        return this.hashCode;
-    }
-
-    /**
-     * Converts the NodeID into a string for communication with other implementations, or for display purposes.
-     * 
-     * @return String representation of the NodeID
-     */
-    public String toString()
-    {
-        return this.time + "-" + this.mem + "-" + this.hashCode + "-" + this.name + "-" + this.address.toString();
-    }
-
-    /**
-     * Gets the NodeAddress part of the NodeID
-     * 
-     * @return The NodeAddress part of the NodeID
-     */
-    public NodeAddress getNodeAddress()
-    {
-        return this.address;
-    }
-
-    /**
-     * Converts a string representation of a NodeID back to a NodeID object
-     * 
-     * @param str
-     *            The string version of a NodeID
-     * @return A new NodeID created from the String representation
-     */
-    public static NodeID parse(String str)
-    {
-        // Split the string into its separate parts
-        String[] pieces = new String[5];
-        int index = 0;
-        int last = 0;
-        for (int i = 0; i < 5; i++)
+        /**
+         * Constructor taking the name and the address of the Node
+         * 
+         * @param nodeName
+         *            Symbolic name of the Node
+         * @param nodeAddress
+         *            Symbolic address of the Node
+         */
+        internal NodeID(String nodeName, NodeAddress nodeAddress)
         {
-            index = str.IndexOf("-", index + 1);
-            if (index == -1)
-                index = str.Length;
-            pieces[i] = str.Substring(last, index);
-            last = index + 1;
+            this.time = CSPTimeMillis.CurrentTimeMillis();
+            //this.mem = System.Runtime.GetRuntime().freeMemory();
+            //this.mem = GC.GetTotalMemory(true);
+            this.mem = Process.GetCurrentProcess().PrivateMemorySize64;
+            //this.hashCode = new Object().hashCode();
+            this.hashCode = new Object().GetHashCode();
+            this.name = nodeName;
+            this.address = nodeAddress;
         }
 
-        // Get the relevant parts
-        long time = Int64.Parse(pieces[0]);
-        long mem = Int64.Parse(pieces[1]);
-        int hashCode = Int32.Parse(pieces[2]);
-        String name = pieces[3];
-        // Parse the address
-        NodeAddress addr = NodeAddress.parse(pieces[4]);
+        /**
+         * Constructor taking the full details for a remote Node connection
+         * 
+         * @param long1
+         *            The time component of the remote Node
+         * @param long2
+         *            The memory component of the remote Node
+         * @param int1
+         *            The hashCode component of the remote Node
+         * @param nodeName
+         *            The name component of the remote Node
+         * @param nodeAddress
+         *            The NodeAddress component of the remote Node
+         */
+        public NodeID(long long1, long long2, int int1, String nodeName, NodeAddress nodeAddress)
+        {
+            this.time = long1;
+            this.mem = long2;
+            this.hashCode = int1;
+            this.name = nodeName;
+            this.address = nodeAddress;
+        }
 
-        // Return the NodeID
-        return new NodeID(time, mem, hashCode, name, addr);
-    }
+        /**
+         * Compares this NodeID with another NodeID.
+         * 
+         * @param arg0
+         * @return -1, 0 or 1 if less than, equal, or greater than the other NodeID
+         */
+        //public int compareTo(/*final*/ Object arg0)
+        //{
+
+        //}
+
+        /**
+         * Checks if the given object is equal to this NodeID
+         * 
+         * @param arg0
+         * @return True if equal, false otherwise
+         */
+        public Boolean equals(NodeID arg0)
+        {
+            return this.CompareTo(arg0) == 0;
+        }
+
+        /**
+         * Returns the hashCode for this object
+         * 
+         * @return Hashcode for the NodeID
+         */
+        public int HashCode()
+        {
+            return this.hashCode;
+        }
+
+        /**
+         * Converts the NodeID into a string for communication with other implementations, or for display purposes.
+         * 
+         * @return String representation of the NodeID
+         */
+        public String toString()
+        {
+            return this.time + "-" + this.mem + "-" + this.hashCode + "-" + this.name + "-" + this.address.toString();
+        }
+
+        /**
+         * Gets the NodeAddress part of the NodeID
+         * 
+         * @return The NodeAddress part of the NodeID
+         */
+        public NodeAddress getNodeAddress()
+        {
+            return this.address;
+        }
+
+        /**
+         * Converts a string representation of a NodeID back to a NodeID object
+         * 
+         * @param str
+         *            The string version of a NodeID
+         * @return A new NodeID created from the String representation
+         */
+        public static NodeID parse(String str)
+        {
+            // Split the string into its separate parts
+            /*        String[] pieces = new String[5];
+                    int index = 0;
+                    int last = 0;
+                    for (int i = 0; i < 5; i++)
+                    {
+                        index = str.IndexOf("-", index + 1);
+                        if (index == -1)
+                            index = str.Length;
+                        pieces[i] = str.Substring(last, index);
+                        last = index + 1;
+                    }*/
+            String[] pieces = str.Split("-");
+
+
+            // Get the relevant parts
+            long time = Int64.Parse(pieces[0]);
+            long mem = Int64.Parse(pieces[1]);
+            int hashCode = Int32.Parse(pieces[2]);
+            String name = pieces[3];
+            // Parse the address
+            NodeAddress addr = NodeAddress.parse(pieces[4]);
+
+            // Return the NodeID
+            return new NodeID(time, mem, hashCode, name, addr);
+        }
 
         public int CompareTo(NodeID that)
         {
@@ -237,6 +238,7 @@ namespace CSPnet2.NetNode
                     }
                 }
             }
+
             return 0;
         }
     }

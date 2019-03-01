@@ -176,6 +176,7 @@ namespace CSPnet2.Net2Link
 
         // Create Link from address
         Link toReturn = addr.createLink();
+        Console.WriteLine("Finished creating link NodeID " + toReturn.remoteID);
 
         // Now attempt to connect the Link. If connect fails, then the opposite node already has a connection to us.
         // This may occur during connection if the opposite end registered its Link prior to us doing so. In such
@@ -187,7 +188,7 @@ namespace CSPnet2.Net2Link
 
             // Log failed connect
             Node.log.log(typeof(LinkFactory), "Failed to connect to " + remoteID.toString());
-
+                Console.WriteLine("Failed to connect to " + remoteID.toString());
             // Set the Link to return to null
             toReturn = null;
 

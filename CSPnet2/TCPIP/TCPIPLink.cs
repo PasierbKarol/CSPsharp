@@ -182,6 +182,7 @@ namespace CSPnet2.TCPIP
                 
                 // Log Node connection
                 Node.log.log(this.GetType(), "Link created to " + address.toString());
+                Console.WriteLine("Link created to " + address.toString());
             }
             catch (IOException ioe)
             {
@@ -230,7 +231,9 @@ namespace CSPnet2.TCPIP
                 this.connected = true;
                 // Log Link creation and Link connection
                 Node.log.log(this.GetType(), "Link created to " + nodeID.toString());
+                Console.WriteLine("Link created to " + nodeID.toString());
                 Node.log.log(this.GetType(), "Link to " + nodeID.toString() + " connected");
+                Console.WriteLine("Link to " + nodeID.toString() + " connected");
             }
             catch (IOException ioe)
             {
@@ -261,11 +264,13 @@ namespace CSPnet2.TCPIP
             try
             {
                 // Write the string representation of our NodeID to the remote Node
+                var a = Node.getInstance().getNodeID().toString();
                 this.txStream.Write(Node.getInstance().getNodeID().toString());
                 this.txStream.Flush();
 
                 // Read in the response from the opposite Node
                 String response = this.rxStream.ReadString();
+                Console.WriteLine("REsponse read " + response);
 
                 // Either the connection has been accepted (no connection to this Node exists on the opposite Node) or
                 // it has not. The opposite Node sends OK in the first instance.

@@ -38,6 +38,7 @@ namespace CSPnet2.NetNode
          */
         public /*synchronized*/ void log(Type clazz, String message) //changed Java Class to Object
         {
+            Console.WriteLine(message);
             if (this.logger == null)
                 return;
             DateTime date = new DateTime(CSPTimeMillis.CurrentTimeMillis());

@@ -21,6 +21,7 @@ using System;
 using System.Collections;
 using CSPlang;
 using CSPnet2.Net2Link;
+using CSPnet2.TCPIP;
 
 namespace CSPnet2.NetNode
 {
@@ -169,12 +170,22 @@ namespace CSPnet2.NetNode
         public static NodeAddress parse(String str)
             //throws ArgumentException 
         {
-            int index = str.IndexOf("\\\\");
-            ProtocolID protocol = (ProtocolID) NodeAddress.installedProtocols[str.Substring(0, index)];
-            if (protocol != null)
-            {
-                return protocol.parse(str.Substring(index + 4));
-            }
+            int index = str.IndexOf("\\");
+            ProtocolID protocol = (ProtocolID)NodeAddress.installedProtocols[str.Substring(0, index)];
+            //if (protocol != null)
+            //{
+            //    return protocol.parse(str.Substring(index + 4));
+            //}
+
+            return protocol.parse(str);
+
+            //String[] strings = str.Split(@"\\\\");
+
+            //if (strings[0].Equals("tcpip", StringComparison.OrdinalIgnoreCase))
+            //{
+            //    String[] addressStrings = strings[1].Split(":");
+            //    return new TCPIPNodeAddress(addressStrings[0], Int32.Parse(addressStrings[1]));
+            //}
 
             throw new ArgumentException("Unknown protocol used for parsing NodeAddress");
         }

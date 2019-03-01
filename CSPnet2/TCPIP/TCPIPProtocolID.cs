@@ -68,11 +68,11 @@ public sealed class TCPIPProtocolID : ProtocolID
        // //throws ArgumentException 
     {
         // Split address into IP and port
-        int index = addressString.IndexOf("\\\\");
+        int index = addressString.IndexOf(@"\\\\");
         String temp = addressString.Substring(index + 2);
         index = temp.IndexOf(":");
         String address = temp.Substring(0, index);
-        int port = Int32.Parse(temp.Substring(index + 1, temp.Length));
+        int port = Int32.Parse(temp.Substring(index + 1));
         return new TCPIPNodeAddress(address, port);
     }
 
