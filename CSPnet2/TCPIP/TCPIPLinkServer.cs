@@ -63,8 +63,6 @@ namespace CSPnet2.TCPIP
          * The NodeAddress that this LinkServer is listening on. This should be the same as the Node's address.
          */
         readonly TCPIPNodeAddress listeningAddress;
-        readonly EndPoint remotEndPoint; //Karol Pasierb
-        public static ManualResetEvent allDone = new ManualResetEvent(false); //Karol Pasierb
         private static Socket incoming = null;
 
         /**
@@ -168,7 +166,9 @@ namespace CSPnet2.TCPIP
                     // No port number supplied. Get one as we create the ServerSocket
                     //InetAddress socketAddress = InetAddress.getByName(address.GetIpAddressAsString());
                     //SocketAddress socketAddress = new SocketAddress(AddressFamily.InterNetwork);
-                    IPEndPoint socketEndPoint = new IPEndPoint(IPAddress.Parse(address.GetIpAddressAsString()), 0); //port 0 as in Java's implementation
+                    IPEndPoint socketEndPoint =
+                        new IPEndPoint(IPAddress.Parse(address.GetIpAddressAsString()),
+                            0); //port 0 as in Java's implementation
                     IPAddress serverAddress = IPAddress.Parse(address.GetIpAddressAsString());
 
 
@@ -194,7 +194,8 @@ namespace CSPnet2.TCPIP
                 {
                     // Create an IP address from the NodeAddress
                     //InetAddress inetAddress = InetAddress.getByName(address.GetIpAddressAsString());
-                    IPEndPoint inetAddress = new IPEndPoint(IPAddress.Parse(address.GetIpAddressAsString()), address.getPort()); 
+                    IPEndPoint inetAddress = new IPEndPoint(IPAddress.Parse(address.GetIpAddressAsString()),
+                        address.getPort());
 
                     // Now create the ServerSocket
                     //this.serv = new ServerSocket(address.getPort(), 10, inetAddress);
@@ -207,7 +208,6 @@ namespace CSPnet2.TCPIP
 
                     // Set listeningAddress
                     this.listeningAddress = address;
-                    this.remotEndPoint = inetAddress;
                 }
             }
             catch (IOException ioe)
@@ -231,9 +231,8 @@ namespace CSPnet2.TCPIP
                     // Receive incoming connection
                     //Socket incoming = this.serv.accept();
                     Socket incoming = this.serv.Accept();
-                    //var ir = new AsyncCallback(AcceptCallback);
-                    /*Socket incoming = */ //this.serv.BeginAccept(ir, this.serv );
-                    IPEndPoint remoteEndPoint = (IPEndPoint)incoming.RemoteEndPoint;
+
+                    IPEndPoint remoteEndPoint = (IPEndPoint) incoming.RemoteEndPoint;
                     Console.WriteLine("Accepted connection from {0}:{1}.", remoteEndPoint.Address, remoteEndPoint.Port);
 
 
@@ -250,7 +249,9 @@ namespace CSPnet2.TCPIP
                     //BinaryReader inStream = new BinaryReader(networkStream).ReadBytes(100);
 
                     // Receive remote NodeID and parse
-                    String otherID = new BinaryReader(networkStream).ReadString(); //https://stackoverflow.com/questions/10810479/what-does-binaryreader-do-if-the-bytes-i-am-reading-arent-present-yet
+                    String
+                        otherID = new BinaryReader(networkStream)
+                            .ReadString(); //https://stackoverflow.com/questions/10810479/what-does-binaryreader-do-if-the-bytes-i-am-reading-arent-present-yet
                     Console.WriteLine("\n\nRead otherID  " + otherID);
                     NodeID remoteID = NodeID.parse(otherID);
 
@@ -306,7 +307,9 @@ namespace CSPnet2.TCPIP
 
                     // Address is not a TCPIP address. Close socket. This will cause an exception on the opposite Node
                     else
+                    {
                         incoming.Close();
+                    }
                 }
             }
             catch (IOException ioe)
@@ -316,8 +319,5 @@ namespace CSPnet2.TCPIP
                 Node.err.log(this.GetType(), "TCPIPLinkServer failed.  " + ioe.Message);
             }
         }
-
     }
-
-  
 }

@@ -19,6 +19,7 @@
 
 using System;
 using System.Collections;
+using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
 using CSPlang;
@@ -505,9 +506,10 @@ namespace CSPnet2.Net2Link
                     while (true)
                     {
                         // Read in the next message from the stream
+                        //var a = this.inputStream.BaseStream.ReadByte();
                         byte type = this.inputStream.ReadByte();
-                        int attr1 = this.inputStream.ReadInt32();
-                        int attr2 = this.inputStream.ReadInt32();
+                        int attr1 = this.inputStream.BaseStream.ReadByte();
+                        int attr2 = this.inputStream.Read();
 
                         // Reconstruct the message object
                         NetworkMessage msg = new NetworkMessage();
@@ -617,6 +619,8 @@ namespace CSPnet2.Net2Link
                                     reject.attr1 = msg.attr2;
                                     reject.attr2 = -1;
                                     msg.toLink.write(reject);
+                                    Debug.WriteLine("Message was rejected");
+
                                 }
 
                                 break;
@@ -720,6 +724,8 @@ namespace CSPnet2.Net2Link
                                     reject.attr1 = msg.attr2;
                                     reject.attr2 = -1;
                                     this.toTxProcess.write(reject);
+                                    Debug.WriteLine("Message was rejected");
+
                                 }
 
                                 break;
@@ -845,6 +851,7 @@ namespace CSPnet2.Net2Link
                                     reject.attr1 = msg.attr2;
                                     reject.attr2 = -1;
                                     this.toTxProcess.write(reject);
+                                    Debug.WriteLine("Message was rejected");
                                 }
 
                                 break;

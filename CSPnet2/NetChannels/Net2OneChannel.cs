@@ -348,6 +348,7 @@ namespace CSPnet2.NetChannels
         {
             // Read in the next message
             NetworkMessage msg = (NetworkMessage)this.In.read();
+                Console.WriteLine("Read message from the net to OneChannel " + msg.data.ToString() + " Type " + msg.type);
 
             // Now we need to decode the message and act accordingly
             try

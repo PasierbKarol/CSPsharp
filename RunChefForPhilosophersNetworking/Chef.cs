@@ -30,7 +30,7 @@ namespace RunChefForPhilosophersNetworking
             toConsole.write(CHICKENS + "chickens ready ... \n");
             supply.write(CHICKENS);
             toConsole.write("Taking chickens to Canteen ... \n");
-            supply.write(0);
+            supply.write(100);
         }
     }
     }

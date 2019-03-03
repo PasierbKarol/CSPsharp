@@ -94,7 +94,6 @@ namespace CSPnet2.TCPIP
         {
             try
             {
-                
 
                 // First check if we have an ip address in the string. If not, we assume that this is to be connected
                 // to the local machine but to a different JVM
@@ -270,7 +269,6 @@ namespace CSPnet2.TCPIP
 
                 // Read in the response from the opposite Node
                 String response = this.rxStream.ReadString();
-                Console.WriteLine("REsponse read " + response);
 
                 // Either the connection has been accepted (no connection to this Node exists on the opposite Node) or
                 // it has not. The opposite Node sends OK in the first instance.
@@ -284,6 +282,7 @@ namespace CSPnet2.TCPIP
                 // Read in Remote NodeID as string
                 String nodeIDString = this.rxStream.ReadString();
                 NodeID otherID = NodeID.parse(nodeIDString);
+                Console.WriteLine("Other NodeID was read " + otherID.toString());
 
                 // First check we have a tcpip Node connection. This should always be the case
                 if (otherID.getNodeAddress() is TCPIPNodeAddress)
