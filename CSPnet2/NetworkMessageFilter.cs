@@ -56,6 +56,8 @@ namespace CSPnet2
             /// <exception cref="System.IO.IOException">some scenario</exception>
             /*public*/
             Object filterRX(byte[] bytes);
+
+            T filterRX<T>(byte[] bytes);
         }
 
         /**
@@ -79,5 +81,8 @@ namespace CSPnet2
             /*public*/
             byte[] filterTX(Object obj);
         }
+
+        
+
     }
 }

@@ -153,6 +153,10 @@ sealed class CNSNetworkMessageFilter
             return msg;
         }
 
+        public T filterRX<T>(byte[] bytes)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
 }

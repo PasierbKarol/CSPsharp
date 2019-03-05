@@ -62,6 +62,10 @@ public sealed class RawNetworkMessageFilter
             return bytes;
         }
 
+        public T filterRX<T>(byte[] bytes)
+        {
+            throw new NotImplementedException();
+        }
     }
 
     /**

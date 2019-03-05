@@ -3,6 +3,7 @@
 
 using System;
 using CSPlang;
+using CSPnet2.NetChannels;
 
 namespace NetworkedDiningPhilosophers
 {
@@ -10,10 +11,10 @@ namespace NetworkedDiningPhilosophers
     {
         ChannelInput service;
         ChannelOutput deliver;
-        ChannelInput supply;
+        Net2OneChannel supply;
         ChannelOutput toConsole;
 
-        public QueuingCanteen(ChannelInput service, ChannelOutput deliver, ChannelInput supply, ChannelOutput toConsole)
+        public QueuingCanteen(ChannelInput service, ChannelOutput deliver, Net2OneChannel supply, ChannelOutput toConsole)
         {
             this.service = service;
             this.deliver = deliver;

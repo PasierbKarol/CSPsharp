@@ -17,7 +17,7 @@ namespace NetworkedDiningPhilosophers
 
             var canteenNodeAddr = new TCPIPNodeAddress(canteenNodeIP, 3000);
             Node.getInstance().init(canteenNodeAddr);
-            var cooked = NetChannel.net2one();
+            var cooked =(Net2OneChannel) NetChannel.net2one();
             Console.WriteLine("cooked location = " + cooked.GetLocationAsString());
 
             var getOne = NetChannel.net2one();
