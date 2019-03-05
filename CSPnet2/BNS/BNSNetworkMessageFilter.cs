@@ -156,6 +156,10 @@ namespace CSPnet2.BNS
             return msg;
         }
 
+        public T filterRX<T>(byte[] bytes)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
 }

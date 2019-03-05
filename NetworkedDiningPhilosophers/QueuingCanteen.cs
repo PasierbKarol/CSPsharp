@@ -3,6 +3,7 @@
 
 using System;
 using CSPlang;
+using CSPnet2;
 using CSPnet2.NetChannels;
 
 namespace NetworkedDiningPhilosophers

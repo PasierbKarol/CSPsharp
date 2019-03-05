@@ -217,7 +217,7 @@ namespace CSPnet2
             return stream;
         }
 
-        private static T DeserializeFromStream<T>(byte[] bytesData)
+        private static T DeserializeFromStream<T>(byte[] bytesData) //https://stackoverflow.com/questions/33616621/how-to-deserialize-byte-into-generic-object-to-be-cast-at-method-call/33616721
         {
             object o = null;
             using (MemoryStream stream = new MemoryStream(bytesData))

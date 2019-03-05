@@ -2,15 +2,16 @@
 // Let's Do It In Parallel
 
 using CSPlang;
+using CSPnet2.NetChannels;
 using PlugAndPlay;
 
 namespace RunChefForPhilosophersNetworking
 {
     class Kitchen : IamCSProcess
     {
-        ChannelOutput supply;
+        One2NetChannel supply;
 
-        public Kitchen(ChannelOutput supply)
+        public Kitchen(One2NetChannel supply)
         {
             this.supply = supply;
         }
