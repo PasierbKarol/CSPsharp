@@ -507,9 +507,10 @@ namespace CSPnet2.Net2Link
                     {
                         // Read in the next message from the stream
                         //var a = this.inputStream.BaseStream.ReadByte();
-                        byte type = this.inputStream.ReadByte();
-                        int attr1 = this.inputStream.BaseStream.ReadByte();
-                        int attr2 = this.inputStream.Read();
+                        int type = this.inputStream.ReadInt32();
+                        
+                        int attr1 = this.inputStream.ReadInt32();
+                        int attr2 = this.inputStream.ReadInt32();
 
                         // Reconstruct the message object
                         NetworkMessage msg = new NetworkMessage();
@@ -539,7 +540,7 @@ namespace CSPnet2.Net2Link
                                 // Now keeping reading from the stream until the buffer is filled
                                 int read = 0;
                                 while (read < size)
-                                    read += this.inputStream.Read(bytes, read, size - read);
+                                    read += this.inputStream.BaseStream.Read(bytes, read, size - read);
 
                                 // Set the data part of the message to the buffer
                                 msg.data = bytes;

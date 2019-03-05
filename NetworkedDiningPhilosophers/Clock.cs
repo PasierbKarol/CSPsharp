@@ -28,7 +28,7 @@ namespace NetworkedDiningPhilosophers
 
             while (true)
             {
-                toConsole.write("Time: $tick \n");
+                toConsole.write("Time: " + tick + " \n");
                 tim.sleep(1000);
                 tick = tick + 1;
             }

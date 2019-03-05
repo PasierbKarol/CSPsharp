@@ -24,7 +24,7 @@ namespace NetworkedDiningPhilosophers
             Console.WriteLine("getOne location = " + getOne.GetLocationAsString());
 
             Console.WriteLine("Waiting for read from the philosophers...");
-            getOne.read(); // signal from the philosophers;
+            var a = getOne.read(); // signal from the philosophers;
             Console.WriteLine("Read signal from philosophers.\nCreating philosophers channel.");
             var philosopherAddr = new TCPIPNodeAddress(philosopherNodeIP, 3002);
             Console.WriteLine("Philosophers Address in canteen created.");

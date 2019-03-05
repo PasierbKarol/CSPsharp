@@ -183,13 +183,14 @@ namespace CSPnet2
                 // //throws IOException
             {
                 // First we reset the byte buffer to the buffer size, just in case a previous message caused it to grow
-                this.baos.reset(ObjectNetworkMessageFilter.BUFFER_SIZE);
+                //this.baos.reset(ObjectNetworkMessageFilter.BUFFER_SIZE);
                 // Now reset the object stream. This clears any remembered messages
                 //this.oos.reset();
                 // Write the object to the stream
                 //this.oos.writeObject(obj);
                 // Get the bytes
                 return this.baos.ToArray();
+                
             }
         }
     }
