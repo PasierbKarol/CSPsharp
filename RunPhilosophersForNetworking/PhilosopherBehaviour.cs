@@ -41,7 +41,7 @@ namespace RunPhilosophersForNetworking
 
                 toConsole.write("Need a chicken ...\n");
                 service.write(id);
-                int gotOne = (int) deliver.read();
+                long gotOne = (int)(long) deliver.read();
                 if (gotOne > 0)
                 {
                     toConsole.write("Eating ... \n");

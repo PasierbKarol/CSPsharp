@@ -1,7 +1,9 @@
 // copyright 2012-13 Jon Kerridge
 // Let's Do It In Parallel
 
+using System;
 using CSPlang;
+using CSPnet2;
 using CSPnet2.NetChannels;
 
 namespace RunChefForPhilosophersNetworking
@@ -30,8 +32,8 @@ namespace RunChefForPhilosophersNetworking
                 toConsole.write(CHICKENS + "chickens ready ... \n");
                 supply.write(CHICKENS);
                 toConsole.write("Taking chickens to Canteen ... \n");
-                supply.write(100);
+                supply.write(0);
             }
         }
-    }
+    }    
 }

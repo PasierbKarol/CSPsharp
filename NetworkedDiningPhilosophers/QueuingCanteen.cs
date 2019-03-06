@@ -48,15 +48,15 @@ namespace NetworkedDiningPhilosophers
                 switch (canteenAlt.fairSelect(precondition))
                 {
                     case SUPPLY:
-                        int value =(int) supply.read();
+                        int value =(int)(long) supply.read();
                         toConsole.write("Chickens on the way ...\n");
                         tim.after(tim.read() + 3000);
                         chickens = chickens + value;
                         toConsole.write(chickens + " chickens now available ...\n");
-                        supply.read();
+                        var a =  supply.read();
                         break;
                     case SERVICE:
-                        int id =(int) service.read();
+                        int id =(int)(long) service.read();
                         chickens = chickens - 1;
                         toConsole.write("chicken ready for Philosoper " + id + " ... " + chickens + " chickens left \n");
                         deliver.write(1);

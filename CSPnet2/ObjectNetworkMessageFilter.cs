@@ -49,7 +49,7 @@ namespace CSPnet2
 
         //https://stackoverflow.com/questions/29688498/how-to-deserialize-json-to-objects-of-the-correct-type-without-having-to-define
         private static JsonSerializerSettings settings = 
-            new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.Auto, TypeNameAssemblyFormat = FormatterAssemblyStyle.Full };
+            new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All, TypeNameAssemblyFormat = FormatterAssemblyStyle.Full };
 
         /**
          * The receiving (decoding) filter for Objects
@@ -119,6 +119,7 @@ namespace CSPnet2
             public object filterRXfromJSON(string json)
             {
                 var jsonObject = JsonConvert.DeserializeObject(json, settings);
+                Type type = jsonObject.GetType();
                 return jsonObject;
             }
         }
@@ -168,7 +169,8 @@ namespace CSPnet2
 
             public string filterTXtoJSON(Object obj)
             {
-                var json = JsonConvert.SerializeObject(obj, typeof(object), settings);
+                Type objectType = obj.GetType();
+                var json = JsonConvert.SerializeObject(obj, objectType, settings);
                 Console.WriteLine(json);
 
                 return json;

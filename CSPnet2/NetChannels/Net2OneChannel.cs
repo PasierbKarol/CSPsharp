@@ -361,8 +361,8 @@ namespace CSPnet2.NetChannels
                         // We have received a SEND
                         // Convert the message into the object again. This may throw an IOException
                         //Object toReturn = this.messageFilter.filterRX(msg.data);
-                        var a = this.messageFilter.filterRX<int>(msg.data);
-                        var toReturn = this.messageFilter.filterRXfromJSON(msg.jsonData);
+                        var a = this.messageFilter.filterRX(msg.data);
+                        object toReturn = this.messageFilter.filterRXfromJSON(msg.jsonData);
 
                         // We have a SEND, we need to acknowledge.
                         // Create an ACK message
