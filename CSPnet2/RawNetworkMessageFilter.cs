@@ -57,15 +57,6 @@ public sealed class RawNetworkMessageFilter
          *            The bytes received in an incoming message
          * @return The same bytes as is passed in
          */
-        public Object filterRX(byte[] bytes)
-        {
-            return bytes;
-        }
-
-        public T filterRX<T>(byte[] bytes)
-        {
-            throw new NotImplementedException();
-        }
 
         public object filterRXfromJSON(string json)
         {
@@ -97,14 +88,6 @@ public sealed class RawNetworkMessageFilter
          * @//throws IOException
          *             Thrown if the sent object is not a byte array
          */
-        public byte[] filterTX(Object obj)
-            //throws IOException
-        {
-            if (!(obj is byte[]))
-                throw new IOException("Raw data filter received an object that was not a byte[]");
-            return (byte[])obj;
-        }
-
         public string filterTXtoJSON(object obj)
         {
             throw new NotImplementedException();
