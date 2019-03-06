@@ -17,9 +17,9 @@ namespace NetworkedDiningPhilosophers
     {
         ChannelInput service;
         ChannelOutput deliver;
-        Net2OneChannel supply;
+        ChannelInput supply;
 
-        public ClockedQueuingServery(ChannelInput service, ChannelOutput deliver, Net2OneChannel supply)
+        public ClockedQueuingServery(ChannelInput service, ChannelOutput deliver, ChannelInput supply)
         {
             this.service = service;
             this.deliver = deliver;

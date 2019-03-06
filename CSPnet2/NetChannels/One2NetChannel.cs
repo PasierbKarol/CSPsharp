@@ -35,7 +35,7 @@ namespace CSPnet2.NetChannels
  * @see NetChannel
  * @author Kevin Chalmers (Updated from Quickstone Technologies)
  */
-    sealed class One2NetChannel : NetChannelOutput
+    public sealed class One2NetChannel : NetChannelOutput
     {
         NetworkMessage msg;
 
@@ -422,7 +422,7 @@ namespace CSPnet2.NetChannels
 
             // Now we wait for a reply on our ackChannel
             NetworkMessage reply = (NetworkMessage) this.theAckChannel.read();
-            Console.WriteLine("Read acknowledge message from the network " + reply.data.ToString());
+            Console.WriteLine("Read acknowledge message from the network " );
 
             // The SEND was rejected. Break channel.
             if (reply.type == NetworkProtocol.REJECT_CHANNEL)

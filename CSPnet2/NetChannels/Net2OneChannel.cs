@@ -325,7 +325,7 @@ namespace CSPnet2.NetChannels
      * @//throws InvalidOperationException
      *             Thrown if the channel is in an extended read state
      */
-    public Object read()
+    public override Object read()
         //throws JCSPNetworkException, NetworkPoisonException, InvalidOperationException
     {
         // First check our state

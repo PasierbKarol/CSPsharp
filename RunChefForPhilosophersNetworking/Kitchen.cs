@@ -9,9 +9,9 @@ namespace RunChefForPhilosophersNetworking
 {
     class Kitchen : IamCSProcess
     {
-        One2NetChannel supply;
+        NetChannelOutput supply;
 
-        public Kitchen(One2NetChannel supply)
+        public Kitchen(NetChannelOutput supply)
         {
             this.supply = supply;
         }
