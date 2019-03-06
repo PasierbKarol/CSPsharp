@@ -67,16 +67,6 @@ namespace CSPnet2
              */
             public FilterRX()
             {
-                try
-                {
-
-                }
-                catch (IOException ioe)
-                {
-                    // Should never really happen, however...
-                    throw new RuntimeException(
-                        "Failed to create the required streams for ObjectNetwrokMessageFilter.FilterRX");
-                }
             }
 
             //https://stackoverflow.com/questions/33616621/how-to-deserialize-byte-into-generic-object-to-be-cast-at-method-call/33616721
@@ -89,37 +79,9 @@ namespace CSPnet2
              * @//throws IOException
              *             Thrown of something goes wrong during the decoding
              */
-            public T filterRX<T>(byte[] bytes)
-            {
-                try
-                {
-                    object o = null;
-                    using (MemoryStream stream = new MemoryStream(bytes))
-                    {
-                        IFormatter formatter = new BinaryFormatter();
-                        stream.Seek(0, SeekOrigin.Begin);
-                        o = formatter.Deserialize(stream);
-                        stream.Flush();
-                    }
-                    return (T)o;
-                }
-                catch (Exception cnfe)
-                {
-                    // Not an exception thrown by other filters, so we convert into an IOException
-                    throw new IOException("Class not found");
-                }
-            }
-
-            public object filterRX(byte[] bytes)
-            {
-   
-                return new object();
-            }
-
             public object filterRXfromJSON(string json)
             {
                 var jsonObject = JsonConvert.DeserializeObject(json, settings);
-                Type type = jsonObject.GetType();
                 return jsonObject;
             }
         }
@@ -137,14 +99,7 @@ namespace CSPnet2
              */
             public FilterTX()
             {
-                try
-                {
-                }
-                catch (IOException ioe)
-                {
-                    throw new RuntimeException(
-                        "Failed to create the required streams for ObjectNetworkMessageFilter.FilterTX");
-                }
+
             }
 
             /**
@@ -156,23 +111,10 @@ namespace CSPnet2
              * @//throws IOException
              *             Thrown if something goes wrong during the serialization
              */
-            public byte[] filterTX(Object obj)
-                // //throws IOException
-            {
-                IFormatter formatter = new BinaryFormatter();
-                MemoryStream memoryStream = new MemoryStream();
-                formatter.Serialize(memoryStream, obj);
-
-                // Get the bytes
-                return memoryStream.ToArray();
-            }
-
             public string filterTXtoJSON(Object obj)
             {
                 Type objectType = obj.GetType();
                 var json = JsonConvert.SerializeObject(obj, objectType, settings);
-                Console.WriteLine(json);
-
                 return json;
             }
         }

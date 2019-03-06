@@ -18,6 +18,7 @@
 //////////////////////////////////////////////////////////////////////
 
 using System;
+using System.Diagnostics;
 using System.IO;
 using CSPlang;
 using CSPlang.Any2;
@@ -348,7 +349,7 @@ namespace CSPnet2.NetChannels
         {
             // Read in the next message
             NetworkMessage msg = (NetworkMessage)this.In.read();
-                Console.WriteLine("Read message from the net to OneChannel " + msg.data.ToString() + " Type " + msg.type);
+                Debug.WriteLine("Read message from the net to OneChannel  Type " + msg.type);
 
             // Now we need to decode the message and act accordingly
             try
@@ -361,7 +362,6 @@ namespace CSPnet2.NetChannels
                         // We have received a SEND
                         // Convert the message into the object again. This may throw an IOException
                         //Object toReturn = this.messageFilter.filterRX(msg.data);
-                        var a = this.messageFilter.filterRX(msg.data);
                         object toReturn = this.messageFilter.filterRXfromJSON(msg.jsonData);
 
                         // We have a SEND, we need to acknowledge.
@@ -381,7 +381,7 @@ namespace CSPnet2.NetChannels
                     {
                         // We have received an ASYNC_SEND
                         // Convert the message into the object again. This may throw an IOException
-                        Object toReturn = this.messageFilter.filterRX(msg.data);
+                        Object toReturn = this.messageFilter.filterRXfromJSON(msg.jsonData);
                         // Return read object
                         return toReturn;
                     }
@@ -497,8 +497,7 @@ namespace CSPnet2.NetChannels
                     {
                         // We have received a SEND or ASYNC_SEND
                         // Convert the message into the object again. This may throw an IOException
-                       // Object toReturn = this.messageFilter.filterRX(msg.data);
-                        var toReturn = this.messageFilter.filterRX(msg.data);
+                        Object toReturn = this.messageFilter.filterRXfromJSON(msg.jsonData);
 
                         // Now set the lastRead to the incoming message so we can acknowledge during the endRead
                         // operation

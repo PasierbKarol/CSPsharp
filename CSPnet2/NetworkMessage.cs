@@ -49,7 +49,6 @@ namespace CSPnet2
         /**
          * Data sent in the message if relevant.
          */
-        internal byte[] data = null;
 
         internal string jsonData = null;
 

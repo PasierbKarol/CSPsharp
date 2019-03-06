@@ -54,10 +54,6 @@ namespace CSPnet2
 
             /// <summary>what this does</summary>
             /// <exception cref="System.IO.IOException">some scenario</exception>
-            /*public*/
-            Object filterRX(byte[] bytes);
-
-            T filterRX<T>(byte[] bytes);
 
             Object filterRXfromJSON(string json);
         }
@@ -80,7 +76,6 @@ namespace CSPnet2
              */
             /// <summary>what this does</summary>
             /// <exception cref="System.IO.IOException">some scenario</exception>
-            byte[] filterTX(Object obj);
 
             string filterTXtoJSON(Object obj);
 

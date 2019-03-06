@@ -143,7 +143,7 @@ ConnectionData connData, NetConnectionLocation loc, NetworkMessageFilter.FilterT
                     {
                         case NetworkProtocol.REPLY:
                         {
-                            Object toReturn = this.inputFilter.filterRX(msg.data);
+                            Object toReturn = this.inputFilter.filterRXfromJSON(msg.jsonData);
                             NetworkMessage ack = new NetworkMessage();
                             ack.type = NetworkProtocol.REPLY_ACK;
                             ack.attr1 = msg.attr2;
@@ -154,7 +154,7 @@ ConnectionData connData, NetConnectionLocation loc, NetworkMessageFilter.FilterT
                         }
                         case NetworkProtocol.REPLY_AND_CLOSE:
                         {
-                            Object toReturn = this.inputFilter.filterRX(msg.data);
+                            Object toReturn = this.inputFilter.filterRXfromJSON(msg.jsonData);
                             NetworkMessage ack = new NetworkMessage();
                             ack.attr1 = msg.attr2;
                             ack.attr2 = -1;
@@ -235,7 +235,7 @@ ConnectionData connData, NetConnectionLocation loc, NetworkMessageFilter.FilterT
 
         try
         {
-            msg.data = this.outputFilter.filterTX(obj);
+            msg.jsonData = this.outputFilter.filterTXtoJSON(obj);
 
             lock (this.data)
             {

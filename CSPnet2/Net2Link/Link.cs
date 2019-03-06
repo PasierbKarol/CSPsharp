@@ -432,8 +432,6 @@ namespace CSPnet2.Net2Link
                                                              || msg.type == NetworkProtocol.ASYNC_SEND)
                         {
                             // Write data element
-                            this.outputStream.Write(msg.data.Length);
-                            this.outputStream.Write(msg.data);
                             this.outputStream.Write(msg.jsonData);
                         }
 
@@ -531,21 +529,7 @@ namespace CSPnet2.Net2Link
                             case NetworkProtocol.ASYNC_SEND:
 
                                 // First also read the data portion of the message
-
-                                // Read the size
-                                int size = this.inputStream.ReadInt32();
-
-                                // Declare a buffer of the correct size
-                                byte[] bytes = new byte[size];
-
-                                // Now keeping reading from the stream until the buffer is filled
-                                int read = 0;
-                                while (read < size)
-                                    read += this.inputStream.BaseStream.Read(bytes, read, size - read);
-
-                                msg.jsonData = this.inputStream.ReadString();
-                                // Set the data part of the message to the buffer
-                                msg.data = bytes;
+                               msg.jsonData = this.inputStream.ReadString();
 
                                 // Attach the channel to allow the acknowledge message to be sent later.
                                 msg.toLink = this.toTxProcess;

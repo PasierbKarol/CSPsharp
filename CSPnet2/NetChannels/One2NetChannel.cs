@@ -368,7 +368,6 @@ namespace CSPnet2.NetChannels
                 // an object into a byte array via object serialization, but implementation specific methods can be
                 // developed.
                 // See NetworkMessageFilter and ObjectNetworkMessageFilter.
-                msg.data = this.messageFilter.filterTX(_object);
                 msg.jsonData = this.messageFilter.filterTXtoJSON(_object);
 
                 // Now we must determine how to send the message. If it is to a remote Node, simply write to the Link.
@@ -567,7 +566,7 @@ namespace CSPnet2.NetChannels
                 // an object into a byte array via object serialization, but implementation specific methods can be
                 // developed.
                 // See NetworkMessageFilter and ObjectNetworkMessageFilter.
-                msg.data = this.messageFilter.filterTX(_object);
+                msg.jsonData = this.messageFilter.filterTXtoJSON(_object);
 
                 // Now we must determine how to send the message. If it is to a remote Node, simply write to the Link.
                 if (!this.isLocal)
