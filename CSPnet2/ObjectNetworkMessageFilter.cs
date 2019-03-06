@@ -20,10 +20,16 @@
 using System;
 using System.IO;
 using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Xml.Serialization;
 using CSPlang;
 using CSPnet2;
+
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Converters;
+using Newtonsoft.Json.Serialization;
 
 namespace CSPnet2
 {
@@ -39,7 +45,11 @@ namespace CSPnet2
  */
     public sealed class ObjectNetworkMessageFilter
     {
-       //https://stackoverflow.com/questions/10390356/serializing-deserializing-with-memory-stream;
+        //https://stackoverflow.com/questions/10390356/serializing-deserializing-with-memory-stream;
+
+        //https://stackoverflow.com/questions/29688498/how-to-deserialize-json-to-objects-of-the-correct-type-without-having-to-define
+        private static JsonSerializerSettings settings = 
+            new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.Auto, TypeNameAssemblyFormat = FormatterAssemblyStyle.Full };
 
         /**
          * The receiving (decoding) filter for Objects
@@ -80,7 +90,6 @@ namespace CSPnet2
              *             Thrown of something goes wrong during the decoding
              */
             public T filterRX<T>(byte[] bytes)
-                ////throws IOException
             {
                 try
                 {
@@ -94,7 +103,6 @@ namespace CSPnet2
                     }
                     return (T)o;
                 }
-                //catch (ClassNotFoundException cnfe)
                 catch (Exception cnfe)
                 {
                     // Not an exception thrown by other filters, so we convert into an IOException
@@ -106,6 +114,12 @@ namespace CSPnet2
             {
    
                 return new object();
+            }
+
+            public object filterRXfromJSON(string json)
+            {
+                var jsonObject = JsonConvert.DeserializeObject(json, settings);
+                return jsonObject;
             }
         }
 
@@ -150,6 +164,14 @@ namespace CSPnet2
 
                 // Get the bytes
                 return memoryStream.ToArray();
+            }
+
+            public string filterTXtoJSON(Object obj)
+            {
+                var json = JsonConvert.SerializeObject(obj, typeof(object), settings);
+                Console.WriteLine(json);
+
+                return json;
             }
         }
 

@@ -51,6 +51,8 @@ namespace CSPnet2
          */
         internal byte[] data = null;
 
+        internal string jsonData = null;
+
         /**
          * ChannelOutput to the Link so that acknowledgements can be sent.
          */

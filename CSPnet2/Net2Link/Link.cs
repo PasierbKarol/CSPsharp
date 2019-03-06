@@ -434,6 +434,7 @@ namespace CSPnet2.Net2Link
                             // Write data element
                             this.outputStream.Write(msg.data.Length);
                             this.outputStream.Write(msg.data);
+                            this.outputStream.Write(msg.jsonData);
                         }
 
                         // Flush the stream.
@@ -542,6 +543,7 @@ namespace CSPnet2.Net2Link
                                 while (read < size)
                                     read += this.inputStream.BaseStream.Read(bytes, read, size - read);
 
+                                msg.jsonData = this.inputStream.ReadString();
                                 // Set the data part of the message to the buffer
                                 msg.data = bytes;
 

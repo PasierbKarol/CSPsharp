@@ -101,6 +101,10 @@ sealed class CNSNetworkMessageFilter
             return this.baos.ToArray();
         }
 
+        public string filterTXtoJSON(object obj)
+        {
+            throw new NotImplementedException();
+        }
     }
 
     /**
@@ -154,6 +158,11 @@ sealed class CNSNetworkMessageFilter
         }
 
         public T filterRX<T>(byte[] bytes)
+        {
+            throw new NotImplementedException();
+        }
+
+        public object filterRXfromJSON(string json)
         {
             throw new NotImplementedException();
         }

@@ -310,7 +310,7 @@ namespace CSPnet2.NetChannels
             if (this.theAckChannel.pending())
             {
                 msg = (NetworkMessage) this.theAckChannel.read();
-                Console.WriteLine("Read message from the Acknowledge channel " + msg.data.ToString());
+                Console.WriteLine("Read message from the Acknowledge channel ");
 
                 // Lock onto our state object as we may be changing our state
                 lock (this.data)
@@ -369,6 +369,7 @@ namespace CSPnet2.NetChannels
                 // developed.
                 // See NetworkMessageFilter and ObjectNetworkMessageFilter.
                 msg.data = this.messageFilter.filterTX(_object);
+                msg.jsonData = this.messageFilter.filterTXtoJSON(_object);
 
                 // Now we must determine how to send the message. If it is to a remote Node, simply write to the Link.
                 if (!this.isLocal)

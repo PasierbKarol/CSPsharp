@@ -104,6 +104,10 @@ namespace CSPnet2.BNS
             return this.baos.ToArray();
         }
 
+        public string filterTXtoJSON(object obj)
+        {
+            throw new NotImplementedException();
+        }
     }
 
     /**
@@ -157,6 +161,11 @@ namespace CSPnet2.BNS
         }
 
         public T filterRX<T>(byte[] bytes)
+        {
+            throw new NotImplementedException();
+        }
+
+        public object filterRXfromJSON(string json)
         {
             throw new NotImplementedException();
         }

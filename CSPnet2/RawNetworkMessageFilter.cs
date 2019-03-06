@@ -66,6 +66,11 @@ public sealed class RawNetworkMessageFilter
         {
             throw new NotImplementedException();
         }
+
+        public object filterRXfromJSON(string json)
+        {
+            throw new NotImplementedException();
+        }
     }
 
     /**
@@ -98,6 +103,11 @@ public sealed class RawNetworkMessageFilter
             if (!(obj is byte[]))
                 throw new IOException("Raw data filter received an object that was not a byte[]");
             return (byte[])obj;
+        }
+
+        public string filterTXtoJSON(object obj)
+        {
+            throw new NotImplementedException();
         }
     }
 }
