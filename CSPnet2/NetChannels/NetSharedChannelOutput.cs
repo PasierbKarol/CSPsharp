@@ -30,7 +30,7 @@ namespace CSPnet2.NetChannels
  * @see NetChannel
  * @author Kevin Chalmers (updated from Quickstone Technologies)
  */
-    public interface NetSharedChannelOutput : NetChannelOutput, SharedChannelOutput
+    public interface NetSharedChannelOutput : NetChannelOutput//, SharedChannelOutput
     {
         // Nothing to add
         string GetLocationAsString();

@@ -39,11 +39,7 @@ namespace CSPnet2
  */
     public sealed class ObjectNetworkMessageFilter
     {
-        /*
-         * Size of the internal buffer of the memory stream
-         */
-        public static int BUFFER_SIZE = 8192;
-        private static MemoryStream memoryStream ; //https://stackoverflow.com/questions/10390356/serializing-deserializing-with-memory-stream;
+       //https://stackoverflow.com/questions/10390356/serializing-deserializing-with-memory-stream;
 
         /**
          * The receiving (decoding) filter for Objects
@@ -55,21 +51,6 @@ namespace CSPnet2
  */
         public /*static*/ sealed class FilterRX : NetworkMessageFilter.FilterRx
         {
-            /**
-             * These four bytes represent the normal header expected in Java for object streams
-             */
-            //static readonly byte[] objectStreamHeader = { -84, -19, 0, 5 };
-
-            /**
-             * The byte array stream used to connect to the ObjectInputStream
-             */
-            private readonly ResettableByteArrayInputStream bais;
-
-            /**
-             * The ObjectInputStream used to read the objects from.
-             */
-            // private readonly ObjectInputStream ois;
-            //private readonly MemoryStream ois;
 
             /**
              * Creates a new incoming object filter
@@ -78,13 +59,6 @@ namespace CSPnet2
             {
                 try
                 {
-                    // We need to put the header down the stream first to create the ObjectInputStream
-                    //.bais = new ResettableByteArrayInputStream(FilterRX.objectStreamHeader);
-
-                    // Now hook the ObjectInputStream to the byte array stream. Should work fine.
-                    //this.ois = new ObjectInputStream(this.bais);
-                    //this.ois = new MemoryStream();
-                    memoryStream = getMemoryStreamInstance();
 
                 }
                 catch (IOException ioe)
@@ -95,6 +69,7 @@ namespace CSPnet2
                 }
             }
 
+            //https://stackoverflow.com/questions/33616621/how-to-deserialize-byte-into-generic-object-to-be-cast-at-method-call/33616721
             /**
              * Decodes an incoming byte array, converting it back into an Object
              * 
@@ -109,24 +84,15 @@ namespace CSPnet2
             {
                 try
                 {
-                    // Reset the byte array stream with the incoming bytes
-                    //this.bais.reset(bytes);
-                    // Return the object read from the input stream
-                    //return this.ois.readObject();
-
-                    /*MemoryStream stream = new MemoryStream();
-
-                    IFormatter formatter = new BinaryFormatter();
-                    stream.Seek(0, SeekOrigin.Begin);
-                    T objectType = (T) formatter.Deserialize(stream);
-                    return objectType;*/
-
-                    // var serializer = new XmlSerializer(typeof(T));
-
-
-                    // return (T)serializer.Deserialize(bytes);
-
-                    return DeserializeFromStream<T>(bytes);
+                    object o = null;
+                    using (MemoryStream stream = new MemoryStream(bytes))
+                    {
+                        IFormatter formatter = new BinaryFormatter();
+                        stream.Seek(0, SeekOrigin.Begin);
+                        o = formatter.Deserialize(stream);
+                        stream.Flush();
+                    }
+                    return (T)o;
                 }
                 //catch (ClassNotFoundException cnfe)
                 catch (Exception cnfe)
@@ -138,11 +104,7 @@ namespace CSPnet2
 
             public object filterRX(byte[] bytes)
             {
-                //TODO
-                // Reset the byte array stream with the incoming bytes
-                //this.bais.reset(bytes);
-                // Return the object read from the input stream
-                // return this.ois.;    
+   
                 return new object();
             }
         }
@@ -154,16 +116,6 @@ namespace CSPnet2
          */
         public /*static*/ sealed class FilterTX : NetworkMessageFilter.FilterTx
         {
-            /**
-             * The output stream to get the bytes from
-             */
-            private readonly ResettableByteArrayOutputStream baos;
-
-            /**
-             * The ObjectOutputStream connected to the byte stream to allow the serialization of objects
-             */
-            //private readonly ObjectOutputStream oos;
-            //private readonly MemoryStream oos;
 
             /**
              * Creates a new encoding object filter
@@ -172,10 +124,6 @@ namespace CSPnet2
             {
                 try
                 {
-                    // We use an 8Kb buffer to serialize into as default, although this could can adjusted
-                    this.baos = new ResettableByteArrayOutputStream(ObjectNetworkMessageFilter.BUFFER_SIZE);
-                    //this.oos = new ObjectOutputStream(this.baos);
-                    memoryStream = getMemoryStreamInstance();
                 }
                 catch (IOException ioe)
                 {
@@ -196,49 +144,14 @@ namespace CSPnet2
             public byte[] filterTX(Object obj)
                 // //throws IOException
             {
-                // First we reset the byte buffer to the buffer size, just in case a previous message caused it to grow
-                //this.baos.reset(ObjectNetworkMessageFilter.BUFFER_SIZE);
-                // Now reset the object stream. This clears any remembered messages
-                //this.oos.reset();
-                // Write the object to the stream
-                //this.oos.writeObject(obj);
-                //byte[] a = (byte[]) new BinaryFormatter().Deserialize(oos);
-                //this.oos.Write(obj);
-                var a =  SerializeToStream(obj, memoryStream);
-                // Get the bytes
-                return a.ToArray();
-            }
-        }
-
-        public static MemoryStream SerializeToStream(object o, MemoryStream stream)
-        {
-            IFormatter formatter = new BinaryFormatter();
-            formatter.Serialize(stream, o);
-            return stream;
-        }
-
-        private static T DeserializeFromStream<T>(byte[] bytesData) //https://stackoverflow.com/questions/33616621/how-to-deserialize-byte-into-generic-object-to-be-cast-at-method-call/33616721
-        {
-            object o = null;
-            using (MemoryStream stream = new MemoryStream(bytesData))
-            {
-                //IFormatter br = new BinaryFormatter();
-                //o = (br.Deserialize(ms) as T);
                 IFormatter formatter = new BinaryFormatter();
-                stream.Seek(0, SeekOrigin.Begin);
-                o = formatter.Deserialize(stream);
-                stream.Flush();
+                MemoryStream memoryStream = new MemoryStream();
+                formatter.Serialize(memoryStream, obj);
+
+                // Get the bytes
+                return memoryStream.ToArray();
             }
-            return (T)o;
         }
 
-        private static MemoryStream getMemoryStreamInstance()
-        {
-            if (memoryStream == null)
-            {
-                memoryStream = new MemoryStream();
-            }
-            return memoryStream;
-        }
     }
 }

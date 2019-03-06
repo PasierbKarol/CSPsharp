@@ -80,6 +80,6 @@ namespace CSPlang
  *
  * @param object the object to write to the channel
  */
-        /*public*/ void write(Object object_name);
+        /*public*/  void write(Object object_name);
     }
 }
