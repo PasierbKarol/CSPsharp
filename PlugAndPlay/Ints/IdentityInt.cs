@@ -96,9 +96,13 @@ namespace PlugAndPlay.Ints
          */
         public void run()
         {
+            //Console.WriteLine("Inside identity int");
             while (true)
             {
-                Out.write(In.read());
+                //Out.write(In.read());
+                var a = In.read();
+                //Console.WriteLine("Prefix  identityInt is " + a.ToString());
+                Out.write(a);
             }
         }
     }

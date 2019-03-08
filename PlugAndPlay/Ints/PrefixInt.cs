@@ -27,6 +27,7 @@
 //////////////////////////////////////////////////////////////////////
 
 using System;
+using System.Diagnostics;
 using CSPlang;
 
 namespace PlugAndPlay.Ints
@@ -100,7 +101,8 @@ namespace PlugAndPlay.Ints
         public void run()
         {
             Out.write(n);
-            //Debug.WriteLine("Prefix  object is " + o.ToString());
+
+            //Console.WriteLine("First Prefix  object is " + n.ToString());
 
             new IdentityInt(In, Out).run();
         }

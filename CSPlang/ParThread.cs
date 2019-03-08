@@ -123,16 +123,14 @@ namespace CSPlang
          * @param process the process to be executed
          * @param cspBarrier the cspBarrier for then end of the PAR
          */
-        public ParThread(IamCSProcess process, CSPBarrier cspBarrier) : this() //Added call to main constructor to run a thread - KP
+        public ParThread(IamCSProcess process, CSPBarrier cspBarrier) : this() //Added call to main constructor to run a thread - Karol asierbP
         {
-            //setDaemon(true);
             this.IsBackground = true;
             //Call to this reset method to avoid code duplication
             reset(process, cspBarrier);
             //this.process = process;
             this._cspBarrier = cspBarrier;
             this.name = process.ToString();
-            //setName(process.ToString());
         }
 
         /**
@@ -146,7 +144,6 @@ namespace CSPlang
         {
             this.process = process;
             this._cspBarrier = cspBarrier;
-            //setName(process.ToString());
             this.name = process.ToString();
         }
 
@@ -189,7 +186,7 @@ namespace CSPlang
                         CSPParallel.uncaughtException("jcsp.lang.CSPParallel", e);
                     }
 
-                    //_cspBarrier.resign(); //TODO find out why there is error thrown here
+                    _cspBarrier.resign(); //TODO find out why there is error thrown here
                     park.sync();
                 }
             }

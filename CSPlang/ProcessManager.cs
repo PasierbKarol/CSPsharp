@@ -186,9 +186,6 @@ namespace CSPlang
             thread = new ParThread(this.process, new CSPBarrier());
         }
 
-        //}}}
-
-        //{{{ public void start ()
         /**
          * Start the managed process (but keep running ourselves).
          */

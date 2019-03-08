@@ -115,7 +115,9 @@ namespace PlugAndPlay.Ints
          */
         public void run()
         {
+            //Console.WriteLine("Before writing value in ProcessWriter");
             Out.write(value);
+            //Console.WriteLine("After writing value in ProcessWriter");
         }
     }
 }

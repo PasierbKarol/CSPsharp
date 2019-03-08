@@ -70,46 +70,47 @@ namespace PlugAndPlay.Ints
 
     public sealed class Delta2Int : IamCSProcess
     {
-    /** The input Channel */
-    private ChannelInputInt In;
+        /** The input Channel */
+        private ChannelInputInt In;
 
-    /** The first output Channel */
-    private ChannelOutputInt Out0;
+        /** The first output Channel */
+        private ChannelOutputInt Out0;
 
-    /** The second output Channel */
-    private ChannelOutputInt Out1;
+        /** The second output Channel */
+        private ChannelOutputInt Out1;
 
-    /**
-     * Construct a new Delta2Int process with the input Channel in and the output
-     * Channels Out0 and Out1. The ordering of the Channels Out0 and Out1 make
-     * no difference to the functionality of this process.
-     *
-     * @param in the input channel
-     * @param Out0 an output Channel
-     * @param Out1 an output Channel
-     */
-    public Delta2Int(ChannelInputInt In, ChannelOutputInt out0, ChannelOutputInt out1)
-    {
-        this.In = In;
-        this.Out0 = out0;
-        this.Out1 = out1;
-    }
-
-    /**
-     * The main body of this process.
-     */
-    public void run()
-    {
-        ProcessWriteInt[] parWrite = {new ProcessWriteInt(Out0), new ProcessWriteInt(Out1)};
-        CSPParallel par = new CSPParallel(parWrite);
-
-        while (true)
+        /**
+         * Construct a new Delta2Int process with the input Channel in and the output
+         * Channels Out0 and Out1. The ordering of the Channels Out0 and Out1 make
+         * no difference to the functionality of this process.
+         *
+         * @param in the input channel
+         * @param Out0 an output Channel
+         * @param Out1 an output Channel
+         */
+        public Delta2Int(ChannelInputInt In, ChannelOutputInt out0, ChannelOutputInt out1)
         {
-            int value = In.read();
-            parWrite[0].value = value;
-            parWrite[1].value = value;
-            par.run();
+            this.In = In;
+            this.Out0 = out0;
+            this.Out1 = out1;
         }
-    }
+
+        /**
+         * The main body of this process.
+         */
+        public void run()
+        {
+            ProcessWriteInt[] parWrite = {new ProcessWriteInt(Out0), new ProcessWriteInt(Out1)};
+            CSPParallel par = new CSPParallel(parWrite);
+
+            while (true)
+            {
+                int value = In.read();
+                parWrite[0].value = value;
+                parWrite[1].value = value;
+                par.run();
+                //Console.WriteLine("Read values in Delta. ProcessWrite finished");
+            }
+        }
     }
 }

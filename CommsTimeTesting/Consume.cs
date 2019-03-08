@@ -50,6 +50,7 @@ namespace CommsTimeTesting
             for (int i = 0; i < warm_up; i++)
             {
                 x = In.read();
+                //Console.WriteLine("Read " + x + " value");
             }
             Console.WriteLine("last number received = " + x);
 

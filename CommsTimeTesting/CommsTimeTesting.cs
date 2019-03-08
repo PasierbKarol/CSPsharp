@@ -28,7 +28,7 @@ namespace CommsTimeTesting
 {
     public class CommsTimeTesting
     {
-        public static String TITLE = "CommsTime";
+        /*public static String TITLE = "CommsTime";
         public static String DESCR =
         "Test of communication speed between JCSP processes. Based on OCCAM CommsTime.occ by Peter Welch, " +
         "University of Kent at Canterbury. Ported into Java by Oyvind Teig. Now using the JCSP library.\n" +
@@ -40,24 +40,24 @@ namespace CommsTimeTesting
         "forms a benchmark for the for the overheads involved.\n" +
         "\n" +
         "This version uses a PARallel delta2 component, so includes the starting and finishing of one extra" +
-        "process per loop.";
+        "process per loop.";*/
 
         public static void Main(string[] args)
         {
             int nLoops = 10000;
             Console.WriteLine(nLoops + " loops ...\n");
 
-            One2OneChannelInt a = Channel.one2oneInt();
-            One2OneChannelInt b = Channel.one2oneInt();
-            One2OneChannelInt c = Channel.one2oneInt();
-            One2OneChannelInt d = Channel.one2oneInt();
+            One2OneChannelInt P2D = Channel.one2oneInt();
+            One2OneChannelInt D2S = Channel.one2oneInt();
+            One2OneChannelInt S2P = Channel.one2oneInt();
+            One2OneChannelInt D2C = Channel.one2oneInt();
 
             new CSPParallel(
                 new IamCSProcess[] {
-                    new PrefixInt (0, c.In(), a.Out()),
-                    new Delta2Int (a.In(), d.Out(), b.Out()),
-                    new SuccessorInt (b.In(), c.Out()),
-                    new Consume (nLoops, d.In())
+                    new PrefixInt (0, S2P.In(), P2D.Out()),
+                    new Delta2Int (P2D.In(), D2C.Out(), D2S.Out()),
+                    new SuccessorInt (D2S.In(), S2P.Out()),
+                    new Consume (nLoops, D2C.In())
                 }
             ).run();
         }

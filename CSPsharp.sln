@@ -31,7 +31,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetworkedDiningPhilosophers
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RunPhilosophersForNetworking", "RunPhilosophersForNetworking\RunPhilosophersForNetworking.csproj", "{2640EFB8-95D5-4DF1-89B8-F3F8C489EDE3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RunChefForPhilosophersNetworking", "RunChefForPhilosophersNetworking\RunChefForPhilosophersNetworking.csproj", "{A4939732-CB5B-44B1-8C67-DAEA9219250A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RunChefForPhilosophersNetworking", "RunChefForPhilosophersNetworking\RunChefForPhilosophersNetworking.csproj", "{A4939732-CB5B-44B1-8C67-DAEA9219250A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetworkedCommsTime - RunNumbers", "NetworkedCommsTime - RunNumbers\NetworkedCommsTime - RunNumbers.csproj", "{EDB2EE6E-DA77-4E71-BDB1-2AF9C1A76467}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetworkedCommsTime - RunConsume", "NetworkedCommsTime - RunConsume\NetworkedCommsTime - RunConsume.csproj", "{F2362359-4559-4634-859D-CCECA1D21324}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -99,6 +103,14 @@ Global
 		{A4939732-CB5B-44B1-8C67-DAEA9219250A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A4939732-CB5B-44B1-8C67-DAEA9219250A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A4939732-CB5B-44B1-8C67-DAEA9219250A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EDB2EE6E-DA77-4E71-BDB1-2AF9C1A76467}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EDB2EE6E-DA77-4E71-BDB1-2AF9C1A76467}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EDB2EE6E-DA77-4E71-BDB1-2AF9C1A76467}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EDB2EE6E-DA77-4E71-BDB1-2AF9C1A76467}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F2362359-4559-4634-859D-CCECA1D21324}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F2362359-4559-4634-859D-CCECA1D21324}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F2362359-4559-4634-859D-CCECA1D21324}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F2362359-4559-4634-859D-CCECA1D21324}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

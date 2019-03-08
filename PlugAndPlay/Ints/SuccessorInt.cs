@@ -96,32 +96,35 @@ namespace PlugAndPlay.Ints
 
     public sealed class SuccessorInt : IamCSProcess
     {
-    /** The input Channel */
-    private ChannelInputInt In;
+        /** The input Channel */
+        private ChannelInputInt In;
 
-    /** The output Channel */
-    private ChannelOutputInt Out;
+        /** The output Channel */
+        private ChannelOutputInt Out;
 
-    /**
-     * Construct a new SuccessorInt process with the input Channel in and the
-     * output Channel out.
-     *
-     * @param in the input Channel
-     * @param out the output Channel
-     */
-    public SuccessorInt(ChannelInputInt In, ChannelOutputInt Out)
-    {
-        this.In = In;
-        this.Out = Out;
-    }
+        /**
+         * Construct a new SuccessorInt process with the input Channel in and the
+         * output Channel out.
+         *
+         * @param in the input Channel
+         * @param out the output Channel
+         */
+        public SuccessorInt(ChannelInputInt In, ChannelOutputInt Out)
+        {
+            this.In = In;
+            this.Out = Out;
+        }
 
-    /**
-     * The main body of this process.
-     */
-    public void run()
-    {
-        while (true)
-            Out.write(In.read() + 1);
-    }
+        /**
+         * The main body of this process.
+         */
+        public void run()
+        {
+            while (true)
+            {
+                Out.write(In.read() + 1);
+                //Console.WriteLine("After adding value in Successor");
+            }
+        }
     }
 }
