@@ -18,11 +18,11 @@ namespace RunPhilosophersForNetworking
             var philosopherNodeAddr = new TCPIPNodeAddress(philosopherNodeIP, 3002);
             Node.getInstance().init(philosopherNodeAddr);
             var gotOne = NetChannel.net2any();
-            Console.WriteLine("gotOne location = " + gotOne.GetLocationAsString());
+            Console.WriteLine("gotOne location = " + gotOne.getLocation().ToString());
 
             var canteenAddress = new TCPIPNodeAddress(canteenNodeIP, 3000);
             var getOne = NetChannel.any2net(canteenAddress, 51);
-            Console.WriteLine("getOne location = " + getOne.GetLocationAsString());
+            Console.WriteLine("getOne location = " + getOne.getLocation().ToString());
 
             getOne.write(0);
             Console.WriteLine("Wrote signal to the canteen");

@@ -98,10 +98,6 @@ namespace CSPnet2.NetChannels
             return this.chan.getLocation();
         }
 
-        public String GetLocationAsString()
-        {
-            return this.chan.GetLocationAsString();
-        }
 
         /**
          * Writes an object to the underlying channel.

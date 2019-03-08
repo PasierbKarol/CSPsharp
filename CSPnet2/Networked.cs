@@ -35,13 +35,12 @@ namespace CSPnet2
          * 
          * @return The location of the construct
          */
-        /*public*/
+
         NetLocation getLocation();
 
         /**
          * Destroys the Networked construct
          */
-        /*public*/
         void destroy();
     }
 }

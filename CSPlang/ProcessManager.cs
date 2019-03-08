@@ -183,11 +183,7 @@ namespace CSPlang
         public ProcessManager(IamCSProcess process)
         {
             this.process = process;
-            //thread = new ParThread();
             thread = new ParThread(this.process, new CSPBarrier());
-            //thread.IsBackground = true;
-            //thread.run();
-            Debug.WriteLine("Process manager thread is created and it is in background. " + thread.IsBackground + " and is alive " + thread.IsAlive);
         }
 
         //}}}

@@ -41,7 +41,7 @@ namespace CSPnet2.TCPIP
          * The IP address part of the address
          */
         private String ip;
-        private IPAddress ipAddress;
+        //private IPAddress ipAddress;
 
         /**
          * The port part of the address
@@ -128,10 +128,10 @@ namespace CSPnet2.TCPIP
             return this.ip;
         }
 
-        public /*final*/ IPAddress GetIpAddress()
+/*        public /*final#1# IPAddress GetIpAddress()
         {
             return this.ipAddress;
-        }
+        }*/
 
         /**
          * Sets the IP address part of the NodeAddress. Used internally in JCSP
@@ -144,10 +144,10 @@ namespace CSPnet2.TCPIP
             this.ip = ipAddr;
         }
 
-        internal void setIpAddress(IPAddress ipAddr)
+/*        internal void setIpAddress(IPAddress ipAddr)
         {
             this.ipAddress = ipAddr;
-        }
+        }*/
 
         /**
          * Sets the address String. Used internally within JCSP

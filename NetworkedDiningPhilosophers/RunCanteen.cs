@@ -18,10 +18,10 @@ namespace NetworkedDiningPhilosophers
             var canteenNodeAddr = new TCPIPNodeAddress(canteenNodeIP, 3000);
             Node.getInstance().init(canteenNodeAddr);
             var cooked = NetChannel.net2one();
-            Console.WriteLine("cooked location = " + cooked.GetLocationAsString());
+            Console.WriteLine("cooked location = " + cooked.getLocation().ToString());
 
             var getOne = NetChannel.net2one();
-            Console.WriteLine("getOne location = " + getOne.GetLocationAsString());
+            Console.WriteLine("getOne location = " + getOne.getLocation().ToString());
 
             Console.WriteLine("Waiting for read from the philosophers...");
             var a = getOne.read(); // signal from the philosophers;

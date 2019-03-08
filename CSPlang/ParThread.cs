@@ -189,7 +189,7 @@ namespace CSPlang
                         CSPParallel.uncaughtException("jcsp.lang.CSPParallel", e);
                     }
 
-                    //_cspBarrier.resign();
+                    //_cspBarrier.resign(); //TODO find out why there is error thrown here
                     park.sync();
                 }
             }

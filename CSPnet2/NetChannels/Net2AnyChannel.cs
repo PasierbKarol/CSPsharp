@@ -272,7 +272,7 @@ namespace CSPnet2.NetChannels
 
     public  String GetLocationAsString()
     {
-        return this.actualChannel.GetLocationAsString();
+        return this.actualChannel.getLocation().ToString();
     }
 
         /**

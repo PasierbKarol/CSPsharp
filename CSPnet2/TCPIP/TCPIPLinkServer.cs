@@ -94,11 +94,11 @@ namespace CSPnet2.TCPIP
             try
             {
                 // First check if we have an ip address in the string
-                if (address.GetIpAddressAsString().Equals(""))
+                if (String.IsNullOrEmpty(address.GetIpAddressAsString()))
                 {
                     IPAddress localIPAddresstoUse = IPAddressGetterForNET2.GetOnlyLocalIPAddress();
                     IPAddress[] localIPAddresses = IPAddressGetterForNET2.GetAllLocalAddresses();
-                    address.setIpAddress(localIPAddresstoUse);
+                    address.setIpAddress(IPAddressGetterForNET2.ConvertIPAddressToString(localIPAddresstoUse));
                     // Get the local IP addresses
                     //InetAddress[] local = InetAddress.getAllByName(InetAddress.getLocalHost().getHostName());
                     //InetAddress toUse = InetAddress.getLocalHost();
@@ -154,10 +154,11 @@ namespace CSPnet2.TCPIP
 
                     // Now set the IP address of the address
                     //address.setIpAddress(toUse.getHostAddress());
-                    address.setIpAddress(localIPAddresstoUse);
+                    //address.setIpAddress(localIPAddresstoUse.ToString());
 
                     // Set the address part now, but it may change if we have to get a port number
-                    address.setAddress(address.GetIpAddressAsString() + ":" + address.getPort());
+                    //address.setAddress(address.GetIpAddressAsString() + ":" + address.getPort());
+                    
                 }
 
                 // Now check if the address has a port number

@@ -114,7 +114,8 @@ namespace CSPnet2.NetChannels
          * 
          * @return The String form of the NetChannelLocation
          */
-        public String LocationToString()
+
+        public override String ToString()
         {
             return "ncl://" + this.nodeID.toString() + "/" + this.vcn;
         }

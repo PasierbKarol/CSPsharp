@@ -30,5 +30,21 @@ namespace CSPnet2
             }
             throw new Exception("No network adapters with an IPv4 address in the system!");
         }
+
+        public static String ConvertIPAddressToString(IPAddress address)
+        {
+            StringBuilder a = new StringBuilder();
+            byte[] bytes = address.GetAddressBytes();
+            for (int i = 0; i < bytes.Length; i++)
+            {
+                a.Append(bytes[i]);
+                if (i < bytes.Length - 1)
+                {
+                    a.Append(".");
+                }
+                
+            }
+            return a.ToString();
+        }
     }
 }

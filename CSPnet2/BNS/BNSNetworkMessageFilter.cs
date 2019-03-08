@@ -90,7 +90,7 @@ namespace CSPnet2.BNS
             this.dos.Write(msg.type);
             this.dos.Write(msg.success);
             if (msg.serviceLocation != null)
-                this.dos.Write(msg.serviceLocation.LocationToString());
+                this.dos.Write(msg.serviceLocation.ToString());
             else
                 this.dos.Write("null");
             if (msg.location != null)

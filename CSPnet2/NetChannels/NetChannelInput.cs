@@ -38,7 +38,6 @@ namespace CSPnet2.NetChannels
          * @param decoder
          *            The new decoder to use.
          */
-        /*public*/
         void setDecoder(NetworkMessageFilter.FilterRx decoder);
     }
 }
