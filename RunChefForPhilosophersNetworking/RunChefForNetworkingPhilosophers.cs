@@ -14,7 +14,7 @@ namespace RunChefForPhilosophersNetworking
             var canteenNodeIP = "127.0.0.2";
             var philosopherNodeIP = "127.0.0.3";
 
-            TCPIPNodeAddress chefNodeAddr = new TCPIPNodeAddress(chefNodeIP, 3003);
+            var chefNodeAddr = new TCPIPNodeAddress(chefNodeIP, 3003);
             Node.getInstance().init(chefNodeAddr);
             var canteenAddress = new TCPIPNodeAddress(canteenNodeIP, 3000);
             var cooked = NetChannel.one2net(canteenAddress, 50);

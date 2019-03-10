@@ -42,7 +42,7 @@ namespace CSPnet2.NetChannels
          * The input channel coming into the networked channel input object from Links or locally connected net channel
          * outputs.
          */
-        private readonly AltingChannelInput In;
+        public readonly AltingChannelInput In;
 
         /**
          * The ChannelData structure representing this channel.
@@ -353,7 +353,7 @@ namespace CSPnet2.NetChannels
             {
                 // Read in the next message
                 NetworkMessage msg = (NetworkMessage) this.In.read();
-                Debug.WriteLine("Read message from the net to OneChannel  Type " + msg.type);
+                //Debug.WriteLine("Read message from the net to OneChannel  Type " + msg.type);
 
                 // Now we need to decode the message and act accordingly
                 try

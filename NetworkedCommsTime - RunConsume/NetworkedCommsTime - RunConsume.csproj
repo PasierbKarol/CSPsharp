@@ -6,4 +6,10 @@
     <RootNamespace>NetworkedCommsTime___RunConsume</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\CommsTimeTesting\CommsTimeTesting.csproj" />
+    <ProjectReference Include="..\CSPlang\CSPlang.csproj" />
+    <ProjectReference Include="..\CSPnet2\CSPnet2.csproj" />
+  </ItemGroup>
+
 </Project>

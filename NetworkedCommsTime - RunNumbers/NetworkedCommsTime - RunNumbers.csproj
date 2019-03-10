@@ -6,4 +6,10 @@
     <RootNamespace>NetworkedCommsTime___RunNumbers</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\CSPlang\CSPlang.csproj" />
+    <ProjectReference Include="..\CSPnet2\CSPnet2.csproj" />
+    <ProjectReference Include="..\PlugAndPlay\PlugAndPlay.csproj" />
+  </ItemGroup>
+
 </Project>

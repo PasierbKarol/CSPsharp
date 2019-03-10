@@ -33,9 +33,9 @@ namespace CommsTimeTesting
     public class Consume : IamCSProcess
     {
         private int nLoops;
-        private ChannelInputInt In;
+        private ChannelInput In;
 
-        public Consume(int nLoops, ChannelInputInt In)
+        public Consume(int nLoops, ChannelInput In)
         {
             this.nLoops = nLoops;
             this.In = In;
@@ -44,12 +44,12 @@ namespace CommsTimeTesting
         public void run()
         {
 
-            int x = -1;
+            long x = -1;
             int warm_up = 1000;
             Console.WriteLine("warming up ... ");
             for (int i = 0; i < warm_up; i++)
             {
-                x = In.read();
+                x = (long) In.read();
                 //Console.WriteLine("Read " + x + " value");
             }
             Console.WriteLine("last number received = " + x);
@@ -64,7 +64,7 @@ namespace CommsTimeTesting
                 long t0 = CSPTimeMillis.CurrentTimeMillis();
                 for (int i = 0; i < nLoops; i++)
                 {
-                    x = In.read();
+                    x = (long) In.read();
                 }
                 long t1 = CSPTimeMillis.CurrentTimeMillis();
 

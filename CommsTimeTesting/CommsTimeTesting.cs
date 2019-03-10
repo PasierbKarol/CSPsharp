@@ -19,6 +19,7 @@
 
 using System;
 using CSPlang;
+using PlugAndPlay;
 using PlugAndPlay.Ints;
 
 /**
@@ -47,16 +48,16 @@ namespace CommsTimeTesting
             int nLoops = 10000;
             Console.WriteLine(nLoops + " loops ...\n");
 
-            One2OneChannelInt P2D = Channel.one2oneInt();
-            One2OneChannelInt D2S = Channel.one2oneInt();
-            One2OneChannelInt S2P = Channel.one2oneInt();
-            One2OneChannelInt D2C = Channel.one2oneInt();
+            One2OneChannel P2D = Channel.one2one();
+            One2OneChannel D2S = Channel.one2one();
+            One2OneChannel S2P = Channel.one2one();
+            One2OneChannel D2C = Channel.one2one();
 
             new CSPParallel(
                 new IamCSProcess[] {
-                    new PrefixInt (0, S2P.In(), P2D.Out()),
-                    new Delta2Int (P2D.In(), D2C.Out(), D2S.Out()),
-                    new SuccessorInt (D2S.In(), S2P.Out()),
+                    new Prefix (0, S2P.In(), P2D.Out()),
+                    new Delta2 (P2D.In(), D2C.Out(), D2S.Out()),
+                    new Successor (D2S.In(), S2P.Out()),
                     new Consume (nLoops, D2C.In())
                 }
             ).run();

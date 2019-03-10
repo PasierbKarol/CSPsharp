@@ -305,7 +305,7 @@ namespace CSPnet2.NetChannels
             if (this.theAckChannel.pending())
             {
                 msg = (NetworkMessage) this.theAckChannel.read();
-                Console.WriteLine("Read message from the Acknowledge channel ");
+                //Console.WriteLine("Read message from the Acknowledge channel ");
 
                 // Lock onto our state object as we may be changing our state
                 lock (this.data)
@@ -417,7 +417,7 @@ namespace CSPnet2.NetChannels
 
             // Now we wait for a reply on our ackChannel
             NetworkMessage reply = (NetworkMessage) this.theAckChannel.read();
-            Console.WriteLine("Read acknowledge message from the network " );
+            //Console.WriteLine("Read acknowledge message from the network " );
 
             // The SEND was rejected. Break channel.
             if (reply.type == NetworkProtocol.REJECT_CHANNEL)
