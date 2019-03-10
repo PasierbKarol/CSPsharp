@@ -33,21 +33,20 @@ using Newtonsoft.Json.Serialization;
 
 namespace CSPnet2
 {
-//    import java.io.IOException;
-//import java.io.ObjectInputStream;
-//import java.io.ObjectOutputStream;
+    //    import java.io.IOException;
+    //import java.io.ObjectInputStream;
+    //import java.io.ObjectOutputStream;
 
-/**
- * This class is the standard encoding and decoding filter for networked JCSP channels. It uses standard Java
- * serialization to operate.
- * 
- * @author Kevin Chalmers
- */
+    /**
+     * This class is the standard encoding and decoding filter for networked JCSP channels. It uses standard Java
+     * serialization to operate.
+     *
+     * https://stackoverflow.com/questions/29688498/how-to-deserialize-json-to-objects-of-the-correct-type-without-having-to-define
+     *
+     * @author Kevin Chalmers, altered by Karol Pasierb
+     */
     public sealed class ObjectNetworkMessageFilter
     {
-        //https://stackoverflow.com/questions/10390356/serializing-deserializing-with-memory-stream;
-
-        //https://stackoverflow.com/questions/29688498/how-to-deserialize-json-to-objects-of-the-correct-type-without-having-to-define
         private static JsonSerializerSettings settings = 
             new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All, TypeNameAssemblyFormat = FormatterAssemblyStyle.Full };
 
@@ -57,22 +56,15 @@ namespace CSPnet2
          * @author Kevin Chalmers
          */
         /**
- * Static classes are sealed by default in C# - Karol Pasierb
- */
-        public /*static*/ sealed class FilterRX : NetworkMessageFilter.FilterRx
+         * Static classes are sealed by default in C# - Karol Pasierb
+         */
+        public sealed class FilterRX : NetworkMessageFilter.FilterRx
         {
-
-            /**
-             * Creates a new incoming object filter
-             */
-            public FilterRX()
-            {
-            }
-
-            //https://stackoverflow.com/questions/33616621/how-to-deserialize-byte-into-generic-object-to-be-cast-at-method-call/33616721
             /**
              * Decodes an incoming byte array, converting it back into an Object
-             * 
+             *
+             * https://stackoverflow.com/questions/33616621/how-to-deserialize-byte-into-generic-object-to-be-cast-at-method-call/33616721
+             *
              * @param bytes
              *            The byte representation of the object
              * @return The recreated Object
@@ -81,8 +73,7 @@ namespace CSPnet2
              */
             public object filterRXfromJSON(string json)
             {
-                var jsonObject = JsonConvert.DeserializeObject(json, settings);
-                return jsonObject;
+                return JsonConvert.DeserializeObject(json, settings);
             }
         }
 
@@ -91,17 +82,8 @@ namespace CSPnet2
          * 
          * @author Kevin Chalmers
          */
-        public /*static*/ sealed class FilterTX : NetworkMessageFilter.FilterTx
+        public sealed class FilterTX : NetworkMessageFilter.FilterTx
         {
-
-            /**
-             * Creates a new encoding object filter
-             */
-            public FilterTX()
-            {
-
-            }
-
             /**
              * Encodes an object into bytes by using Object serialization
              * 
@@ -113,11 +95,8 @@ namespace CSPnet2
              */
             public string filterTXtoJSON(Object obj)
             {
-                Type objectType = obj.GetType();
-                var json = JsonConvert.SerializeObject(obj, objectType, settings);
-                return json;
+                return JsonConvert.SerializeObject(obj, obj.GetType(), settings);
             }
         }
-
     }
 }

@@ -801,5 +801,13 @@ namespace CSPnet2.NetChannels
         {
             return factory.any2net(nodeAddr, vcn, immunityLevel, filter);
         }
+
+        public NetAltingChannelInput[] getInputArray(Net2OneChannel[] c)
+        {
+            NetAltingChannelInput[] _in = new NetAltingChannelInput[c.Length];
+            for (int i = 0; i < c.Length; i++)
+                _in[i] = c[i].In();
+            return _in;
+        }
     }
 }

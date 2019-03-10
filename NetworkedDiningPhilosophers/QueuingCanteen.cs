@@ -53,7 +53,7 @@ namespace NetworkedDiningPhilosophers
                         tim.after(tim.read() + 3000);
                         chickens = chickens + value;
                         toConsole.write(chickens + " chickens now available ...\n");
-                        var a =  supply.read();
+                        supply.read();
                         break;
                     case SERVICE:
                         int id =(int)(long) service.read();

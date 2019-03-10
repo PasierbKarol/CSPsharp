@@ -64,7 +64,6 @@ namespace StressedAlt_PerformanceTesting
                         new StressedReaderPerformance(Channel.getInputArray(any2OneChannelsNumber),nMessages, nChannels, nWritersPerChannel)
                     }
                 ).run();
-                //Console.WriteLine("\nFinished " + i + " time");
             }
             Console.WriteLine("Finished all");
 
