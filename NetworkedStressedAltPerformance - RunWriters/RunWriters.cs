@@ -17,10 +17,10 @@ namespace NetworkedStressedAltPerformance___RunWriters
             var readerNodeIP = "127.0.0.1";
             var writersNodeIP = "127.0.0.2";
 
-            var readerNodeAddr = new TCPIPNodeAddress(readerNodeIP, 3000);
+            var readerNodeAddr = new TCPIPNodeAddress(readerNodeIP, 3300);
             var writersNodeAddr = new TCPIPNodeAddress(writersNodeIP, 3300);
             Node.getInstance().init(writersNodeAddr);
-            var writers2network = NetChannel.any2net(writersNodeAddr, 50);
+            var writers2network = NetChannel.any2net(readerNodeAddr, 50);
             Console.WriteLine("writers2network location = " + writers2network.getLocation().ToString());
 
             Console.WriteLine("Sending signal to Reader...");
@@ -29,8 +29,8 @@ namespace NetworkedStressedAltPerformance___RunWriters
             Console.WriteLine("Sent signal to Reader");
 
             //====================== Running the test
-            int nChannels = 100;
-            int nWritersPerChannel = 200;
+            int nChannels = 10;
+            int nWritersPerChannel = 10;
             int nMessages = 2;
             int writerID = 0;
 

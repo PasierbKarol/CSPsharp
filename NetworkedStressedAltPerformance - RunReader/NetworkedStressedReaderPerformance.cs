@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using CSPlang;
+using CSPlang.Alting;
 using CSPnet2;
 using CSPutil;
 using TestingUtilities;
@@ -11,7 +12,7 @@ namespace NetworkedStressedAltPerformance___RunReader
 {
     public class NetworkedStressedReaderPerformance : IamCSProcess
     {
-        private readonly NetAltingChannelInput[] c;
+        private readonly AltingChannelInputWrapper[] c;
         private readonly int nWritersPerChannel;
         private readonly int nChannels;
         private readonly int nMessages;
@@ -27,7 +28,7 @@ namespace NetworkedStressedAltPerformance___RunReader
         public void run()
         {
             //initialize internal arrays of 2-dimensional array
-            int[][] n = new int[c.Length][];
+            int[][] n = new int[10][];
             for (int i = 0; i < n.Length; i++)
             {
                 n[i] = new int[nWritersPerChannel];
