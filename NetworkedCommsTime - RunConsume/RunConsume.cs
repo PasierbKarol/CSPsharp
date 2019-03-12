@@ -15,14 +15,18 @@ namespace NetworkedCommsTime___RunConsume
 
             var numbersNodeIP = "127.0.0.1";
             var consumeNodeIP = "127.0.0.2";
+            var prefixNodeIP = "127.0.0.3";
+            var deltaNodeIP = "127.0.0.4";
+            var successorNodeIP = "127.0.0.5";
 
             var consumeNodeAddr = new TCPIPNodeAddress(consumeNodeIP, 3300);
             Node.getInstance().init(consumeNodeAddr);
-            var network2Consume =(Net2OneChannel) NetChannel.net2one();
+
+            var network2Consume = NetChannel.net2one();
             Console.WriteLine("network2consume location = " + network2Consume.getLocation().ToString());
 
-            Console.WriteLine("Waiting for read from the numbers...");
-            var a = network2Consume.read(); // signal from the numbers;
+            Console.WriteLine("Waiting for read from the numbers... Please start other processes now");
+            network2Consume.read();
 
             Console.WriteLine("Read signal from numbers");
            

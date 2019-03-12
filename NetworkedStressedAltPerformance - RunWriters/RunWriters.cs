@@ -14,6 +14,7 @@ namespace NetworkedStressedAltPerformance___RunWriters
         static void Main(string[] args)
         {
             Console.WriteLine("Run Writers started.");
+            Console.WriteLine("Please enter writer ID");
 
             int nChannels = 1;
             int nWritersPerChannel = 10;
@@ -36,7 +37,7 @@ namespace NetworkedStressedAltPerformance___RunWriters
 
             Console.WriteLine("writers2network location = " + writers2network.getLocation().ToString());
 
-            Console.WriteLine("Informing reader Writer " + writerID + " is ready");
+            Console.WriteLine("Informing reader that Writer" + writerID + " is ready");
             writers2network.write(0);
 
             CSTimer timer = new CSTimer();
@@ -60,7 +61,7 @@ namespace NetworkedStressedAltPerformance___RunWriters
                 }
             }
 
-            Console.WriteLine("TEST: " + nChannels + " Channels, " + nWritersPerChannel + " Writers, " + nMessages + " messages");
+            //Console.WriteLine("TEST: " + nChannels + " Channels, " + nWritersPerChannel + " Writers, " + nMessages + " messages");
             for (int i = 0; i < 10; i++)
             {
                 new CSPParallel(

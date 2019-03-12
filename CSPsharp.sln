@@ -37,9 +37,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetworkedCommsTime - RunNum
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetworkedCommsTime - RunConsume", "NetworkedCommsTime - RunConsume\NetworkedCommsTime - RunConsume.csproj", "{F2362359-4559-4634-859D-CCECA1D21324}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetworkedStressedAltPerformance - RunWriters", "NetworkedStressedAltPerformance - RunWriters\NetworkedStressedAltPerformance - RunWriters.csproj", "{C269FD32-E943-4C64-BBA5-0310881C97F2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetworkedStressedAltPerformance - RunWriters", "NetworkedStressedAltPerformance - RunWriters\NetworkedStressedAltPerformance - RunWriters.csproj", "{C269FD32-E943-4C64-BBA5-0310881C97F2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetworkedStressedAltPerformance - RunReader", "NetworkedStressedAltPerformance - RunReader\NetworkedStressedAltPerformance - RunReader.csproj", "{4D4922A8-719A-4E23-83C7-7AD592EB3399}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetworkedStressedAltPerformance - RunReader", "NetworkedStressedAltPerformance - RunReader\NetworkedStressedAltPerformance - RunReader.csproj", "{4D4922A8-719A-4E23-83C7-7AD592EB3399}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetworkedCommsTime - RunPrefix", "NetworkedCommsTime - RunPrefix\NetworkedCommsTime - RunPrefix.csproj", "{1DA8F7A8-28D2-4585-9924-EC036FB794FA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetworkedCommsTime - RunDelta", "NetworkedCommsTime - RunDelta\NetworkedCommsTime - RunDelta.csproj", "{793B2690-FB43-4ED6-9B8E-DFEB95E7D889}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetworkedCommsTime - RunSuccessor", "NetworkedCommsTime - RunSuccessor\NetworkedCommsTime - RunSuccessor.csproj", "{020F74D7-8F1D-42BA-BD36-7524968036AC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -123,6 +129,18 @@ Global
 		{4D4922A8-719A-4E23-83C7-7AD592EB3399}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4D4922A8-719A-4E23-83C7-7AD592EB3399}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4D4922A8-719A-4E23-83C7-7AD592EB3399}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1DA8F7A8-28D2-4585-9924-EC036FB794FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1DA8F7A8-28D2-4585-9924-EC036FB794FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1DA8F7A8-28D2-4585-9924-EC036FB794FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1DA8F7A8-28D2-4585-9924-EC036FB794FA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{793B2690-FB43-4ED6-9B8E-DFEB95E7D889}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{793B2690-FB43-4ED6-9B8E-DFEB95E7D889}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{793B2690-FB43-4ED6-9B8E-DFEB95E7D889}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{793B2690-FB43-4ED6-9B8E-DFEB95E7D889}.Release|Any CPU.Build.0 = Release|Any CPU
+		{020F74D7-8F1D-42BA-BD36-7524968036AC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{020F74D7-8F1D-42BA-BD36-7524968036AC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{020F74D7-8F1D-42BA-BD36-7524968036AC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{020F74D7-8F1D-42BA-BD36-7524968036AC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

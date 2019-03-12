@@ -16,6 +16,9 @@ namespace NetworkedCommsTime___RunNumbers
 
             var numbersNodeIP = "127.0.0.1";
             var consumeNodeIP = "127.0.0.2";
+            var prefixNodeIP = "127.0.0.3";
+            var deltaNodeIP = "127.0.0.4";
+            var successorNodeIP = "127.0.0.5";
 
             var numbersNodeAddr = new TCPIPNodeAddress(numbersNodeIP, 3000);
             Node.getInstance().init(numbersNodeAddr);
@@ -37,7 +40,7 @@ namespace NetworkedCommsTime___RunNumbers
             new CSPParallel(
                 new IamCSProcess[] {
                     new Prefix (0, S2P.In(), P2D.Out()),
-                    new Delta2 (P2D.In(), (ChannelOutput)numbers2network, D2S.Out()),
+                    new Delta2 (P2D.In(),numbers2network, D2S.Out()),
                     new Successor (D2S.In(), S2P.Out()),
                 }
             ).run();

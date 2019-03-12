@@ -15,7 +15,7 @@ namespace NetworkedStressedAltPerformance___RunReader
         {
             Console.WriteLine("Run Reader started");
 
-            int nChannels = 2;
+            int nChannels = 4;
             int nWritersPerChannel = 10;
             int nMessages = 2;
 
@@ -51,8 +51,6 @@ namespace NetworkedStressedAltPerformance___RunReader
             }
 
             Console.WriteLine("Writing to channels to notify them they are ready to start");
-            CSTimer timer = new CSTimer();
-            timer.sleep(10000);
             for (int i = 0; i < nChannels; i++)
             {
                 reader2allWriters[i].write(0);
@@ -62,11 +60,7 @@ namespace NetworkedStressedAltPerformance___RunReader
 
             //====================== Running the test
 
-            
-
-           // Any2OneChannel[] any2OneChannelsNumber = Channel.any2oneArray(nChannels);
-
-            Console.WriteLine("TEST: " + nChannels + " Channels, " + nWritersPerChannel + " Writers, " + nMessages + " messages");
+            //Console.WriteLine("TEST: " + nChannels + " Channels, " + nWritersPerChannel + " Writers, " + nMessages + " messages");
             for (int i = 0; i < 10; i++)
             {
                 new CSPParallel(
@@ -76,6 +70,7 @@ namespace NetworkedStressedAltPerformance___RunReader
                 ).run();
             }
             Console.WriteLine("Finished all");
+            Console.ReadKey();
         }
     }
 }
