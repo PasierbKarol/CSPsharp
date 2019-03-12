@@ -4,6 +4,7 @@ using CSPlang.Any2;
 using CSPnet2.NetChannels;
 using CSPnet2.NetNode;
 using CSPnet2.TCPIP;
+using CSPutil;
 using StressedAlt_PerformanceTesting;
 
 namespace NetworkedStressedAltPerformance___RunWriters
@@ -14,25 +15,39 @@ namespace NetworkedStressedAltPerformance___RunWriters
         {
             Console.WriteLine("Run Writers started.");
 
-            var readerNodeIP = "127.0.0.1";
-            var writersNodeIP = "127.0.0.2";
-
-            var readerNodeAddr = new TCPIPNodeAddress(readerNodeIP, 3300);
-            var writersNodeAddr = new TCPIPNodeAddress(writersNodeIP, 3300);
-            Node.getInstance().init(writersNodeAddr);
-            var writers2network = NetChannel.any2net(readerNodeAddr, 50);
-            Console.WriteLine("writers2network location = " + writers2network.getLocation().ToString());
-
-            Console.WriteLine("Sending signal to Reader...");
-            writers2network.write(0); // signal from the numbers;
-
-            Console.WriteLine("Sent signal to Reader");
-
-            //====================== Running the test
-            int nChannels = 10;
+            int nChannels = 1;
             int nWritersPerChannel = 10;
             int nMessages = 2;
-            int writerID = 0;
+            int writerID = Int32.Parse(Console.ReadLine());
+
+
+            var readerNodeIP = "127.0.0.10";
+            var writersChannelNodeIP  = "127.0.0." + writerID;
+
+
+            var readerNodeAddr = new TCPIPNodeAddress(readerNodeIP, 3300);
+            var fromReader = NetChannel.net2one();
+
+            var writersChannelNodesAddresses = new TCPIPNodeAddress(writersChannelNodeIP, 3300);
+            Node.getInstance().init(writersChannelNodesAddresses);
+
+            var readersChannelNumberForThisWriter = Int32.Parse("5" + (writerID - 1));
+            var writers2network = NetChannel.any2net(readerNodeAddr, readersChannelNumberForThisWriter );
+
+            Console.WriteLine("writers2network location = " + writers2network.getLocation().ToString());
+
+            Console.WriteLine("Informing reader Writer " + writerID + " is ready");
+            writers2network.write(0);
+
+            CSTimer timer = new CSTimer();
+            timer.sleep(2000);
+            Console.WriteLine("Waiting for the signal from Reader...");
+            fromReader.read();
+            
+            Console.WriteLine("Read signal from Reader");
+
+            //====================== Running the test
+            
 
             StressedWriterPerformance[] writers = new StressedWriterPerformance[nChannels * nWritersPerChannel];
 
