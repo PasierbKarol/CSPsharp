@@ -61,12 +61,12 @@ namespace CommsTimeTesting
             int repeatTimes = 1000;
             while (repeatTimes > 0)
             {
-                long t0 = CSPTimeMillis.CurrentTimeMillis();
+                long t0 = CSTimer.CurrentTimeMillis();
                 for (int i = 0; i < nLoops; i++)
                 {
                     x = (long) In.read();
                 }
-                long t1 = CSPTimeMillis.CurrentTimeMillis();
+                long t1 = CSTimer.CurrentTimeMillis();
 
                 Console.WriteLine("last number received = " + x);
                 long microseconds = (t1 - t0) * 1000;

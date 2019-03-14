@@ -1100,7 +1100,7 @@ namespace CSPlang
 					{
 						if (timeout)
 						{
-							long delay = msecs - /*System.currentTimeMillis()*/ CSPTimeMillis.CurrentTimeMillis();
+							long delay = msecs - /*System.currentTimeMillis()*/ CSTimer.CurrentTimeMillis();
 							Debug.WriteLine("Alternative pri select precon delay for sleep is " + delay);
 
 							if (delay > Spurious.earlyTimeout)
@@ -1108,7 +1108,7 @@ namespace CSPlang
 								Monitor.Wait(delay);
 								while (state == waiting)
 								{
-									delay = msecs - /*System.currentTimeMillis()*/ CSPTimeMillis.CurrentTimeMillis();
+									delay = msecs - /*System.currentTimeMillis()*/ CSTimer.CurrentTimeMillis();
 									Debug.WriteLine("Alternative pri select orecon delay for sleep is " + delay);
 
 									if (delay > Spurious.earlyTimeout)
@@ -1198,13 +1198,13 @@ namespace CSPlang
 					{
 						if (timeout)
 						{
-							long delay = msecs - /*System.currentTimeMillis()*/ CSPTimeMillis.CurrentTimeMillis();
+							long delay = msecs - /*System.currentTimeMillis()*/ CSTimer.CurrentTimeMillis();
 							if (delay > Spurious.earlyTimeout)
 							{
 								Monitor.Wait(delay);
 								while (state == waiting)
 								{
-									delay = msecs - /*System.currentTimeMillis()*/ CSPTimeMillis.CurrentTimeMillis();
+									delay = msecs - /*System.currentTimeMillis()*/ CSTimer.CurrentTimeMillis();
 									if (delay > Spurious.earlyTimeout)
 									{
 										if (Spurious.logging)

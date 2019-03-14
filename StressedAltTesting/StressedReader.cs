@@ -23,7 +23,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
 using CSPlang;
-using CSPutil;
 
 /**
  * @author P.H. Welch
@@ -92,25 +91,26 @@ namespace TestingUtilities
                             total += n[channel][i];
                         }
                     }
+
                     Console.WriteLine(": " + total);
                     tock++;
                     counter = 10000;
 //                    t0 = CSPTimeMillis.CurrentTimeMillis();
                     //Debug.WriteLine("Read time at counter 10000");
                 }
+
                 counter--;
 
-                t0 = CSPTimeMillis.CurrentTimeMillis();
+                t0 = CSTimer.CurrentTimeMillis();
                 int channelFairSelect = alt.fairSelect();
-                StressedPacket stressedPacket = (StressedPacket)c[channelFairSelect].read();
+                StressedPacket stressedPacket = (StressedPacket) c[channelFairSelect].read();
                 n[channelFairSelect][stressedPacket.writer] = stressedPacket.n;
-                t1 = CSPTimeMillis.CurrentTimeMillis();
+                t1 = CSTimer.CurrentTimeMillis();
                 microseconds = (t1 - t0) * 1000;
                 if (microseconds > 0)
                 {
                     Debug.WriteLine("Reading time for tock " + tock + ": " + microseconds);
                 }
-
 
 
                 // for (int chan = 0; chan < channel; chan++) System.out.print ("  ");
@@ -119,6 +119,5 @@ namespace TestingUtilities
                 //                     " read " + stressedPacket.n);
             }
         }
-
     }
 }

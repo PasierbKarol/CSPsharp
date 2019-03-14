@@ -53,14 +53,14 @@ namespace StressedAlt_PerformanceTesting
             
 
             //perform read and measure the time
-            t0 = CSPTimeMillis.CurrentTimeMillis();
+            t0 = CSTimer.CurrentTimeMillis();
             for (int i = 0; i < iterations; i++)
             {
                 channelFairSelect = alt.fairSelect();
                 stressedPacket = (StressedPacket) c[channelFairSelect].read();
                 n[channelFairSelect][stressedPacket.writer] = stressedPacket.n;
             }
-            t1 = CSPTimeMillis.CurrentTimeMillis();
+            t1 = CSTimer.CurrentTimeMillis();
             microseconds = (t1 - t0) * 1000;
             if (microseconds > 0)
             {

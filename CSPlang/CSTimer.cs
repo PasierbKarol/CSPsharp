@@ -114,15 +114,23 @@ namespace CSPlang
 
     public class CSTimer : Guard
     {
+        /** Variable used to read the Java style time in miliseconds since 1970
+         *  It was used in JCSP and copied into this library in similar manner.
+         *  Used in method CurrentTimeMillis() to read time passed since that date
+         *  Author: Karol Pasierb
+         */
+        private static readonly DateTime Jan1st1970 = new DateTime
+            (1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+
         /**
-    * The absolute timeout value set for the <TT>Alternative</TT>.
-    *
-    * If this is used without setAlarm(msecs) ever having been invoked,
-    * the wake-up call is set at time zero, which will always be in
-    * the past.  So, the <TT>Alternative</TT> will see the timeout
-    * as having occurred.
-    *
-    */
+        * The absolute timeout value set for the <TT>Alternative</TT>.
+        *
+        * If this is used without setAlarm(msecs) ever having been invoked,
+        * the wake-up call is set at time zero, which will always be in
+        * the past.  So, the <TT>Alternative</TT> will see the timeout
+        * as having occurred.        
+        */
+
         private long msecs = 0;
 
         /**
@@ -132,7 +140,7 @@ namespace CSPlang
          *
          * @param msecs the absolute timeout value.
          */
-        public void setAlarm(/*final*/ long msecs)
+        public void setAlarm( /*final*/ long msecs)
         {
             this.msecs = msecs;
         }
@@ -156,7 +164,7 @@ namespace CSPlang
          * @deprecated Use {@link #setAlarm(long)} - this name caused confusion with
          * the idea of setting the current time (a concept that is not supported).
          */
-        public void setAbsoluteTimeout(/*final*/ long msecs)
+        public void setAbsoluteTimeout( /*final*/ long msecs)
         {
             this.msecs = msecs;
         }
@@ -168,7 +176,7 @@ namespace CSPlang
          */
         public long read()
         {
-            return CSPTimeMillis.CurrentTimeMillis();
+            return CurrentTimeMillis();
         }
 
         /**
@@ -176,19 +184,20 @@ namespace CSPlang
          *
          * @param msecs the absolute time awaited.  Note: if this time has already been reached, this returns straight away.
          */
-        public void after(/*final*/ long msecsReceived)
+        public void after( /*final*/ long msecsReceived)
         {
-            long timeRead = CSPTimeMillis.CurrentTimeMillis();
-            /*final*/ long delay = msecsReceived - timeRead;
+            long timeRead = CurrentTimeMillis();
+            /*final*/
+            long delay = msecsReceived - timeRead;
             if (delay > 0)
                 try
                 {
-                    Thread.Sleep((int)delay);
+                    Thread.Sleep((int) delay);
                 }
-                catch (ThreadInterruptedException  e)
+                catch (ThreadInterruptedException e)
                 {
                     throw new ProcessInterruptedException
-                            ("*** Thrown from CSTimer.after (long)\n" + e.ToString());
+                        ("*** Thrown from CSTimer.after (long)\n" + e.ToString());
                 }
         }
 
@@ -197,17 +206,17 @@ namespace CSPlang
          *
          * @param msecs the length of the sleep period.  Note: if this is negative, this returns straight away.
          */
-        public void sleep(/*final*/ long msecs)
+        public void sleep( /*final*/ long msecs)
         {
             if (msecs > 0)
                 try
                 {
-                    Thread.Sleep((int)msecs);
+                    Thread.Sleep((int) msecs);
                 }
-                catch (ThreadInterruptedException  e)
+                catch (ThreadInterruptedException e)
                 {
                     throw new ProcessInterruptedException
-                            ("*** Thrown from CSTimer.sleep (long)\n" + e.ToString());
+                        ("*** Thrown from CSTimer.sleep (long)\n" + e.ToString());
                 }
         }
 
@@ -218,13 +227,13 @@ namespace CSPlang
          */
         public override Boolean enable(Alternative alt)
         {
-            if (CSPTimeMillis.CurrentTimeMillis() > msecs)
+            if (CurrentTimeMillis() > msecs)
             {
                 return true;
             }
             else
             {
-                alt.setTimeout((int)msecs);
+                alt.setTimeout((int) msecs);
                 return false;
             }
         }
@@ -234,10 +243,15 @@ namespace CSPlang
          */
         public override Boolean disable()
         {
-            return (CSPTimeMillis.CurrentTimeMillis() > msecs);
+            return (CurrentTimeMillis() > msecs);
             // WARNING: the above is an insufficient test to see if the timeout
             // has expired ... since Java wait-with-timeouts sometimes return
             // early!  See the implementation of Alternative for a work-around.
+        }
+
+        public static long CurrentTimeMillis()
+        {
+            return (long) (DateTime.UtcNow - Jan1st1970).TotalMilliseconds;
         }
     }
 }

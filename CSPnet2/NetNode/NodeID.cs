@@ -19,8 +19,8 @@
 
 using System;
 using System.Diagnostics;
-using CSPutil;
 using System.Runtime.InteropServices;
+using CSPlang;
 
 
 namespace CSPnet2.NetNode
@@ -83,7 +83,7 @@ namespace CSPnet2.NetNode
          */
         internal NodeID(String nodeName, NodeAddress nodeAddress)
         {
-            this.time = CSPTimeMillis.CurrentTimeMillis();
+            this.time = CSTimer.CurrentTimeMillis();
             //this.mem = System.Runtime.GetRuntime().freeMemory();
             //this.mem = GC.GetTotalMemory(true);
             this.mem = Process.GetCurrentProcess().PrivateMemorySize64;

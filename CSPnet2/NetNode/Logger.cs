@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using CSPutil;
+using CSPlang;
 
 namespace CSPnet2.NetNode
 {
@@ -41,7 +41,7 @@ namespace CSPnet2.NetNode
             //Console.WriteLine(message);
             if (this.logger == null)
                 return;
-            DateTime date = new DateTime(CSPTimeMillis.CurrentTimeMillis());
+            DateTime date = new DateTime(CSTimer.CurrentTimeMillis());
             try
             {
                 this.logger.WriteLine("(" + date.ToString() + ")-" + clazz.GetType().Name + ":");
