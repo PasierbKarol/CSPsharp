@@ -7,7 +7,7 @@ using System.Text;
 
 namespace CSPnet2
 {
-    public static class IPAddressGetterForNET2
+    public static class GetLocalIPAddress
     {
         public static IPAddress[] GetAllLocalAddresses()
         {
@@ -43,6 +43,22 @@ namespace CSPnet2
                     a.Append(".");
                 }
                 
+            }
+            return a.ToString();
+        }
+
+        public static String ConvertLocalIPAddressToString()
+        {
+            StringBuilder a = new StringBuilder();
+            byte[] bytes = GetOnlyLocalIPAddress().GetAddressBytes();
+            for (int i = 0; i < bytes.Length; i++)
+            {
+                a.Append(bytes[i]);
+                if (i < bytes.Length - 1)
+                {
+                    a.Append(".");
+                }
+
             }
             return a.ToString();
         }

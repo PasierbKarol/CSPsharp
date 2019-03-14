@@ -98,9 +98,9 @@ namespace CSPnet2.TCPIP
                 // First check if we have an ip address in the string
                 if (String.IsNullOrEmpty(address.GetIpAddressAsString()))
                 {
-                    IPAddress localIPAddresstoUse = IPAddressGetterForNET2.GetOnlyLocalIPAddress();
-                    IPAddress[] localIPAddresses = IPAddressGetterForNET2.GetAllLocalAddresses();
-                    address.setIpAddress(IPAddressGetterForNET2.ConvertIPAddressToString(localIPAddresstoUse));
+                    IPAddress localIPAddresstoUse = GetLocalIPAddress.GetOnlyLocalIPAddress();
+                    IPAddress[] localIPAddresses = GetLocalIPAddress.GetAllLocalAddresses();
+                    address.setIpAddress(GetLocalIPAddress.ConvertIPAddressToString(localIPAddresstoUse));
                     // Get the local IP addresses
                     //InetAddress[] local = InetAddress.getAllByName(InetAddress.getLocalHost().getHostName());
                     //InetAddress toUse = InetAddress.getLocalHost();

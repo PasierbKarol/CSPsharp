@@ -41,7 +41,7 @@ namespace NetworkedStressedAltPerformance___RunWriters
             Console.WriteLine("writers2network location = " + writers2network.getLocation().ToString());
 
             Console.WriteLine("Informing reader that Writer" + writerID + " is ready and sending its IP");
-            writers2network.write(IPAddressGetterForNET2.ConvertIPAddressToString(IPAddressGetterForNET2.GetOnlyLocalIPAddress()));
+            writers2network.write(GetLocalIPAddress.ConvertLocalIPAddressToString());
             //writers2network.write(writersChannelNodeIP);
 
             CSTimer timer = new CSTimer();

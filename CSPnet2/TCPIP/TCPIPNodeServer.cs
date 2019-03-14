@@ -47,8 +47,8 @@ namespace CSPnet2.TCPIP
             Node.getInstance().setErr(new StreamWriter(Console.OpenStandardError()));
 
             // Get the local IP addresses
-            IPAddress[] localIPAddresses = IPAddressGetterForNET2.GetAllLocalAddresses();
-            IPAddress ipAddresstoUse = IPAddressGetterForNET2.GetOnlyLocalIPAddress();
+            IPAddress[] localIPAddresses = GetLocalIPAddress.GetAllLocalAddresses();
+            IPAddress ipAddresstoUse = GetLocalIPAddress.GetOnlyLocalIPAddress();
             
 
             // We basically have four types of addresses to worry about. Loopback (127), link local (169),

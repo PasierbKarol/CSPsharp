@@ -47,9 +47,9 @@ namespace CSPnet2.TCPIP
         {
             // Get the local IP addresses
             //InetAddress[] local = InetAddress.getAllByName(InetAddress.getLocalHost().getHostName());
-            IPAddress[] localIPAddresses = IPAddressGetterForNET2.GetAllLocalAddresses();
+            IPAddress[] localIPAddresses = GetLocalIPAddress.GetAllLocalAddresses();
             //InetAddress toUse = InetAddress.getLocalHost();
-            IPAddress ipAddresstoUse = IPAddressGetterForNET2.GetOnlyLocalIPAddress();
+            IPAddress ipAddresstoUse = GetLocalIPAddress.GetOnlyLocalIPAddress();
 
 
             // We basically have four types of addresses to worry about. Loopback (127), link local (169),

@@ -99,9 +99,9 @@ namespace CSPnet2.TCPIP
                 if (String.IsNullOrEmpty(address.GetIpAddressAsString()))
                 {
 
-                    IPAddress[] localIPAddresses = IPAddressGetterForNET2.GetAllLocalAddresses();
-                    IPAddress ipAddresstoUse = IPAddressGetterForNET2.GetOnlyLocalIPAddress();
-                    address.setIpAddress(IPAddressGetterForNET2.ConvertIPAddressToString(ipAddresstoUse));
+                    IPAddress[] localIPAddresses = GetLocalIPAddress.GetAllLocalAddresses();
+                    IPAddress ipAddresstoUse = GetLocalIPAddress.GetOnlyLocalIPAddress();
+                    address.setIpAddress(GetLocalIPAddress.ConvertIPAddressToString(ipAddresstoUse));
 
                     // We basically have four types of addresses to worry about. Loopback (127), link local (169),
                     // local (192) and (possibly) global. Grade each 1, 2, 3, 4 and use highest scoring address. In all
