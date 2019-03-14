@@ -14,8 +14,11 @@ namespace NetworkedCommsTime___RunPrefix
             Console.WriteLine("Prefix Starts!");
             //It is the first process to run after the Consume
 
-            var deltaNodeIP = "127.0.0.4";
-            var prefixNodeIP = "127.0.0.3";
+            Console.WriteLine("Please enter IP address for this node.");
+            var prefixNodeIP = Console.ReadLine();
+            Console.WriteLine("Please enter IP address for Delta.");
+            var deltaNodeIP = Console.ReadLine();
+
 
             var prefixNodeAddr = new TCPIPNodeAddress(prefixNodeIP, 3000);
             Node.getInstance().init(prefixNodeAddr);

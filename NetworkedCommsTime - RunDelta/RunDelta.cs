@@ -14,11 +14,15 @@ namespace NetworkedCommsTime___RunDelta
             Console.WriteLine("Delta Starts!");
             //This process starts after Prefix
 
-            var consumeNodeIP = "127.0.0.2";
-            var prefixNodeIP = "127.0.0.3";
-            var deltaNodeIP = "127.0.0.4";
-            var successorNodeIP = "127.0.0.5";
 
+            Console.WriteLine("Please enter IP address for this node.");
+            var deltaNodeIP = Console.ReadLine();
+            Console.WriteLine("Please enter IP address for Prefix.");
+            var prefixNodeIP = Console.ReadLine();
+            Console.WriteLine("Please enter IP address for Consume.");
+            var consumeNodeIP = Console.ReadLine();
+            Console.WriteLine("Please enter IP address for Successor.");
+            var successorNodeIP = Console.ReadLine();
 
             var deltaNodeAddr = new TCPIPNodeAddress(deltaNodeIP, 3000);
             Node.getInstance().init(deltaNodeAddr);

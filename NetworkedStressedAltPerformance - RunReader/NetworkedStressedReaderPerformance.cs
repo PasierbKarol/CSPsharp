@@ -28,7 +28,7 @@ namespace NetworkedStressedAltPerformance___RunReader
         public void run()
         {
             //initialize internal arrays of 2-dimensional array
-            int[][] n = new int[10][];
+            int[][] n = new int[c.Length][];
             for (int i = 0; i < n.Length; i++)
             {
                 n[i] = new int[nWritersPerChannel];
@@ -70,7 +70,7 @@ namespace NetworkedStressedAltPerformance___RunReader
                 csv.AppendLine(newLine);
                 File.AppendAllText(@"d:\\stressedAlt_Test" + nChannels + "x" + nWritersPerChannel + ".csv", csv.ToString());
             }
-            //Console.WriteLine("Finished reader");
+            //Console.ReadKey();
 
         }
     }

@@ -11,12 +11,16 @@ namespace RunPhilosophersForNetworking
     {
         static void Main(string[] args)
         {
-            string chefNodeIP = "127.0.0.1";
-            string canteenNodeIP = "127.0.0.2";
-            string philosopherNodeIP = "127.0.0.3";
+
+            Console.WriteLine("Please enter IP address for this Node.");
+            var philosopherNodeIP = Console.ReadLine();
+            Console.WriteLine("Please enter IP address for Canteen.");
+            var canteenNodeIP = Console.ReadLine();
+            
 
             var philosopherNodeAddr = new TCPIPNodeAddress(philosopherNodeIP, 3002);
             Node.getInstance().init(philosopherNodeAddr);
+
             var gotOne = NetChannel.net2any();
             Console.WriteLine("gotOne location = " + gotOne.getLocation().ToString());
 

@@ -68,9 +68,7 @@ namespace StressedAlt_PerformanceTesting
                 var newLine = string.Format("{0},{1},{2},{3},{4}", nChannels, nWritersPerChannel, nMessages, iterations, microseconds);
                 csv.AppendLine(newLine);
                 File.AppendAllText(@"d:\\stressedAlt_Test"+nChannels+"x"+nWritersPerChannel+".csv", csv.ToString());
-            }
-            //Console.WriteLine("Finished reader");
-           
+            }         
         }
     }
 }

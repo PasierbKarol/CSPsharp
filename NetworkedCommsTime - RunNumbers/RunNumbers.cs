@@ -14,11 +14,13 @@ namespace NetworkedCommsTime___RunNumbers
         {
             Console.WriteLine("Numbers started!");
 
-            var numbersNodeIP = "127.0.0.1";
-            var consumeNodeIP = "127.0.0.2";
-            var prefixNodeIP = "127.0.0.3";
-            var deltaNodeIP = "127.0.0.4";
-            var successorNodeIP = "127.0.0.5";
+
+            
+            Console.WriteLine("Please enter IP address for this node.");
+            var numbersNodeIP = Console.ReadLine();
+            Console.WriteLine("Please enter IP address for Consume.");
+            var consumeNodeIP = Console.ReadLine();
+            
 
             var numbersNodeAddr = new TCPIPNodeAddress(numbersNodeIP, 3000);
             Node.getInstance().init(numbersNodeAddr);

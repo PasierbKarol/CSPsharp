@@ -74,7 +74,7 @@ namespace CSPnet2.TCPIP
         /**
          * The socket connected to the remote Node.
          */
-        private Socket sock;
+        private Socket socket;
 
         /**
          * The address of the remote Node.
@@ -94,7 +94,6 @@ namespace CSPnet2.TCPIP
         {
             try
             {
-
                 // First check if we have an ip address in the string. If not, we assume that this is to be connected
                 // to the local machine but to a different JVM
                 if (String.IsNullOrEmpty(address.GetIpAddressAsString()))
@@ -159,21 +158,21 @@ namespace CSPnet2.TCPIP
                 }
 
                 // Connect the socket to the server socket on the remote Node
-                //this.sock = new Socket(address.GetIpAddressAsString(), address.getPort());
+                //this.socket = new Socket(address.GetIpAddressAsString(), address.getPort());
                 IPAddress clientAddress = IPAddress.Parse(address.GetIpAddressAsString());
-                this.sock = new Socket(clientAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
-                EndPoint clientEndPoint = (IPEndPoint)new IPEndPoint(IPAddress.Parse(address.GetIpAddressAsString()), address.getPort());
+                this.socket = new Socket(clientAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
+                EndPoint clientEndPoint = new IPEndPoint(IPAddress.Parse(address.GetIpAddressAsString()), address.getPort());
                                 
                 // Set TcpNoDelay. Off should improve performance for smaller packet sizes, which JCSP should have in
                 // general
-                //this.sock.setTcpNoDelay(!TCPIPLink.NAGLE);
-                this.sock.NoDelay = !TCPIPLink.NAGLE;
-                this.sock.Connect(clientEndPoint);
+                //this.socket.setTcpNoDelay(!TCPIPLink.NAGLE);
+                this.socket.NoDelay = !TCPIPLink.NAGLE;
+                this.socket.Connect(clientEndPoint);
                 // Create the input and output streams for the Link
-                //this.rxStream = new BinaryReader(new BufferedInputStream(this.sock.getInputStream(), TCPIPLink.BUFFER_SIZE));
-                this.rxStream = new BinaryReader(new NetworkStream(this.sock));
-                //this.txStream = new BinaryWriter(new BufferedOutputStream(this.sock.getOutputStream(), TCPIPLink.BUFFER_SIZE));
-                this.txStream = new BinaryWriter(new NetworkStream(this.sock));
+                //this.rxStream = new BinaryReader(new BufferedInputStream(this.socket.getInputStream(), TCPIPLink.BUFFER_SIZE));
+                this.rxStream = new BinaryReader(new NetworkStream(this.socket));
+                //this.txStream = new BinaryWriter(new BufferedOutputStream(this.socket.getOutputStream(), TCPIPLink.BUFFER_SIZE));
+                this.txStream = new BinaryWriter(new NetworkStream(this.socket));
 
                 // Set the remote address
                 this.remoteAddress = address;
@@ -183,7 +182,6 @@ namespace CSPnet2.TCPIP
                 
                 // Log Node connection
                 Node.log.log(this.GetType(), "Link created to " + address.toString());
-                Console.WriteLine("Link created to " + address.toString());
             }
             catch (IOException ioe)
             {
@@ -208,8 +206,8 @@ namespace CSPnet2.TCPIP
         {
             try
             {
-                // Set the sock property
-                this.sock = socket;
+                // Set the socket property
+                this.socket = socket;
                 // Set TcpNoDelay
                 //socket.setTcpNoDelay(!TCPIPLink.NAGLE);
                 socket.NoDelay = !TCPIPLink.NAGLE;
@@ -218,10 +216,10 @@ namespace CSPnet2.TCPIP
                 //this.txStream = new BinaryWriter(new BufferedOutputStream(socket.getOutputStream(), TCPIPLink.BUFFER_SIZE));
 
 
-                //this.rxStream = new BinaryReader(new BufferedInputStream(this.sock.getInputStream(), TCPIPLink.BUFFER_SIZE));
-                this.rxStream = new BinaryReader(new NetworkStream(this.sock));
-                //this.txStream = new BinaryWriter(new BufferedOutputStream(this.sock.getOutputStream(), TCPIPLink.BUFFER_SIZE));
-                this.txStream = new BinaryWriter(new NetworkStream(this.sock));
+                //this.rxStream = new BinaryReader(new BufferedInputStream(this.socket.getInputStream(), TCPIPLink.BUFFER_SIZE));
+                this.rxStream = new BinaryReader(new NetworkStream(this.socket));
+                //this.txStream = new BinaryWriter(new BufferedOutputStream(this.socket.getOutputStream(), TCPIPLink.BUFFER_SIZE));
+                this.txStream = new BinaryWriter(new NetworkStream(this.socket));
 
 
                 // Set the NodeID
@@ -232,9 +230,7 @@ namespace CSPnet2.TCPIP
                 this.connected = true;
                 // Log Link creation and Link connection
                 Node.log.log(this.GetType(), "Link created to " + nodeID.toString());
-                Console.WriteLine("Link created to " + nodeID.toString());
                 Node.log.log(this.GetType(), "Link to " + nodeID.toString() + " connected");
-                Console.WriteLine("Link to " + nodeID.toString() + " connected");
             }
             catch (IOException ioe)
             {
@@ -265,7 +261,6 @@ namespace CSPnet2.TCPIP
             try
             {
                 // Write the string representation of our NodeID to the remote Node
-                var a = Node.getInstance().getNodeID().toString();
                 this.txStream.Write(Node.getInstance().getNodeID().toString());
                 this.txStream.Flush();
 
@@ -282,9 +277,7 @@ namespace CSPnet2.TCPIP
                 }
 
                 // Read in Remote NodeID as string
-                String nodeIDString = this.rxStream.ReadString();
-                NodeID otherID = NodeID.parse(nodeIDString);
-                Console.WriteLine("Other NodeID was read " + otherID.toString());
+                NodeID otherID = NodeID.parse(this.rxStream.ReadString());
 
                 // First check we have a tcpip Node connection. This should always be the case
                 if (otherID.getNodeAddress() is TCPIPNodeAddress)
@@ -336,15 +329,15 @@ namespace CSPnet2.TCPIP
                 lock (this)
                 {
                     // Check that the socket is still in existence
-                    if (this.sock != null)
+                    if (this.socket != null)
                     {
                         // Close the streams
                         this.txStream.Close();
                         this.rxStream.Close();
                         // Close the socket
-                        this.sock.Close();
+                        this.socket.Close();
                         // Set the socket to null
-                        this.sock = null;
+                        this.socket = null;
                         // Remove the Link from the LinkManager
                         this.lostLink();
                     }

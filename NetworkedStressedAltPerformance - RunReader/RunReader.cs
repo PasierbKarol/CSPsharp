@@ -15,12 +15,14 @@ namespace NetworkedStressedAltPerformance___RunReader
         {
             Console.WriteLine("Run Reader started");
 
-            int nChannels = 4;
+            Console.WriteLine("Please enter number of writers to be created");
+            int nChannels = Int32.Parse(Console.ReadLine());
             int nWritersPerChannel = 10;
             int nMessages = 2;
 
-            var readerNodeIP = "127.0.0.10";
-           
+            Console.WriteLine("Please enter IP address for the reader.");
+            var readerNodeIP = Console.ReadLine();
+
 
             var readerNodeAddr = new TCPIPNodeAddress(readerNodeIP, 3300);
             Node.getInstance().init(readerNodeAddr);
@@ -32,21 +34,17 @@ namespace NetworkedStressedAltPerformance___RunReader
                 Console.WriteLine("network2Reader location = " + network2Reader[i].getLocation().ToString());
             }
             
-
-            Console.WriteLine("Wait for writers to confirm they are ready");
+            string[] writersNodesIPs = new string[nChannels];
+            Console.WriteLine("Wait for writers to confirm they are ready and send their IPs");
             for (int i = 0; i < nChannels; i++)
             {
-                network2Reader[i].read();
+                writersNodesIPs[i] =(string) network2Reader[i].read();
             }
 
-            String[] writersNodeIP = new string[nChannels];
             NetChannelOutput[] reader2allWriters = new NetChannelOutput[nChannels];
-
-            for (int i = 0; i < writersNodeIP.Length; i++)
+            for (int i = 0; i < writersNodesIPs.Length; i++)
             {
-                writersNodeIP[i] = "127.0.0." + (i + 1);
-                var writersChannelNodeAddress = new TCPIPNodeAddress(writersNodeIP[i], 3300);
-                var channelNumber = Int32.Parse("5" + i);
+                var writersChannelNodeAddress = new TCPIPNodeAddress(writersNodesIPs[i], 3300);
                 reader2allWriters[i] = NetChannel.one2net(writersChannelNodeAddress, 50 ); //It's going to be always first read channel in the writer
             }
 

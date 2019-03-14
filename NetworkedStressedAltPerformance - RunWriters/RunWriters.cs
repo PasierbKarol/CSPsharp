@@ -1,6 +1,7 @@
 ﻿using System;
 using CSPlang;
 using CSPlang.Any2;
+using CSPnet2;
 using CSPnet2.NetChannels;
 using CSPnet2.NetNode;
 using CSPnet2.TCPIP;
@@ -14,16 +15,18 @@ namespace NetworkedStressedAltPerformance___RunWriters
         static void Main(string[] args)
         {
             Console.WriteLine("Run Writers started.");
-            Console.WriteLine("Please enter writer ID");
 
             int nChannels = 1;
             int nWritersPerChannel = 10;
             int nMessages = 2;
+            Console.WriteLine("Please enter writer ID");
             int writerID = Int32.Parse(Console.ReadLine());
 
 
-            var readerNodeIP = "127.0.0.10";
-            var writersChannelNodeIP  = "127.0.0." + writerID;
+            Console.WriteLine("Please enter IP address for this node.");
+            var writersChannelNodeIP = Console.ReadLine();
+            Console.WriteLine("Please enter IP address for Reader.");
+            var readerNodeIP = Console.ReadLine();
 
 
             var readerNodeAddr = new TCPIPNodeAddress(readerNodeIP, 3300);
@@ -37,8 +40,9 @@ namespace NetworkedStressedAltPerformance___RunWriters
 
             Console.WriteLine("writers2network location = " + writers2network.getLocation().ToString());
 
-            Console.WriteLine("Informing reader that Writer" + writerID + " is ready");
-            writers2network.write(0);
+            Console.WriteLine("Informing reader that Writer" + writerID + " is ready and sending its IP");
+            writers2network.write(IPAddressGetterForNET2.ConvertIPAddressToString(IPAddressGetterForNET2.GetOnlyLocalIPAddress()));
+            //writers2network.write(writersChannelNodeIP);
 
             CSTimer timer = new CSTimer();
             timer.sleep(2000);

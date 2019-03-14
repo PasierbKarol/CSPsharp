@@ -31,17 +31,16 @@ using CSPlang.Any2;
 namespace StressedAlt_PerformanceTesting
 {
 
-    public class StressedAltPerformance
+    public class RunStressedAltPerformance
     {
 
         public static void Main(String[] args)
         {
-            int nChannels = 100;
-            int nWritersPerChannel = 200;
+            int nChannels = 2;
+            int nWritersPerChannel = 10;
             int nMessages = 2;
             int writerID = 0;
 
-            //Any2OneChannel[] c = Channel.any2oneArray (nChannels, new OverWriteOldestBuffer (1));
             Any2OneChannel[] any2OneChannelsNumber = Channel.any2oneArray(nChannels);
 
             StressedWriterPerformance[] writers = new StressedWriterPerformance[nChannels * nWritersPerChannel];
@@ -66,6 +65,7 @@ namespace StressedAlt_PerformanceTesting
                 ).run();
             }
             Console.WriteLine("Finished all");
+            Console.ReadKey();
 
 
 

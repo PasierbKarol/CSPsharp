@@ -442,6 +442,7 @@ namespace CSPnet2.Net2Link
                 catch (IOException ioe)
                 {
                     // Something went wrong during I/O. Destroy resources.
+                    //TODO Call to the function below needs to be restored and operate properly
                     //destroyResources();
                 }
             }
@@ -1048,6 +1049,7 @@ namespace CSPnet2.Net2Link
                 catch (IOException ioe)
                 {
                     // First destroyResources as appropriate for the implementation
+                    //TODO Call to the function below needs to be restored and operate properly
                     //destroyResources();
 
                     // Now we wish to inform any server ends of a barrier that may have had enrollments via this Link that

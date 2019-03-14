@@ -63,7 +63,6 @@ namespace CSPnet2.TCPIP
          * The NodeAddress that this LinkServer is listening on. This should be the same as the Node's address.
          */
         readonly TCPIPNodeAddress listeningAddress;
-        private static Socket incoming = null;
 
         /**
          * Creates LinkServer by wrapping round an existing ServerSocket. Used internally by JCSP
@@ -75,8 +74,11 @@ namespace CSPnet2.TCPIP
         internal TCPIPLinkServer(Socket serverSocket)
         {
             // We need to set the NodeAddress. Create from ServerSocket address and port
-            //TODO implement later - Karol Pasierb
+            //TODO double check if thee code below provides the proper values - Karol Pasierb
             //this.listeningAddress = new TCPIPNodeAddress(serverSocket.getInetAddress().getHostAddress(), serverSocket.getLocalPort());
+            IPEndPoint a = (IPEndPoint) serverSocket.LocalEndPoint;
+
+            this.listeningAddress = new TCPIPNodeAddress(a.Address.ToString(), a.Port);
             this.serv = serverSocket;
         }
 
@@ -158,7 +160,6 @@ namespace CSPnet2.TCPIP
 
                     // Set the address part now, but it may change if we have to get a port number
                     //address.setAddress(address.GetIpAddressAsString() + ":" + address.getPort());
-                    
                 }
 
                 // Now check if the address has a port number
@@ -170,13 +171,11 @@ namespace CSPnet2.TCPIP
                     IPEndPoint socketEndPoint =
                         new IPEndPoint(IPAddress.Parse(address.GetIpAddressAsString()),
                             0); //port 0 as in Java's implementation
-                    IPAddress serverAddress = IPAddress.Parse(address.GetIpAddressAsString());
-
 
                     // Create the server socket with a random port
                     //this.serv = new ServerSocket(0, 0, socketAddress);
                     //this.serv = new TcpListener(localIPAddresstoUse.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
-                    this.serv = new Socket(serverAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
+                    this.serv = new Socket(socketEndPoint.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
                     this.serv.Bind(socketEndPoint);
                     this.serv.Listen(0);
 

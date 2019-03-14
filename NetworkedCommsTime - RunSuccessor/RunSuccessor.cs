@@ -14,8 +14,12 @@ namespace NetworkedCommsTime___RunSuccessor
             Console.WriteLine("Successor Starts!");
             //This Process runs after Delta
 
-            var prefixNodeIP = "127.0.0.3";
-            var successorNodeIP = "127.0.0.5";
+            Console.WriteLine("Please enter IP address for this node.");
+            var successorNodeIP = Console.ReadLine();
+            Console.WriteLine("Please enter IP address for Prefix.");
+            var prefixNodeIP = Console.ReadLine();
+
+           
 
             var successorNodeAddr = new TCPIPNodeAddress(successorNodeIP, 3000);
             Node.getInstance().init(successorNodeAddr);
