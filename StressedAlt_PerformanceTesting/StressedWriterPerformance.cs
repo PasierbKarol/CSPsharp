@@ -24,7 +24,6 @@ namespace StressedAlt_PerformanceTesting
 
         public void run()
         {
-            //int n = 0;
             StressedPacket stressedPacketA = new StressedPacket(writer);
             StressedPacket stressedPacketB = new StressedPacket(writer);
                 stressedPacketA.n = writerID;

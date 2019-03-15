@@ -474,7 +474,6 @@ namespace CSPlang
 
         public static One2OneChannel one2one()
         {
-            //Debug.WriteLine("Creating channel ","Karol");
             return new One2OneChannelImpl();
         }
 

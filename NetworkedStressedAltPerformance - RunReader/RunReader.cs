@@ -17,7 +17,8 @@ namespace NetworkedStressedAltPerformance___RunReader
 
             Console.WriteLine("Please enter number of writers to be created");
             int nChannels = Int32.Parse(Console.ReadLine());
-            int nWritersPerChannel = 10;
+            Console.WriteLine("Please enter number of writers per channel");
+            int nWritersPerChannel = Int32.Parse(Console.ReadLine());
             int nMessages = 2;
 
             Console.WriteLine("Please enter IP address for the reader.");

@@ -15,7 +15,8 @@ namespace NetworkedStressedAltPerformance___RunWriters
             Console.WriteLine("Run Writers started.");
 
             int nChannels = 1;
-            int nWritersPerChannel = 10;
+            Console.WriteLine("Please enter number of writers per channel");
+            int nWritersPerChannel = Int32.Parse(Console.ReadLine());
             int nMessages = 2;
             Console.WriteLine("Please enter writer ID");
             int writerID = Int32.Parse(Console.ReadLine());

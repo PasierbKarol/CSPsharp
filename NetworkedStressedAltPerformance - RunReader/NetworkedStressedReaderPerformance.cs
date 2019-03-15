@@ -68,7 +68,7 @@ namespace NetworkedStressedAltPerformance___RunReader
                 Console.WriteLine("Reading time for " + iterations + " iterations: " + microseconds);
                 var newLine = string.Format("{0},{1},{2},{3},{4}", nChannels, nWritersPerChannel, nMessages, iterations, microseconds);
                 csv.AppendLine(newLine);
-                File.AppendAllText(@"d:\\stressedAlt_Test" + nChannels + "x" + nWritersPerChannel + ".csv", csv.ToString());
+                File.AppendAllText(@"d:\\NetworkedstressedAlt_Test" + nChannels + "x" + nWritersPerChannel + ".csv", csv.ToString());
             }
         }
     }

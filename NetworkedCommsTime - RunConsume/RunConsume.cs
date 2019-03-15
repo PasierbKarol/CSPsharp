@@ -46,6 +46,7 @@ namespace NetworkedCommsTime___RunConsume
                     new Consume (nLoops, network2Consume)
                 }
             ).run();
+            Console.ReadKey();
         }
     }
 }
