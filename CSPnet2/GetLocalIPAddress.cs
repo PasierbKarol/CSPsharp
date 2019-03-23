@@ -9,22 +9,18 @@ namespace CSPnet2
 {
     public static class GetLocalIPAddress
     {
-        public static IPAddress[] GetAllLocalAddresses()
+        public static IPAddress[] GetAllAddresses()
         {
             return Dns.GetHostEntry(Dns.GetHostName()).AddressList;
         }
 
         public static IPAddress GetOnlyLocalIPAddress()
         {
-            var host = GetAllLocalAddresses();
+            var host = GetAllAddresses();
             foreach (var ip in host)
             {
                 if (ip.AddressFamily == AddressFamily.InterNetwork)
                 {
-                    Debug.WriteLine("Local IPAddress found: " + ip.ToString());
-                    //Check if there is a connection - Karol Pasierb
-                    var connectionExisit = System.Net.NetworkInformation.NetworkInterface.GetIsNetworkAvailable();
-                    Debug.WriteLine("Connection status " + connectionExisit);
                     return ip;
                 }
             }
@@ -41,26 +37,14 @@ namespace CSPnet2
                 if (i < bytes.Length - 1)
                 {
                     a.Append(".");
-                }
-                
+                }                
             }
             return a.ToString();
         }
 
         public static String ConvertLocalIPAddressToString()
         {
-            StringBuilder a = new StringBuilder();
-            byte[] bytes = GetOnlyLocalIPAddress().GetAddressBytes();
-            for (int i = 0; i < bytes.Length; i++)
-            {
-                a.Append(bytes[i]);
-                if (i < bytes.Length - 1)
-                {
-                    a.Append(".");
-                }
-
-            }
-            return a.ToString();
+            return ConvertIPAddressToString(GetOnlyLocalIPAddress());
         }
     }
 }

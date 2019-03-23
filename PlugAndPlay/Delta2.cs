@@ -17,9 +17,6 @@ namespace PlugAndPlay
             this.out2 = Out2;
         }
 
-
-
-
         public void run()
         {
             ProcessWrite[] parWrite = { new ProcessWrite(out1), new ProcessWrite(out2) };
@@ -27,7 +24,6 @@ namespace PlugAndPlay
             while (true)
             {
                 Object value = In.read();
-                //Debug.WriteLine("Delta2 read " + value.ToString());
 
                 parWrite[0].value = value;
                 parWrite[1].value = value;

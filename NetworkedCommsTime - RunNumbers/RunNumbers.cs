@@ -14,8 +14,6 @@ namespace NetworkedCommsTime___RunNumbers
         {
             Console.WriteLine("Numbers started!");
 
-
-            
             Console.WriteLine("Please enter IP address for this node.");
             var numbersNodeIP = Console.ReadLine();
             Console.WriteLine("Please enter IP address for Consume.");

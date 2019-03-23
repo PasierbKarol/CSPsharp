@@ -41,7 +41,7 @@ namespace CSPlang
      * the array passed to the constructor (or added/inserted later) is significant,
      * with earlier processes having higher priority.  The last process in the
      * array inherits the priority of the constructing process.  That priority may
-     * be set explicitly by {@link #setPriority <TT>setPriority</TT>}.
+     * be set explicitly by {@link #SetPriority <TT>SetPriority</TT>}.
      * <P>
      * <I>Implementation Note</I>: these priorities are currently implemented
      * using the underlying threads priority mechanism.  If there are more

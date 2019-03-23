@@ -102,8 +102,6 @@ namespace PlugAndPlay
         public void run()
         {
             Out.write(o);
-            //Debug.WriteLine("Prefix  object is " + o.ToString());
-
             new Identity(In, Out).run();
         }
     }

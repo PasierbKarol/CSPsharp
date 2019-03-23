@@ -14,12 +14,8 @@ namespace PlugAndPlay
             this.Out = Out;
         }
 
-
-
-
         public void run()
         {
-            //Debug.WriteLine("Process write value is " + value.ToString());
             Out.write(value);
         }
     }

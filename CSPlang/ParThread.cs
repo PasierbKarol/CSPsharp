@@ -34,7 +34,6 @@ using System.Threading.Tasks;
 
 namespace CSPlang
 {
-
     /**
      * This is the <TT>Thread</TT> class used by {@link CSPParallel} to run all but
      * one of its given processes.
@@ -57,23 +56,21 @@ namespace CSPlang
 
     public class ParThread //: Thread
     {
-
-
         /**
          * In C# Thread is a sealed class and cannot be inherit from.
          * However there is a thing called Composition.
          * Using this means this class (ParThread) is used as a new base class of Thread
          * Therefore this class requires additional fields and methods to accommodate such change
          * https://stackoverflow.com/questions/8123461/unable-to-inherit-from-a-thread-class-in-c-sharp/8123600#8123600
+         * Author: Karol Pasierb
          */
 
-        //============================= COMPOSITION METHODS AND FIELDS ====================
+        //============================= COMPOSITION METHODS AND FIELDS ============================================
         private Thread _thread;
 
         public ParThread()
         {
             _thread = new Thread(run);
-
         }
 
         // Thread methods / properties
@@ -81,29 +78,27 @@ namespace CSPlang
         public void Join() => _thread.Join();
         public bool IsAlive => _thread.IsAlive;
         public void Interrupt() => _thread.Interrupt();
+
         public bool IsBackground
         {
             get => _thread.IsBackground;
             set => _thread.IsBackground = value;
         }
+
         public int Priority
         {
-            get => (int)_thread.Priority;
-            set => _thread.Priority = (ThreadPriority)value;
+            get => (int) _thread.Priority;
+            set => _thread.Priority = (ThreadPriority) value;
         }
 
-        public void setPriority(int priority)
+        public void SetPriority(int priority)
         {
-            _thread.Priority = (ThreadPriority)priority;
+            _thread.Priority = (ThreadPriority) priority;
         }
-
 
 
         //================================ END OF COMPOSITION ======================
-        //================ THREAD GROUP =============
-        //Using thread pool as a group
 
-        //=============
         /** the process to be executed */
         private IamCSProcess process;
 
@@ -123,7 +118,8 @@ namespace CSPlang
          * @param process the process to be executed
          * @param cspBarrier the cspBarrier for then end of the PAR
          */
-        public ParThread(IamCSProcess process, CSPBarrier cspBarrier) : this() //Added call to main constructor to run a thread - Karol asierbP
+        public ParThread(IamCSProcess process, CSPBarrier cspBarrier) :
+            this() //Added call to main constructor to run a thread - Karol asierbP
         {
             this.IsBackground = true;
             //Call to this reset method to avoid code duplication
@@ -199,25 +195,5 @@ namespace CSPlang
                 CSPParallel.removeFromAllParThreads(this);
             }
         }
-
-
-        //=========== Copied from Process manager
-        //public void run()
-        //{
-        //    try
-        //    {
-        //        CSPParallel.addToAllParThreads(this);
-        //        process.run();
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        CSPParallel.uncaughtException("jcsp.lang.ProcessManager", e);
-        //    }
-        //    finally
-        //    {
-        //        CSPParallel.removeFromAllParThreads(this);
-        //    }
-        //}
-
     }
 }

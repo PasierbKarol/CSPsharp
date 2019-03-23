@@ -23,8 +23,7 @@ using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Xml.Serialization;
-using CSPlang;
-using CSPnet2;
+
 
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -33,10 +32,6 @@ using Newtonsoft.Json.Serialization;
 
 namespace CSPnet2
 {
-    //    import java.io.IOException;
-    //import java.io.ObjectInputStream;
-    //import java.io.ObjectOutputStream;
-
     /**
      * This class is the standard encoding and decoding filter for networked JCSP channels. It uses standard Java
      * serialization to operate.

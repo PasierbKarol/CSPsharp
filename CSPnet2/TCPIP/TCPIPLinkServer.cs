@@ -99,13 +99,14 @@ namespace CSPnet2.TCPIP
                 if (String.IsNullOrEmpty(address.GetIpAddressAsString()))
                 {
                     IPAddress localIPAddresstoUse = GetLocalIPAddress.GetOnlyLocalIPAddress();
-                    IPAddress[] localIPAddresses = GetLocalIPAddress.GetAllLocalAddresses();
+                    IPAddress[] localIPAddresses = GetLocalIPAddress.GetAllAddresses();
                     address.setIpAddress(GetLocalIPAddress.ConvertIPAddressToString(localIPAddresstoUse));
                     // Get the local IP addresses
                     //InetAddress[] local = InetAddress.getAllByName(InetAddress.getLocalHost().getHostName());
                     //InetAddress toUse = InetAddress.getLocalHost();
 
 
+                    //TODO the code below is not updated and not working correctly. 
                     // We basically have four types of addresses to worry about. Loopback (127), link local (169),
                     // local (192) and (possibly) global. Grade each 1, 2, 3, 4 and use highest scoring address. In all
                     // cases use first address of that score.
@@ -193,13 +194,10 @@ namespace CSPnet2.TCPIP
                 else
                 {
                     // Create an IP address from the NodeAddress
-                    //InetAddress inetAddress = InetAddress.getByName(address.GetIpAddressAsString());
                     IPEndPoint inetAddress = new IPEndPoint(IPAddress.Parse(address.GetIpAddressAsString()),
                         address.getPort());
 
                     // Now create the ServerSocket
-                    //this.serv = new ServerSocket(address.getPort(), 10, inetAddress);
-                    //IPEndPoint ipEndpoint = new IPEndPoint(localIPAddresstoUse, address.getPort());
                     this.serv = new Socket(inetAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
 
                     //Bind server to the ip address - Karol Pasierb
@@ -229,42 +227,31 @@ namespace CSPnet2.TCPIP
                 while (true)
                 {
                     // Receive incoming connection
-                    //Socket incoming = this.serv.accept();
                     Socket incoming = this.serv.Accept();
 
-                    IPEndPoint remoteEndPoint = (IPEndPoint) incoming.RemoteEndPoint;
-                    Console.WriteLine("Accepted connection from {0}:{1}.", remoteEndPoint.Address, remoteEndPoint.Port);
-
+                    //IPEndPoint remoteEndPoint = (IPEndPoint) incoming.RemoteEndPoint;
+                    //Debug.WriteLine("Accepted connection from {0}:{1}.", remoteEndPoint.Address, remoteEndPoint.Port);
 
                     // Log
                     Node.log.log(this.GetType(), "Received new incoming connection");
-                    Console.WriteLine("\n\nReceived new incoming connection");
                     // Set TcpNoDelay
-                    //incoming.setTcpNoDelay(true);
                     incoming.NoDelay = true;
 
                     // Now we want to receive the connecting Node's NodeID
-                    //BinaryReader inStream = new BinaryReader(incoming.getInputStream());
                     NetworkStream networkStream = new NetworkStream(incoming);
-                    //BinaryReader inStream = new BinaryReader(networkStream).ReadBytes(100);
 
                     // Receive remote NodeID and parse
-                    String
-                        otherID = new BinaryReader(networkStream)
-                            .ReadString(); //https://stackoverflow.com/questions/10810479/what-does-binaryreader-do-if-the-bytes-i-am-reading-arent-present-yet
-                    Console.WriteLine("\n\nRead otherID  " + otherID);
+                    String otherID = new BinaryReader(networkStream).ReadString();
                     NodeID remoteID = NodeID.parse(otherID);
 
                     // First check we have a tcpip Node connection
                     if (remoteID.getNodeAddress() is TCPIPNodeAddress)
                     {
                         // Create an output stream from the Socket
-                        //BinaryWriter outStream = new BinaryWriter(incoming.getOutputStream());
                         BinaryWriter outStream = new BinaryWriter(networkStream);
 
                         // Now Log that we have received a connection
                         Node.log.log(this.GetType(), "Received connection from: " + remoteID.toString());
-                        Console.WriteLine("\n\nReceived connection from: " + remoteID.toString());
 
                         // Check if already connected
                         if (requestLink(remoteID) == null)

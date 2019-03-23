@@ -41,7 +41,7 @@ namespace CSPnet2.Net2Link
             Node.log.log(typeof(LinkServer), "Attempting to start Link Server on " + address);
             LinkServer linkServer = address.createLinkServer();
             //ProcessManager linkServProc = new ProcessManager(linkServer);
-            //linkServProc.setPriority(Link.LINK_PRIORITY);
+            //linkServProc.SetPriority(Link.LINK_PRIORITY);
             //linkServProc.start();
             new ProcessManager(linkServer).start();
             Node.log.log(typeof(LinkServer), "Link Server started on " + address);

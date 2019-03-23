@@ -58,9 +58,7 @@ namespace NetworkedStressedAltPerformance___RunReader
 
 
             //====================== Running the test
-
-            //Console.WriteLine("TEST: " + nChannels + " Channels, " + nWritersPerChannel + " Writers, " + nMessages + " messages");
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < 100; i++)
             {
                 new CSPParallel(
                     new IamCSProcess[] {

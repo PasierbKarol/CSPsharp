@@ -646,9 +646,9 @@ namespace CSPlang
                                 parThreads[i].reset(processes[i], barrier);
                                 if (priority)
                                 {
-                                    //parThreads[i].setPriority(Math.max(
+                                    //parThreads[i].SetPriority(Math.max(
                                     //        currentPriority, maxPriority - i));
-                                    parThreads[i].setPriority(Math.Max((byte)currentPriority, maxPriority - i));
+                                    parThreads[i].SetPriority(Math.Max((byte)currentPriority, maxPriority - i));
                                 }
                                 parThreads[i].release();
                             }
@@ -660,7 +660,7 @@ namespace CSPlang
                                 
                                 if (priority)
                                 {
-                                    parThreads[i].setPriority(Math.Max(
+                                    parThreads[i].SetPriority(Math.Max(
                                             (byte)currentPriority, maxPriority - i));
                                 }
                                 parThreads[i].Start();
@@ -676,7 +676,7 @@ namespace CSPlang
                                 parThreads[i].reset(processes[i], barrier);
                                 if (priority)
                                 {
-                                    parThreads[i].setPriority(Math.Max(
+                                    parThreads[i].SetPriority(Math.Max(
                                             (byte)currentPriority, maxPriority - i));
                                 }
                                 parThreads[i].release();
@@ -690,7 +690,7 @@ namespace CSPlang
                         {
                             if (priority)
                             {
-                                parThreads[i].setPriority(Math.Max((byte)currentPriority,
+                                parThreads[i].SetPriority(Math.Max((byte)currentPriority,
                                         maxPriority - i));
                             }
                             parThreads[i].release();

@@ -47,7 +47,7 @@ namespace CSPnet2.TCPIP
         {
             // Get the local IP addresses
             //InetAddress[] local = InetAddress.getAllByName(InetAddress.getLocalHost().getHostName());
-            IPAddress[] localIPAddresses = GetLocalIPAddress.GetAllLocalAddresses();
+            IPAddress[] localIPAddresses = GetLocalIPAddress.GetAllAddresses();
             //InetAddress toUse = InetAddress.getLocalHost();
             IPAddress ipAddresstoUse = GetLocalIPAddress.GetOnlyLocalIPAddress();
 

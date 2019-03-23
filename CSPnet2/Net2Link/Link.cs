@@ -52,13 +52,11 @@ namespace CSPnet2.Net2Link
         /**
          * The incoming stream for the connection. This must be created by the specific protocol implementation.
          */
-        //protected DataInputStream rxStream;
         protected BinaryReader rxStream;
 
         /**
          * The outgoing stream for the connection. This must be created by the specific protocol implementation.
          */
-        //protected DataOutputStream txStream;
         protected BinaryWriter txStream;
 
         /**

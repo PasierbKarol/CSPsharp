@@ -99,10 +99,11 @@ namespace CSPnet2.TCPIP
                 if (String.IsNullOrEmpty(address.GetIpAddressAsString()))
                 {
 
-                    IPAddress[] localIPAddresses = GetLocalIPAddress.GetAllLocalAddresses();
+                    IPAddress[] localIPAddresses = GetLocalIPAddress.GetAllAddresses();
                     IPAddress ipAddresstoUse = GetLocalIPAddress.GetOnlyLocalIPAddress();
                     address.setIpAddress(GetLocalIPAddress.ConvertIPAddressToString(ipAddresstoUse));
 
+                    //TODO the code below is not updated and not working correctly. 
                     // We basically have four types of addresses to worry about. Loopback (127), link local (169),
                     // local (192) and (possibly) global. Grade each 1, 2, 3, 4 and use highest scoring address. In all
                     // cases use first address of that score.
@@ -158,20 +159,15 @@ namespace CSPnet2.TCPIP
                 }
 
                 // Connect the socket to the server socket on the remote Node
-                //this.socket = new Socket(address.GetIpAddressAsString(), address.getPort());
-                IPAddress clientAddress = IPAddress.Parse(address.GetIpAddressAsString());
-                this.socket = new Socket(clientAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
-                EndPoint clientEndPoint = new IPEndPoint(IPAddress.Parse(address.GetIpAddressAsString()), address.getPort());
+                IPAddress remoteAddress = IPAddress.Parse(address.GetIpAddressAsString());
+                this.socket = new Socket(remoteAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
+                EndPoint remoteEndPoint = new IPEndPoint(remoteAddress, address.getPort());
                                 
-                // Set TcpNoDelay. Off should improve performance for smaller packet sizes, which JCSP should have in
-                // general
-                //this.socket.setTcpNoDelay(!TCPIPLink.NAGLE);
+                // Set TcpNoDelay. Off should improve performance for smaller packet sizes, which JCSP should have in general
                 this.socket.NoDelay = !TCPIPLink.NAGLE;
-                this.socket.Connect(clientEndPoint);
+                this.socket.Connect(remoteEndPoint);
                 // Create the input and output streams for the Link
-                //this.rxStream = new BinaryReader(new BufferedInputStream(this.socket.getInputStream(), TCPIPLink.BUFFER_SIZE));
                 this.rxStream = new BinaryReader(new NetworkStream(this.socket));
-                //this.txStream = new BinaryWriter(new BufferedOutputStream(this.socket.getOutputStream(), TCPIPLink.BUFFER_SIZE));
                 this.txStream = new BinaryWriter(new NetworkStream(this.socket));
 
                 // Set the remote address

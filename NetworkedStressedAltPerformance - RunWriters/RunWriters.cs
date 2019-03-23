@@ -40,8 +40,8 @@ namespace NetworkedStressedAltPerformance___RunWriters
             Console.WriteLine("writers2network location = " + writers2network.getLocation().ToString());
 
             Console.WriteLine("Informing reader that Writer" + writerID + " is ready and sending its IP");
-            writers2network.write(GetLocalIPAddress.ConvertLocalIPAddressToString());
-            //writers2network.write(writersChannelNodeIP);
+            //writers2network.write(GetLocalIPAddress.ConvertLocalIPAddressToString()); //use while all nodes are on different machines
+            writers2network.write(writersChannelNodeIP); //use for local loopback addresses
 
             CSTimer timer = new CSTimer();
             timer.sleep(2000);
@@ -51,8 +51,6 @@ namespace NetworkedStressedAltPerformance___RunWriters
             Console.WriteLine("Read signal from Reader");
 
             //====================== Running the test
-            
-
             StressedWriterPerformance[] writers = new StressedWriterPerformance[nChannels * nWritersPerChannel];
 
             for (int channel = 0; channel < nChannels; channel++)
@@ -64,8 +62,7 @@ namespace NetworkedStressedAltPerformance___RunWriters
                 }
             }
 
-            //Console.WriteLine("TEST: " + nChannels + " Channels, " + nWritersPerChannel + " Writers, " + nMessages + " messages");
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < 100; i++)
             {
                 new CSPParallel(
                     new IamCSProcess[] {

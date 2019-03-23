@@ -208,7 +208,7 @@ namespace CSPlang
          */
         public void Start(int priority)
         {
-            thread.setPriority(priority);
+            thread.SetPriority(priority);
             start();
         }
 
@@ -283,7 +283,7 @@ namespace CSPlang
          */
         public void setPriority(int priority)
         {
-            thread.setPriority(priority);
+            thread.SetPriority(priority);
         }
 
         /**

@@ -126,10 +126,8 @@ namespace PlugAndPlay
         {
             while (true)
             {
-                /*final*/
                 int i = Int32.Parse(In.read().ToString());
                 Out.write(i + 1);
-                //Debug.WriteLine("Successor wrote " +  (i +1));
             }
         }
     }

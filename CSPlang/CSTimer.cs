@@ -231,16 +231,11 @@ namespace CSPlang
             {
                 return true;
             }
-            else
-            {
-                alt.setTimeout((int) msecs);
-                return false;
-            }
+
+            alt.setTimeout((int) msecs);
+            return false;
         }
 
-        /**
-         * Disables this guard.
-         */
         public override Boolean disable()
         {
             return (CurrentTimeMillis() > msecs);

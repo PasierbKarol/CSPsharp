@@ -47,7 +47,7 @@ namespace CSPnet2.TCPIP
             Node.getInstance().setErr(new StreamWriter(Console.OpenStandardError()));
 
             // Get the local IP addresses
-            IPAddress[] localIPAddresses = GetLocalIPAddress.GetAllLocalAddresses();
+            IPAddress[] localIPAddresses = GetLocalIPAddress.GetAllAddresses();
             IPAddress ipAddresstoUse = GetLocalIPAddress.GetOnlyLocalIPAddress();
             
 
