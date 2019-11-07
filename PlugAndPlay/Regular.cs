@@ -17,8 +17,6 @@
 //                                                                  //
 //////////////////////////////////////////////////////////////////////
 
-using System;
-using System.Diagnostics;
 using CSPlang;
 
 namespace PlugAndPlay
@@ -29,7 +27,7 @@ namespace PlugAndPlay
      * <PRE>
      *    _____________
      *   |             | out
-     *   | Regular (n) |-->--
+     *   | Regular (N) |-->--
      *   |_____________|
      * </PRE>
      * <H2>Description</H2>
@@ -59,18 +57,16 @@ namespace PlugAndPlay
      *
      * @author P.H. Welch
      */
-
-
     public class Regular : IamCSProcess
     {
         readonly private ChannelOutput Out;
         private int N;
         readonly private long interval;
 
-        public Regular(ChannelOutput Out, int n, long interval)
+        public Regular(ChannelOutput Out, int N, long interval)
         {
             this.Out = Out;
-            this.N = n;
+            this.N = N;
             this.interval = interval;
         }
 

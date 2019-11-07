@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using CSPlang;
 
 namespace PlugAndPlay
@@ -29,15 +27,12 @@ namespace PlugAndPlay
             CSTimer timer = new CSTimer();
             while (true)
             {
-                //Console.WriteLine("Inside GPrint timer");
                 if (delay !=0)
                 {
                     timer.after(timer.read() + delay);
                     Console.WriteLine(heading.Split(' ')[0] + " \t" + inChannel.read());
                 }
             }
-        
         }
-
-}
+    }
 }

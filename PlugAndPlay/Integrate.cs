@@ -26,12 +26,10 @@
 //                                                                  //
 //////////////////////////////////////////////////////////////////////
 
-using System;
 using CSPlang;
 
 namespace PlugAndPlay
 {
-
     /**
      * This is a running-sum integrator of the <TT>Integers</TT> on its input stream
      * to its output stream.
@@ -73,10 +71,7 @@ namespace PlugAndPlay
      */
     public class Integrate : IamCSProcess
     {
-        /** The input Channel */
         private ChannelInput In;
-
-        /** The output Channel */
         private ChannelOutput Out;
 
         /**
@@ -92,9 +87,6 @@ namespace PlugAndPlay
             this.Out = Out;
         }
 
-        /**
-         * The main body of this process.
-         */
         public void run()
         {
             /*final*/

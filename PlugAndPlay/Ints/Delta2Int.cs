@@ -26,7 +26,6 @@
 //                                                                  //
 //////////////////////////////////////////////////////////////////////
 
-using System;
 using CSPlang;
 
 namespace PlugAndPlay.Ints
@@ -70,13 +69,8 @@ namespace PlugAndPlay.Ints
 
     public sealed class Delta2Int : IamCSProcess
     {
-        /** The input Channel */
         private ChannelInputInt In;
-
-        /** The first output Channel */
         private ChannelOutputInt Out0;
-
-        /** The second output Channel */
         private ChannelOutputInt Out1;
 
         /**
@@ -95,9 +89,6 @@ namespace PlugAndPlay.Ints
             this.Out1 = out1;
         }
 
-        /**
-         * The main body of this process.
-         */
         public void run()
         {
             ProcessWriteInt[] parWrite = {new ProcessWriteInt(Out0), new ProcessWriteInt(Out1)};
@@ -109,7 +100,6 @@ namespace PlugAndPlay.Ints
                 parWrite[0].value = value;
                 parWrite[1].value = value;
                 par.run();
-                //Console.WriteLine("Read values in Delta. ProcessWrite finished");
             }
         }
     }

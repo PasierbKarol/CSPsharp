@@ -26,13 +26,10 @@
 //                                                                  //
 //////////////////////////////////////////////////////////////////////
 
-using System;
-using System.Diagnostics;
 using CSPlang;
 
 namespace PlugAndPlay
 {
-
     /**
      * <I>Sums</I> two <TT>Integer</TT> streams to one stream.
      *
@@ -106,13 +103,10 @@ namespace PlugAndPlay
      */
     public sealed class Plus : IamCSProcess
     {
-        /** The first input Channel */
         private ChannelInput In1;
 
-        /** The second input Channel */
         private ChannelInput In2;
 
-        /** The output Channel */
         private ChannelOutput Out;
 
         /**
@@ -131,9 +125,6 @@ namespace PlugAndPlay
             this.Out = Out;
         }
 
-        /**
-         * The main body of this process.
-         */
         public void run()
         {
             ProcessRead[] parRead = { new ProcessRead(In1), new ProcessRead(In2) };
@@ -144,8 +135,6 @@ namespace PlugAndPlay
                 par.run();
                 int i1 = (int)parRead[0].value;
                 int i2 = (int)parRead[1].value;
-                //Debug.WriteLine("Plus values are " + i1 + " and " + i2 );
-
                 Out.write((int)(i1 + i2));
             }
         }

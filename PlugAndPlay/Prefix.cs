@@ -27,12 +27,10 @@
 //////////////////////////////////////////////////////////////////////
 
 using System;
-using System.Diagnostics;
 using CSPlang;
 
 namespace PlugAndPlay
 {
-
     /**
      * <I>Prefixes</I> a user-supplied object to the <TT>Object</TT> stream
      * flowing through.
@@ -96,9 +94,6 @@ namespace PlugAndPlay
             this.o = o;
         }
 
-        /**
-         * The main body of this process.
-         */
         public void run()
         {
             Out.write(o);

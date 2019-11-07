@@ -26,8 +26,6 @@
 //                                                                  //
 //////////////////////////////////////////////////////////////////////
 
-using System;
-using System.Diagnostics;
 using CSPlang;
 
 namespace PlugAndPlay.Ints
@@ -72,10 +70,7 @@ namespace PlugAndPlay.Ints
      */
     public class IdentityInt : IamCSProcess
     {
-        /** The input Channel */
         private ChannelInputInt In;
-
-        /** The output Channel */
         private ChannelOutputInt Out;
 
         /**
@@ -91,17 +86,11 @@ namespace PlugAndPlay.Ints
             this.Out = Out;
         }
 
-        /**
-         * The main body of this process.
-         */
         public void run()
         {
-            //Console.WriteLine("Inside identity int");
             while (true)
             {
-                //Out.write(In.read());
                 var a = In.read();
-                //Console.WriteLine("Prefix  identityInt is " + a.ToString());
                 Out.write(a);
             }
         }

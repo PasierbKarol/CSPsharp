@@ -26,8 +26,6 @@
 //                                                                  //
 //////////////////////////////////////////////////////////////////////
 
-using System;
-using System.Diagnostics;
 using CSPlang;
 
 namespace PlugAndPlay.Ints
@@ -71,13 +69,8 @@ namespace PlugAndPlay.Ints
      */
     public sealed class PrefixInt : IamCSProcess
     {
-        /** The input Channel */
         private ChannelInputInt In;
-
-        /** The output Channel */
         private ChannelOutputInt Out;
-
-        /** The initial int to be sent down the Channel. */
         private int n;
 
         /**
@@ -95,15 +88,9 @@ namespace PlugAndPlay.Ints
             this.n = n;
         }
 
-        /**
-         * The main body of this process.
-         */
         public void run()
         {
             Out.write(n);
-
-            //Console.WriteLine("First Prefix  object is " + n.ToString());
-
             new IdentityInt(In, Out).run();
         }
     }

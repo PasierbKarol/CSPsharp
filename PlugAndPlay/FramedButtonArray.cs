@@ -18,12 +18,10 @@
 //////////////////////////////////////////////////////////////////////
 
 using System;
-using System.Threading.Tasks;
 using CSPlang;
 
 namespace PlugAndPlay
 {
-    //{{{  javadoc
     /**
      * A free-standing array of button processes in their own frame,
      * with <i>configure</i> and <i>channelEvent</i> channels.
@@ -178,7 +176,6 @@ namespace PlugAndPlay
      * @author P.H. Welch
      *
      */
-    //}}}
 
     public sealed class FramedButtonArray : IamCSProcess
     {

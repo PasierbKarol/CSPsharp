@@ -26,7 +26,6 @@
 //                                                                  //
 //////////////////////////////////////////////////////////////////////
 
-using System;
 using CSPlang;
 
 namespace PlugAndPlay.Ints
@@ -97,7 +96,6 @@ namespace PlugAndPlay.Ints
         /** The <TT>int</TT> to be written to the channel */
         public int value;
 
-        /** The channel to which to write */
         private ChannelOutputInt Out;
 
         /**
@@ -110,14 +108,9 @@ namespace PlugAndPlay.Ints
             this.Out = Out;
         }
 
-        /**
-         * The main body of this process.
-         */
         public void run()
         {
-            //Console.WriteLine("Before writing value in ProcessWriter");
             Out.write(value);
-            //Console.WriteLine("After writing value in ProcessWriter");
         }
     }
 }

@@ -18,13 +18,11 @@
 //////////////////////////////////////////////////////////////////////
 
 using System;
-using System.Diagnostics;
 using System.IO;
 using CSPlang;
 
 namespace PlugAndPlay
 {
-
     /**
      * Prints each <TT>Object</TT> from its input channel to a <TT>PrintStream</TT>.
      * <H2>Process Diagram</H2>
@@ -81,7 +79,6 @@ namespace PlugAndPlay
          */
         public Printer(ChannelInput In) : this(In, new StreamWriter(Console.OpenStandardOutput()), "", "")
         {
-
         }
 
         /**
@@ -94,7 +91,6 @@ namespace PlugAndPlay
          */
         public Printer(ChannelInput In, String prefix, String postfix) : this(In, new StreamWriter(Console.OpenStandardOutput()), prefix, postfix)
         {
-
         }
 
         /**
@@ -105,7 +101,6 @@ namespace PlugAndPlay
          */
         public Printer(ChannelInput In, StreamWriter printStream) : this(In, printStream, "", "")
         {
-
         }
 
         /**

@@ -26,7 +26,6 @@
 //                                                                  //
 //////////////////////////////////////////////////////////////////////
 
-using System;
 using CSPlang;
 
 namespace PlugAndPlay.Ints
@@ -96,10 +95,7 @@ namespace PlugAndPlay.Ints
 
     public sealed class SuccessorInt : IamCSProcess
     {
-        /** The input Channel */
         private ChannelInputInt In;
-
-        /** The output Channel */
         private ChannelOutputInt Out;
 
         /**
@@ -115,15 +111,11 @@ namespace PlugAndPlay.Ints
             this.Out = Out;
         }
 
-        /**
-         * The main body of this process.
-         */
         public void run()
         {
             while (true)
             {
                 Out.write(In.read() + 1);
-                //Console.WriteLine("After adding value in Successor");
             }
         }
     }

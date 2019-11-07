@@ -27,12 +27,10 @@
 //////////////////////////////////////////////////////////////////////
 
 using System;
-using System.Diagnostics;
 using CSPlang;
 
 namespace PlugAndPlay
 {
-
     /**
      * Adds <I>one</I> to each <TT>Integer</TT> in the stream flowing through.
      * <H2>Process Diagram</H2>

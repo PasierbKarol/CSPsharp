@@ -27,7 +27,6 @@
 //////////////////////////////////////////////////////////////////////
 
 using System;
-using System.Diagnostics;
 using CSPlang;
 
 namespace PlugAndPlay
@@ -71,10 +70,7 @@ namespace PlugAndPlay
 
     public sealed class FixedDelay : IamCSProcess
     {
-        /** The input Channel */
         private ChannelInput In;
-
-        /** The output Channel */
         private ChannelOutput Out;
 
         /**
@@ -100,16 +96,12 @@ namespace PlugAndPlay
             this.delayTime = delayTime;
         }
 
-        /**
-         * The main body of this process.
-         */
         public void run()
         {
             CSTimer tim = new CSTimer();
             while (true)
             {
                 Object o = In.read();
-                //Debug.WriteLine("Fixed delay sleeping for " + delayTime);
                 tim.sleep(delayTime);
                 Out.write(o);
             }
