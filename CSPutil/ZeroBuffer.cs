@@ -30,7 +30,6 @@ using System;
 
 namespace CSPutil
 {
-
     /**
      * This is used to create a zero-buffered object channel that never loses data.
      * <H2>Description</H2>
@@ -61,10 +60,7 @@ namespace CSPutil
     [Serializable]
     public class ZeroBuffer : ChannelDataStore
     {
-        /** The current state */
         private int state = ChannelDataStoreState.EMPTY;
-
-        /** The Object */
         private Object value;
 
         /**

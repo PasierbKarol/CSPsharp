@@ -30,7 +30,6 @@ using System;
 
 namespace CSPutil
 {
-
     /**
      * This is used to create a buffered object channel that always accepts input,
      * discarding its last entered data if full.
@@ -63,8 +62,8 @@ namespace CSPutil
         /** The storage for the buffered Objects */
         private readonly Object[] buffer;
 
-    /** The number of Objects stored in the CSPBuffer */
-    private int counter = 0;
+        /** The number of Objects stored in the CSPBuffer */
+        private int counter = 0;
 
         /** The index of the oldest element (when  counter > 0) */
         private int firstIndex = 0;
@@ -183,7 +182,7 @@ namespace CSPutil
 
             for (int i = 0; i < buffer.Length; i++)
             {
-                //Null the objects so they can be garbage collected:
+                //Null the objects so they can be garbage collected
                 buffer[i] = null;
             }
         }

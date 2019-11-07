@@ -1,13 +1,9 @@
-﻿using System.Reflection.Metadata.Ecma335;
-
-namespace CSPutil
+﻿namespace CSPutil
 {
     public static class ChannelDataStoreState
     {
         public const int EMPTY = 0;
         public const int NONEMPTYFULL = 1;
-        public const int FULL = 2;
-        
+        public const int FULL = 2;        
     }
-
 }

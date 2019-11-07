@@ -53,93 +53,89 @@ namespace CSPutil
      *
      * @author P.D.Austin
      */
-    //}}}
 
     [Serializable]
     public class ZeroBufferInt : ChannelDataStoreInt
     {
-    /** The current state */
-    private int state = ChannelDataStoreState.EMPTY;
+        private int state = ChannelDataStoreState.EMPTY;
+        private int value;
 
-    /** The int */
-    private int value;
+        /**
+         * Returns the <TT>int</TT> from the <TT>ZeroBufferInt</TT>.
+         * <P>
+         * <I>Pre-condition</I>: <TT>getState</TT> must not currently return <TT>EMPTY</TT>.
+         *
+         * @return the <TT>int</TT> from the <TT>ZeroBufferInt</TT>
+         */
+        public int get()
+        {
+            state = ChannelDataStoreState.EMPTY;
+            int o = value;
+            return o;
+        }
 
-    /**
-     * Returns the <TT>int</TT> from the <TT>ZeroBufferInt</TT>.
-     * <P>
-     * <I>Pre-condition</I>: <TT>getState</TT> must not currently return <TT>EMPTY</TT>.
-     *
-     * @return the <TT>int</TT> from the <TT>ZeroBufferInt</TT>
-     */
-    public int get()
-    {
-        state = ChannelDataStoreState.EMPTY;
-        int o = value;
-        return o;
+        /**
+         * Begins an extended rendezvous - simply returns the next integer in the buffer.  
+         * This function does not remove the integer.
+         * 
+         * <I>Pre-condition</I>: <TT>getState</TT> must not currently return <TT>EMPTY</TT>.
+         * 
+         * @return The integer in the buffer. 
+         */
+        public int startGet()
+        {
+            return value;
+        }
+
+        /**
+         * Ends the extended rendezvous by clearing the buffer.
+         */
+        public void endGet()
+        {
+            state = ChannelDataStoreState.EMPTY;
+        }
+
+        /**
+         * Puts a new <TT>int</TT> into the <TT>ZeroBufferInt</TT>.
+         * <P>
+         * <I>Pre-condition</I>: <TT>getState</TT> must not currently return <TT>FULL</TT>.
+         *
+         * @param value the <TT>int</TT> to put into the <TT>ZeroBufferInt</TT>
+         */
+        public void put(int value)
+        {
+            state = ChannelDataStoreState.FULL;
+            this.value = value;
+        }
+
+        /**
+         * Returns the current state of the <TT>ZeroBufferInt</TT>.
+         *
+         * @return the current state of the <TT>ZeroBufferInt</TT> (<TT>EMPTY</TT>
+         * or <TT>FULL</TT>)
+         */
+        public int getState()
+        {
+            return state;
+        }
+
+        /**
+         * Returns a new (and <TT>EMPTY</TT>) <TT>ZeroBufferInt</TT> with the same
+         * creation parameters as this one.
+         * <P>
+         * <I>Note: Only the size and structure of the </I><TT>ZeroBufferInt</TT><I> is
+         * cloned, not any stored data.</I>
+         *
+         * @return the cloned instance of this <TT>ZeroBufferInt</TT>.
+         */
+        public Object Clone()
+        {
+            return new ZeroBufferInt();
+        }
+
+        public void removeAll()
+        {
+            state = ChannelDataStoreState.EMPTY;
+        }
     }
-
-    /**
-     * Begins an extended rendezvous - simply returns the next integer in the buffer.  
-     * This function does not remove the integer.
-     * 
-     * <I>Pre-condition</I>: <TT>getState</TT> must not currently return <TT>EMPTY</TT>.
-     * 
-     * @return The integer in the buffer. 
-     */
-    public int startGet()
-    {
-        return value;
-    }
-
-    /**
-     * Ends the extended rendezvous by clearing the buffer.
-     */
-    public void endGet()
-    {
-        state = ChannelDataStoreState.EMPTY;
-    }
-
-    /**
-     * Puts a new <TT>int</TT> into the <TT>ZeroBufferInt</TT>.
-     * <P>
-     * <I>Pre-condition</I>: <TT>getState</TT> must not currently return <TT>FULL</TT>.
-     *
-     * @param value the <TT>int</TT> to put into the <TT>ZeroBufferInt</TT>
-     */
-    public void put(int value)
-    {
-        state = ChannelDataStoreState.FULL;
-        this.value = value;
-    }
-
-    /**
-     * Returns the current state of the <TT>ZeroBufferInt</TT>.
-     *
-     * @return the current state of the <TT>ZeroBufferInt</TT> (<TT>EMPTY</TT>
-     * or <TT>FULL</TT>)
-     */
-    public int getState()
-    {
-        return state;
-    }
-
-    /**
-     * Returns a new (and <TT>EMPTY</TT>) <TT>ZeroBufferInt</TT> with the same
-     * creation parameters as this one.
-     * <P>
-     * <I>Note: Only the size and structure of the </I><TT>ZeroBufferInt</TT><I> is
-     * cloned, not any stored data.</I>
-     *
-     * @return the cloned instance of this <TT>ZeroBufferInt</TT>.
-     */
-    public Object Clone()
-    {
-        return new ZeroBufferInt();
-    }
-
-    public void removeAll()
-    {
-        state = ChannelDataStoreState.EMPTY;
-    }
-}
 }

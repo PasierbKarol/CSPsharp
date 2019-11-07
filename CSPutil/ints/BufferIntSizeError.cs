@@ -30,7 +30,6 @@ using System;
 
 namespace CSPutil
 {
-
     /**
      * This is thrown if an attempt is made to create some variety of buffered channel
      * with a zero or negative sized buffer.
@@ -71,14 +70,14 @@ namespace CSPutil
 
     public class BufferIntSizeError : Exception
     {
-    /**
-     * Constructs a new <code>BufferIntSizeError</code> with the specified detail message.
-     *
-     * @param s the detail message.
-     */
-    public BufferIntSizeError(String s) : base(s)
-    {
+        /**
+         * Constructs a new <code>BufferIntSizeError</code> with the specified detail message.
+         *
+         * @param s the detail message.
+         */
+        public BufferIntSizeError(String s) : base(s)
+        {
         
+        }
     }
-}
 }

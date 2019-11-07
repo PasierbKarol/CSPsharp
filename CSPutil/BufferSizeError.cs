@@ -72,7 +72,6 @@ namespace CSPutil
     {
         public BufferSizeError(String s) : base(s)
         {
-
         }
     }
 }

@@ -30,7 +30,6 @@ using System;
 
 namespace CSPutil
 {
-
     /**
      * This is used to create a buffered object channel that always accepts and
      * never loses any input.

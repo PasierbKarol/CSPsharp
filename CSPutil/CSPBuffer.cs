@@ -30,7 +30,6 @@ using System;
 
 namespace CSPutil
 {
-
     /**
      * This is used to create a buffered object channel that never loses data.
      * <H2>Description</H2>
@@ -57,8 +56,6 @@ namespace CSPutil
     [Serializable]
     public class CSPBuffer : ChannelDataStore
     {
-
-
         /** The storage for the buffered Objects */
         private readonly Object[] buffer;
 
@@ -175,7 +172,6 @@ namespace CSPutil
             return new CSPBuffer(buffer.Length - 1);
         }
 
-
         public void removeAll()
         {
             counter = 0;
@@ -184,11 +180,10 @@ namespace CSPutil
 
             for (int i = 0; i < buffer.Length; i++)
             {
-                //Null the objects so they can be garbage collected:
+                //Null the objects so they can be garbage collected
                 buffer[i] = null;
             }
         }
-
 
         public object Clone()
         {

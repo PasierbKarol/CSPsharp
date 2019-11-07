@@ -30,8 +30,6 @@ using System;
 
 namespace CSPutil
 {
-
-    //{{{  javadoc
     /**
      * This is used to create a buffered integer channel that always accepts input,
      * overwriting its last entered data if full.
@@ -55,7 +53,6 @@ namespace CSPutil
      *
      * @author P.D.Austin
      */
-    //}}}
 
     [Serializable]
     public class OverWritingBufferInt : ChannelDataStoreInt
@@ -137,7 +134,7 @@ namespace CSPutil
         {
             if (false == valueWrittenWhileFull || buffer.Length != 1)
             {
-                //Our data hasn't been over-written so remove it:        
+                //Our data hasn't been over-written so remove it    
                 firstIndex = (firstIndex + 1) % buffer.Length;
                 counter--;
             }
@@ -149,13 +146,13 @@ namespace CSPutil
         }
 
         /**
-     * Puts a new <TT>int</TT> into the <TT>OverWritingBufferInt</TT>.
-     * <P>
-     * If <TT>OverWritingBufferInt</TT> is full, the last item
-     * previously put into the buffer will be overwritten.
-     *
-     * @param value the <TT>int</TT> to put into the <TT>OverWritingBufferInt</TT>
-     */
+         * Puts a new <TT>int</TT> into the <TT>OverWritingBufferInt</TT>.
+         * <P>
+         * If <TT>OverWritingBufferInt</TT> is full, the last item
+         * previously put into the buffer will be overwritten.
+         *
+         * @param value the <TT>int</TT> to put into the <TT>OverWritingBufferInt</TT>
+         */
         public void put(int value)
         {
             if (counter == buffer.Length)
@@ -205,7 +202,5 @@ namespace CSPutil
             firstIndex = 0;
             lastIndex = 0;
         }
-
-
     }
 }
