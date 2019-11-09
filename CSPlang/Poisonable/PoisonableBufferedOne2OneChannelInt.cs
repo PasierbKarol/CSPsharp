@@ -8,16 +8,12 @@ namespace CSPlang
 
     class PoisonableBufferedOne2OneChannelInt : One2OneChannelInt, ChannelInternalsInt
     {
-        /** The ChannelDataStore used to store the data for the channel */
         private readonly ChannelDataStoreInt data;
-
         private readonly Object rwMonitor = new Object();
-
         private Alternative alt;
 
         //Only passed to channel-ends, not used directly:
         private int immunity;
-
         private int poisonStrength = 0;
 
         /**
@@ -48,7 +44,6 @@ namespace CSPlang
         {
             lock (rwMonitor)
             {
-
                 if (data.getState() == ChannelDataStoreState.EMPTY)
                 {
                     //Reader only sees poison if buffer is empty:
@@ -66,7 +61,6 @@ namespace CSPlang
                             {
                                 SpuriousLog.record(SpuriousLog.One2OneChannelXRead);
                             }
-
                             Monitor.Wait(rwMonitor);
                         }
                     }
@@ -92,7 +86,6 @@ namespace CSPlang
         {
             lock (rwMonitor)
             {
-
                 if (data.getState() == ChannelDataStoreState.EMPTY)
                 {
                     //    	Reader only sees poison if buffer is empty:
@@ -127,7 +120,6 @@ namespace CSPlang
                         throw new PoisonException(poisonStrength);
                     }
                 }
-
                 return data.startGet();
             }
         }

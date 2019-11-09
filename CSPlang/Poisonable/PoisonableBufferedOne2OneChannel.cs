@@ -26,59 +26,50 @@
 //                                                                  //
 //////////////////////////////////////////////////////////////////////
 
-
 using System;
 using System.Threading;
 using CSPutil;
 
 namespace CSPlang
 {
-
     /**
-* This implements a one-to-one object channel with user-definable buffering.
-* <H2>Description</H2>
-* <TT>BufferedOne2OneChannel</TT> implements a one-to-one object channel with
-* user-definable buffering.  Multiple readers or multiple writers are
-* not allowed -- these are catered for by {@link BufferedAny2OneChannel},
-* {@link BufferedOne2AnyChannel} or {@link BufferedAny2AnyChannel}.
-* <P>
-* The reading process may {@link Alternative <TT>ALT</TT>} on this channel.
-* The writing process is committed (i.e. it may not back off).
-* <P>
-* The constructor requires the user to provide
-* the channel with a <I>plug-in</I> driver conforming to the
-* {@link jcsp.util.ChannelDataStore <TT>ChannelDataStore</TT>}
-* interface.  This allows a variety of different channel semantics to be
-* introduced -- including buffered channels of user-defined capacity
-* (including infinite), overwriting channels (with various overwriting
-* policies) etc..
-* Standard examples are given in the <TT>jcsp.util</TT> package, but
-* <I>careful users</I> may write their own.
-*
-* @see jcsp.lang.Alternative
-* @see jcsp.lang.BufferedAny2OneChannel
-* @see jcsp.lang.BufferedOne2AnyChannel
-* @see jcsp.lang.BufferedAny2AnyChannel
-* @see jcsp.util.ChannelDataStore
-*
-* @author P.D.Austin
-* @author P.H.Welch
-*/
-
-
+    * This implements a one-to-one object channel with user-definable buffering.
+    * <H2>Description</H2>
+    * <TT>BufferedOne2OneChannel</TT> implements a one-to-one object channel with
+    * user-definable buffering.  Multiple readers or multiple writers are
+    * not allowed -- these are catered for by {@link BufferedAny2OneChannel},
+    * {@link BufferedOne2AnyChannel} or {@link BufferedAny2AnyChannel}.
+    * <P>
+    * The reading process may {@link Alternative <TT>ALT</TT>} on this channel.
+    * The writing process is committed (i.e. it may not back off).
+    * <P>
+    * The constructor requires the user to provide
+    * the channel with a <I>plug-in</I> driver conforming to the
+    * {@link jcsp.util.ChannelDataStore <TT>ChannelDataStore</TT>}
+    * interface.  This allows a variety of different channel semantics to be
+    * introduced -- including buffered channels of user-defined capacity
+    * (including infinite), overwriting channels (with various overwriting
+    * policies) etc..
+    * Standard examples are given in the <TT>jcsp.util</TT> package, but
+    * <I>careful users</I> may write their own.
+    *
+    * @see jcsp.lang.Alternative
+    * @see jcsp.lang.BufferedAny2OneChannel
+    * @see jcsp.lang.BufferedOne2AnyChannel
+    * @see jcsp.lang.BufferedAny2AnyChannel
+    * @see jcsp.util.ChannelDataStore
+    *
+    * @author P.D.Austin
+    * @author P.H.Welch
+    */
     internal class PoisonableBufferedOne2OneChannel : One2OneChannel, ChannelInternals
     {
-
-        /** The ChannelDataStore used to store the data for the channel */
         private readonly ChannelDataStore data;
-
         private readonly Object rwMonitor = new Object();
-
         private Alternative alt;
 
         //Only passed to channel-ends, not used directly:
         private int immunity;
-
         private int poisonStrength = 0;
 
         /**
@@ -109,7 +100,6 @@ namespace CSPlang
         {
             lock (rwMonitor)
             {
-
                 if (data.getState() == ChannelDataStoreState.EMPTY)
                 {
                     //Reader only sees poison if buffer is empty:
@@ -185,7 +175,6 @@ namespace CSPlang
                         throw new PoisonException(poisonStrength);
                     }
                 }
-
                 return data.startGet();
             }
         }
@@ -401,7 +390,6 @@ namespace CSPlang
 
                     //Poison by reader clears the buffer:
                     data.removeAll();
-
                     Monitor.PulseAll(rwMonitor);
                 }
             }
@@ -421,6 +409,5 @@ namespace CSPlang
         {
             throw new NotImplementedException();
         }
-
     }
 }

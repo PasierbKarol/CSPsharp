@@ -6,7 +6,7 @@ namespace CSPlang
     {
         internal PoisonableOne2AnyChannelImpl(int _immunity) : base(new PoisonableOne2OneChannelImpl(_immunity))
         {
-            
+
         }
     }
 }

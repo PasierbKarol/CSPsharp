@@ -4,7 +4,6 @@ using CSPlang.Alting;
 
 namespace CSPlang
 {
-
     class PoisonableOne2OneChannelIntImpl : One2OneChannelInt, ChannelInternalsInt
     {
         /** The monitor synchronising reader and writer on this channel */
@@ -34,12 +33,10 @@ namespace CSPlang
          */
         private int immunity;
 
-        /** The Alternative class that controls the selection */
         private Alternative alt;
 
-        /** Flag to deal with a spurious wakeup during a write */
+        /** Flag to deal with a spurious wakeup during a write */ //TODO is it needed with no Spurious?
         private Boolean spuriousWakeUp = true;
-
 
         private Boolean isPoisoned()
         {
@@ -145,11 +142,10 @@ namespace CSPlang
                 {
                     done = true;
                 }
-
             }
         }
 
-        /** ***********Methods from AltingChannelInput************************* */
+        /*************Methods from AltingChannelInput**************************/
 
         /**
         * Reads an <TT>Object</TT> from the channel.
@@ -164,7 +160,6 @@ namespace CSPlang
                 {
                     throw new PoisonException(poisonStrength);
                 }
-
 
                 if (empty)
                 {
@@ -248,7 +243,6 @@ namespace CSPlang
                 {
                     throw new PoisonException(poisonStrength);
                 }
-
                 return hold;
             }
         }
@@ -280,7 +274,6 @@ namespace CSPlang
                 {
                     return true;
                 }
-
 
                 if (empty)
                 {
