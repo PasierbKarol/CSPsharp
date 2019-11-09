@@ -27,17 +27,9 @@
 //////////////////////////////////////////////////////////////////////
 
 using System;
-using System.Runtime.Serialization;
 
 namespace CSPlang
 {
-
-
-
-    /**
-     *
-     */
-
     [Serializable]
 
     class ConnectionClientMessage

@@ -28,10 +28,6 @@
 
 namespace CSPlang
 {
-
-    /**
-     *
-     */
     class ConnectionClientOpenMessage : ConnectionClientMessage
     {
         internal ChannelOutput replyChannel;

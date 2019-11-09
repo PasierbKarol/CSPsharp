@@ -30,13 +30,10 @@ using CSPlang.Any2;
 
 namespace CSPlang
 {
-
     /**
      * <p>
      * Defines an interface for a factory than can create connections.
      * </p>
-     *
-     *
      */
     public interface ConnectionFactory
     {
@@ -46,7 +43,7 @@ namespace CSPlang
          *
          * @return	the constructed <code>One2OneConnection</code> object.
          */
-         One2OneConnection createOne2One();
+        One2OneConnection createOne2One();
 
         /**
          * Constructs and returns an implementation of
@@ -54,7 +51,7 @@ namespace CSPlang
          *
          * @return	the constructed <code>Any2OneConnection</code> object.
          */
-         Any2OneConnection createAny2One();
+        Any2OneConnection createAny2One();
 
         /**
          * Constructs and returns an implementation of
@@ -62,7 +59,7 @@ namespace CSPlang
          *
          * @return	the constructed <code>One2AnyConnection</code> object.
          */
-         One2AnyConnection createOne2Any();
+        One2AnyConnection createOne2Any();
 
         /**
          * Constructs and returns an implementation of
@@ -70,6 +67,6 @@ namespace CSPlang
          *
          * @return	the constructed <code>Any2AnyConnection</code> object.
          */
-         Any2AnyConnection createAny2Any();
+        Any2AnyConnection createAny2Any();
     }
 }

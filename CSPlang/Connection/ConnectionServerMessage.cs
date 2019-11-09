@@ -30,12 +30,6 @@ using System;
 
 namespace CSPlang
 {
-
-
-
-    /**
-     *
-     */
     [Serializable]
     class ConnectionServerMessage
     {

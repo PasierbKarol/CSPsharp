@@ -30,12 +30,6 @@ using CSPlang.Shared;
 
 namespace CSPlang
 {
-
-    /**
-     * This interface is just
-     *
-     *
-     */
     public interface ConnectionWithSharedAltingClient
     {
         SharedAltingConnectionClient client();

@@ -30,7 +30,6 @@ using System;
 
 namespace CSPlang
 {
-
     /**
      * <p>This is an interface to be implemented by classes that wish
      * to act as a client to connect to a <code>ConnectionServer</code>.</p>
@@ -62,8 +61,6 @@ namespace CSPlang
      *     some_variable = client.receive();
      * } while (client.isOpen())
      * </pre>
-     *
-     *
      */
     public interface ConnectionClient
     {
@@ -89,7 +86,7 @@ namespace CSPlang
          * @throws  IllegalStateException	if the method is called when it is
          *                                  not meant to be.
          */
-         void request(Object data);// throws IllegalStateException;
+        void request(Object data);// throws IllegalStateException; //TODO is there a way to add exceptions here?
 
         /**
          * <p>Receives some data back from the server after
@@ -104,7 +101,7 @@ namespace CSPlang
          * @throws  IllegalStateException	if the method is called when it is
          *                                  not meant to be.
          */
-         Object reply();// throws IllegalStateException;
+        Object reply();// throws IllegalStateException; //TODO is there a way to add exceptions here?
 
         /**
          * <p>Returns whether the server has kept its end of the Connection open.
@@ -114,7 +111,6 @@ namespace CSPlang
          * @return <code>true</code> iff the server has kept the connection
          *          open.
          */
-         Boolean isOpen();// throws IllegalStateException;
-
+        Boolean isOpen();// throws IllegalStateException; //TODO is there a way to add exceptions here?
     }
 }

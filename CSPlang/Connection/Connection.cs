@@ -32,27 +32,20 @@ using CSPlang.Shared;
 
 namespace CSPlang
 {
-
     /**
      * This class provides static factory methods for constructing
      * different types of connection. The methods are equivalent to
      * the non-static methods of the <code>StandardConnectionFactory</code>
      * class.
-     *
-     *
      */
     public class Connection
     {
         private static StandardConnectionFactory factory = new StandardConnectionFactory();
 
-        /**
-         * Constructor for Connection.
-         */
         private Connection() : base()
         {
-            
-        }
 
+        }
 
         /**
          * @see jcsp.lang.ConnectionFactory#createOne2One()

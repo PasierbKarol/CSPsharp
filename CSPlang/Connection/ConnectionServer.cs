@@ -1,36 +1,32 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace CSPlang
 {
     /**
- * <p>This interface should be implemented by classes that wish to
- * act as connection servers and to accept requests from
- * <code>ConnectionClient</code> objects.</p>
- *
- * <p>The server can call <code>request()</code> to allow a client
- * to establish a connection to the server and to obtain the client's
- * initial request. This should block until a client establishes a
- * connection.</p>
- *
- * <p>Once a request has been received, the server should reply to the client.
- * If the server wants to close the connection then the server should call
- * <code>replyAndClose(Object)</code> or alternatively
- * <code>reply(Object, Boolean)</code> with the <code>Boolean</code> set to
- * <code>true</code>. If the server wants to keep the connection open, then it
- * should call <code>reply(Object)</code> or alternatively
- * <code>reply(Object, Boolean)</code> with the <code>Boolean</code> set to
- * <code>false</code>.  The <code>reply(Object, Boolean)</code> method is
- * provided for convenience in closing connections programatically.</p>
- *
- *
- */
+     * <p>This interface should be implemented by classes that wish to
+     * act as connection servers and to accept requests from
+     * <code>ConnectionClient</code> objects.</p>
+     *
+     * <p>The server can call <code>request()</code> to allow a client
+     * to establish a connection to the server and to obtain the client's
+     * initial request. This should block until a client establishes a
+     * connection.</p>
+     *
+     * <p>Once a request has been received, the server should reply to the client.
+     * If the server wants to close the connection then the server should call
+     * <code>replyAndClose(Object)</code> or alternatively
+     * <code>reply(Object, Boolean)</code> with the <code>Boolean</code> set to
+     * <code>true</code>. If the server wants to keep the connection open, then it
+     * should call <code>reply(Object)</code> or alternatively
+     * <code>reply(Object, Boolean)</code> with the <code>Boolean</code> set to
+     * <code>false</code>.  The <code>reply(Object, Boolean)</code> method is
+     * provided for convenience in closing connections programatically.</p>
+     */
     public interface ConnectionServer
     {
         /**
-     * The factory for creating channels within servers.
-     */
+         * The factory for creating channels within servers.
+         */
         //static StandardChannelFactory FACTORY = new StandardChannelFactory();
 
         /**
@@ -45,7 +41,7 @@ namespace CSPlang
          *
          * @return the <code>Object</code> sent by the client.
          */
-          Object request(); // throws IllegalStateException; //No equivalent in C# - KP
+        Object request(); // throws IllegalStateException; //TODO is there a way to add exceptions here?
 
         /**
          * <p>Sends some data back to the client after a request
@@ -59,7 +55,7 @@ namespace CSPlang
          *
          * @param	data	the data to send to the client.
          */
-          void reply(Object data); // throws IllegalStateException; //No equivalent in C# - KP
+        void reply(Object data); // throws IllegalStateException; //TODO is there a way to add exceptions here?
 
 
         /**
@@ -86,6 +82,6 @@ namespace CSPlang
          *
          * @param data	the data to send back to client.
          */
-          void replyAndClose(Object data); // throws IllegalStateException; //No equivalent in C# - KP
+        void replyAndClose(Object data); // throws IllegalStateException; //TODO is there a way to add exceptions here?
     }
 }
