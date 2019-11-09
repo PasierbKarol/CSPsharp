@@ -80,8 +80,5 @@ namespace CSPnet2
             string filterTXtoJSON(Object obj);
 
         }
-
-
-
     }
 }

@@ -21,7 +21,6 @@ using System;
 using CSPlang;
 using CSPlang.Alting;
 using CSPlang.Any2;
-using CSPnet2;
 using CSPnet2.Net2Link;
 using CSPnet2.NetConnection;
 using CSPnet2.NetNode;
@@ -30,117 +29,107 @@ using CSPutil;
 namespace CSPnet2
 {
 
-//    import jcsp.lang.AltingChannelInput;
-//import jcsp.lang.AltingConnectionServer;
-//import jcsp.lang.Any2OneChannel;
-//import jcsp.lang.Channel;
-//import jcsp.util.InfiniteBuffer;
+    public sealed class NetAltingConnectionServer : AltingConnectionServer, NetConnectionServer
+    {
+        private readonly AltingChannelInput requestIn;
+        private readonly AltingChannelInput openIn;
+        private readonly NetConnectionLocation location;
+        private readonly NetworkMessageFilter.FilterRx inputFilter;
+        private readonly NetworkMessageFilter.FilterTx outputFilter;
+        private readonly ConnectionData data;
+        private readonly NetworkMessage lastRead = null;
+        private readonly Link linkConnectedTo = null;
 
-public sealed class NetAltingConnectionServer : AltingConnectionServer, NetConnectionServer
-{
-    private readonly AltingChannelInput requestIn;
-
-    private readonly AltingChannelInput openIn;
-
-    private readonly NetConnectionLocation location;
-
-    private readonly NetworkMessageFilter.FilterRx inputFilter;
-
-    private readonly NetworkMessageFilter.FilterTx outputFilter;
-
-    private readonly ConnectionData data;
-
-    private readonly NetworkMessage lastRead = null;
-
-    private readonly Link linkConnectedTo = null;
-
-    static NetAltingConnectionServer create(int index, NetworkMessageFilter.FilterRx filterRX,
-            NetworkMessageFilter.FilterTx filterTX)
+        static NetAltingConnectionServer create(int index, NetworkMessageFilter.FilterRx filterRX,
+                NetworkMessageFilter.FilterTx filterTX) //TODO should some try/catch be added here?
         ////throws ArgumentException 
-    {
-        ConnectionData data = new ConnectionData();
-        Any2OneChannel requestChan = Channel.any2one(new InfiniteBuffer());
-        Any2OneChannel openChan = Channel.any2one(new InfiniteBuffer());
-        data.toConnection = requestChan.Out();
-        data.openServer = openChan.Out();
-        data.state = ConnectionDataState.SERVER_STATE_CLOSED;
-        ConnectionManager.getInstance().create(index, data);
-        return new NetAltingConnectionServer(openChan.In(), requestChan.In(), data, filterRX, filterTX);
-    }
+        {
+            ConnectionData data = new ConnectionData();
+            Any2OneChannel requestChan = Channel.any2one(new InfiniteBuffer());
+            Any2OneChannel openChan = Channel.any2one(new InfiniteBuffer());
+            data.toConnection = requestChan.Out();
+            data.openServer = openChan.Out();
+            data.state = ConnectionDataState.SERVER_STATE_CLOSED;
+            ConnectionManager.getInstance().create(index, data);
+            return new NetAltingConnectionServer(openChan.In(), requestChan.In(), data, filterRX, filterTX);
+        }
 
-    static NetAltingConnectionServer create(NetworkMessageFilter.FilterRx filterRX,
-                                            NetworkMessageFilter.FilterTx filterTX)
-    {
-        ConnectionData data = new ConnectionData();
-        Any2OneChannel requestChan = Channel.any2one(new InfiniteBuffer());
-        Any2OneChannel openChan = Channel.any2one(new InfiniteBuffer());
-        data.toConnection = requestChan.Out();
-        data.openServer = openChan.Out();
-        data.state = ConnectionDataState.SERVER_STATE_CLOSED;
-        ConnectionManager.getInstance().create(data);
-        return new NetAltingConnectionServer(openChan.In(), requestChan.In(), data, filterRX, filterTX);
-    }
+        static NetAltingConnectionServer create(NetworkMessageFilter.FilterRx filterRX,
+                                                NetworkMessageFilter.FilterTx filterTX)
+        {
+            ConnectionData data = new ConnectionData();
+            Any2OneChannel requestChan = Channel.any2one(new InfiniteBuffer());
+            Any2OneChannel openChan = Channel.any2one(new InfiniteBuffer());
+            data.toConnection = requestChan.Out();
+            data.openServer = openChan.Out();
+            data.state = ConnectionDataState.SERVER_STATE_CLOSED;
+            ConnectionManager.getInstance().create(data);
+            return new NetAltingConnectionServer(openChan.In(), requestChan.In(), data, filterRX, filterTX);
+        }
 
-    private NetAltingConnectionServer(AltingChannelInput openChan, AltingChannelInput requestChan,
-                                      ConnectionData connData, NetworkMessageFilter.FilterRx filterRX, NetworkMessageFilter.FilterTx filterTX) : base(openChan)
+        private NetAltingConnectionServer(AltingChannelInput openChan, 
+                                            AltingChannelInput requestChan,
+                                            ConnectionData connData, 
+                                            NetworkMessageFilter.FilterRx filterRX, 
+                                            NetworkMessageFilter.FilterTx filterTX) : 
+                                            base(openChan)
         ////throws JCSPNetworkException
-    {
-        this.openIn = openChan;
-        this.requestIn = requestChan;
-        this.data = connData;
-        this.inputFilter = filterRX;
-        this.outputFilter = filterTX;
-        this.location = new NetConnectionLocation(Node.getInstance().getNodeID(), this.data.vconnn);
-    }
+        {
+            this.openIn = openChan;
+            this.requestIn = requestChan;
+            this.data = connData;
+            this.inputFilter = filterRX;
+            this.outputFilter = filterTX;
+            this.location = new NetConnectionLocation(Node.getInstance().getNodeID(), this.data.vconnn);
+        }
 
-    public void destroy()
-    {
-        // TODO Auto-generated method stub
+        public void destroy()
+        {
+            // TODO Auto-generated method stub
+        }
 
-    }
+        public NetLocation getLocation()
+        {
+            // TODO Auto-generated method stub
+            return null;
+        }
 
-    public NetLocation getLocation()
-    {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    public void reply(Object data, Boolean close)
+        public void reply(Object data, Boolean close)
         ////throws InvalidOperationException
-    {
-        // TODO Auto-generated method stub
+        {
+            // TODO Auto-generated method stub
 
-    }
+        }
 
-    public void reply(Object data)
+        public void reply(Object data)
         ////throws InvalidOperationException
-    {
-        // TODO Auto-generated method stub
+        {
+            // TODO Auto-generated method stub
 
-    }
+        }
 
-    public void replyAndClose(Object data)
-       ////throws InvalidOperationException
-    {
-        // TODO Auto-generated method stub
-
-    }
-
-    public Object request()
+        public void replyAndClose(Object data)
         ////throws InvalidOperationException
-    {
-        // TODO Auto-generated method stub
-        return null;
-    }
+        {
+            // TODO Auto-generated method stub
 
-    public override bool enable(Alternative alt)
-    {
-        throw new NotImplementedException();
-    }
+        }
 
-    public override bool disable()
-    {
-        throw new NotImplementedException();
+        public Object request()
+        ////throws InvalidOperationException
+        {
+            // TODO Auto-generated method stub
+            return null;
+        }
+
+        public override bool enable(Alternative alt)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override bool disable()
+        {
+            throw new NotImplementedException();
+        }
     }
-}
 }

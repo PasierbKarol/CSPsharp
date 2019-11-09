@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
@@ -29,17 +27,17 @@ namespace CSPnet2
 
         public static String ConvertIPAddressToString(IPAddress address)
         {
-            StringBuilder a = new StringBuilder();
+            StringBuilder builder = new StringBuilder();
             byte[] bytes = address.GetAddressBytes();
             for (int i = 0; i < bytes.Length; i++)
             {
-                a.Append(bytes[i]);
+                builder.Append(bytes[i]);
                 if (i < bytes.Length - 1)
                 {
-                    a.Append(".");
-                }                
+                    builder.Append(".");
+                }
             }
-            return a.ToString();
+            return builder.ToString();
         }
 
         public static String ConvertLocalIPAddressToString()

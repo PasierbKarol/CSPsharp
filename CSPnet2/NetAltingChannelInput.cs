@@ -17,24 +17,23 @@
 //                                                                  //
 //////////////////////////////////////////////////////////////////////
 
-using System;
 using CSPlang;
 using CSPlang.Alting;
 using CSPnet2.NetChannels;
 
 namespace CSPnet2
 {
-/**
- * A NetChannelInput that may be used as a guard. This class describes the abstract interface of such a channel. To
- * create an instance of this class, use the standard NetChannel factory, or the CNS. For information on the usage of
- * this object, see AltingChannelInput
- * 
- * @see AltingChannelInput
- * @see jcsp.lang.ChannelInput
- * @see NetChannelInput
- * @see NetChannel
- * @author Quickstone Technologies
- */
+    /**
+     * A NetChannelInput that may be used as a guard. This class describes the abstract interface of such a channel. To
+     * create an instance of this class, use the standard NetChannel factory, or the CNS. For information on the usage of
+     * this object, see AltingChannelInput
+     * 
+     * @see AltingChannelInput
+     * @see jcsp.lang.ChannelInput
+     * @see NetChannelInput
+     * @see NetChannel
+     * @author Quickstone Technologies
+     */
     public abstract class NetAltingChannelInput : AltingChannelInputWrapper, NetChannelInput
     {
         /**
@@ -52,6 +51,5 @@ namespace CSPnet2
         public abstract void destroy();
 
         public abstract void setDecoder(NetworkMessageFilter.FilterRx decoder);
-
     }
 }

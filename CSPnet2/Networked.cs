@@ -31,16 +31,10 @@ namespace CSPnet2
     public interface Networked
     {
         /**
-         * Gets the networked location of the Networked construct
-         * 
          * @return The location of the construct
          */
 
         NetLocation getLocation();
-
-        /**
-         * Destroys the Networked construct
-         */
         void destroy();
     }
 }

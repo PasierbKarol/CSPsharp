@@ -23,18 +23,18 @@ using CSPlang;
 
 namespace CSPnet2
 {
-/**
- * A message received or to be sent via a Link. This is an internal structure to JCSP, and is an object encapsulation of
- * the messages sent between nodes
- * 
- * @author Kevin Chalmers
- */
+    /**
+     * A message received or to be sent via a Link. This is an internal structure to JCSP, and is an object encapsulation of
+     * the messages sent between nodes
+     * 
+     * @author Kevin Chalmers
+     */
     sealed class NetworkMessage
     {
         /**
          * The message type, as described in NetworkProtocol.
          */
-        internal int type = (int) -1;
+        internal int type = (int)-1;
 
         /**
          * The first attribute of the message.

@@ -22,23 +22,18 @@ using CSPlang;
 
 namespace CSPnet2
 {
-/**
- * An exception thrown when a networked channel is poisoned. See the poison exception in the core package for more
- * information
- * 
- * @see PoisonException
- * @author Kevin Chalmers
- */
+    /**
+     * An exception thrown when a networked channel is poisoned. See the poison exception in the core package for more
+     * information
+     * 
+     * @see PoisonException
+     * @author Kevin Chalmers
+     */
     public sealed class NetworkPoisonException : PoisonException
     {
-        /**
-         * The SUID of the class
-         */
         private static readonly long serialVersionUID = 1L;
 
         /**
-         * Creates a new NetworkPoisonException
-         * 
          * @param strength
          *            The strength of the poison
          */

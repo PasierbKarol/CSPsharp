@@ -1,4 +1,3 @@
-
 //////////////////////////////////////////////////////////////////////
 //                                                                  //
 //  JCSP ("CSP for Java") Libraries                                 //
@@ -24,50 +23,50 @@ using CSPlang;
 
 namespace CSPnet2
 {
-/**
- * A package-visible class that implements a straightforward mutex, for use by Net2AnyChannel
- * 
- * @author Neil Brown
- */
-class Net2_Mutex
-{
     /**
-     * Flag to mark the mutex as claimed
+     * A package-visible class that implements a straightforward mutex, for use by Net2AnyChannel
+     * 
+     * @author Neil Brown
      */
-    private Boolean claimed = false;
-
-    /**
-     * Claims the mutex for exclusive access
-     */
-    internal void claim()
+    class Net2_Mutex
     {
-        lock (this)
+        /**
+         * Flag to mark the mutex as claimed
+         */
+        private Boolean claimed = false;
+
+        /**
+         * Claims the mutex for exclusive access
+         */
+        internal void claim()
         {
-            while (this.claimed)
+            lock (this)
             {
-                try
+                while (this.claimed)
                 {
-                    Monitor.Wait(this);
+                    try
+                    {
+                        Monitor.Wait(this);
+                    }
+                    catch (ThreadInterruptedException e)
+                    {
+                        throw new ProcessInterruptedException("*** Thrown from Net2_Mutex.claim()\n" + e.ToString());
+                    }
                 }
-                catch (ThreadInterruptedException e)
-                {
-                    throw new ProcessInterruptedException("*** Thrown from Net2_Mutex.claim()\n" + e.ToString());
-                }
+                this.claimed = true;
             }
-            this.claimed = true;
         }
-    }
 
-    /**
-     * Releases the mutex for exclusive access
-     */
-    internal void release()
-    {
-        lock (this)
+        /**
+         * Releases the mutex for exclusive access
+         */
+        internal void release()
         {
-            this.claimed = false;
-            Monitor.Pulse(this);
+            lock (this)
+            {
+                this.claimed = false;
+                Monitor.Pulse(this);
+            }
         }
     }
-}
 }

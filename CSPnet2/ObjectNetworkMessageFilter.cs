@@ -19,16 +19,8 @@
 
 using System;
 using System.IO;
-using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters;
-using System.Runtime.Serialization.Formatters.Binary;
-using System.Xml.Serialization;
-
-
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using Newtonsoft.Json.Converters;
-using Newtonsoft.Json.Serialization;
 
 namespace CSPnet2
 {
@@ -38,11 +30,11 @@ namespace CSPnet2
      *
      * https://stackoverflow.com/questions/29688498/how-to-deserialize-json-to-objects-of-the-correct-type-without-having-to-define
      *
-     * @author Kevin Chalmers, altered by Karol Pasierb
+     * @author Kevin Chalmers, updated by Karol Pasierb
      */
     public sealed class ObjectNetworkMessageFilter
     {
-        private static JsonSerializerSettings settings = 
+        private static JsonSerializerSettings settings =
             new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All, TypeNameAssemblyFormat = FormatterAssemblyStyle.Full };
 
         /**
@@ -66,7 +58,7 @@ namespace CSPnet2
              * @//throws IOException
              *             Thrown of something goes wrong during the decoding
              */
-            public object filterRXfromJSON(string json)
+            public object filterRXfromJSON(string json) //TODO should this be expanded by adding try/catch block? Should it apply to similar files?
             {
                 return JsonConvert.DeserializeObject(json, settings);
             }

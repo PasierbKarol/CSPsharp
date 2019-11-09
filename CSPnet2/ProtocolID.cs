@@ -22,15 +22,13 @@ using CSPnet2.NetNode;
 
 namespace CSPnet2
 {
-    //import jcsp.net.tcpip.TCPIPProtocolID;
-
-/**
- * This abstract class must be defined in concrete protocol implementations. Its main usage is to allow installation and
- * correct parsing of relevant address strings into correct address objects. See TCPIPProtocolID for an example.
- * 
- * @see TCPIPProtocolID
- * @author Kevin Chalmers
- */
+    /**
+     * This abstract class must be defined in concrete protocol implementations. Its main usage is to allow installation and
+     * correct parsing of relevant address strings into correct address objects. See TCPIPProtocolID for an example.
+     * 
+     * @see TCPIPProtocolID
+     * @author Kevin Chalmers
+     */
     public abstract class ProtocolID
     {
         /**

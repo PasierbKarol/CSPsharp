@@ -17,8 +17,6 @@
 //                                                                  //
 //////////////////////////////////////////////////////////////////////
 
-using System;
-
 namespace CSPnet2
 {
     /**
@@ -34,7 +32,6 @@ namespace CSPnet2
          */
         private NetworkProtocol()
         {
-            // Empty constructor
         }
 
         /**

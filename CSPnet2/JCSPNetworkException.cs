@@ -31,17 +31,8 @@ namespace CSPnet2
      */
     public sealed class JCSPNetworkException : RuntimeException
     {
-        /**
-         * Default serial ID. Given for the sake of completeness.
-         */
         private static readonly long serialVersionUID = 1L;
 
-        /**
-         * Constructor for a new JCSPNetworkException
-         * 
-         * @param message
-         *            The message for the exception
-         */
         public JCSPNetworkException(String message) : base(message)
         {
         }

@@ -1,4 +1,3 @@
-
 //////////////////////////////////////////////////////////////////////
 //                                                                  //
 //  JCSP ("CSP for Java") Libraries                                 //
@@ -19,79 +18,74 @@
 //////////////////////////////////////////////////////////////////////
 
 using System;
-using System.IO;
-using CSPnet2;
 
 namespace CSPnet2
 {
-
-    //import java.io.IOException;
-
-/**
- * A NetworkMessageFilter used to send and receive raw byte data.
- * 
- * @see NetworkMessageFilter
- * @author Kevin Chalmers
- */
-public sealed class RawNetworkMessageFilter
-{
     /**
-     * The receiving filter
+     * A NetworkMessageFilter used to send and receive raw byte data.
      * 
+     * @see NetworkMessageFilter
      * @author Kevin Chalmers
      */
-    public /*static*/ sealed class FilterRX : NetworkMessageFilter.FilterRx
+    public sealed class RawNetworkMessageFilter
     {
         /**
-         * Creates a new RawNetworkMessageFilter.FilterRX
+         * The receiving filter
+         * 
+         * @author Kevin Chalmers
          */
-        public FilterRX()
+        public /*static*/ sealed class FilterRX : NetworkMessageFilter.FilterRx
         {
-            // Nothing to do
+            /**
+             * Creates a new RawNetworkMessageFilter.FilterRX
+             */
+            public FilterRX()
+            {
+                // Nothing to do
+            }
+
+            /**
+             * Decodes an incoming byte array. Does nothing
+             * 
+             * @param bytes
+             *            The bytes received in an incoming message
+             * @return The same bytes as is passed in
+             */
+
+            public object filterRXfromJSON(string json)
+            {
+                throw new NotImplementedException();
+            }
         }
 
         /**
-         * Decodes an incoming byte array. Does nothing
+         * The sending Filter
          * 
-         * @param bytes
-         *            The bytes received in an incoming message
-         * @return The same bytes as is passed in
+         * @author Kevin Chalmers
          */
-
-        public object filterRXfromJSON(string json)
+        public /*static*/ sealed class FilterTX : NetworkMessageFilter.FilterTx
         {
-            throw new NotImplementedException();
+            /**
+             * Creates a new output filter
+             */
+            public FilterTX()
+            {
+                // Nothing to do
+            }
+
+            /**
+             * Will send a byte array as raw bytes
+             * 
+             * @param obj
+             *            The object to send. This must be a byte array
+             * @return The same byte array as sent in
+             * @//throws IOException
+             *             Thrown if the sent object is not a byte array
+             */
+            public string filterTXtoJSON(object obj)
+            {
+                throw new NotImplementedException();
+            }
         }
     }
-
-    /**
-     * The sending Filter
-     * 
-     * @author Kevin Chalmers
-     */
-    public /*static*/ sealed class FilterTX : NetworkMessageFilter.FilterTx
-    {
-        /**
-         * Creates a new output filter
-         */
-        public FilterTX()
-        {
-            // Nothing to do
-        }
-
-        /**
-         * Will send a byte array as raw bytes
-         * 
-         * @param obj
-         *            The object to send. This must be a byte array
-         * @return The same byte array as sent in
-         * @//throws IOException
-         *             Thrown if the sent object is not a byte array
-         */
-        public string filterTXtoJSON(object obj)
-        {
-            throw new NotImplementedException();
-        }
-    }
-}
 }
