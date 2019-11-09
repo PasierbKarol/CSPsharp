@@ -30,24 +30,16 @@ using System;
 
 namespace CSPlang
 {
-
     /**
      * Defines a wrapper to go around a channel output end. This wrapper allows a channel end to be given
      * away without any risk of the user of that end casting it to a channel input because they cannot
      * gain access to the actual channel end.
-     *
-     *
      */
     public class ChannelOutputWrapper : ChannelOutput
     {
-        /**
-         * The actual channel end.
-         */
         private ChannelOutput Out;
 
         /**
-         * Creates a new wrapper for the given channel end.
-         *
          * @param out the existing channel end.
          */
         public ChannelOutputWrapper(ChannelOutput Out)
@@ -56,8 +48,6 @@ namespace CSPlang
         }
 
         /**
-         * Writes a value to the channel.
-         *
          * @param o the value to write.
          * @see jcsp.lang.ChannelOutput
          */
@@ -70,6 +60,5 @@ namespace CSPlang
         {
             Out.poison(strength);
         }
-
     }
 }

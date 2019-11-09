@@ -1,40 +1,37 @@
 namespace CSPlang
 {
-
-    class ChannelInputIntImpl : ChannelInputInt {
-
-    private ChannelInternalsInt channel;
-    private int immunity;
-
-    ChannelInputIntImpl(ChannelInternalsInt _channel, int _immunity)
+    class ChannelInputIntImpl : ChannelInputInt
     {
-        channel = _channel;
-        immunity = _immunity;
-    }
+        private ChannelInternalsInt channel;
+        private int immunity;
 
-    public void endRead()
-    {
-        channel.endRead();
-
-    }
-
-    public int read()
-    {
-        return channel.read();
-    }
-
-    public int startRead()
-    {
-        return channel.startRead();
-    }
-
-    public void poison(int strength)
-    {
-        if (strength > immunity)
+        ChannelInputIntImpl(ChannelInternalsInt _channel, int _immunity)
         {
-            channel.readerPoison(strength);
+            channel = _channel;
+            immunity = _immunity;
         }
-    }
 
+        public void endRead()
+        {
+            channel.endRead();
+        }
+
+        public int read()
+        {
+            return channel.read();
+        }
+
+        public int startRead()
+        {
+            return channel.startRead();
+        }
+
+        public void poison(int strength)
+        {
+            if (strength > immunity)
+            {
+                channel.readerPoison(strength);
+            }
+        }
     }
 }

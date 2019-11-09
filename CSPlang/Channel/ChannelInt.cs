@@ -33,9 +33,6 @@ using CSPutil;
 
 namespace CSPlang
 {
-
-
-
     /**
      * This class provides static factory methods for constructing
      * various different types of int channel objects. There are also methods
@@ -318,120 +315,120 @@ namespace CSPlang
         {
             SharedChannelInputInt[] In = new SharedChannelInputInt[c.Length];
             for (int i = 0; i < c.Length; i++)
-            In[i] = c[i].In();
-        return In;
-    }
+                In[i] = c[i].In();
+            return In;
+        }
 
-    /**
-     * Constructs and returns an array of input channel ends, each of which can be used as guards
-     * in an <code>Alternative</code>. The returned array, <code>r</code>, is constructed such that
-     * <code>r[i] = c[i].in ()</code> for <code>0 <= i < c.Length</code>.
-     *
-     * @param c the array of channel to obtain input ends from.
-     * @return the array of channel input ends.
-     */
-    public static AltingChannelInputInt[] getInputArray(Any2OneChannelInt[] c)
-    {
-        AltingChannelInputInt[] In = new AltingChannelInputInt[c.Length];
-        for (int i = 0; i < c.Length; i++)
-            In[i] = c[i].In();
-        return In;
-    }
+        /**
+         * Constructs and returns an array of input channel ends, each of which can be used as guards
+         * in an <code>Alternative</code>. The returned array, <code>r</code>, is constructed such that
+         * <code>r[i] = c[i].in ()</code> for <code>0 <= i < c.Length</code>.
+         *
+         * @param c the array of channel to obtain input ends from.
+         * @return the array of channel input ends.
+         */
+        public static AltingChannelInputInt[] getInputArray(Any2OneChannelInt[] c)
+        {
+            AltingChannelInputInt[] In = new AltingChannelInputInt[c.Length];
+            for (int i = 0; i < c.Length; i++)
+                In[i] = c[i].In();
+            return In;
+        }
 
-/**
- * Constructs and returns an array of input channel ends, each of which can be shared by multiple
- * concurrent readers. The returned array, <code>r</code>, is constructed such that
- * <code>r[i] = c[i].in ()</code> for <code>0 <= i < c.Length</code>.
- *
- * @param c the array of channel to obtain input ends from.
- * @return the array of channel input ends.
- */
-public static SharedChannelInputInt[] getInputArray(One2AnyChannelInt[] c)
-{
-    SharedChannelInputInt[] In = new SharedChannelInputInt[c.Length];
-    for (int i = 0; i < c.Length; i++)
-            In[i] = c[i].In();
-        return In;
-    }
+        /**
+         * Constructs and returns an array of input channel ends, each of which can be shared by multiple
+         * concurrent readers. The returned array, <code>r</code>, is constructed such that
+         * <code>r[i] = c[i].in ()</code> for <code>0 <= i < c.Length</code>.
+         *
+         * @param c the array of channel to obtain input ends from.
+         * @return the array of channel input ends.
+         */
+        public static SharedChannelInputInt[] getInputArray(One2AnyChannelInt[] c)
+        {
+            SharedChannelInputInt[] In = new SharedChannelInputInt[c.Length];
+            for (int i = 0; i < c.Length; i++)
+                In[i] = c[i].In();
+            return In;
+        }
 
-    /**
-     * Constructs and returns an array of input channel ends, each of which can be used as guards
-     * in an <code>Alternative</code>. The returned array, <code>r</code>, is constructed such that
-     * <code>r[i] = c[i].in ()</code> for <code>0 <= i < c.Length</code>.
-     *
-     * @param c the array of channel to obtain input ends from.
-     * @return the array of channel input ends.
-     */
-    public static AltingChannelInputInt[] getInputArray(One2OneChannelInt[] c)
-{
-    AltingChannelInputInt[] In = new AltingChannelInputInt[c.Length];
-    for (int i = 0; i < c.Length; i++)
-            In[i] = c[i].In();
-        return In;
-    }
+        /**
+         * Constructs and returns an array of input channel ends, each of which can be used as guards
+         * in an <code>Alternative</code>. The returned array, <code>r</code>, is constructed such that
+         * <code>r[i] = c[i].in ()</code> for <code>0 <= i < c.Length</code>.
+         *
+         * @param c the array of channel to obtain input ends from.
+         * @return the array of channel input ends.
+         */
+        public static AltingChannelInputInt[] getInputArray(One2OneChannelInt[] c)
+        {
+            AltingChannelInputInt[] In = new AltingChannelInputInt[c.Length];
+            for (int i = 0; i < c.Length; i++)
+                In[i] = c[i].In();
+            return In;
+        }
 
-    /**
-     * Constructs and returns an array of output channel ends, each of which can be shared by multiple
-     * concurrent writers. The returned array, <code>r</code>, is constructed such that
-     * <code>r[i] = c[i].out ()</code> for <code>0 <= i < c.Length</code>.
-     *
-     * @param c the array of channel to obtain output ends from.
-     * @return the array of output input ends.
-     */
-    public static SharedChannelOutputInt[] getOutputArray(Any2AnyChannelInt[] c)
-{
-    SharedChannelOutputInt[] In = new SharedChannelOutputInt[c.Length];
-    for (int i = 0; i < c.Length; i++)
-            In[i] = c[i].Out();
-        return In;
-    }
+        /**
+         * Constructs and returns an array of output channel ends, each of which can be shared by multiple
+         * concurrent writers. The returned array, <code>r</code>, is constructed such that
+         * <code>r[i] = c[i].out ()</code> for <code>0 <= i < c.Length</code>.
+         *
+         * @param c the array of channel to obtain output ends from.
+         * @return the array of output input ends.
+         */
+        public static SharedChannelOutputInt[] getOutputArray(Any2AnyChannelInt[] c)
+        {
+            SharedChannelOutputInt[] In = new SharedChannelOutputInt[c.Length];
+            for (int i = 0; i < c.Length; i++)
+                In[i] = c[i].Out();
+            return In;
+        }
 
-    /**
-     * Constructs and returns an array of output channel ends, each of which can be shared by multiple
-     * concurrent writers. The returned array, <code>r</code>, is constructed such that
-     * <code>r[i] = c[i].out ()</code> for <code>0 <= i < c.Length</code>.
-     *
-     * @param c the array of channel to obtain output ends from.
-     * @return the array of output input ends.
-     */
-    public static SharedChannelOutputInt[] getOutputArray(Any2OneChannelInt[] c)
-{
-    SharedChannelOutputInt[] In = new SharedChannelOutputInt[c.Length];
-    for (int i = 0; i < c.Length; i++)
-            In[i] = c[i].Out();
-        return In;
-    }
+        /**
+         * Constructs and returns an array of output channel ends, each of which can be shared by multiple
+         * concurrent writers. The returned array, <code>r</code>, is constructed such that
+         * <code>r[i] = c[i].out ()</code> for <code>0 <= i < c.Length</code>.
+         *
+         * @param c the array of channel to obtain output ends from.
+         * @return the array of output input ends.
+         */
+        public static SharedChannelOutputInt[] getOutputArray(Any2OneChannelInt[] c)
+        {
+            SharedChannelOutputInt[] In = new SharedChannelOutputInt[c.Length];
+            for (int i = 0; i < c.Length; i++)
+                In[i] = c[i].Out();
+            return In;
+        }
 
-    /**
-     * Constructs and returns an array of output channel ends, each of which can only be used by a
-     * single writer. The returned array, <code>r</code>, is constructed such that
-     * <code>r[i] = c[i].out ()</code> for <code>0 <= i < c.Length</code>.
-     *
-     * @param c the array of channel to obtain output ends from.
-     * @return the array of output input ends.
-     */
-    public static ChannelOutputInt[] getOutputArray(One2AnyChannelInt[] c)
-{
-    ChannelOutputInt[] In = new ChannelOutputInt[c.Length];
-    for (int i = 0; i < c.Length; i++)
-            In[i] = c[i].Out();
-        return In;
-    }
+        /**
+         * Constructs and returns an array of output channel ends, each of which can only be used by a
+         * single writer. The returned array, <code>r</code>, is constructed such that
+         * <code>r[i] = c[i].out ()</code> for <code>0 <= i < c.Length</code>.
+         *
+         * @param c the array of channel to obtain output ends from.
+         * @return the array of output input ends.
+         */
+        public static ChannelOutputInt[] getOutputArray(One2AnyChannelInt[] c)
+        {
+            ChannelOutputInt[] In = new ChannelOutputInt[c.Length];
+            for (int i = 0; i < c.Length; i++)
+                In[i] = c[i].Out();
+            return In;
+        }
 
-    /**
-     * Constructs and returns an array of output channel ends, each of which can only be used by a
-     * single writer. The returned array, <code>r</code>, is constructed such that
-     * <code>r[i] = c[i].out ()</code> for <code>0 <= i < c.Length</code>.
-     *
-     * @param c the array of channel to obtain output ends from.
-     * @return the array of output input ends.
-     */
-    public static ChannelOutputInt[] getOutputArray(One2OneChannelInt[] c)
-{
-    ChannelOutputInt[] In = new ChannelOutputInt[c.Length];
-    for (int i = 0; i < c.Length; i++)
-            In[i] = c[i].Out();
-        return In;
+        /**
+         * Constructs and returns an array of output channel ends, each of which can only be used by a
+         * single writer. The returned array, <code>r</code>, is constructed such that
+         * <code>r[i] = c[i].out ()</code> for <code>0 <= i < c.Length</code>.
+         *
+         * @param c the array of channel to obtain output ends from.
+         * @return the array of output input ends.
+         */
+        public static ChannelOutputInt[] getOutputArray(One2OneChannelInt[] c)
+        {
+            ChannelOutputInt[] In = new ChannelOutputInt[c.Length];
+            for (int i = 0; i < c.Length; i++)
+                In[i] = c[i].Out();
+            return In;
+        }
     }
-}
 }

@@ -28,7 +28,6 @@
 
 namespace CSPlang
 {
-
     /**
      * This defines the interface for accepting CALL channels.
      * <H2>Description</H2>

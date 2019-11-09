@@ -30,40 +30,34 @@ using CSPlang.Any2;
 
 namespace CSPlang
 {
-
-    /**
-     * Defines an interface for a factory to create instances of channels.
-     *
-     *
-     */
-      interface ChannelFactory
+    interface ChannelFactory
     {
         /**
          * Creates a new <code>One2One</code> channel.
          *
          * @return the created channel.
          */
-          One2OneChannel createOne2One();
+        One2OneChannel createOne2One();
 
         /**
          * Creates a new <code>Any2One</code> channel.
          *
          * @return the created channel.
          */
-          Any2OneChannel createAny2One();
+        Any2OneChannel createAny2One();
 
         /**
          * Creates a new <code>One2Any</code> channel.
          *
          * @return the created channel.
          */
-          One2AnyChannel createOne2Any();
+        One2AnyChannel createOne2Any();
 
         /**
          * Creates a new <code>Any2Any</code> channel.
          *
          * @return the created channel.
          */
-          Any2AnyChannel createAny2Any();
+        Any2AnyChannel createAny2Any();
     }
 }

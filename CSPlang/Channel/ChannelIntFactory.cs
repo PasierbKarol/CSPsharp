@@ -30,12 +30,6 @@ using CSPlang.Any2;
 
 namespace CSPlang
 {
-
-    /**
-     * Defines an interface for a factory that can create channels carrying integers.
-     *
-     *
-     */
     public interface ChannelIntFactory
     {
         /**
@@ -43,27 +37,27 @@ namespace CSPlang
          *
          * @return the created channel.
          */
-         One2OneChannelInt createOne2One();
+        One2OneChannelInt createOne2One();
 
         /**
          * Creates a new <code>Any2One</code> channel.
          *
          * @return the created channel.
          */
-         Any2OneChannelInt createAny2One();
+        Any2OneChannelInt createAny2One();
 
         /**
          * Creates a new <code>One2Any</code> channel.
          *
          * @return the created channel.
          */
-         One2AnyChannelInt createOne2Any();
+        One2AnyChannelInt createOne2Any();
 
         /**
          * Creates a new <code>Any2Any</code> channel.
          *
          * @return the created channel.
          */
-         Any2AnyChannelInt createAny2Any();
+        Any2AnyChannelInt createAny2Any();
     }
 }

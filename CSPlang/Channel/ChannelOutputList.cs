@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using CSPlang.Any2;
-using CSPlang.Shared;
 
 namespace CSPlang
 {
@@ -15,7 +13,7 @@ namespace CSPlang
             ChannelOutput[] outputEnds = new ChannelOutput[channelListArray.Length];
 
             var name = channelListArray.GetType().Name;
-            name = name.Substring(0, name.Length-2);  //removed array symbols [] to use the channel type name in Switch - Karo Pasierb
+            name = name.Substring(0, name.Length - 2);  //removed array symbols [] to use the channel type name in Switch
 
             switch (name)
             {

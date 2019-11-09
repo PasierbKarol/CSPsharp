@@ -26,8 +26,6 @@
 //                                                                  //
 //////////////////////////////////////////////////////////////////////
 
-
-using System.Diagnostics;
 using CSPlang.Any2;
 using CSPlang.One2;
 using CSPlang.Shared;
@@ -559,7 +557,6 @@ namespace CSPlang
             {
                 r[i] = one2one();
             }
-
             return r;
         }
 
@@ -570,7 +567,6 @@ namespace CSPlang
             {
                 r[i] = one2any();
             }
-
             return r;
         }
 
@@ -581,7 +577,6 @@ namespace CSPlang
             {
                 r[i] = any2one();
             }
-
             return r;
         }
 
@@ -592,7 +587,6 @@ namespace CSPlang
             {
                 r[i] = any2any();
             }
-
             return r;
         }
 
@@ -603,7 +597,6 @@ namespace CSPlang
             {
                 r[i] = one2one(immunity);
             }
-
             return r;
         }
 
@@ -983,6 +976,5 @@ namespace CSPlang
 
             return r;
         }
-
     }
 }

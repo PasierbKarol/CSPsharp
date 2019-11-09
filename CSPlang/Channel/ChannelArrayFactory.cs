@@ -30,12 +30,6 @@ using CSPlang.Any2;
 
 namespace CSPlang
 {
-
-    /**
-     * Defines an interface for a factory that can create arrays of channels.
-     *
-     *
-     */
     public interface ChannelArrayFactory
     {
         /**

@@ -4,15 +4,15 @@ namespace CSPlang
 {
     public interface ChannelInternalsInt
     {
-          int read();
-          void write(int obj);
+        int read();
+        void write(int obj);
 
-          int startRead();
-          void endRead();
+        int startRead();
+        void endRead();
 
-          Boolean readerEnable(Alternative alt);
-          Boolean readerDisable();
-          Boolean readerPending();
+        Boolean readerEnable(Alternative alt);
+        Boolean readerDisable();
+        Boolean readerPending();
 
         /*//For Symmetric channel, later:
           Boolean writerEnable(Alternative alt);
@@ -20,8 +20,8 @@ namespace CSPlang
           Boolean writerPending();
         */
 
-          void readerPoison(int strength);
-          void writerPoison(int strength);
+        void readerPoison(int strength);
+        void writerPoison(int strength);
     }
 }
 

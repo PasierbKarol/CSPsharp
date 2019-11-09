@@ -28,7 +28,6 @@
 
 namespace CSPlang
 {
-
     /**
      * This defines the interface for writing to integer channels.
      * <H2>Description</H2>
@@ -71,8 +70,6 @@ namespace CSPlang
     public interface ChannelOutputInt : Poisonable
     {
         /**
-         * Write an int to the channel.
-         *
          * @param i the integer to write to the channel
          */
         void write(int i);

@@ -32,10 +32,8 @@ namespace CSPlang
     /**
      * Thrown by a <code>read</code> or a <code>write</code> method of a channel when a reject has been
      * called and the synchronization and data transfer will not complete.
-     *
-     *
      */
-    public class ChannelDataRejectedException : RuntimeException
+    public class ChannelDataRejectedException : RuntimeException //TODO is that really needed?
     {
     }
 }

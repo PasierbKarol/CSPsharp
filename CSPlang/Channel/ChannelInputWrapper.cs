@@ -30,67 +30,56 @@ using System;
 
 namespace CSPlang
 {
-
     /**
      * Defines a wrapper to go around a channel input end. This wrapper allows a channel end to be given
      * away without any risk of the user of that end casting it to a channel output because they cannot
      * gain access to the actual channel end.
-     *
-     *
      */
     public class ChannelInputWrapper : ChannelInput
     {
-    /**
-     * The actual channel end.
-     */
-    private ChannelInput In;
+        private ChannelInput In;
 
-    /**
-     * Constructs a new wrapper around the given channel end.
-     *
-     * @param in the existing channel end.
-     */
-    public ChannelInputWrapper(ChannelInput In)
-    {
-        this.In = In;
-    }
+        /**
+         * @param in the existing channel end.
+         */
+        public ChannelInputWrapper(ChannelInput In)
+        {
+            this.In = In;
+        }
 
-    /**
-     * Reads a value from the channel.
-     *
-     * @see jcsp.lang.ChannelInput
-     * @return the value read.
-     */
-    public Object read()
-    {
-        return In.read();
-    }
+        /**
+         * @see jcsp.lang.ChannelInput
+         * @return the value read.
+         */
+        public Object read()
+        {
+            return In.read();
+        }
 
-    /**
-     * Begins an extended rendezvous
-     * 
-     * @see ChannelInput.beginExtRead
-     * @return The object read from the channel
-     */
-    public Object startRead()
-    {
-        return In.startRead();
-    }
+        /**
+         * Begins an extended rendezvous
+         * 
+         * @see ChannelInput.beginExtRead
+         * @return The object read from the channel
+         */
+        public Object startRead()
+        {
+            return In.startRead();
+        }
 
-    /**
-     * Ends an extended rendezvous
-     * 
-     * @see ChannelInput.endExtRead
-     */
-    public void endRead()
-    {
-        In.endRead();
-    }
+        /**
+         * Ends an extended rendezvous
+         * 
+         * @see ChannelInput.endExtRead
+         */
+        public void endRead()
+        {
+            In.endRead();
+        }
 
-    public void poison(int strength)
-    {
-        In.poison(strength);
-    }
-
+        public void poison(int strength)
+        {
+            In.poison(strength);
+        }
     }
 }
