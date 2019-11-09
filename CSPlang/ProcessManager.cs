@@ -26,10 +26,7 @@
 //                                                                  //
 //////////////////////////////////////////////////////////////////////
 
-using System;
-using System.Diagnostics;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace CSPlang
 {
@@ -155,21 +152,9 @@ namespace CSPlang
 
     public class ProcessManager : IamCSProcess
     {
-        /**
-         * The maximum priority value for running a process.
-         */
         public static readonly int PRIORITY_MAX = 5;
-
-        /**
-         * The normal priority value for running a process.
-         */
         public static readonly int PRIORITY_NORM = 3;
-
-        /**
-         * The minimum priority value for running a process.
-         */
         public static readonly int PRIORITY_MIN = 0;
-
 
         /** The IamCSProcess to be executed by this ProcessManager */
         private readonly IamCSProcess process;
@@ -264,7 +249,7 @@ namespace CSPlang
         public void run()
         {
             ThreadPriority oldPriority = Thread.CurrentThread.Priority;
-            Thread.CurrentThread.Priority = (ThreadPriority) thread.Priority;
+            Thread.CurrentThread.Priority = (ThreadPriority)thread.Priority;
             process.run();
             Thread.CurrentThread.Priority = oldPriority;
         }

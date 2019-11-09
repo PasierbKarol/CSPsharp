@@ -3,7 +3,6 @@ using System.Threading;
 
 namespace CSPlang
 {
-
     /**
      * A package-visible class that implements a straightforward mutex, for use by 
      * One2AnyChannel and Any2AnyChannel
@@ -18,7 +17,7 @@ namespace CSPlang
         public void Claim()
         {
             lock (this)
-            { 
+            {
                 while (claimed)
                 {
                     try
@@ -32,7 +31,6 @@ namespace CSPlang
                         );
                     }
                 }
-
                 claimed = true;
             }
         }

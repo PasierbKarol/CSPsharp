@@ -22,34 +22,33 @@
 *                                                                        *
 *************************************************************************/
 
-
 using System;
 
 namespace CSPlang
 {
     /**
- * This is thrown if a process is interrupted whilst blocked during synchronisation
- * - processes should never be interrupted.
- *
- * <H2>Description</H2>
- * This is caused by accessing the Java thread executing a JCSP process and invoking its
- * <TT>java.lang.Thread.interrupt</TT>() method.
- * If this is done to a process blocked on a JCSP synchronisation primitive (such as
- * a channel communication or timeout), the process will wake up prematurely
- * -- invalidating the semantics of that primitive.
- * The wake up is intercepted and this {@link java.lang.Error} is thrown.
- * <P>
- * Some browsers, when shutting down an <I>applet</I>, may do this to processes
- * spawned by an {@link jcsp.awt.ActiveApplet} that have not died naturally.
- *
- * Alternatively, this may be raised by processes stopped prematurely as a result of
- * a call to <TT>Parallel.destroy</TT>, or by calling <TT>stop</TT> on the
- * <TT>ProcessManager</TT> responsible for the process (or network).
- *
- * @author P.H.Welch
- */
+     * This is thrown if a process is interrupted whilst blocked during synchronisation
+     * - processes should never be interrupted.
+     *
+     * <H2>Description</H2>
+     * This is caused by accessing the Java thread executing a JCSP process and invoking its
+     * <TT>java.lang.Thread.interrupt</TT>() method.
+     * If this is done to a process blocked on a JCSP synchronisation primitive (such as
+     * a channel communication or timeout), the process will wake up prematurely
+     * -- invalidating the semantics of that primitive.
+     * The wake up is intercepted and this {@link java.lang.Error} is thrown.
+     * <P>
+     * Some browsers, when shutting down an <I>applet</I>, may do this to processes
+     * spawned by an {@link jcsp.awt.ActiveApplet} that have not died naturally.
+     *
+     * Alternatively, this may be raised by processes stopped prematurely as a result of
+     * a call to <TT>Parallel.destroy</TT>, or by calling <TT>stop</TT> on the
+     * <TT>ProcessManager</TT> responsible for the process (or network).
+     *
+     * @author P.H.Welch
+     */
 
-
+    //TODO Is it needed? How does it work and could it be changed to be useful?
     public class ProcessInterruptedException : /*Error*/ Exception
     {
         private static String message = "\n*** Interrupting a running process is not compatible with JCSP\n" +
@@ -57,9 +56,7 @@ namespace CSPlang
 
         public ProcessInterruptedException(String s) : base(message + s)
         {
-            //throw new NotImplementedException();
+            //TODO throw new NotImplementedException();
         }
-
-
     }
 }

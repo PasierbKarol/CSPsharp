@@ -20,7 +20,7 @@
 
 namespace CSPlang
 {
-
+    //TODO check where it's used and if it is needed, as it's empty after all
     interface MultiwaySynchronisation
     {
     }

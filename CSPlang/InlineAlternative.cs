@@ -30,10 +30,7 @@ using System;
 
 namespace CSPlang
 {
-
     /**
-     *
-     * 
      * TODO (NCCB) what is the reason for this class, over and above using a simple flat Alternative ?
      */
     public class InlineAlternative : Guard
@@ -43,11 +40,7 @@ namespace CSPlang
 
         /** If used as a top level ALT, the work will be delegated to this */
         private Alternative alt;
-
-        /** Mode of the select */
         private int selectMode;
-
-        /** Index last selected */
         private int selected;
 
         /** Index to favour (fair / pri) */
@@ -55,41 +48,32 @@ namespace CSPlang
 
         /** The preconditions set for the ALT when it is being used as a guard. */
         private Boolean[] preconditions;
-
-        /** The guards */
         private readonly Guard[] guard;
-
-        /** The timer guards */
         private readonly CSTimer[] timers;
 
         /** Nested ALTs */
         private readonly InlineAlternative[] ialts;
-
-        /** Timeout index */
         private int timeoutIndex;
-
-        /** Shortest alarm set by a timer */
         private long minAlarm;
 
-        /** Creates a new one */
         public InlineAlternative(Guard[] guards) : this(guards, MODE_ARBITRARY)
         {
 
         }
 
-        /** Creates a new one */
         public InlineAlternative(Guard[] guards, int mode) : base()
         {
-
             guard = guards;
             selectMode = mode;
             timers = new CSTimer[guards.Length];
             ialts = new InlineAlternative[guards.Length];
             for (int i = 0; i < guards.Length; i++)
+            {
                 if (guards[i] is CSTimer)
                     timers[i] = (CSTimer)guards[i];
                 else if (guards[i] is InlineAlternative)
                     ialts[i] = (InlineAlternative)guards[i];
+            }
         }
 
         /**
@@ -116,9 +100,6 @@ namespace CSPlang
             preconditions = precons;
         }
 
-        /**
-         * Alters the precondition on a guard.
-         */
         public void setPreconditionByIndex(int index, Boolean on)
         {
             if (preconditions == null)
@@ -127,13 +108,12 @@ namespace CSPlang
                 for (int i = 0; i < preconditions.Length; i++)
                     preconditions[i] = true;
             }
-
             preconditions[index] = on;
         }
 
         /**
-         * Returns the actual guard object corresponding to the selected guard. For example it can return the channel
-         * or the ALT object.
+         * Returns the actual guard object corresponding to the selected guard. 
+         * For example it can return the channel or the ALT object.
          */
         public Guard getSelectedGuard()
         {
@@ -148,9 +128,6 @@ namespace CSPlang
             return guard[index];
         }
 
-        /**
-         * Creates an Alternative (if needed) and delegates the call to it.
-         */
         public int select()
         {
             if (alt == null)
@@ -161,9 +138,6 @@ namespace CSPlang
                 return alt.select();
         }
 
-        /**
-         * Creates an Alternative (if needed) and delegates the call to it.
-         */
         public int priSelect()
         {
             if (alt == null)
@@ -174,17 +148,20 @@ namespace CSPlang
                 return alt.priSelect();
         }
 
-        /**
-         * Creates an Alternative (if needed) and delegates the call to it.
-         */
         public int fairSelect()
         {
             if (alt == null)
+            {
                 alt = new Alternative(guard);
+            }
             if (preconditions != null)
+            {
                 return alt.fairSelect(preconditions);
+            }
             else
+            {
                 return alt.fairSelect();
+            }
         }
 
         /**
@@ -286,7 +263,6 @@ namespace CSPlang
                     }
                 }
             }
-
             selected = -1;
             return false;
         }
@@ -312,7 +288,6 @@ namespace CSPlang
                         selected = i;
                     }
                 }
-
                 startIndex = guard.Length - 1;
             }
 

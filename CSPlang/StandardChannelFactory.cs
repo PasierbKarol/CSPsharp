@@ -26,50 +26,36 @@
 //                                                                  //
 //////////////////////////////////////////////////////////////////////
 
-using System;
-using System.Collections.Generic;
-using System.Text;
 using CSPlang.Any2;
 using CSPlang.One2;
 using CSPutil;
 
 namespace CSPlang
 {
-
     /**
- * <p>This class acts as a Factory for creating
- * channels. It can create non-buffered and buffered channels
- * and also arrays of non-buffered and buffered channels.</p>
- *
- * <p>The Channel objects created by this Factory are formed of
- * separate objects for the read and write ends. Therefore the
- * <code>ChannelInput</code> object cannot be cast into the
- * <code>ChannelOutput</code> object and vice-versa.</p>
- *
- * <p>The current implementation uses an instance of the
- * <code>RiskyChannelFactory</code> to construct the underlying
- * raw channels.</p>
- *
- *
- */
-
-
+     * <p>This class acts as a Factory for creating
+     * channels. It can create non-buffered and buffered channels
+     * and also arrays of non-buffered and buffered channels.</p>
+     *
+     * <p>The Channel objects created by this Factory are formed of
+     * separate objects for the read and write ends. Therefore the
+     * <code>ChannelInput</code> object cannot be cast into the
+     * <code>ChannelOutput</code> object and vice-versa.</p>
+     *
+     * <p>The current implementation uses an instance of the
+     * <code>RiskyChannelFactory</code> to construct the underlying
+     * raw channels.</p>
+     */
 
     public class StandardChannelFactory : ChannelFactory, ChannelArrayFactory, BufferedChannelFactory, BufferedChannelArrayFactory
     {
         private static StandardChannelFactory defaultInstance = new StandardChannelFactory();
 
-        /**
-         * Constructs a new factory.
-         */
         public StandardChannelFactory() : base()
         {
-            
+
         }
 
-        /**
-         * Returns a default instance of a channel factory.
-         */
         public static StandardChannelFactory getDefaultInstance()
         {
             return defaultInstance;

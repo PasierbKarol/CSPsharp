@@ -30,13 +30,11 @@ using CSPlang.Alting;
 
 namespace CSPlang
 {
-
     /**
      * @author P.H.Welch
      */
     class CrewServer : IamCSProcess
     {
-
         public /*static*/ const int READER = 0;
         public /*static*/ const int WRITER = 1;
 
@@ -61,7 +59,7 @@ namespace CSPlang
         public void run()
         {
             int nReaders = 0;
-            //const 
+            //const //TODO check whether all these Alts should be constants
             Alternative altMain = new Alternative(new Guard[] { readerRelease, request, poison });
             const int MAIN_READER_RELEASE = 0;
             const int MAIN_REQUEST = 1;
@@ -116,10 +114,8 @@ namespace CSPlang
                                         poison.read(); // let the /*final*/izer complete
                                         return;
                                 }
-
                                 break;
                         }
-
                         break;
                     case MAIN_POISON:
                         poison.read(); // let the /*final*/izer complete

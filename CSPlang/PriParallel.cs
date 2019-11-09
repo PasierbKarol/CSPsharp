@@ -30,7 +30,6 @@ using System.Threading;
 
 namespace CSPlang
 {
-
     /**
      * This is an extension of the {@link Parallel} class that prioritises
      * the processes given to its control.
@@ -55,72 +54,72 @@ namespace CSPlang
 
     public class PriParallel : CSPParallel
     {
-    /**
-     * Construct a new PriParallel object initially without any processes.
-     * Processes may be added later using the inherited addProcess methods.
-     * The order of their adding is significant, with ealier processes
-     * having higher priority.
-     */
-    public PriParallel() : base (null, true)
-    {
-        
-    }
+        /**
+         * Construct a new PriParallel object initially without any processes.
+         * Processes may be added later using the inherited addProcess methods.
+         * The order of their adding is significant, with ealier processes
+         * having higher priority.
+         */
+        public PriParallel() : base(null, true)
+        {
 
-/**
- * Construct a new PriParallel object with the processes specified.
- * The ordering of the processes in the array is significant, with
- * ealier processes having higher priority.  The last process in the
- * array inherits the priority of the constructing process.
- *
- * @param processes The processes to be executed in parallel
- */
-    public PriParallel(IamCSProcess[] processes) : base(processes, true)
-    {
-        
-    }
+        }
 
-/**
- * Insert another process to the pri-parallel object at the specifed
- * index.  The point of insertion is significant because the ordering of
- * process components determines the priorities.  The extended network
- * will be executed the next time run() is invoked.
- * <P>
- * @param process the process to be inserted
- * @param index the index at which to insert the process
- */
-    public void insertProcessAt(IamCSProcess process, int index)
-    {
-        base.insertProcessAt(process, index);
-    }
+        /**
+         * Construct a new PriParallel object with the processes specified.
+         * The ordering of the processes in the array is significant, with
+         * ealier processes having higher priority.  The last process in the
+         * array inherits the priority of the constructing process.
+         *
+         * @param processes The processes to be executed in parallel
+         */
+        public PriParallel(IamCSProcess[] processes) : base(processes, true)
+        {
 
-/**
- * This returns the current priority of this process.
- * <P>
- * @return the current priority of this process.
- */
-    public static int getPriority()
-    {
-        return (int)Thread.CurrentThread.Priority;
-    }
+        }
 
-/**
- * This changes the priority of this process.  Note that JCSP only provides
- * this method for changing the priority of the <I>invoking</I> process.
- * Changing the process of <I>another</I> process is not considered wise.
- * <P>
- * <I>Implementation Note</I>: these priorities are currently implemented
- * using the underlying threads priority mechanism - hence run time
- * exceptions corresponding to the {@link java.lang.Thread}.<TT>getPriority()</TT>
- * may be thrown.
- * <P>
- * @throws <TT>java.lang.IllegalArgumentException</TT> if the priority is not
- *   in the range supported by the underlying threads implementation.
- * @throws <TT>java.lang.SecurityException</TT> if the security manager of
- *   the underlying threads implementation will not allow this modification.
- */
-    public static void setPriority(int newPriority)
-    {
-        Thread.CurrentThread.Priority = (ThreadPriority)newPriority;
-    }
+        /**
+         * Insert another process to the pri-parallel object at the specifed
+         * index.  The point of insertion is significant because the ordering of
+         * process components determines the priorities.  The extended network
+         * will be executed the next time run() is invoked.
+         * <P>
+         * @param process the process to be inserted
+         * @param index the index at which to insert the process
+         */
+        public void insertProcessAt(IamCSProcess process, int index)
+        {
+            base.insertProcessAt(process, index);
+        }
+
+        /**
+         * This returns the current priority of this process.
+         * <P>
+         * @return the current priority of this process.
+         */
+        public static int getPriority()
+        {
+            return (int)Thread.CurrentThread.Priority;
+        }
+
+        /**
+         * This changes the priority of this process.  Note that JCSP only provides
+         * this method for changing the priority of the <I>invoking</I> process.
+         * Changing the process of <I>another</I> process is not considered wise.
+         * <P>
+         * <I>Implementation Note</I>: these priorities are currently implemented
+         * using the underlying threads priority mechanism - hence run time
+         * exceptions corresponding to the {@link java.lang.Thread}.<TT>getPriority()</TT>
+         * may be thrown.
+         * <P>
+         * @throws <TT>java.lang.IllegalArgumentException</TT> if the priority is not
+         *   in the range supported by the underlying threads implementation.
+         * @throws <TT>java.lang.SecurityException</TT> if the security manager of
+         *   the underlying threads implementation will not allow this modification.
+         */
+        public static void setPriority(int newPriority)
+        {
+            Thread.CurrentThread.Priority = (ThreadPriority)newPriority;
+        }
     }
 }

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Runtime.Serialization;
 
 namespace CSPlang
 {
@@ -10,6 +9,7 @@ namespace CSPlang
 
         protected internal PoisonException(int _strength)
         {
+            //TODO check why this was commented and if it is needed
             //super("PoisonException, strength: " + _strength);
             strength = _strength;
         }
@@ -18,6 +18,5 @@ namespace CSPlang
         {
             return strength;
         }
-
     }
 }

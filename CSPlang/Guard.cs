@@ -26,50 +26,45 @@
 //                                                                  //
 //////////////////////////////////////////////////////////////////////
 
-
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace CSPlang
 {
-
     /**
- * This is the super-class for all {@link Alternative} events selectable by a process.
- * <H2>Description</H2>
- * <TT>Guard</TT> defines an abstract interface to be implemented by events competing
- * for selection by a process executing an {@link Alternative}.  Its methods have
- * only <I>package</I> visibility within <TT>jcsp.lang</TT> and are of no concern to
- * <I>users</I> of this package.  Currently, JCSP supports channel inputs, accepts,
- * timeouts and skips as guards.
- * <P>
- * <I>Note: for those familiar with the <I><B>occam</B></I> multiprocessing
- * language, classes implementing </I><TT>Guard</TT><I> correspond to process
- * guards for use within </I><TT>ALT</TT><I> constructs.</I>
- *
- * @see jcsp.lang.CSTimer
- * @see jcsp.lang.Skip
- * @see jcsp.lang.AltingChannelInput
- * @see jcsp.lang.AltingChannelInputInt
- * @see jcsp.lang.Alternative
- * @author P.D.Austin
- * @author P.H.Welch
- */
-
-
+     * This is the super-class for all {@link Alternative} events selectable by a process.
+     * <H2>Description</H2>
+     * <TT>Guard</TT> defines an abstract interface to be implemented by events competing
+     * for selection by a process executing an {@link Alternative}.  Its methods have
+     * only <I>package</I> visibility within <TT>jcsp.lang</TT> and are of no concern to
+     * <I>users</I> of this package.  Currently, JCSP supports channel inputs, accepts,
+     * timeouts and skips as guards.
+     * <P>
+     * <I>Note: for those familiar with the <I><B>occam</B></I> multiprocessing
+     * language, classes implementing </I><TT>Guard</TT><I> correspond to process
+     * guards for use within </I><TT>ALT</TT><I> constructs.</I>
+     *
+     * @see jcsp.lang.CSTimer
+     * @see jcsp.lang.Skip
+     * @see jcsp.lang.AltingChannelInput
+     * @see jcsp.lang.AltingChannelInputInt
+     * @see jcsp.lang.Alternative
+     * @author P.D.Austin
+     * @author P.H.Welch
+     */
 
     public abstract class Guard
     {
         /**
-     * Returns true if the event is ready.  Otherwise, this enables the guard
-     * for selection and returns false.
-     * <P>
-     * <I>Note: this method should only be called by the Alternative class</I>
-     *
-     * @param alt the Alternative class that is controlling the selection
-     * @return true if and only if the event is ready
-     */
-        /*protected*/ public abstract Boolean enable(Alternative alt);
+         * Returns true if the event is ready.  Otherwise, this enables the guard
+         * for selection and returns false.
+         * <P>
+         * <I>Note: this method should only be called by the Alternative class</I>
+         *
+         * @param alt the Alternative class that is controlling the selection
+         * @return true if and only if the event is ready
+         */
+        /*protected*/
+        public abstract Boolean enable(Alternative alt);
 
         /**
          * Disables the guard for selection. Returns true if the event was ready.
@@ -78,7 +73,8 @@ namespace CSPlang
          *
          * @return true if and only if the event was ready
          */
-        /*protected*/ public abstract Boolean disable();
+        /*protected*/
+        public abstract Boolean disable();
 
         /**
          * Schedules the process performing the given Alternative to run again.
@@ -87,10 +83,10 @@ namespace CSPlang
          * 
          * @param alt The Alternative to schedule
          */
-        /*protected*/ public void schedule(Alternative alt)
+        /*protected*/
+        public void schedule(Alternative alt)
         {
             alt.schedule();
         }
-
     }
 }

@@ -27,10 +27,7 @@
 //////////////////////////////////////////////////////////////////////
 
 using System;
-using System.Collections;
-using System.ComponentModel;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace CSPlang
 {
@@ -52,7 +49,6 @@ namespace CSPlang
      * @author P.D.Austin
      * @author P.H.Welch
      */
-    //}}}
 
     public class ParThread //: Thread
     {
@@ -99,14 +95,11 @@ namespace CSPlang
 
         //================================ END OF COMPOSITION ======================
 
-        /** the process to be executed */
         private IamCSProcess process;
-
         private string name;
 
         /** the cspBarrier at the end of a PAR */
         private CSPBarrier _cspBarrier;
-
         private Boolean running = true;
 
         /** parking cspBarrier for this thread */
@@ -119,23 +112,20 @@ namespace CSPlang
          * @param cspBarrier the cspBarrier for then end of the PAR
          */
         public ParThread(IamCSProcess process, CSPBarrier cspBarrier) :
-            this() //Added call to main constructor to run a thread - Karol asierbP
+            this() //Added call to main constructor to run a thread
         {
             this.IsBackground = true;
             //Call to this reset method to avoid code duplication
             reset(process, cspBarrier);
-            //this.process = process;
+            //this.process = process; //TODO check why this was commented out and whether it's needed
             this._cspBarrier = cspBarrier;
             this.name = process.ToString();
         }
 
         /**
-         * reset the ParThread.
-         *
          * @param process the process to be executed
          * @param cspBarrier the cspBarrier for then end of the PAR
          */
-
         public void reset(IamCSProcess process, CSPBarrier cspBarrier)
         {
             this.process = process;
@@ -145,7 +135,6 @@ namespace CSPlang
 
         /**
          * Sets the ParThread to terminate next time it's unparked.
-         *
          */
         public void terminate()
         {
@@ -153,18 +142,11 @@ namespace CSPlang
             park.sync();
         }
 
-        /**
-         * Releases the ParThread to do some more work.
-         */
         public void release()
         {
             park.sync();
         }
 
-        /**
-         * The main body of this process.
-         * above.
-         */
         public void run()
         {
             try
@@ -175,7 +157,7 @@ namespace CSPlang
                     try
                     {
                         process.run();
-                        //_cspBarrier.enroll();
+                        //_cspBarrier.enroll(); //TODO check why this was commented out
                     }
                     catch (Exception e)
                     {

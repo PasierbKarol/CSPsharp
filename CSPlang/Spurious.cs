@@ -23,33 +23,29 @@
 *************************************************************************/
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace CSPlang
 {
-
     /**
- * This holds the static flag (indicating whether spurious wakeups should be logged)
- * and early timeout allowance (for {@link Alternative}s with {@link CSTimer} guards).
- * 
- * <H2>Description</H2>
- * These fields are held in this separate class to minimise class loading when
- * spurious wakeups are not logged - the default condition.
- *
- * @see jcsp.lang.SpuriousLog
- *
- * @author P.H.Welch
- */
-
+     * This holds the static flag (indicating whether spurious wakeups should be logged)
+     * and early timeout allowance (for {@link Alternative}s with {@link CSTimer} guards).
+     * 
+     * <H2>Description</H2>
+     * These fields are held in this separate class to minimise class loading when
+     * spurious wakeups are not logged - the default condition.
+     *
+     * @see jcsp.lang.SpuriousLog
+     *
+     * @author P.H.Welch
+     */
 
     class Spurious
     {
         /**
-   * If logging is required, this flag should be set <i>before</i> any concurrency
-   * is started.  It should only be set <i>once</i> using {@link SpuriousLog#start()}.
-   * There is no concurrency protection!
-   */
+       * If logging is required, this flag should be set <i>before</i> any concurrency
+       * is started.  It should only be set <i>once</i> using {@link SpuriousLog#start()}.
+       * There is no concurrency protection!
+       */
         static public Boolean logging = false;
 
         /**
@@ -70,6 +66,5 @@ namespace CSPlang
          * There is no concurrency protection!
          */
         static public long earlyTimeout = 9;
-
     }
 }

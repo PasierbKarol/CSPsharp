@@ -26,7 +26,6 @@ using System;
 
 namespace CSPlang
 {
-
     /**
      * This is thrown for an illegal operation on an Alternative.
      *
@@ -39,12 +38,9 @@ namespace CSPlang
 
     public class AlternativeError : Exception
     {
-
         public AlternativeError(String errorMessage) : base(errorMessage)
         {
 
         }
-
     }
-
 }

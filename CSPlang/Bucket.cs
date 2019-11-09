@@ -27,13 +27,11 @@
 //                                                                  //
 //////////////////////////////////////////////////////////////////////
 
-
 using System;
 using System.Threading;
 
 namespace CSPlang
 {
-
     /**
      * This enables <I>bucket</I> synchronisation between a set of processes.
      * <P>
@@ -365,13 +363,10 @@ namespace CSPlang
      * 
      * @author P.H.Welch
      */
-
     [Serializable]
     public class Bucket
     {
-        /**
-    * The number of processes currently enrolled on this bucket.
-    */
+
         private int nHolding = 0;
 
         /**
@@ -394,17 +389,16 @@ namespace CSPlang
         public void fallInto()
         {
             lock (bucketLock)
-    
-        {
+            {
                 nHolding++;
-                // System.out.println ("Bucket.fallInto : " + nHolding);
+                //Debug.WriteLine("Bucket.fallInto : " + nHolding, "DEBUG");
                 try
                 {
                     int spuriousCycle = bucketCycle;
                     Monitor.Wait(bucketLock);
                     while (spuriousCycle == bucketCycle)
                     {
-                        if (Spurious.logging)
+                        if (Spurious.logging) //TODO as with others, check if it's still neded
                         {
                             SpuriousLog.record(SpuriousLog.BucketFallInto);
                         }
@@ -428,10 +422,10 @@ namespace CSPlang
         public int flush()
         {
             lock (bucketLock)
-      
-      {
-                // System.out.println ("Bucket.flush : " + nHolding);
-                /*final*/ int tmp = nHolding;
+            {
+                //Debug.WriteLine("Bucket.flush : " + nHolding, "DEBUG");
+                /*final*/
+                int tmp = nHolding;
                 nHolding = 0;
                 bucketCycle += 1;
                 Monitor.PulseAll(bucketLock);
@@ -450,8 +444,7 @@ namespace CSPlang
         public int holding()
         {
             lock (bucketLock)
-      
-      {
+            {
                 return nHolding;
             }
         }
@@ -472,6 +465,5 @@ namespace CSPlang
             }
             return buckets;
         }
-
     }
 }

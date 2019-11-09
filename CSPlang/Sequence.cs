@@ -30,7 +30,6 @@ using System;
 
 namespace CSPlang
 {
-
     /**
      * This constructor taks an array of <TT>CSProcess</TT>es
      * and returns a <TT>CSProcess</TT> that is the sequential composition of
@@ -325,7 +324,7 @@ namespace CSPlang
          */
         public Sequence()
         {
-            //this (null); //Constructor cannot return null - KP
+            //this (null); //TODO Constructor cannot return null
         }
 
         /**
@@ -444,5 +443,4 @@ namespace CSPlang
                 processes[i].run();
         }
     }
-
 }

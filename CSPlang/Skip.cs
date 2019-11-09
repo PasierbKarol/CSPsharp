@@ -31,7 +31,6 @@ using System.Threading;
 
 namespace CSPlang
 {
-
     /**
      * This is a process that immediately terminates <I>and</I>
      * a {@link Guard} that is always ready.
@@ -54,8 +53,6 @@ namespace CSPlang
     public class Skip : Guard, IamCSProcess
     {
         /**
-         * Enables this guard.
-         *
          * @param alt the Alternative doing the enabling.
          */
         public override Boolean enable(Alternative alt)
@@ -72,9 +69,6 @@ namespace CSPlang
             return true;
         }
 
-        /**
-         * The main body of this process.
-         */
         public void run()
         {
         }

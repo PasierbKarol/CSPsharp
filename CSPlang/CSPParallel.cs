@@ -28,14 +28,11 @@
 
 using System;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Security;
 using System.Threading;
 
 namespace CSPlang
 {
-
     /**
      * This process constructor task an array of <TT>IamCSProcess</TT>es
      * and returns a <TT>IamCSProcess</TT> that is the parallel composition of
@@ -246,8 +243,6 @@ namespace CSPlang
 
         /** The number of processes in this <TT>CSPParallel</TT> */
         private int nProcesses = 0;
-
-        /** A pool of ParThreads */
         private ParThread[] parThreads;
 
         /** The number of threads created so far by this <TT>CSPParallel</TT> */
@@ -258,9 +253,7 @@ namespace CSPlang
 
         /** Used to synchronise the termination of processes in each run of <TT>CSPParallel</TT> */
         private CSPBarrier barrier = new CSPBarrier();
-
         private Boolean priority;
-
         private Boolean processesChanged;
 
         /**
@@ -320,7 +313,7 @@ namespace CSPlang
                 {
                     Console.WriteLine("*** jcsp.lang.CSPParallel: stopping " +
                                        allParThreads.Count + " threads");
-                    //allParThreads.Size() + " threads");
+                    //allParThreads.Size() + " threads"); //TODO Why this was commented out?
                     for (var i = allParThreads.GetEnumerator(); i.MoveNext();)
                     {
                         /*final*/
@@ -555,7 +548,7 @@ namespace CSPlang
          * System finalizer. When this object falls out of scope it will Release all of the threads that it
          * has allocated.
          */
-        protected void finalize() //throws Throwable
+        protected void finalize() //throws Throwable //TODO if it's Throwable in Java, should it operate differently here?
         {
             releaseAllThreads();
         }
@@ -604,15 +597,12 @@ namespace CSPlang
         {
             if (nProcesses > 0)
             {
-
                 IamCSProcess myProcess;
 
-                //int currentPriority = 0;
                 ThreadPriority currentPriority = 0;
                 int maxPriority = 0;
                 if (priority)
                 {
-
                     Thread thread = Thread.CurrentThread;
                     currentPriority = thread.Priority;
                     maxPriority =
@@ -626,7 +616,7 @@ namespace CSPlang
 
                 lock (sync)
                 {
-                    //Debug.WriteLine("Resettin g barrier in CSPParallel" , "KAROL");
+                    //Debug.WriteLine("Resettin g barrier in CSPParallel" , "DEBUG");
                     barrier.reset(nProcesses);
                     myProcess = processes[nProcesses - 1];
                     if (processesChanged)
@@ -641,7 +631,7 @@ namespace CSPlang
                             }
                             for (int i = 0; i < nThreads; i++)
                             {
-                                //Debug.WriteLine("Resetting processes and barrier in CSPParallel", "KAROL");
+                                //Debug.WriteLine("Resetting processes and barrier in CSPParallel", "DEBUG");
 
                                 parThreads[i].reset(processes[i], barrier);
                                 if (priority)
@@ -654,7 +644,7 @@ namespace CSPlang
                             }
                             for (int i = nThreads; i < nProcesses - 1; i++)
                             {
-                                //Debug.WriteLine("Creating thread and barrier in CSPParallel", "KAROL");
+                                //Debug.WriteLine("Creating thread and barrier in CSPParallel", "DEBUG");
 
                                 parThreads[i] = new ParThread(processes[i], barrier);
                                 
@@ -671,7 +661,7 @@ namespace CSPlang
                         {
                             for (int i = 0; i < nProcesses - 1; i++)
                             {
-                                //Debug.WriteLine("Resetting processes and barrier in CSPParallel", "KAROL");
+                                //Debug.WriteLine("Resetting processes and barrier in CSPParallel", "DEBUG");
 
                                 parThreads[i].reset(processes[i], barrier);
                                 if (priority)
@@ -727,19 +717,18 @@ namespace CSPlang
                 {
                     uncaughtException("jcsp.lang.Parallel", e);
                 }
-                //Debug.WriteLine("Synchronizing barrier in CSPParallel","KAROL");
+                //Debug.WriteLine("Synchronizing barrier in CSPParallel","DEBUG");
                 barrier.sync();
-
             }
         }
 
         /**
-         * TRUE iff uncaught exceptions are to be displayed.
+         * TRUE if uncaught exceptions are to be displayed.
          */
         private static Boolean displayExceptions = true;
 
         /**
-         * TRUE iff uncaught errors are to the displayed.
+         * TRUE if uncaught errors are to the displayed.
          */
         private static Boolean displayErrors = true;
 
@@ -763,6 +752,7 @@ namespace CSPlang
 
         public static void uncaughtException(/*final*/ String caller, /*final*/ Exception t)
         {
+            //TODO check if something should be done with this, or can it be removed
             //if (((t is Exception) && displayErrors) ||((t is Exception) && displayExceptions))
             //{
                 

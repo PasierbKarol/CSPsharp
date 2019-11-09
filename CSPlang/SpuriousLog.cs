@@ -22,34 +22,31 @@
 *                                                                        *
 *************************************************************************/
 
-
 using System;
 
 namespace CSPlang
 {
     /**
- * This holds the log of spurious wakeups and early timeouts.
- * <H2>Description</H2>
- * The <tt>java.lang.Object.wait</tt> method sometimes returns <i>spuriously</i>
- * - i.e. without being <tt>notify</tt>'d by another thread or <tt>interrupt</tt>ed 
- * or timed-out!  This class is an optional (static) repository holding and reporting
- * counts of any such spurious wakeups.  JCSP handles all spurious wakeups cleanly.
- * <p>
- * Some JVMs also timeout on calls of <tt>wait(timeout)</tt> early.  This class
- * enables the specification of <i>how early</i> will be acceptable to JCSP.
- * <i>``Timeouts''</i> returned earlier than the set threshold are treated as
- * <i>spurious wakeups</i> (i.e. the process is put back to sleep).
- * Provision is also made for counting and reporting the accepted early timeouts.
- * <p>
- * To operate, this logging must first be switched on ({@link #start}). 
- *
- * @author P.H.Welch
- */
-
+     * This holds the log of spurious wakeups and early timeouts.
+     * <H2>Description</H2>
+     * The <tt>java.lang.Object.wait</tt> method sometimes returns <i>spuriously</i>
+     * - i.e. without being <tt>notify</tt>'d by another thread or <tt>interrupt</tt>ed 
+     * or timed-out!  This class is an optional (static) repository holding and reporting
+     * counts of any such spurious wakeups.  JCSP handles all spurious wakeups cleanly.
+     * <p>
+     * Some JVMs also timeout on calls of <tt>wait(timeout)</tt> early.  This class
+     * enables the specification of <i>how early</i> will be acceptable to JCSP.
+     * <i>``Timeouts''</i> returned earlier than the set threshold are treated as
+     * <i>spurious wakeups</i> (i.e. the process is put back to sleep).
+     * Provision is also made for counting and reporting the accepted early timeouts.
+     * <p>
+     * To operate, this logging must first be switched on ({@link #start}). 
+     *
+     * @author P.H.Welch
+     */
 
     public class SpuriousLog
     {
-
         /**
          * This indexes the counts of spurious wakeups
          * ({@link #getSpuriousWakeUpCounts()}),

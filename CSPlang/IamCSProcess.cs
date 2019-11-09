@@ -28,7 +28,6 @@
 
 namespace CSPlang
 {
-
     /**
      * This is the JCSP interface for a <I>process</I> - an active component that encapsulates
      * the data structures on which it operates.
@@ -303,10 +302,6 @@ namespace CSPlang
 
     public interface IamCSProcess
     {
-        /**
-         * This defines the actions of the process.
-         */
         void run();
     }
-
 }

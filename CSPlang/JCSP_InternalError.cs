@@ -22,29 +22,25 @@
 *                                                                        *
 *************************************************************************/
 
-
 using System;
 
 namespace CSPlang
 {
-
     /**
- * This is thrown by an inconsistency detected in the internal structures of JCSP.
- *
- * <H2>Description</H2>
- * Please report the circumstances to jcsp-team@kent.ac.uk - thanks!
- *
- * @author P.H.Welch
- */
-
+     * This is thrown by an inconsistency detected in the internal structures of JCSP.
+     *
+     * <H2>Description</H2>
+     * Please report the circumstances to jcsp-team@kent.ac.uk - thanks!
+     *
+     * @author P.H.Welch
+     */
 
     public class JCSP_InternalError : Exception
     {
-
         private static string report = "\n*** Please report the circumstances to jcsp-team@kent.ac.uk - thanks!";
         public JCSP_InternalError(String s) : base(s + report)
         {
-            
+            //TODO Implement it, or find out how this can be removed
         }
     }
 }

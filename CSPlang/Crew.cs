@@ -31,7 +31,6 @@ using CSPlang.Any2;
 
 namespace CSPlang
 {
-
     /**
      * This provides a <I>Concurrent Read Exclusive Write</I> (CREW) lock for synchronising
      * fair and secure access to a shared resource.
@@ -396,7 +395,6 @@ namespace CSPlang
      *
      * @author P.H.Welch
      */
-
     public class Crew
     {
         private static readonly Any2OneChannelIntImpl request = new Any2OneChannelIntImpl();
@@ -405,10 +403,8 @@ namespace CSPlang
 
         ///TODO make this poison the existing channels, once poison is added
         private static readonly Any2OneChannelIntImpl poison = new Any2OneChannelIntImpl();
-
         private readonly ProcessManager manager =
             new ProcessManager(new CrewServer(request.In(), writerControl.In(), readerRelease.In(), poison.In()));
-
         private readonly Object shared;
 
         /**
@@ -436,7 +432,7 @@ namespace CSPlang
          * readonlyize method added to terminate the process that it spawned. The spawned process holds no references
          * to this object so this object will eventually fall out of scope and gets readonlyized.
          */
-        protected void readonlyize() //throws Throwable
+        protected void readonlyize() //throws Throwable //TODO should this be constructed in some other way?
         {
             try
             {
@@ -444,53 +440,54 @@ namespace CSPlang
             }
             catch (Exception e)
             {
+                //TODO what should happen here?
             }
-    }
+        }
 
-    /**
-     * This must be invoked <I>before</I> any read operations on the associated shared resource.
-     */
-    public void startRead()
-    {
-        request.write(CrewServer.READER);
-    }
+        /**
+         * This must be invoked <I>before</I> any read operations on the associated shared resource.
+         */
+        public void startRead()
+        {
+            request.write(CrewServer.READER);
+        }
 
-    /**
-     * This must be invoked <I>after</I> any read operations on the associated shared resource.
-     */
-    public void endRead()
-    {
-        readerRelease.write(0);
-    }
+        /**
+         * This must be invoked <I>after</I> any read operations on the associated shared resource.
+         */
+        public void endRead()
+        {
+            readerRelease.write(0);
+        }
 
-    /**
-     * This must be invoked <I>before</I> any write operations on the associated shared resource.
-     */
-    public void startWrite()
-    {
-        request.write(CrewServer.WRITER);
-        writerControl.write(0); // wait for all current readers to finish
-    }
+        /**
+         * This must be invoked <I>before</I> any write operations on the associated shared resource.
+         */
+        public void startWrite()
+        {
+            request.write(CrewServer.WRITER);
+            writerControl.write(0); // wait for all current readers to finish
+        }
 
-    /**
-     * This must be invoked <I>after</I> any write operations on the associated shared resource.
-     */
-    public void endWrite()
-    {
-        writerControl.write(0);
-    }
+        /**
+         * This must be invoked <I>after</I> any write operations on the associated shared resource.
+         */
+        public void endWrite()
+        {
+            writerControl.write(0);
+        }
 
-    /**
-     * This returns the shared resource associated with this lock by its
-     * {@link #Crew(java.lang.Object) constructor}.
-     * Note: if the {@link #Crew parameterless constructor} was used,
-     * this will return <TT>null</TT>.
-     *
-     * @return the shared resource associated with this lock.
-     */
-    public Object getShared()
-    {
-        return shared;
+        /**
+         * This returns the shared resource associated with this lock by its
+         * {@link #Crew(java.lang.Object) constructor}.
+         * Note: if the {@link #Crew parameterless constructor} was used,
+         * this will return <TT>null</TT>.
+         *
+         * @return the shared resource associated with this lock.
+         */
+        public Object getShared()
+        {
+            return shared;
+        }
     }
-}
 }

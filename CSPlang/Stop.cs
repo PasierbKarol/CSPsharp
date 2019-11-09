@@ -1,5 +1,4 @@
-﻿
-/*************************************************************************
+﻿/*************************************************************************
 *                                                                        *
 *  JCSP ("CSP for Java") libraries                                       *
 *  Copyright (C) 1996-2001 Peter Welch and Paul Austin.                  *
@@ -28,8 +27,6 @@ using System.Threading;
 
 namespace CSPlang
 {
-
-    //{{{  javadoc
     /**
      * This is a process that starts, engages in no events, performs no
      * computation but refuses to terminate.
@@ -47,11 +44,9 @@ namespace CSPlang
      * @author P.D.Austin and P.H.Welch
      *
      */
-    //}}}
 
     public class Stop : Guard, IamCSProcess
     {
-
         /**
          * Enables this guard.
          *
@@ -63,9 +58,6 @@ namespace CSPlang
             return false;
         }
 
-        /**
-         * Disables this guard.
-         */
         public override Boolean disable()
         {
             return false;
@@ -93,7 +85,6 @@ namespace CSPlang
 
                         Monitor.Wait(lockedObject);
                     }
-
                 }
                 catch (ThreadInterruptedException e)
                 {

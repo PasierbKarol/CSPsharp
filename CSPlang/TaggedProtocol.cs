@@ -28,7 +28,6 @@
 
 namespace CSPlang
 {
-
     /**
      * <TT>TaggedProtocol</TT> is the base class for messages carrying
      * an <I><B>occam2</B></I>-like tagged (<TT>CASE</TT>) protocol over JCSP channels.
