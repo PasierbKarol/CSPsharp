@@ -30,23 +30,18 @@ using System;
 
 namespace CSPlang
 {
-
     /**
      * Defines an interface for a channel output end which may reject data if the reader is not prepared
      * to receive it and calls <code>reject</code> instead of <code>read</code> on the input channel end.
      *
-     *
-     * 
      * @deprecated This channel is superceded by the poison mechanisms, please see {@link PoisonException}
      */
     public interface RejectableChannelOutput : ChannelOutput
     {
         /**
-         * Writes data over the channel.
-         *
          * @param o an object to write over the channel.
          * @throws ChannelDataRejectedException if the reader rejects the data instead of reading it from the channel.
          */
-        void write(Object o);// throws ChannelDataRejectedException; //Nothing similar in C# - KP
+        void write(Object o);// throws ChannelDataRejectedException; //TODO Nothing similar in C#, should this operate differently?
     }
 }

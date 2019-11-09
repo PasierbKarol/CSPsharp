@@ -32,8 +32,6 @@ namespace CSPlang
      * Defines an interface for a channel that allows readers to either accept (<code>read</code>) or
      * <code>reject</code> data offered by the writer.
      *
-     *
-     * 
      * @deprecated This channel is superceded by the poison mechanisms, please see {@link PoisonException}
      */
     public interface RejectableChannel

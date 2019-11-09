@@ -5,7 +5,6 @@ namespace CSPlang
 
     class RejectableAltingChannelInputImpl : RejectableAltingChannelInput
     {
-
         private ChannelInternals channel;
         private int immunity;
 
@@ -14,7 +13,6 @@ namespace CSPlang
             channel = _channel;
             immunity = _immunity;
         }
-
 
         public override Boolean pending()
         {
@@ -53,7 +51,6 @@ namespace CSPlang
                 channel.readerPoison(strength);
             }
         }
-
 
         public override void reject()
         {

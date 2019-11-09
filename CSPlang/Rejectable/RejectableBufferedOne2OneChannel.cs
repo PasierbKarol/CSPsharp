@@ -30,7 +30,6 @@ using CSPutil;
 
 namespace CSPlang
 {
-
     /**
      * <p>This implements a one-to-one object channel with user-definable buffering,
      * for use by a single writer and single reader. Refer to {@link One2OneChannel} for a
@@ -42,8 +41,6 @@ namespace CSPlang
      * <code>ChannelDataRejectedException</code>.</p>
      *
      * <p>Note that the <code>reject</code> operation cannot be called concurrently to a read.</p>
-     *
-     *
      * 
      * @deprecated This channel is superceded by the poison mechanisms, please see {@link PoisonException}
      */
@@ -52,13 +49,11 @@ namespace CSPlang
         BufferedOne2OneChannel innerChannel;
 
         /**
-         * Constructs a new channel.
-         *
          * @param buffer the buffer implementation to use.
          */
         public RejectableBufferedOne2OneChannel(ChannelDataStore buffer)
         {
-            innerChannel = (BufferedOne2OneChannel) Channel.one2one(buffer);
+            innerChannel = (BufferedOne2OneChannel)Channel.one2one(buffer);
         }
 
         public RejectableAltingChannelInput inAlt()
@@ -66,13 +61,14 @@ namespace CSPlang
             return new RejectableAltingChannelInputImpl(innerChannel, 0);
         }
 
-        public RejectableChannelInput In() {
+        public RejectableChannelInput In()
+        {
             return new RejectableChannelInputImpl(innerChannel, 0);
         }
 
-        public RejectableChannelOutput Out() {
+        public RejectableChannelOutput Out()
+        {
             return new RejectableChannelOutputImpl(innerChannel, 0);
         }
-
     }
 }

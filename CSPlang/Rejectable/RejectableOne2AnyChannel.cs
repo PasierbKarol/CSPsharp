@@ -30,7 +30,6 @@ using CSPlang.One2;
 
 namespace CSPlang
 {
-
     /**
      * <p>This implements a one-to-any object channel,
      * safe for use by a single writer and many readers. Refer to {@link One2AnyChannel} for a
@@ -42,17 +41,12 @@ namespace CSPlang
      * completion of the write). Subsequent read and write attempts will immediately cause a
      * <code>ChannelDataRejectedException</code>.</p>
      *
-     *
-     * 
      * @deprecated This channel is superceded by the poison mechanisms, please see {@link PoisonException}
      */
     public class RejectableOne2AnyChannel : RejectableChannel
     {
         One2AnyChannelImpl innerChannel;
 
-        /**
-         * Constructs a new channel.
-         */
         public RejectableOne2AnyChannel()
         {
             innerChannel = (One2AnyChannelImpl)Channel.createOne2Any();

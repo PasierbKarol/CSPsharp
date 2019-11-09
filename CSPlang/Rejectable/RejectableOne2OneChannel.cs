@@ -28,7 +28,6 @@
 
 namespace CSPlang
 {
-
     /**
      * <p>This implements a one-to-one object channel
      * for use by a single writer and single reader. Refer to {@link One2OneChannel} for a
@@ -41,33 +40,30 @@ namespace CSPlang
      *
      * <p>Note that the <code>reject</code> operation cannot be called concurrently to a read.</p>
      *
-     *
-     * 
      * @deprecated This channel is superceded by the poison mechanisms, please see {@link PoisonException}
      */
-    public class RejectableOne2OneChannel :  RejectableChannel
+    public class RejectableOne2OneChannel : RejectableChannel
     {
-    private One2OneChannelImpl innerChannel;
+        private One2OneChannelImpl innerChannel;
 
-    /**
-     * Constructs a new channel.
-     */
-    public RejectableOne2OneChannel()
-    {
-        innerChannel = (One2OneChannelImpl) Channel.one2one();
-    }
+        public RejectableOne2OneChannel()
+        {
+            innerChannel = (One2OneChannelImpl)Channel.one2one();
+        }
 
-    public RejectableAltingChannelInput inAlt()
-    {
-        return new RejectableAltingChannelInputImpl(innerChannel, 0);
-    }
+        public RejectableAltingChannelInput inAlt()
+        {
+            return new RejectableAltingChannelInputImpl(innerChannel, 0);
+        }
 
-    public RejectableChannelInput In() {
-        return new RejectableChannelInputImpl(innerChannel, 0);
-    }
+        public RejectableChannelInput In()
+        {
+            return new RejectableChannelInputImpl(innerChannel, 0);
+        }
 
-    public RejectableChannelOutput Out() {
-        return new RejectableChannelOutputImpl(innerChannel, 0);
-    }
+        public RejectableChannelOutput Out()
+        {
+            return new RejectableChannelOutputImpl(innerChannel, 0);
+        }
     }
 }

@@ -33,8 +33,6 @@ namespace CSPlang
      * Defines an interface for an input channel end that gives the reader the ability to reject instead
      * of accepting pending data.
      *
-     *
-     * 
      * @deprecated This channel is superceded by the poison mechanisms, please see {@link PoisonException}
      */
     public interface RejectableChannelInput : ChannelInput

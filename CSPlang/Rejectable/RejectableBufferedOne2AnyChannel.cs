@@ -30,7 +30,6 @@ using CSPutil;
 
 namespace CSPlang
 {
-
     /**
      * <p>This implements a one-to-any object channel with user-definable buffering,
      * safe for use by a single writer and many readers. Refer to {@link One2AnyChannel} for a
@@ -42,31 +41,30 @@ namespace CSPlang
      * completion of the write). Subsequent read and write attempts will immediately cause a
      * <code>ChannelDataRejectedException</code>.</p>
      *
-     *
-     * 
      * @deprecated This channel is superceded by the poison mechanisms, please see {@link PoisonException}
      */
     public class RejectableBufferedOne2AnyChannel : RejectableChannel
     {
-    BufferedOne2AnyChannel innerChannel;
+        BufferedOne2AnyChannel innerChannel;
 
-    /**
-     * Constructs a new <code>RejectableBufferedOne2AnyChannel</code>
-     *
-     * @param data the buffer implementation to use.
-     */
-    public RejectableBufferedOne2AnyChannel(ChannelDataStore data)
-    {
-        innerChannel = (BufferedOne2AnyChannel) Channel.one2any(data);
-    }
+        /**
+         * Constructs a new <code>RejectableBufferedOne2AnyChannel</code>
+         *
+         * @param data the buffer implementation to use.
+         */
+        public RejectableBufferedOne2AnyChannel(ChannelDataStore data)
+        {
+            innerChannel = (BufferedOne2AnyChannel)Channel.one2any(data);
+        }
 
-    public RejectableChannelInput In() {
-        return new RejectableChannelInputImpl(innerChannel, 0);
-    }
+        public RejectableChannelInput In()
+        {
+            return new RejectableChannelInputImpl(innerChannel, 0);
+        }
 
-    public RejectableChannelOutput Out() {
-        return new RejectableChannelOutputImpl(innerChannel, 0);
-    }
-
+        public RejectableChannelOutput Out()
+        {
+            return new RejectableChannelOutputImpl(innerChannel, 0);
+        }
     }
 }
