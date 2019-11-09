@@ -33,8 +33,6 @@ namespace CSPutil
 
     /**
      * Interface for a channel input end that supports filtering operations.
-     *
-     *
      */
     public interface FilteredChannelInput : ChannelInput, ReadFiltered
     {

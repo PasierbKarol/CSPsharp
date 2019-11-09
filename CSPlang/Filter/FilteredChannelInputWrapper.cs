@@ -31,77 +31,71 @@ using CSPlang;
 
 namespace CSPutil
 {
-
     /**
      * Wrapper for an input channel end to include read filtering functionality.
-     *
-     *
      */
-    public class FilteredChannelInputWrapper:  ChannelInputWrapper, FilteredChannelInput
+    public class FilteredChannelInputWrapper : ChannelInputWrapper, FilteredChannelInput
     {
-    /**
-     * Set of read filters installed.
-     */
-    private FilterHolder filters = null;
+        private FilterHolder filters = null;
 
-    /**
-     * Constructs a new <code>FilteredChannelInputWrapper</code> around the existing channel end.
-     *
-     * @param in channel end to create the wrapper around.
-     */
-    internal FilteredChannelInputWrapper(ChannelInput In) : base (In)
-    {
-        
-    }
+        /**
+         * Constructs a new <code>FilteredChannelInputWrapper</code> around the existing channel end.
+         *
+         * @param in channel end to create the wrapper around.
+         */
+        internal FilteredChannelInputWrapper(ChannelInput In) : base(In)
+        {
 
-    public Object read()
-    {
-        Object toFilter = base.read();
-        for (int i = 0; filters != null && i < filters.getFilterCount(); i++)
-            toFilter = filters.getFilter(i).filter(toFilter);
-        return toFilter;
-    }
+        }
 
-    public void addReadFilter(Filter filter)
-    {
-        if (filters == null)
-            filters = new FilterHolder();
-        filters.addFilter(filter);
-    }
+        public Object read()
+        {
+            Object toFilter = base.read();
+            for (int i = 0; filters != null && i < filters.getFilterCount(); i++)
+                toFilter = filters.getFilter(i).filter(toFilter);
+            return toFilter;
+        }
 
-    public void addReadFilter(Filter filter, int index)
-    {
-        if (filters == null)
-            filters = new FilterHolder();
-        filters.addFilter(filter, index);
-    }
+        public void addReadFilter(Filter filter)
+        {
+            if (filters == null)
+                filters = new FilterHolder();
+            filters.addFilter(filter);
+        }
 
-    public void removeReadFilter(Filter filter)
-    {
-        if (filters == null)
-            filters = new FilterHolder();
-        filters.removeFilter(filter);
-    }
+        public void addReadFilter(Filter filter, int index)
+        {
+            if (filters == null)
+                filters = new FilterHolder();
+            filters.addFilter(filter, index);
+        }
 
-    public void removeReadFilter(int index)
-    {
-        if (filters == null)
-            filters = new FilterHolder();
-        filters.removeFilter(index);
-    }
+        public void removeReadFilter(Filter filter)
+        {
+            if (filters == null)
+                filters = new FilterHolder();
+            filters.removeFilter(filter);
+        }
 
-    public Filter getReadFilter(int index)
-    {
-        if (filters == null)
-            filters = new FilterHolder();
-        return filters.getFilter(index);
-    }
+        public void removeReadFilter(int index)
+        {
+            if (filters == null)
+                filters = new FilterHolder();
+            filters.removeFilter(index);
+        }
 
-    public int getReadFilterCount()
-    {
-        if (filters == null)
-            return 0;
-        return filters.getFilterCount();
-    }
+        public Filter getReadFilter(int index)
+        {
+            if (filters == null)
+                filters = new FilterHolder();
+            return filters.getFilter(index);
+        }
+
+        public int getReadFilterCount()
+        {
+            if (filters == null)
+                return 0;
+            return filters.getFilterCount();
+        }
     }
 }

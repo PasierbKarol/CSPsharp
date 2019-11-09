@@ -30,16 +30,13 @@ using CSPlang.Shared;
 
 namespace CSPutil
 {
-
     /**
      * Interface for a channel input end that supports filtering and can be shared by multiple processes.
      *
      * @see jcsp.lang.SharedChannelInput
      * @see jcsp.util.filter.ReadFiltered
-     *
-     *
      */
-    public interface FilteredSharedChannelInput : SharedChannelInput, FilteredChannelInput
+    public interface FilteredSharedChannelInput : SharedChannelInput, FilteredChannelInput //TODO is it really needed?
     {
     }
 }

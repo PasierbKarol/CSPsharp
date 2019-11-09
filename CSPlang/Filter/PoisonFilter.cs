@@ -30,45 +30,32 @@ using System;
 
 namespace CSPutil
 {
-
     /**
      * This filter will throw a <code>PoisonException</code>
      * when <code>filter(Object)</code> is called. This can be
      * used to prevent a channel from being written to or read from.
-     *
-     *
      */
     public class PoisonFilter : Filter
     {
-    /**
-     * The message to be placed in the <code>PoisonException</code> raised.
-     */
-    private String message;
+        /**
+         * The message to be placed in the <code>PoisonException</code> raised.
+         */
+        private String message;
+        private static String defaultMessage = "Channel end has been poisoned.";
 
-    /**
-     * Default message.
-     */
-    private static String defaultMessage = "Channel end has been poisoned.";
-
-    /**
-     * Constructs a new filter with the default message.
-     */
-    public PoisonFilter() : this (defaultMessage)
+        public PoisonFilter() : this(defaultMessage)
         {
-        
-    }
 
-    /**
-     * Constructs a new filter with a specific message.
-     */
-    public PoisonFilter(String message)
-    {
-        this.message = message;
-    }
+        }
 
-    public Object filter(Object obj)
-    {
-        throw new PoisonFilterException(this.message);
-    }
+        public PoisonFilter(String message)
+        {
+            this.message = message;
+        }
+
+        public Object filter(Object obj)
+        {
+            throw new PoisonFilterException(this.message);
+        }
     }
 }

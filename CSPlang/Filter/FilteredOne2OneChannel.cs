@@ -30,26 +30,16 @@ using CSPlang;
 
 namespace CSPutil
 {
-
     /**
      * Interface for a <code>One2One</code> channel that supports filtering operations at each end.
      *
      * @see jcsp.lang.One2OneChannel
      * @see jcsp.util.filter.ReadFiltered
      * @see jcsp.util.filter.WriteFiltered
-     *
-     *
      */
     public interface FilteredOne2OneChannel : One2OneChannel
     {
-        /**
-         * Returns the control interface for configuring the read filters on the channel.
-         */
         ReadFiltered inFilter();
-
-        /**
-         * Returns the control interface for configuring the write filters on the channel.
-         */
         WriteFiltered outFilter();
     }
 }

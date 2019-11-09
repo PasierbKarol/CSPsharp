@@ -31,17 +31,11 @@ using CSPlang.Shared;
 
 namespace CSPutil
 {
-
     /**
      * Static factory for creating channel end wrappers that support filtering.
-     *
-     *
      */
     public class FilteredChannelEnd
     {
-        /**
-         * The default factory for creating the channel ends.
-         */
         private static readonly FilteredChannelEndFactory factory = new FilteredChannelEndFactory();
 
         /**
@@ -49,7 +43,7 @@ namespace CSPutil
          */
         private FilteredChannelEnd()
         {
-            // Noone's creating one of these
+            // No one's creating one of these
         }
 
         /**

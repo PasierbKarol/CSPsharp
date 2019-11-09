@@ -30,13 +30,10 @@ using CSPlang;
 
 namespace CSPutil
 {
-
     /**
      * Interface for a channel output end that supports write filtering operations.
-     *
-     *
      */
-    public interface FilteredChannelOutput : ChannelOutput, WriteFiltered
+    public interface FilteredChannelOutput : ChannelOutput, WriteFiltered //TODO is it really needed?
     {
     }
 }

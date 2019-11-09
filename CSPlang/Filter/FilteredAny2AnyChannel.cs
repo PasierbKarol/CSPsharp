@@ -30,27 +30,16 @@ using CSPlang.Any2;
 
 namespace CSPutil
 {
-
     /**
      * Interface for an Any2Any channel that has support for filtering at both ends.
      *
      * @see jcsp.lang.Any2AnyChannel
      * @see jcsp.util.filter.ReadFiltered
      * @see jcsp.util.filter.WriteFiltered
-     *
-     *
      */
     public interface FilteredAny2AnyChannel : Any2AnyChannel
     {
-        /**
-         * Returns an interface for configuring read filters on the channel.
-         */
         ReadFiltered inFilter();
-
-        /**
-         * Returns an interface for configuring write filters on the channel.
-         */
         WriteFiltered outFilter();
-
     }
 }

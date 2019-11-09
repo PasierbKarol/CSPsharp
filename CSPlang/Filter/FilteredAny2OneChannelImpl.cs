@@ -36,48 +36,36 @@ namespace CSPutil
      * This wraps up an Any2OneChannel object so that its
      * input and output ends are separate objects. Both ends of the channel
      * have filtering enabled.
-     *
-     *
      */
     class FilteredAny2OneChannelImpl : FilteredAny2OneChannel
     {
-    /**
-     * The input end of the channel.
-     */
-    private FilteredAltingChannelInput _In;
+        private FilteredAltingChannelInput _In;
+        private FilteredSharedChannelOutput _Out;
 
-    /**
-     * The output end of the channel.
-     */
-    private FilteredSharedChannelOutput _Out;
+        public FilteredAny2OneChannelImpl(Any2OneChannel chan)
+        {
+            _In = new FilteredAltingChannelInput(chan.In());
+            _Out = new FilteredSharedChannelOutputWrapper(chan.Out());
+        }
 
-    /**
-     * Constructs a new filtered channel over the top of an existing channel.
-     */
-    public FilteredAny2OneChannelImpl(Any2OneChannel chan)
-    {
-        _In = new FilteredAltingChannelInput(chan.In());
-        _Out = new FilteredSharedChannelOutputWrapper(chan.Out());
-    }
+        public AltingChannelInput In()
+        {
+            return _In;
+        }
 
-    public AltingChannelInput In()
-    {
-        return _In;
-    }
+        public SharedChannelOutput Out()
+        {
+            return _Out;
+        }
 
-public SharedChannelOutput Out()
-    {
-        return _Out;
-    }
+        public ReadFiltered inFilter()
+        {
+            return _In;
+        }
 
-    public ReadFiltered inFilter()
-{
-    return _In;
-}
-
-public WriteFiltered outFilter()
-{
-    return _Out;
-}
+        public WriteFiltered outFilter()
+        {
+            return _Out;
+        }
     }
 }

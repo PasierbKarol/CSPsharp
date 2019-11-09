@@ -28,7 +28,6 @@
 
 namespace CSPutil
 {
-
     /**
      * <p>Interface for a channel end supporting read filtering operations. A channel end that implements this
      * interface can have instances of the <code>Filter</code> interface installed to apply transformations
@@ -66,7 +65,7 @@ namespace CSPutil
          *
          * @param filter the filter to be installed; may not be null.
          */
-         void addReadFilter(Filter filter);
+        void addReadFilter(Filter filter);
 
         /**
          * Installs a read filter defining a transformation to be applied by the <code>read</code> method of the
@@ -77,7 +76,7 @@ namespace CSPutil
          * @param filter the filter to be installed; may not be null.
          * @param index the zero based index; may not be negative.
          */
-         void addReadFilter(Filter filter, int index);
+        void addReadFilter(Filter filter, int index);
 
         /**
          * Removes the first read filter (lowest index) matching the filter given as a parameter. The filter
@@ -86,7 +85,7 @@ namespace CSPutil
          *
          * @param filter the filter to be removed; may not be null.
          */
-         void removeReadFilter(Filter filter);
+        void removeReadFilter(Filter filter);
 
         /**
          * Removes the read filter installed at the given index. The remaining filters are shifted to close the
@@ -94,7 +93,7 @@ namespace CSPutil
          *
          * @param index zero-based index of the filter to be removed.
          */
-         void removeReadFilter(int index);
+        void removeReadFilter(int index);
 
         /**
          * Returns the read filter installed at the given index.
@@ -102,11 +101,11 @@ namespace CSPutil
          * @param index zero-based index of the filter to return.
          * @return the filter at that position.
          */
-         Filter getReadFilter(int index);
+        Filter getReadFilter(int index);
 
         /**
          * Returns the number of read filters currently installed.
          */
-         int getReadFilterCount();
+        int getReadFilterCount();
     }
 }

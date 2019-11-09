@@ -28,17 +28,11 @@
 
 namespace CSPutil
 {
-
     /**
      * Static factory for creating filtered channels.
-     *
-     *
      */
     public class FilteredChannel
     {
-        /**
-         * Default factory for creating the channels.
-         */
         private static FilteredChannelFactory factory = new FilteredChannelFactory();
 
         /**
@@ -56,7 +50,7 @@ namespace CSPutil
          */
         public static FilteredOne2OneChannel createOne2One()
         {
-            return (FilteredOne2OneChannel) factory.createOne2One();
+            return (FilteredOne2OneChannel)factory.createOne2One();
         }
 
         /**
@@ -66,7 +60,7 @@ namespace CSPutil
          */
         public static FilteredAny2OneChannel createAny2One()
         {
-            return (FilteredAny2OneChannel) factory.createAny2One();
+            return (FilteredAny2OneChannel)factory.createAny2One();
         }
 
         /**
@@ -76,7 +70,7 @@ namespace CSPutil
          */
         public static FilteredOne2AnyChannel createOne2Any()
         {
-            return (FilteredOne2AnyChannel) factory.createOne2Any();
+            return (FilteredOne2AnyChannel)factory.createOne2Any();
         }
 
         /**
@@ -86,7 +80,7 @@ namespace CSPutil
          */
         public static FilteredAny2AnyChannel createAny2Any()
         {
-            return (FilteredAny2AnyChannel) factory.createAny2Any();
+            return (FilteredAny2AnyChannel)factory.createAny2Any();
         }
 
         /**
@@ -100,7 +94,7 @@ namespace CSPutil
          */
         public static FilteredOne2OneChannel[] createOne2One(int n)
         {
-            return (FilteredOne2OneChannel[]) factory.createOne2One(n);
+            return (FilteredOne2OneChannel[])factory.createOne2One(n);
         }
 
         /**
@@ -114,7 +108,7 @@ namespace CSPutil
          */
         public static FilteredAny2OneChannel[] createAny2One(int n)
         {
-            return (FilteredAny2OneChannel[]) factory.createAny2One(n);
+            return (FilteredAny2OneChannel[])factory.createAny2One(n);
         }
 
         /**
@@ -128,7 +122,7 @@ namespace CSPutil
          */
         public static FilteredOne2AnyChannel[] createOne2Any(int n)
         {
-            return (FilteredOne2AnyChannel[]) factory.createOne2Any(n);
+            return (FilteredOne2AnyChannel[])factory.createOne2Any(n);
         }
 
         /**
@@ -142,7 +136,7 @@ namespace CSPutil
          */
         public static FilteredAny2AnyChannel[] createAny2Any(int n)
         {
-            return (FilteredAny2AnyChannel[]) factory.createAny2Any(n);
+            return (FilteredAny2AnyChannel[])factory.createAny2Any(n);
         }
 
         /**
@@ -153,7 +147,7 @@ namespace CSPutil
          */
         public static FilteredOne2OneChannel createOne2One(ChannelDataStore buffer)
         {
-            return (FilteredOne2OneChannel) factory.createOne2One(buffer);
+            return (FilteredOne2OneChannel)factory.createOne2One(buffer);
         }
 
         /**
@@ -164,7 +158,7 @@ namespace CSPutil
          */
         public static FilteredAny2OneChannel createAny2One(ChannelDataStore buffer)
         {
-            return (FilteredAny2OneChannel) factory.createAny2One(buffer);
+            return (FilteredAny2OneChannel)factory.createAny2One(buffer);
         }
 
         /**
@@ -175,7 +169,7 @@ namespace CSPutil
          */
         public static FilteredOne2AnyChannel createOne2Any(ChannelDataStore buffer)
         {
-            return (FilteredOne2AnyChannel) factory.createOne2Any(buffer);
+            return (FilteredOne2AnyChannel)factory.createOne2Any(buffer);
         }
 
         /**
@@ -186,7 +180,7 @@ namespace CSPutil
          */
         public static FilteredAny2AnyChannel createAny2Any(ChannelDataStore buffer)
         {
-            return (FilteredAny2AnyChannel) factory.createAny2Any(buffer);
+            return (FilteredAny2AnyChannel)factory.createAny2Any(buffer);
         }
 
         /**
@@ -201,7 +195,7 @@ namespace CSPutil
          */
         public static FilteredOne2OneChannel[] createOne2One(ChannelDataStore buffer, int n)
         {
-            return (FilteredOne2OneChannel[]) factory.createOne2One(buffer, n);
+            return (FilteredOne2OneChannel[])factory.createOne2One(buffer, n);
         }
 
         /**
@@ -216,7 +210,7 @@ namespace CSPutil
          */
         public static FilteredAny2OneChannel[] createAny2One(ChannelDataStore buffer, int n)
         {
-            return (FilteredAny2OneChannel[]) factory.createAny2One(buffer, n);
+            return (FilteredAny2OneChannel[])factory.createAny2One(buffer, n);
         }
 
         /**
@@ -231,7 +225,7 @@ namespace CSPutil
          */
         public static FilteredOne2AnyChannel[] createOne2Any(ChannelDataStore buffer, int n)
         {
-            return (FilteredOne2AnyChannel[]) factory.createOne2Any(buffer, n);
+            return (FilteredOne2AnyChannel[])factory.createOne2Any(buffer, n);
         }
 
         /**
@@ -246,7 +240,7 @@ namespace CSPutil
          */
         public static FilteredAny2AnyChannel[] createAny2Any(ChannelDataStore buffer, int n)
         {
-            return (FilteredAny2AnyChannel[]) factory.createAny2Any(buffer, n);
+            return (FilteredAny2AnyChannel[])factory.createAny2Any(buffer, n);
         }
     }
 }

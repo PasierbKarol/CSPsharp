@@ -37,19 +37,10 @@ namespace CSPutil
      * @see jcsp.lang.Any2OneChannel
      * @see jcsp.util.filter.ReadFiltered
      * @see jcsp.util.filter.WriteFiltered
-     *
-     *
      */
     public interface FilteredAny2OneChannel : Any2OneChannel
     {
-    /**
-     * Returns an interface for configuring read filters on the channel.
-     */
-    ReadFiltered inFilter();
-
-    /**
-     * Returns an interface for configuring write filters on the channel.
-     */
-    WriteFiltered outFilter();
+        ReadFiltered inFilter();
+        WriteFiltered outFilter();
     }
 }

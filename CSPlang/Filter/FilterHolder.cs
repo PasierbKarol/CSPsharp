@@ -30,12 +30,9 @@ using System;
 
 namespace CSPutil
 {
-
     /**
      * Storage scheme for a set of filters that is dynamically sized and supports insert and remove
      * operations to keep the filters in a contiguous block.
-     *
-     *
      */
     class FilterHolder
     {
@@ -54,7 +51,7 @@ namespace CSPutil
          */
         internal FilterHolder() : this(2)
         {
-            
+
         }
 
         /**
@@ -118,7 +115,6 @@ namespace CSPutil
                     removeFilter(i);
                     return;
                 }
-
             throw new ArgumentException("supplied filter not installed.");
         }
 
@@ -132,7 +128,7 @@ namespace CSPutil
             try
             {
                 if (index > (count - 1) || index < 0)
-                    //throw new IndexOutOfBoundsException("Invalid filter index.");
+                    //throw new IndexOutOfBoundsException("Invalid filter index."); //TODO check if there is a way to throw exception here and how to do it
                     filters[index] = null;
                 //if filter not the last item in the array
                 //then need to shift all elements after the
@@ -150,21 +146,15 @@ namespace CSPutil
             }
             catch (IndexOutOfRangeException e)
             {
-                //throw new IndexOutOfRangeException("Invalid filter index.");
+                throw new IndexOutOfRangeException("Invalid filter index.");
             }
         }
 
-        /**
-         * Returns a filter at the given array index.
-         */
         public Filter getFilter(int index)
         {
             return filters[index];
         }
 
-        /**
-         * Returns the number of filters current installed.
-         */
         public int getFilterCount()
         {
             return count;

@@ -32,11 +32,8 @@ using CSPlang.Shared;
 
 namespace CSPutil
 {
-
     /**
      * Wrapper for an output channel end to include write filtering ability.
-     *
-     *
      */
     public class FilteredChannelOutputWrapper : ChannelOutputWrapper, FilteredChannelOutput
     {

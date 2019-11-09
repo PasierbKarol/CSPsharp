@@ -31,87 +31,81 @@ using CSPlang.Shared;
 
 namespace CSPutil
 {
-
     /**
      * This is wrapper for a <code>SharedChannelInput</code> that adds
      * read filtering. Instances of this class can be safely used by
      * multiple concurrent processes.
-     *
-     *
      */
     public class FilteredSharedChannelInputWrapper : FilteredChannelInputWrapper, FilteredSharedChannelInput
     {
-    /**
-     * The object used for synchronization by the methods here to protect the readers from each other
-     * when manipulating the filters and reading data.
-     */
-    private Object synchObject;
+        /**
+         * The object used for synchronization by the methods here to protect the readers from each other
+         * when manipulating the filters and reading data.
+         */
+        private Object synchObject;
 
-    /**
-     * Constructs a new wrapper for the given channel input end.
-     *
-     * @param in the existing channel end.
-     */
-    public FilteredSharedChannelInputWrapper(SharedChannelInput In) : base(In)
-    {
-        
-        synchObject = new Object();
-    }
-
-    public Object read()
-    {
-        lock (synchObject)
+        /**
+         * @param in the existing channel end.
+         */
+        public FilteredSharedChannelInputWrapper(SharedChannelInput In) : base(In)
         {
-            return base.read();
+            synchObject = new Object();
         }
-    }
 
-    public void addReadFilter(Filter filter)
-    {
-        lock (synchObject)
+        public Object read()
         {
-            base.addReadFilter(filter);
+            lock (synchObject)
+            {
+                return base.read();
+            }
         }
-    }
 
-    public void addReadFilter(Filter filter, int index)
-    {
-        lock (synchObject)
+        public void addReadFilter(Filter filter)
         {
-            base.addReadFilter(filter, index);
+            lock (synchObject)
+            {
+                base.addReadFilter(filter);
+            }
         }
-    }
 
-    public void removeReadFilter(Filter filter)
-    {
-        lock (synchObject)
+        public void addReadFilter(Filter filter, int index)
         {
-            base.removeReadFilter(filter);
+            lock (synchObject)
+            {
+                base.addReadFilter(filter, index);
+            }
         }
-    }
 
-    public void removeReadFilter(int index)
-    {
-        lock (synchObject)
+        public void removeReadFilter(Filter filter)
         {
-            base.removeReadFilter(index);
+            lock (synchObject)
+            {
+                base.removeReadFilter(filter);
+            }
         }
-    }
 
-    public Filter getReadFilter(int index)
-    {
-        lock (synchObject)
+        public void removeReadFilter(int index)
         {
-            return base.getReadFilter(index);
+            lock (synchObject)
+            {
+                base.removeReadFilter(index);
+            }
         }
-    }
 
-    public int getReadFilterCount()
-    {
-        lock (synchObject)
+        public Filter getReadFilter(int index)
         {
-            return base.getReadFilterCount();
+            lock (synchObject)
+            {
+                return base.getReadFilter(index);
+            }
         }
-    }
+
+        public int getReadFilterCount()
+        {
+            lock (synchObject)
+            {
+                return base.getReadFilterCount();
+            }
+        }
     }
 }

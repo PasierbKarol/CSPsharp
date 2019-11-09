@@ -40,8 +40,6 @@ namespace CSPutil
      * @see jcsp.util.filter.FilteredChannelEnd
      * @see jcsp.util.filter.ReadFiltered
      * @see jcsp.util.filter.WriteFiltered
-     *
-     *
      */
     public interface Filter
     {

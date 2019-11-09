@@ -30,22 +30,12 @@ using CSPlang;
 
 namespace CSPutil
 {
-
     /**
      * Interface for an <code>Any2Any</code> channel that supports both read and write filters.
-     *
-     *
      */
     public interface FilteredOne2AnyChannel : One2AnyChannel
     {
-    /**
-     * Returns the control interface to manipulate the read filters.
-     */
-    ReadFiltered inFilter();
-
-    /**
-     * Returns the control interface to manipulate the write filters.
-     */
-    WriteFiltered outFilter();
+        ReadFiltered inFilter();
+        WriteFiltered outFilter();
     }
 }

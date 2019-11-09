@@ -17,8 +17,6 @@
 // language governing permissions and limitations under the License.//
 //                                                                  //
 //                                                                  //
-//                                                                  //
-//                                                                  //
 //  Author Contact: P.H.Welch@ukc.ac.uk                             //
 //                                                                  //
 //  Author contact: K.Chalmers@napier.ac.uk                         //
@@ -66,7 +64,7 @@ namespace CSPutil
          *
          * @param filter the filter to be installed; may not be null.
          */
-         void addWriteFilter(Filter filter);
+        void addWriteFilter(Filter filter);
 
         /**
          * Installs a write filter defining a transformation to be applied by the <code>write</code> method of the
@@ -77,7 +75,7 @@ namespace CSPutil
          * @param filter the filter to be installed; may not be null.
          * @param index the zero based index; may not be negative.
          */
-         void addWriteFilter(Filter filter, int index);
+        void addWriteFilter(Filter filter, int index);
 
         /**
          * Removes the first write filter (lowest index) matching the filter given as a parameter. The filter
@@ -86,7 +84,7 @@ namespace CSPutil
          *
          * @param filter the filter to be removed; may not be null.
          */
-         void removeWriteFilter(Filter filter);
+        void removeWriteFilter(Filter filter);
 
         /**
          * Removes the write filter installed at the given index. The remaining filters are shifted to close the
@@ -94,7 +92,7 @@ namespace CSPutil
          *
          * @param index zero-based index of the filter to be removed.
          */
-         void removeWriteFilter(int index);
+        void removeWriteFilter(int index);
 
         /**
          * Returns the write filter installed at the given index.
@@ -102,11 +100,11 @@ namespace CSPutil
          * @param index zero-based index of the filter to return.
          * @return the filter at that position.
          */
-         Filter getWriteFilter(int index);
+        Filter getWriteFilter(int index);
 
         /**
          * Returns the number of write filters currently installed.
          */
-         int getWriteFilterCount();
+        int getWriteFilterCount();
     }
 }

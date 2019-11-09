@@ -30,7 +30,6 @@ using CSPlang.Shared;
 
 namespace CSPutil
 {
-
     /**
      * Interface for an output channel end that supports filtering operations and can be shared by multiple
      * concurrent processes.

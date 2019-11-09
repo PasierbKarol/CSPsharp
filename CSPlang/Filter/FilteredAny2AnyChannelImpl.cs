@@ -31,34 +31,20 @@ using CSPlang.Shared;
 
 namespace CSPutil
 {
-
     /**
      * This wraps up an Any2AnyChannel object so that its
      * input and output ends are separate objects. Both ends of the channel
      * have filtering enabled.
-     *
-     *
      */
     class FilteredAny2AnyChannelImpl : FilteredAny2AnyChannel
     {
-        /**
-         * The input end of the channel.
-         */
         private FilteredSharedChannelInput _In;
-
-        /**
-         * The output end of the channel.
-         */
         private FilteredSharedChannelOutput _Out;
 
-        /**
-         * Constructs a new filtered channel object based on an existing channel.
-         */
         internal FilteredAny2AnyChannelImpl(Any2AnyChannel chan)
         {
             _In = new FilteredSharedChannelInputWrapper(chan.In());
             _Out = new FilteredSharedChannelOutputWrapper(chan.Out());
-
         }
 
         public SharedChannelInput In()

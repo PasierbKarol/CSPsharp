@@ -31,23 +31,20 @@ using CSPlang.Shared;
 
 namespace CSPutil
 {
-
     /**
      * <p>Factory for creating filtered channel ends around existing channel ends.</p>
      *
      * <p>An instance of this class can be created and used, or alternatively the static factory
      * <code>FilteredChannelEnd</code> may be more convenient.</p>
-     *
-     *
      */
     public class FilteredChannelEndFactory
     {
         /**
          * Constructs a new <code>FilteredChannelEndFactory</code>.
          */
-        public FilteredChannelEndFactory() : base ()
+        public FilteredChannelEndFactory() : base()
         {
-            
+
         }
 
         /**

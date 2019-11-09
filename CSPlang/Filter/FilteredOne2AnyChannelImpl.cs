@@ -31,57 +31,45 @@ using CSPlang.Shared;
 
 namespace CSPutil
 {
-
     /**
      * Implements an <code>One2Any</code> channel that supports filtering at each end.
      *
      * @see jcsp.lang.One2AnyChannel
      * @see jcsp.util.filter.ReadFiltered
      * @see jcsp.util.filter.WriteFiltered
-     *
-     *
      */
     class FilteredOne2AnyChannelImpl : FilteredOne2AnyChannel
     {
-    /**
-     * The filtered input end of the channel.
-     */
-    private FilteredSharedChannelInput _In;
+        private FilteredSharedChannelInput _In;
+        private FilteredChannelOutput _Out;
 
-    /**
-     * The filtered output end of the channel.
-     */
-    private FilteredChannelOutput _Out;
+        /**
+         * @param chan the existing channel.
+         */
+        public FilteredOne2AnyChannelImpl(One2AnyChannel chan)
+        {
+            _In = new FilteredSharedChannelInputWrapper(chan.In());
+            _Out = new FilteredChannelOutputWrapper(chan.Out());
+        }
 
-    /**
-     * Constructs a new filtered channel from an existing channel.
-     *
-     * @param chan the existing channel.
-     */
-    public FilteredOne2AnyChannelImpl(One2AnyChannel chan)
-    {
-        _In = new FilteredSharedChannelInputWrapper(chan.In());
-        _Out = new FilteredChannelOutputWrapper(chan.Out());
-    }
+        public SharedChannelInput In()
+        {
+            return _In;
+        }
 
-    public SharedChannelInput In()
-    {
-        return _In;
-    }
+        public ChannelOutput Out()
+        {
+            return _Out;
+        }
 
-    public ChannelOutput Out()
-    {
-        return _Out;
-    }
+        public ReadFiltered inFilter()
+        {
+            return _In;
+        }
 
-    public ReadFiltered inFilter()
-    {
-        return _In;
-    }
-
-    public WriteFiltered outFilter()
-    {
-        return _Out;
-    }
+        public WriteFiltered outFilter()
+        {
+            return _Out;
+        }
     }
 }

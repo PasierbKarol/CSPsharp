@@ -30,53 +30,41 @@ using CSPlang;
 
 namespace CSPutil
 {
-
     /**
      * Implements a <code>One2One</code> channel that supports filtering at each end.
-     *
-     *
      */
     class FilteredOne2OneChannelImpl : FilteredOne2OneChannel
     {
-    /**
-     * The filtered input end of the channel.
-     */
-    private FilteredAltingChannelInput _In;
+        private FilteredAltingChannelInput _In;
+        private FilteredChannelOutput _Out;
 
-    /**
-     * The filtered output end of the channel.
-     */
-    private FilteredChannelOutput _Out;
+        /**
+         * @param chan the existing channel.
+         */
+        public FilteredOne2OneChannelImpl(One2OneChannel chan)
+        {
+            _In = new FilteredAltingChannelInput(chan.In());
+            _Out = new FilteredChannelOutputWrapper(chan.Out());
+        }
 
-    /**
-     * Constructs a new filtered channel based on an existing channel.
-     *
-     * @param chan the existing channel.
-     */
-    public FilteredOne2OneChannelImpl(One2OneChannel chan)
-    {
-        _In = new FilteredAltingChannelInput(chan.In());
-        _Out = new FilteredChannelOutputWrapper(chan.Out());
-    }
+        public AltingChannelInput In()
+        {
+            return _In;
+        }
 
-    public AltingChannelInput In()
-    {
-        return _In;
-    }
+        public ChannelOutput Out()
+        {
+            return _Out;
+        }
 
-    public ChannelOutput Out()
-    {
-        return _Out;
-    }
+        public ReadFiltered inFilter()
+        {
+            return _In;
+        }
 
-    public ReadFiltered inFilter()
-    {
-        return _In;
-    }
-
-    public WriteFiltered outFilter()
-    {
-        return _Out;
-    }
+        public WriteFiltered outFilter()
+        {
+            return _Out;
+        }
     }
 }
