@@ -30,7 +30,6 @@ using System;
 
 namespace CSPlang.Any2
 {
-
     /**
      * This is the super-class for any-to-any <TT>interface</TT>-specific CALL channels,
      * safe for use by many clients and many servers.
@@ -462,14 +461,14 @@ namespace CSPlang.Any2
     public abstract class Any2AnyCallChannel : ChannelAccept
     {
         /**
-     * This is used to synchronise the calling and accepting process.
-     */
-        private readonly Any2OneChannelImpl c = new Any2OneChannelImpl();
+         * This is used to synchronise the calling and accepting process.
+         */
+        private readonly Any2OneChannelImpl callingProcesses = new Any2OneChannelImpl();
 
         /**
          * This is used to synchronise the calling and accepting process.
          */
-        private readonly One2OneChannelImpl d = new One2OneChannelImpl();
+        private readonly One2OneChannelImpl acceptedProcesses = new One2OneChannelImpl();
 
         /**
          * This holds a reference to a <I>server</I> process so that a <I>client</I> may
@@ -507,8 +506,8 @@ namespace CSPlang.Any2
         public /*synchronized*/ int accept(IamCSProcess server)
         {
             this.server = server;
-            c.read(); // ready to ACCEPT the CALL
-            d.read(); // wait until the CALL is complete
+            callingProcesses.read(); // ready to ACCEPT the CALL
+            acceptedProcesses.read(); // wait until the CALL is complete
             return selected;
         }
 
@@ -522,7 +521,7 @@ namespace CSPlang.Any2
          */
         protected void join()
         {
-            c.write(null);
+            callingProcesses.write(null);
         }
 
         /**
@@ -535,7 +534,7 @@ namespace CSPlang.Any2
          */
         protected void fork()
         {
-            d.write(null);
+            acceptedProcesses.write(null);
         }
     }
 }

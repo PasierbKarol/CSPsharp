@@ -56,28 +56,28 @@ namespace CSPlang.Any2
 
         public void write(int n)
         {
-            lock (writeMonitor) {
+            lock (writeMonitor)
+            {
                 channel.write(n);
             }
-
         }
 
         public void writerPoison(int strength)
         {
-            lock (writeMonitor) {
+            lock (writeMonitor)
+            {
                 channel.writerPoison(strength);
             }
-
         }
 
-        public AltingChannelInputInt In() {
-            return new AltingChannelInputIntImpl(channel,0);
+        public AltingChannelInputInt In()
+        {
+            return new AltingChannelInputIntImpl(channel, 0);
         }
 
-        public SharedChannelOutputInt Out() {
-            return new SharedChannelOutputIntImpl(this,0);
+        public SharedChannelOutputInt Out()
+        {
+            return new SharedChannelOutputIntImpl(this, 0);
         }
-
-
     }
 }

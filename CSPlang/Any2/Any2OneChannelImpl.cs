@@ -26,33 +26,24 @@
 //                                                                  //
 //////////////////////////////////////////////////////////////////////
 
-
-
-using CSPlang.Any2;
-
 namespace CSPlang
 {
-
     /**
- * This implements an any-to-one object channel,
- * safe for use by many writers and one reader. Refer to the {@link Any2OneChannel} interface for
- * more details.
- *
- * @see jcsp.lang.One2OneChannelImpl
- * @see jcsp.lang.One2AnyChannelImpl
- * @see jcsp.lang.Any2AnyChannelImpl
- *
- * @author P.D.Austin and P.H.Welch
- */
-
-
+     * This implements an any-to-one object channel,
+     * safe for use by many writers and one reader. Refer to the {@link Any2OneChannel} interface for
+     * more details.
+     *
+     * @see jcsp.lang.One2OneChannelImpl
+     * @see jcsp.lang.One2AnyChannelImpl
+     * @see jcsp.lang.Any2AnyChannelImpl
+     *
+     * @author P.D.Austin and P.H.Welch
+     */
     internal class Any2OneChannelImpl : Any2OneImpl
     {
-        public Any2OneChannelImpl() : base (new One2OneChannelImpl())
+        public Any2OneChannelImpl() : base(new One2OneChannelImpl())
         {
 
         }
-
-
     }
 }

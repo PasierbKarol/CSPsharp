@@ -40,8 +40,6 @@ namespace CSPlang
             return channel.readerPending();
         }
 
-        
-
         public Object startRead()
         {
             return channel.startRead();
@@ -50,27 +48,30 @@ namespace CSPlang
 
         public void write(Object obj)
         {
-            /*synchronized*/ lock (writeMonitor) {
+            /*synchronized*/
+            lock (writeMonitor)
+            {
                 channel.write(obj);
             }
-
         }
 
         public void writerPoison(int strength)
         {
-            /*synchronized*/ lock (writeMonitor) {
+            /*synchronized*/
+            lock (writeMonitor)
+            {
                 channel.writerPoison(strength);
             }
-
         }
 
         public AltingChannelInput In()
-        { 
-            return new AltingChannelInputImpl(channel,0);
+        {
+            return new AltingChannelInputImpl(channel, 0);
         }
 
-        public SharedChannelOutput Out() {
-            return new SharedChannelOutputImpl(this,0);
+        public SharedChannelOutput Out()
+        {
+            return new SharedChannelOutputImpl(this, 0);
         }
 
         public bool writerEnable(Alternative alt)
@@ -93,6 +94,5 @@ namespace CSPlang
             channel.readerPoison(strength);
 
         }
-
     }
 }

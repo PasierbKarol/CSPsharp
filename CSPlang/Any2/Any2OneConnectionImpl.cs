@@ -26,9 +26,6 @@
 //                                                                  //
 //////////////////////////////////////////////////////////////////////
 
-using System;
-using System.Collections.Generic;
-using System.Text;
 using CSPlang.Alting;
 using CSPlang.Shared;
 using CSPutil;
@@ -36,11 +33,9 @@ using CSPutil;
 namespace CSPlang.Any2
 {
     /**
- * This class is an implementation of <code>Any2OneConnection</code>.
- * Each end is safe to be used by one thread at a time.
- *
- *
- */
+     * This class is an implementation of <code>Any2OneConnection</code>.
+     * Each end is safe to be used by one thread at a time.
+     */
 
     class Any2OneConnectionImpl : Any2OneConnection
     {
@@ -92,6 +87,5 @@ namespace CSPlang.Any2
         {
             return connectionServer;
         }
-
     }
 }

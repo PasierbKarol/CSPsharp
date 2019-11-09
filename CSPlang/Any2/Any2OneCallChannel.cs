@@ -26,13 +26,11 @@
 //                                                                  //
 //////////////////////////////////////////////////////////////////////
 
-
 using System;
 using CSPlang.Alting;
 
 namespace CSPlang.Any2
 {
-
     /**
      * This is the super-class for any-to-one <TT>interface</TT>-specific CALL channels,
      * safe for use by many clients and one server.
@@ -653,20 +651,18 @@ namespace CSPlang.Any2
      *
      * @author P.H.Welch
      */
-
-
     [Serializable]
     public abstract class Any2OneCallChannel : AltingChannelAccept
     {
         /**
-    * This is used to synchronise the calling and accepting process.
-    */
-        private readonly Any2OneChannelImpl c = new Any2OneChannelImpl();
+        * This is used to synchronise the calling and accepting process.
+        */
+        private readonly Any2OneChannelImpl callingProcesses = new Any2OneChannelImpl();
 
         /**
          * This is used to synchronise the calling and accepting process.
          */
-        private readonly One2OneChannelImpl d = new One2OneChannelImpl();
+        private readonly One2OneChannelImpl acceptedProcesses = new One2OneChannelImpl();
 
         /**
          * This holds a reference to a <I>server</I> process so that a <I>client</I> may
@@ -704,8 +700,8 @@ namespace CSPlang.Any2
         {
             // invoked by the callee
             this.server = server;
-            c.read(); // ready to ACCEPT the CALL
-            d.read(); // wait until the CALL is complete
+            callingProcesses.read(); // ready to ACCEPT the CALL
+            acceptedProcesses.read(); // wait until the CALL is complete
             return selected;
         }
 
@@ -719,7 +715,7 @@ namespace CSPlang.Any2
         protected void join()
         {
             // indirectly invoked by the caller
-            c.write(null);
+            callingProcesses.write(null);
         }
 
         /**
@@ -732,7 +728,7 @@ namespace CSPlang.Any2
         protected void fork()
         {
             // indirectly invoked by the caller
-            d.write(null);
+            acceptedProcesses.write(null);
         }
 
         /**
@@ -741,7 +737,7 @@ namespace CSPlang.Any2
         Boolean enable(Alternative alt)
         {
             // ignore this!
-            return c.readerEnable(alt);
+            return callingProcesses.readerEnable(alt);
         }
 
         /**
@@ -750,7 +746,7 @@ namespace CSPlang.Any2
         Boolean disable()
         {
             // ignore this!
-            return c.readerDisable();
+            return callingProcesses.readerDisable();
         }
     }
 }

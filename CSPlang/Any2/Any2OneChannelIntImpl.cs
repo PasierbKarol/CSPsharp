@@ -28,26 +28,23 @@
 
 namespace CSPlang.Any2
 {
-
     /**
- * This implements an any-to-one integer channel,
- * safe for use by many writers and one reader.Refer to the {@link Any2OneChannelInt} interface for
- * a fuller description.
- *
- * @see jcsp.lang.One2OneChannelIntImpl
- * @see jcsp.lang.One2AnyChannelIntImpl
- * @see jcsp.lang.Any2AnyChannelIntImpl
- * @see jcsp.util.ints.ChannelDataStoreInt
- *
- * @author P.D.Austin and P.H.Welch
- */
-
-
+     * This implements an any-to-one integer channel,
+     * safe for use by many writers and one reader.Refer to the {@link Any2OneChannelInt} interface for
+     * a fuller description.
+     *
+     * @see jcsp.lang.One2OneChannelIntImpl
+     * @see jcsp.lang.One2AnyChannelIntImpl
+     * @see jcsp.lang.Any2AnyChannelIntImpl
+     * @see jcsp.util.ints.ChannelDataStoreInt
+     *
+     * @author P.D.Austin and P.H.Welch
+     */
     class Any2OneChannelIntImpl : Any2OneIntImpl
     {
-        internal Any2OneChannelIntImpl() : base (new One2OneChannelIntImpl())
+        internal Any2OneChannelIntImpl() : base(new One2OneChannelIntImpl())
         {
-            
+
         }
     }
 }

@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading;
 using CSPlang.Shared;
 
 namespace CSPlang.Any2
@@ -18,18 +15,20 @@ namespace CSPlang.Any2
             channel = _channel;
         }
 
-        public SharedChannelInput In() {
-            return new SharedChannelInputImpl(this,0);
+        public SharedChannelInput In()
+        {
+            return new SharedChannelInputImpl(this, 0);
         }
 
-        public SharedChannelOutput Out() { 
-            return new SharedChannelOutputImpl(this,0);
+        public SharedChannelOutput Out()
+        {
+            return new SharedChannelOutputImpl(this, 0);
         }
 
         public void endRead()
         {
             channel.endRead();
-            _readCspMutex.Release(); //originally it was just .Release. - KP
+            _readCspMutex.Release();
 
         }
 
@@ -47,7 +46,7 @@ namespace CSPlang.Any2
             }
         }
 
-//begin never used:
+        //begin never used:
         public Boolean readerDisable()
         {
             return false;
@@ -62,7 +61,7 @@ namespace CSPlang.Any2
         {
             return false;
         }
-//end never used
+        //end never used
 
         public void readerPoison(int strength)
         {
@@ -84,23 +83,23 @@ namespace CSPlang.Any2
                 _readCspMutex.Release();
                 throw e;
             }
-
         }
 
         public void write(Object obj)
         {
-            lock (writeMonitor) {
+            lock (writeMonitor)
+            {
                 channel.write(obj);
             }
         }
 
         public void writerPoison(int strength)
         {
-            lock (writeMonitor) {
+            lock (writeMonitor)
+            {
                 channel.writerPoison(strength);
             }
         }
-
 
         public bool writerEnable(Alternative alt)
         {

@@ -26,19 +26,15 @@
 //                                                                  //
 //////////////////////////////////////////////////////////////////////
 
-using System;
 using CSPlang.Shared;
 using CSPutil;
 
 namespace CSPlang.Any2
 {
     /**
- * This class is an implementation of <code>Any2AnyConnection</code>.
- * Each end is safe to be used by one thread at a time.
- *
- *
- */
-
+     * This class is an implementation of <code>Any2AnyConnection</code>.
+     * Each end is safe to be used by one thread at a time.
+     */
     public class Any2AnyConnectionImpl : AbstractConnectionImpl, Any2AnyConnection
     {
         private One2OneChannel chanToServer;
@@ -100,6 +96,5 @@ namespace CSPlang.Any2
                     chanServerSynch.Out(),
                     this);
         }
-
     }
 }

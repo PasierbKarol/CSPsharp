@@ -15,12 +15,14 @@ namespace CSPlang.Any2
             channel = _channel;
         }
 
-        public SharedChannelInputInt In() {
-            return new SharedChannelInputIntImpl(this,0);
+        public SharedChannelInputInt In()
+        {
+            return new SharedChannelInputIntImpl(this, 0);
         }
 
-        public SharedChannelOutputInt Out() { 
-            return new SharedChannelOutputIntImpl(this,0);
+        public SharedChannelOutputInt Out()
+        {
+            return new SharedChannelOutputIntImpl(this, 0);
         }
 
         public void endRead()
@@ -38,13 +40,13 @@ namespace CSPlang.Any2
             {
                 return channel.read();
             }
-            finally 
+            finally
             {
                 readMutex.Release();
             }
         }
 
-//begin never used:
+        //begin never used:
         public Boolean readerDisable()
         {
             return false;
@@ -59,7 +61,7 @@ namespace CSPlang.Any2
         {
             return false;
         }
-//end never used
+        //end never used
 
         public void readerPoison(int strength)
         {
@@ -86,17 +88,18 @@ namespace CSPlang.Any2
 
         public void write(int n)
         {
-            lock (writeMonitor) {
+            lock (writeMonitor)
+            {
                 channel.write(n);
             }
         }
 
         public void writerPoison(int strength)
         {
-            lock (writeMonitor) {
+            lock (writeMonitor)
+            {
                 channel.writerPoison(strength);
             }
         }
-
     }
 }

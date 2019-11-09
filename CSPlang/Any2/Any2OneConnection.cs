@@ -32,26 +32,23 @@ using CSPlang.Shared;
 namespace CSPlang.Any2
 {
     /**
- * <p>
- * Defines an interface for a connection that can be shared
- * by multiple concurrent clients but used by
- * a single server. The server end of the connection can be
- * used as a guard in an <code>Alternative</code>.
- * </p>
- *
- *
- */
-
+     * <p>
+     * Defines an interface for a connection that can be shared
+     * by multiple concurrent clients but used by
+     * a single server. The server end of the connection can be
+     * used as a guard in an <code>Alternative</code>.
+     * </p>
+     */
 
     public interface Any2OneConnection : ConnectionWithSharedAltingClient
     {
         /**
- * Returns a client end of the connection. This may only be
- * safely used by a single process but further calls will
- * return new clients which may be used by other processes.
- *
- * @return a new <code>SharedAltingConnectionClient</code> object.
- */
+         * Returns a client end of the connection. This may only be
+         * safely used by a single process but further calls will
+         * return new clients which may be used by other processes.
+         *
+         * @return a new <code>SharedAltingConnectionClient</code> object.
+         */
         SharedAltingConnectionClient client();
 
         /**
