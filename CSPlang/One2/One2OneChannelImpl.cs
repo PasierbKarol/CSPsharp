@@ -1,5 +1,4 @@
-﻿
-//////////////////////////////////////////////////////////////////////
+﻿//////////////////////////////////////////////////////////////////////
 //                                                                  //
 //  JCSP ("CSP for Java") Libraries                                 //
 // Copyright 1996-2017 Peter Welch, Paul Austin and Neil Brown      //
@@ -28,54 +27,48 @@
 //////////////////////////////////////////////////////////////////////
 
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Text;
 using System.Threading;
 
 namespace CSPlang
 {
     /**
- * This implements a one-to-one object channel.
- * <H2>Description</H2>
- * <TT>One2OneChannelImpl</TT> implements a one-to-one object channel.  Multiple
- * readers or multiple writers are not allowed -- these are catered for
- * by {@link Any2OneChannelImpl},
- * {@link One2AnyChannelImpl} or
- * {@link Any2AnyChannelImpl}.
- * <P>
- * The reading process may {@link Alternative <TT>ALT</TT>} on this channel.
- * The writing process is committed (i.e. it may not back off).
- * <P>
- * The default semantics of the channel is that of CSP -- i.e. it is
- * zero-buffered and fully synchronised.  The reading process must wait
- * for a matching writer and vice-versa.
- * <P>
- * However, the static <TT>create</TT> method allows the user to create
- * a channel with a <I>plug-in</I> driver conforming to the
- * {@link jcsp.util.ChannelDataStore <TT>ChannelDataStore</TT>}
- * interface.  This allows a variety of different channel semantics to be
- * introduced -- including buffered channels of user-defined capacity
- * (including infinite), overwriting channels (with various overwriting
- * policies) etc..
- * Standard examples are given in the <TT>jcsp.util</TT> package, but
- * <I>careful users</I> may write their own.
- * <P>
- * Other static <TT>create</TT> methods allows the user to create fully
- * initialised arrays of channels, including plug-ins if required.
- *
- * @see jcsp.lang.Alternative
- * @see jcsp.lang.Any2OneChannelImpl
- * @see jcsp.lang.One2AnyChannelImpl
- * @see jcsp.lang.Any2AnyChannelImpl
- * @see jcsp.util.ChannelDataStore
- *
- * @author P.D.Austin
- * @author P.H.Welch
- */
-
-
-
+     * This implements a one-to-one object channel.
+     * <H2>Description</H2>
+     * <TT>One2OneChannelImpl</TT> implements a one-to-one object channel.  Multiple
+     * readers or multiple writers are not allowed -- these are catered for
+     * by {@link Any2OneChannelImpl},
+     * {@link One2AnyChannelImpl} or
+     * {@link Any2AnyChannelImpl}.
+     * <P>
+     * The reading process may {@link Alternative <TT>ALT</TT>} on this channel.
+     * The writing process is committed (i.e. it may not back off).
+     * <P>
+     * The default semantics of the channel is that of CSP -- i.e. it is
+     * zero-buffered and fully synchronised.  The reading process must wait
+     * for a matching writer and vice-versa.
+     * <P>
+     * However, the static <TT>create</TT> method allows the user to create
+     * a channel with a <I>plug-in</I> driver conforming to the
+     * {@link jcsp.util.ChannelDataStore <TT>ChannelDataStore</TT>}
+     * interface.  This allows a variety of different channel semantics to be
+     * introduced -- including buffered channels of user-defined capacity
+     * (including infinite), overwriting channels (with various overwriting
+     * policies) etc..
+     * Standard examples are given in the <TT>jcsp.util</TT> package, but
+     * <I>careful users</I> may write their own.
+     * <P>
+     * Other static <TT>create</TT> methods allows the user to create fully
+     * initialised arrays of channels, including plug-ins if required.
+     *
+     * @see jcsp.lang.Alternative
+     * @see jcsp.lang.Any2OneChannelImpl
+     * @see jcsp.lang.One2AnyChannelImpl
+     * @see jcsp.lang.Any2AnyChannelImpl
+     * @see jcsp.util.ChannelDataStore
+     *
+     * @author P.D.Austin
+     * @author P.H.Welch
+     */
     class One2OneChannelImpl : One2OneChannel, ChannelInternals
     {
         /** The monitor synchronising reader and writer on this channel */
@@ -86,11 +79,9 @@ namespace CSPlang
 
         /** The synchronisation flag */
         private Boolean empty = true;
-
-        /** The Alternative class that controls the selection */
         private Alternative alternative;
 
-        /** Flag to deal with a spurious wakeup during a write */
+        /** Flag to deal with a spurious wakeup during a write */ //TODO is it still needed?
         private Boolean spuriousWakeUp = true;
 
         /*************Methods from One2OneChannel******************************/
@@ -106,8 +97,7 @@ namespace CSPlang
          */
         public AltingChannelInput In()
         {
-            //Debug.WriteLine("Getting channel input ", "Karol");
-
+            //Debug.WriteLine("Getting channel input ", "DEBUG");
             return new AltingChannelInputImpl(this, 0);
         }
 
@@ -122,8 +112,7 @@ namespace CSPlang
          */
         public ChannelOutput Out()
         {
-            //Debug.WriteLine("Getting channel output", "Karol");
-
+            //Debug.WriteLine("Getting channel output", "DEBUG");
             return new ChannelOutputImpl(this, 0);
         }
 
@@ -167,7 +156,7 @@ namespace CSPlang
                     }
                     spuriousWakeUp = true;
                 }
-                catch (/*InterruptedException*/  ThreadInterruptedException e)
+                catch (ThreadInterruptedException e)
                 {
                     throw new ProcessInterruptedException(
                         "*** Thrown from One2OneChannel.write (Object)\n" + e.ToString());
@@ -203,7 +192,7 @@ namespace CSPlang
 
                         }
                     }
-                    catch (/*InterruptedException*/  ThreadInterruptedException e)
+                    catch (ThreadInterruptedException e)
                     {
                         throw new ProcessInterruptedException("*** Thrown from One2OneChannel.read ()\n"
                                                            + e.ToString());
@@ -236,11 +225,10 @@ namespace CSPlang
                             {
                                 SpuriousLog.record(SpuriousLog.One2OneChannelRead);
                             }
-                            //rwMonitor.wait();
                             Monitor.Wait(rwMonitor);
                         }
                     }
-                    catch (/*InterruptedException*/  ThreadInterruptedException e)
+                    catch (ThreadInterruptedException e)
                     {
                         throw new ProcessInterruptedException("*** Thrown from One2OneChannel.read ()\n"
                                                            + e.ToString());
@@ -250,7 +238,6 @@ namespace CSPlang
                 {
                     empty = true;
                 }
-
                 return hold;
             }
         }
@@ -261,11 +248,9 @@ namespace CSPlang
             lock (rwMonitor)
             {
                 spuriousWakeUp = false;
-                //rwMonitor.notify();
                 Monitor.Pulse(rwMonitor);
             }
         }
-
 
         /**
          * turns on Alternative selection for the channel. Returns true if the
@@ -378,7 +363,5 @@ namespace CSPlang
         public void readerPoison(int strength)
         {
         }
-
-
     }
 }

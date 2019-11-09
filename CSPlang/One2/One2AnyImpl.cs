@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading;
 using CSPlang.Any2;
 using CSPlang.Shared;
 
@@ -32,7 +29,6 @@ namespace CSPlang.One2
         {
             channel.endRead();
             _readCspMutex.Release();
-
         }
 
         public Object read()
@@ -49,7 +45,7 @@ namespace CSPlang.One2
             }
         }
 
-        //begin never used:
+        //begin never used: //TODO
         public Boolean readerDisable()
         {
             return false;
@@ -64,8 +60,6 @@ namespace CSPlang.One2
         {
             return false;
         }
-
-
         //end never used
 
         public void readerPoison(int strength)
@@ -91,7 +85,7 @@ namespace CSPlang.One2
 
         }
 
-        //begin never used
+        //begin never used //TODO
         public void write(Object obj)
         {
             channel.write(obj);

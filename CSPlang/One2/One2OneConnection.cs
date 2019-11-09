@@ -14,9 +14,7 @@
 // software distributed under the License is distributed on         //
 // an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,  //
 // either express or implied. See the License for the specific      //
-// language governing permissions and limitations under the License.//
-//                                                                  //
-//                                                                  //
+// language governing permissions and limitations under the License.//                                                              //
 //                                                                  //
 //                                                                  //
 //  Author Contact: P.H.Welch@ukc.ac.uk                             //
@@ -30,22 +28,12 @@ using CSPlang.Alting;
 
 namespace CSPlang
 {
-
     /**
      * Defines an interface for a connection that can be used by a single server and single client.
-     *
-     *
      */
     public interface One2OneConnection
     {
-        /**
-         * Returns the client end of the connection.
-         */
         AltingConnectionClient client();
-
-        /**
-         * Returns the server end of the connection.
-         */
         AltingConnectionServer server();
     }
 }

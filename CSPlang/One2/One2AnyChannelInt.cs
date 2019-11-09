@@ -30,7 +30,6 @@ using CSPlang.Shared;
 
 namespace CSPlang
 {
-
     /**
      * This implements a one-to-any integer channel,
      * safe for use by one writer and many readers.
@@ -80,14 +79,7 @@ namespace CSPlang
      */
     public interface One2AnyChannelInt
     {
-        /**
-         * Returns the input end of the channel.
-         */
         SharedChannelInputInt In();
-
-        /**
-         * Returns the output end of the channel.
-         */
         ChannelOutputInt Out();
     }
 }

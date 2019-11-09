@@ -30,7 +30,6 @@ using System;
 
 namespace CSPlang
 {
-
     /**
      * This is the super-class for one-to-any <TT>interface</TT>-specific CALL channels,
      * safe for use by one client and many servers.
@@ -159,7 +158,6 @@ namespace CSPlang
      *
      * @author P.H.Welch
      */
-
     [Serializable]
     public abstract class One2AnyCallChannel : ChannelAccept
     {

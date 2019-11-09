@@ -31,23 +31,13 @@ using CSPlang.Shared;
 
 namespace CSPlang
 {
-
     /**
      * An interface for a connection which can be used by only one client but which can be used by multiple
      * concurrent servers.
-     *
-     *
      */
     public interface One2AnyConnection : ConnectionWithSharedAltingServer
     {
-        /**
-         * Returns the client part of the connection.
-         */
         AltingConnectionClient client();
-
-        /**
-         * Returns the server part of the connection.
-         */
         SharedConnectionServer server();
     }
 }

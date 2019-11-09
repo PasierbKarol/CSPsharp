@@ -31,7 +31,6 @@ using CSPlang.Alting;
 
 namespace CSPlang
 {
-
     /**
      * This is the super-class for one-to-one <TT>interface</TT>-specific CALL channels.
      * <P>

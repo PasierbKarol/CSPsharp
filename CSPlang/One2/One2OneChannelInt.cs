@@ -30,7 +30,6 @@ using CSPlang.Alting;
 
 namespace CSPlang
 {
-
     /**
      * This implements a one-to-one integer channel.
      * <H2>Description</H2>
@@ -67,14 +66,7 @@ namespace CSPlang
      */
     public interface One2OneChannelInt
     {
-        /**
-         * Returns the input end of the channel.
-         */
         AltingChannelInputInt In();
-
-        /**
-         * Returns the output end of the channel.
-         */
         ChannelOutputInt Out();
     }
 }

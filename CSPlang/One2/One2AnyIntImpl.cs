@@ -3,10 +3,8 @@ using CSPlang.Shared;
 
 namespace CSPlang
 {
-
     class One2AnyIntImpl : One2AnyChannelInt, ChannelInternalsInt
     {
-
         private ChannelInternalsInt channel;
 
         /** The mutex on which readers must synchronize */
@@ -31,7 +29,6 @@ namespace CSPlang
         {
             channel.endRead();
             readMutex.Release();
-
         }
 
         public int read()
@@ -48,7 +45,7 @@ namespace CSPlang
             }
         }
 
-        //begin never used:
+        //begin never used: //TODO check whether this can be removed
         public Boolean readerDisable()
         {
             return false;
@@ -88,7 +85,7 @@ namespace CSPlang
 
         }
 
-        //begin never used
+        //begin never used //TODO as above
         public void write(int n)
         {
             channel.write(n);
@@ -99,6 +96,5 @@ namespace CSPlang
             channel.writerPoison(strength);
         }
         //end never used
-
     }
 }

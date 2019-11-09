@@ -28,7 +28,6 @@
 
 namespace CSPlang
 {
-
     /**
      * This implements a one-to-any integer channel,
      * safe for use by one writer and many readers.
@@ -76,7 +75,6 @@ namespace CSPlang
      *
      * @author P.D.Austin and P.H.Welch
      */
-
     class One2AnyChannelIntImpl : One2AnyIntImpl
     {
         internal One2AnyChannelIntImpl() : base(new One2OneChannelIntImpl())

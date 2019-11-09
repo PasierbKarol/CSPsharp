@@ -26,7 +26,6 @@
 //                                                                  //
 //////////////////////////////////////////////////////////////////////
 
-using System;
 using CSPlang.Alting;
 using CSPlang.Any2;
 using CSPlang.Shared;
@@ -38,8 +37,6 @@ namespace CSPlang
     /**
      * This class is an implementation of <code>One2AnyConnection</code>.
      * Each end is safe to be used by one thread at a time.
-     *
-     *
      */
     class One2AnyConnectionImpl : One2AnyConnection
     {
@@ -52,12 +49,9 @@ namespace CSPlang
          * Initializes all the attributes to necessary values.
          * Channels are created using the static factory in the
          * <code>ChannelServer</code> interface.
-         *
-         * Constructor for One2OneConnectionImpl.
          */
         public One2AnyConnectionImpl() : base()
         {
-
             chanToServer = StandardChannelFactory.getDefaultInstance().createOne2One(new CSPBuffer(1));
             chanFromServer = StandardChannelFactory.getDefaultInstance().createOne2One(new CSPBuffer(1));
             chanSynch = StandardChannelFactory.getDefaultInstance().createAny2One(new CSPBuffer(1));
@@ -97,7 +91,5 @@ namespace CSPlang
             chanToServer.In(), chanSynch.In(),
             chanSynch.Out(), this);
         }
-
-
     }
 }
