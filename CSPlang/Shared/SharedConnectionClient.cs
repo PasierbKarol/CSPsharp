@@ -28,7 +28,6 @@
 
 namespace CSPlang.Shared
 {
-
     /**
      * <p>
      * Defines an interface for a client end of a connection that
@@ -44,8 +43,6 @@ namespace CSPlang.Shared
      * See <code>{@link ConnectionClient}</code> for a fuller explanation
      * of how to use connection client objects.
      * </p>
-     *
-     *
      */
     public interface SharedConnectionClient : ConnectionClient
     {

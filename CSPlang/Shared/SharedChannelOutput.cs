@@ -30,16 +30,11 @@ namespace CSPlang.Shared
 {
 
     /**
- * An interface that should be implemented by ChannelOutput
- * objects which can be written to by multiple processes
- * concurrently.
- *
- *
- */
-
-
-    public interface SharedChannelOutput : ChannelOutput
-    {
-        
+     * An interface that should be implemented by ChannelOutput
+     * objects which can be written to by multiple processes
+     * concurrently.
+     */     
+    public interface SharedChannelOutput : ChannelOutput //TODO is it needed?
+    {        
     }
 }

@@ -44,8 +44,6 @@ namespace CSPlang.Shared
      * <p>
      * The reply from the server can be ALTed over.
      * </p>
-     *
-     *
      */
     public class SharedAltingConnectionClient : AltingConnectionClientImpl, SharedConnectionClient
     {
@@ -60,9 +58,8 @@ namespace CSPlang.Shared
             SharedChannelOutput synchOut,
             ChannelOutput backToClient,
             ConnectionWithSharedAltingClient
-                parent) : base(fromServer, openToServer, reqToServer, backToClient)
+            parent) : base(fromServer, openToServer, reqToServer, backToClient)
         {
-
             this.synchIn = synchIn;
             this.synchOut = synchOut;
             this.parent = parent;

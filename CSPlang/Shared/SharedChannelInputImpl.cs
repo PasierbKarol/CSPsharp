@@ -17,7 +17,6 @@ namespace CSPlang.Any2
         public void endRead()
         {
             channel.endRead();
-
         }
 
         public Object read()

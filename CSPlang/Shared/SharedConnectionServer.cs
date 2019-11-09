@@ -28,7 +28,6 @@
 
 namespace CSPlang.Shared
 {
-
     /**
      * <p>
      * Defines an interface for a server end of a connection that
@@ -38,8 +37,6 @@ namespace CSPlang.Shared
      * <code>SharedConnectionServer</code> objects cannot have
      * their requests ALTed over.
      * </p>
-     *
-     *
      */
     public interface SharedConnectionServer : ConnectionServer
     {

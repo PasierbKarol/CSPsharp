@@ -17,7 +17,6 @@ namespace CSPlang.Any2
         public void write(Object _object)
         {
             channel.write(_object);
-
         }
 
         public void poison(int strength)

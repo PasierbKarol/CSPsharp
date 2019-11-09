@@ -31,12 +31,9 @@ using CSPlang.Alting;
 
 namespace CSPlang.Shared
 {
-
     /**
      * This class does not need to be used by standard JCSP users. It is exposed so that the connection
      * mechanism can be extended for custom connections.
-     *
-     *
      */
     public class SharedConnectionServerImpl : SharedConnectionServer
     {

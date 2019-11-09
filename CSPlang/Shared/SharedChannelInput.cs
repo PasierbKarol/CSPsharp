@@ -26,21 +26,15 @@
 //                                                                  //
 //////////////////////////////////////////////////////////////////////
 
-
 namespace CSPlang.Shared
 {
 
     /**
- * An interface that should be implemented by ChannelInput
- * objects which can be read by multiple processes
- * concurrently.
- *
- *
- */
-
-
-    public interface SharedChannelInput : ChannelInput
-    {
-        
+     * An interface that should be implemented by ChannelInput
+     * objects which can be read by multiple processes
+     * concurrently.
+     */
+    public interface SharedChannelInput : ChannelInput //TODO is it needed?
+    {        
     }
 }

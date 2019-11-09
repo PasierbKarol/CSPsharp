@@ -1,9 +1,7 @@
 namespace CSPlang.Shared
 {
-
     class SharedChannelInputIntImpl : SharedChannelInputInt
     {
-
         private ChannelInternalsInt channel;
         private int immunity;
 
@@ -16,7 +14,6 @@ namespace CSPlang.Shared
         public void endRead()
         {
             channel.endRead();
-
         }
 
         public int read()
@@ -36,6 +33,5 @@ namespace CSPlang.Shared
                 channel.readerPoison(strength);
             }
         }
-
     }
 }

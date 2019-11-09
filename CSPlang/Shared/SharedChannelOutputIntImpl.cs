@@ -1,6 +1,5 @@
 namespace CSPlang.Shared
 {
-
     public class SharedChannelOutputIntImpl : SharedChannelOutputInt
     {
 
@@ -25,6 +24,5 @@ namespace CSPlang.Shared
                 channel.writerPoison(strength);
             }
         }
-
     }
 }

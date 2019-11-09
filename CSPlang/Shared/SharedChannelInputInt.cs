@@ -33,10 +33,8 @@ namespace CSPlang.Shared
      * An interface that should be implemented by ChannelInputInt
      * objects which can be read by multiple processes
      * concurrently.
-     *
-     *
      */
-    public interface SharedChannelInputInt : ChannelInputInt
+    public interface SharedChannelInputInt : ChannelInputInt //TODO is it needed?
     {
     }
 }

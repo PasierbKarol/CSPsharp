@@ -33,10 +33,8 @@ namespace CSPlang.Shared
      * An interface that should be implemented by ChannelOutputInt
      * objects which can be written to by multiple processes
      * concurrently.
-     *
-     *
      */
-    public interface SharedChannelOutputInt : ChannelOutputInt
+    public interface SharedChannelOutputInt : ChannelOutputInt //TODO is it actually needed? What for?
     {
     }
 }
