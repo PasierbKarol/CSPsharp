@@ -31,13 +31,9 @@ using CSPutil;
 
 namespace CSPlang
 {
-
-
     /**
      * Defines an interface for a factory that can create integer carrying channels with
      * user-definable buffering semantics.
-     *
-     *
      */
     public interface BufferedChannelIntFactory
     {

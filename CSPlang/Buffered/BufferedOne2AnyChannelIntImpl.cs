@@ -82,9 +82,10 @@ namespace CSPlang
 
     class BufferedOne2AnyChannelIntImpl : One2AnyIntImpl
     {
-    public BufferedOne2AnyChannelIntImpl(ChannelDataStoreInt data) : base(new BufferedOne2OneChannelIntImpl(data))
+        public BufferedOne2AnyChannelIntImpl(ChannelDataStoreInt data) : 
+            base(new BufferedOne2OneChannelIntImpl(data))
         {
-        
+
+        }
     }
-}
 }

@@ -33,8 +33,7 @@ using CSPutil;
 
 namespace CSPlang
 {
-
-	/**
+    /**
 	 * This implements a one-to-one integer channel with user-definable buffering.
 	 * <H2>Description</H2>
 	 * <TT>BufferedOne2OneChannelIntImpl</TT> implements a one-to-one integer channel with
@@ -65,267 +64,269 @@ namespace CSPlang
 	 * @author P.H.Welch
 	 */
 
-	class BufferedOne2OneChannelIntImpl : One2OneChannelInt, ChannelInternalsInt
-	{
-	/** The monitor synchronising reader and writer on this channel */
-	private Object rwMonitor = new Object();
+    class BufferedOne2OneChannelIntImpl : One2OneChannelInt, ChannelInternalsInt
+    {
+        /** The monitor synchronising reader and writer on this channel */
+        private Object rwMonitor = new Object();
 
-	/** The Alternative class that controls the selection */
-	private Alternative alt;
+        /** The Alternative class that controls the selection */
+        private Alternative alt;
+        private readonly ChannelDataStoreInt data;
 
-	/** The ChannelDataStoreInt used to store the data for the channel */
+        /*************Methods from One2OneChannelInt******************************/
 
-	private readonly ChannelDataStoreInt data;
+        /**
+         * Returns the <code>AltingChannelInputInt</code> object to use for this
+         * channel. As <code>One2OneChannelIntImpl</code> implements
+         * <code>AltingChannelInputInt</code> itself, this method simply returns
+         * a reference to the object that it is called on.
+         *
+         * @return the <code>AltingChannelInputInt</code> object to use for this
+         *          channel.
+         */
+        public AltingChannelInputInt In()
+        {
+            return new AltingChannelInputIntImpl(this, 0);
+        }
 
-	/*************Methods from One2OneChannelInt******************************/
+        /**
+         * Returns the <code>ChannelOutputInt</code> object to use for this
+         * channel. As <code>One2OneChannelIntImpl</code> implements
+         * <code>ChannelOutputInt</code> itself, this method simply returns
+         * a reference to the object that it is called on.
+         *
+         * @return the <code>ChannelOutputInt</code> object to use for this
+         *          channel.
+         */
+        public ChannelOutputInt Out()
+        {
+            return new ChannelOutputIntImpl(this, 0);
+        }
 
-	/**
-	 * Returns the <code>AltingChannelInputInt</code> object to use for this
-	 * channel. As <code>One2OneChannelIntImpl</code> implements
-	 * <code>AltingChannelInputInt</code> itself, this method simply returns
-	 * a reference to the object that it is called on.
-	 *
-	 * @return the <code>AltingChannelInputInt</code> object to use for this
-	 *          channel.
-	 */
-	public AltingChannelInputInt In()
-	{
-		return new AltingChannelInputIntImpl(this, 0);
-}
+        /**
+         * Constructs a new BufferedOne2OneChannelIntImpl with the specified ChannelDataStoreInt.
+         *
+         * @param data the ChannelDataStoreInt used to store the data for the channel
+         */
+        public BufferedOne2OneChannelIntImpl(ChannelDataStoreInt data)
+        {
+            if (data == null)
+                throw new ArgumentException
+                    ("Null ChannelDataStoreInt given to channel constructor ...\n");
+            this.data = (ChannelDataStoreInt)data.Clone();
+        }
 
-/**
- * Returns the <code>ChannelOutputInt</code> object to use for this
- * channel. As <code>One2OneChannelIntImpl</code> implements
- * <code>ChannelOutputInt</code> itself, this method simply returns
- * a reference to the object that it is called on.
- *
- * @return the <code>ChannelOutputInt</code> object to use for this
- *          channel.
- */
-public ChannelOutputInt Out()
-	{
-		return new ChannelOutputIntImpl(this, 0);
-	}
+        /**
+         * Reads an <TT>int</TT> from the channel.
+         *
+         * @return the integer read from the channel.
+         */
+        public int read()
+        {
+            lock (rwMonitor)
+            {
+                if (data.getState() == ChannelDataStoreState.EMPTY)
+                {
+                    try
+                    {
+                        Monitor.Wait(rwMonitor);
+                        while (data.getState() == ChannelDataStoreState.EMPTY)
+                        {
+                            if (Spurious.logging)
+                            {
+                                SpuriousLog.record(SpuriousLog.One2OneChannelIntXRead);
+                            }
 
-	/**
-	 * Constructs a new BufferedOne2OneChannelIntImpl with the specified ChannelDataStoreInt.
-	 *
-	 * @param data the ChannelDataStoreInt used to store the data for the channel
-	 */
-	public BufferedOne2OneChannelIntImpl(ChannelDataStoreInt data)
-{
-	if (data == null)
-		throw new ArgumentException 
-			("Null ChannelDataStoreInt given to channel constructor ...\n");
-	this.data = (ChannelDataStoreInt)data.Clone();
-}
+                            Monitor.Wait(rwMonitor);
+                        }
+                    }
+                    catch (ThreadInterruptedException e)
+                    {
+                        throw new ProcessInterruptedException(
+                            "*** Thrown from One2OneChannelInt.read (int)\n" + e.ToString()
+                        );
+                    }
+                }
+                Monitor.Pulse(rwMonitor);
+                return data.get();
+            }
+        }
 
-/**
- * Reads an <TT>int</TT> from the channel.
- *
- * @return the integer read from the channel.
- */
-public int read()
-{
-	lock (rwMonitor) {
-		if (data.getState() == ChannelDataStoreState.EMPTY)
-		{
-			try
-			{
-				Monitor.Wait(rwMonitor);
-				while (data.getState() == ChannelDataStoreState.EMPTY)
-				{
-					if (Spurious.logging)
-					{
-						SpuriousLog.record(SpuriousLog.One2OneChannelIntXRead);
-					}
+        public int startRead()
+        {
+            lock (rwMonitor)
+            {
+                if (data.getState() == ChannelDataStoreState.EMPTY)
+                {
+                    try
+                    {
+                        Monitor.Wait(rwMonitor);
+                        while (data.getState() == ChannelDataStoreState.EMPTY)
+                        {
+                            if (Spurious.logging)
+                            {
+                                SpuriousLog.record(SpuriousLog.One2OneChannelXRead);
+                            }
 
-					Monitor.Wait(rwMonitor);
-				}
-			}
-			catch (ThreadInterruptedException e)
-			{
-				throw new ProcessInterruptedException(
-					"*** Thrown from One2OneChannelInt.read (int)\n" + e.ToString()
-				);
-			}
-		}
+                            Monitor.Wait(rwMonitor);
+                        }
+                    }
+                    catch (ThreadInterruptedException e)
+                    {
+                        throw new ProcessInterruptedException(
+                            "*** Thrown from One2OneChannel.read (int)\n" + e.ToString()
+                        );
+                    }
+                }
 
-		Monitor.Pulse(rwMonitor);
-		return data.get();
-	}
-}
+                return data.startGet();
+            }
+        }
 
-public int startRead()
-{
-	lock(rwMonitor) {
-		if (data.getState() == ChannelDataStoreState.EMPTY)
-		{
-			try
-			{
-				Monitor.Wait(rwMonitor);
-				while (data.getState() == ChannelDataStoreState.EMPTY)
-				{
-					if (Spurious.logging)
-					{
-						SpuriousLog.record(SpuriousLog.One2OneChannelXRead);
-					}
+        public void endRead()
+        {
+            lock (rwMonitor)
+            {
+                data.endGet();
+                Monitor.Pulse(rwMonitor);
+            }
+        }
 
-					Monitor.Wait(rwMonitor);
-				}
-			}
-			catch (ThreadInterruptedException e)
-			{
-				throw new ProcessInterruptedException(
-					"*** Thrown from One2OneChannel.read (int)\n" + e.ToString()
-				);
-			}
-		}
+        /**
+         * Writes an <TT>int</TT> to the channel.
+         *
+         * @param value the integer to write to the channel.
+         */
+        public void write(int value)
+        {
+            lock (rwMonitor)
+            {
+                data.put(value);
+                if (alt != null)
+                {
+                    alt.schedule();
+                }
+                else
+                {
+                    Monitor.Pulse(rwMonitor);
+                }
 
-		return data.startGet();
-	}
-}
+                if (data.getState() == ChannelDataStoreState.FULL)
+                {
+                    try
+                    {
+                        Monitor.Wait(rwMonitor);
+                        while (data.getState() == ChannelDataStoreState.FULL)
+                        {
+                            if (Spurious.logging)
+                            {
+                                SpuriousLog.record(SpuriousLog.One2OneChannelIntXWrite);
+                            }
+                            Monitor.Wait(rwMonitor);
+                        }
+                    }
+                    catch (ThreadInterruptedException e)
+                    {
+                        throw new ProcessInterruptedException(
+                            "*** Thrown from One2OneChannelInt.write (int)\n" + e.ToString()
+                        );
+                    }
+                }
+            }
+        }
 
-public void endRead()
-{
-	lock(rwMonitor) {
-		data.endGet();
-		Monitor.Pulse(rwMonitor);
-	}
-}
+        /**
+         * turns on Alternative selection for the channel. Returns true if the
+         * channel has data that can be read immediately.
+         * <P>
+         * <I>Note: this method should only be called by the Alternative class</I>
+         *
+         * @param alt the Alternative class which will control the selection
+         * @return true if the channel has data that can be read, else false
+         */
+        public Boolean readerEnable(Alternative alt)
+        {
+            lock (rwMonitor)
+            {
+                if (data.getState() == ChannelDataStoreState.EMPTY)
+                {
+                    this.alt = alt;
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
+            }
+        }
 
-/**
- * Writes an <TT>int</TT> to the channel.
- *
- * @param value the integer to write to the channel.
- */
-public void write(int value)
-{
-	lock(rwMonitor) {
-		data.put(value);
-		if (alt != null)
-		{
-			alt.schedule();
-		}
-		else
-		{
-			Monitor.Pulse(rwMonitor);
-		}
+        /**
+         * turns off Alternative selection for the channel. Returns true if the
+         * channel contained data that can be read.
+         * <P>
+         * <I>Note: this method should only be called by the Alternative class</I>
+         *
+         * @return true if the channel has data that can be read, else false
+         */
+        public Boolean readerDisable()
+        {
+            lock (rwMonitor)
+            {
+                alt = null;
+                return data.getState() != ChannelDataStoreState.EMPTY;
+            }
+        }
 
-		if (data.getState() == ChannelDataStoreState.FULL)
-		{
-			try
-			{
-				Monitor.Wait(rwMonitor);
-				while (data.getState() == ChannelDataStoreState.FULL)
-				{
-					if (Spurious.logging)
-					{
-						SpuriousLog.record(SpuriousLog.One2OneChannelIntXWrite);
-					}
+        /**
+         * Returns whether there is data pending on this channel.
+         * <P>
+         * <I>Note: if there is, it won't go away until you read it.  But if there
+         * isn't, there may be some by the time you check the result of this method.</I>
+         * <P>
+         * This method is provided for convenience.  Its functionality can be provided
+         * by <I>Pri Alting</I> the channel against a <TT>SKIP</TT> guard, although
+         * at greater run-time and syntactic cost.  For example, the following code
+         * fragment:
+         * <PRE>
+         *   if (c.pending ()) {
+         *     int x = c.read ();
+         *     ...  do something with x
+         *   } else (
+         *     ...  do something else
+         *   }
+         * </PRE>
+         * is equivalent to:
+         * <PRE>
+         *   if (c_pending.priSelect () == 0) {
+         *     int x = c.read ();
+         *     ...  do something with x
+         *   } else (
+         *     ...  do something else
+         * }
+         * </PRE>
+         * where earlier would have had to have been declared:
+         * <PRE>
+         * readonly Alternative c_pending =
+         *   new Alternative (new Guard[] {c, new Skip ()});
+         * </PRE>
+         *
+         * @return state of the channel.
+         */
+        public Boolean readerPending()
+        {
+            lock (rwMonitor)
+            {
+                return (data.getState() != ChannelDataStoreState.EMPTY);
+            }
+        }
 
-					Monitor.Wait(rwMonitor);
-				}
-			}
-			catch (ThreadInterruptedException e)
-			{
-				throw new ProcessInterruptedException(
-					"*** Thrown from One2OneChannelInt.write (int)\n" + e.ToString()
-				);
-			}
-		}
-	}
-}
+        //  No poison in these channels:
+        public void writerPoison(int strength)
+        {
+        }
 
-/**
- * turns on Alternative selection for the channel. Returns true if the
- * channel has data that can be read immediately.
- * <P>
- * <I>Note: this method should only be called by the Alternative class</I>
- *
- * @param alt the Alternative class which will control the selection
- * @return true if the channel has data that can be read, else false
- */
-public Boolean readerEnable(Alternative alt)
-{
-	lock(rwMonitor) {
-		if (data.getState() == ChannelDataStoreState.EMPTY)
-		{
-			this.alt = alt;
-			return false;
-		}
-		else
-		{
-			return true;
-		}
-	}
-}
-
-/**
- * turns off Alternative selection for the channel. Returns true if the
- * channel contained data that can be read.
- * <P>
- * <I>Note: this method should only be called by the Alternative class</I>
- *
- * @return true if the channel has data that can be read, else false
- */
-public Boolean readerDisable()
-{
-	lock(rwMonitor) {
-		alt = null;
-		return data.getState() != ChannelDataStoreState.EMPTY;
-	}
-}
-
-/**
- * Returns whether there is data pending on this channel.
- * <P>
- * <I>Note: if there is, it won't go away until you read it.  But if there
- * isn't, there may be some by the time you check the result of this method.</I>
- * <P>
- * This method is provided for convenience.  Its functionality can be provided
- * by <I>Pri Alting</I> the channel against a <TT>SKIP</TT> guard, although
- * at greater run-time and syntactic cost.  For example, the following code
- * fragment:
- * <PRE>
- *   if (c.pending ()) {
- *     int x = c.read ();
- *     ...  do something with x
- *   } else (
- *     ...  do something else
- *   }
- * </PRE>
- * is equivalent to:
- * <PRE>
- *   if (c_pending.priSelect () == 0) {
- *     int x = c.read ();
- *     ...  do something with x
- *   } else (
- *     ...  do something else
- * }
- * </PRE>
- * where earlier would have had to have been declared:
- * <PRE>
- * readonly Alternative c_pending =
- *   new Alternative (new Guard[] {c, new Skip ()});
- * </PRE>
- *
- * @return state of the channel.
- */
-public Boolean readerPending()
-{
-	lock(rwMonitor) {
-		return (data.getState() != ChannelDataStoreState.EMPTY);
-	}
-}
-
-//  No poison in these channels:
-public void writerPoison(int strength)
-{
-}
-
-public void readerPoison(int strength)
-{
-}
-	}
+        public void readerPoison(int strength)
+        {
+        }
+    }
 }

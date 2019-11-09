@@ -31,12 +31,9 @@ using CSPutil;
 
 namespace CSPlang
 {
-
     /**
      * Defines an interface for a factory that can create arrays of channels with user-definable
      * buffering semantics.
-     *
-     *
      */
     public interface BufferedChannelArrayFactory
     {

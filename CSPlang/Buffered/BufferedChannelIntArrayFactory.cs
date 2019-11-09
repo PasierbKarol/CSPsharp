@@ -32,22 +32,20 @@ using CSPutil;
 namespace CSPlang
 {
     /**
- * Defines an interface for a factory that can create arrays of integer carrying channels with
- * user-definable buffering semantics.
- *
- *
- */
+     * Defines an interface for a factory that can create arrays of integer carrying channels with
+     * user-definable buffering semantics.
+     */
 
     public interface BufferedChannelIntArrayFactory
     {
-        /**
-    * Creates a populated array of <code>n</code> <code>One2One</code> channels with the
-    * specified buffering behaviour.
-    *
-    * @param buffer the buffer implementation to use.
-    * @param n the size of the array.
-    * @return the created array of channels.
-    */
+       /**
+        * Creates a populated array of <code>n</code> <code>One2One</code> channels with the
+        * specified buffering behaviour.
+        *
+        * @param buffer the buffer implementation to use.
+        * @param n the size of the array.
+        * @return the created array of channels.
+        */
         One2OneChannelInt[] createOne2One(ChannelDataStoreInt buffer, int n);
 
         /**

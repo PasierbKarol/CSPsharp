@@ -31,19 +31,14 @@ using CSPutil;
 
 namespace CSPlang
 {
-    /**
- * Defines an interface for a factory that can create channels with user-definable buffering semantics.
- *
- *
- */
     public interface BufferedChannelFactory
     {
         /**
-     * Creates a new <code>One2One</code> channel with the given buffering behaviour.
-     *
-     * @param buffer the buffer implementation to use.
-     * @return the created channel.
-     */
+         * Creates a new <code>One2One</code> channel with the given buffering behaviour.
+         *
+         * @param buffer the buffer implementation to use.
+         * @return the created channel.
+         */
         One2OneChannel createOne2One(ChannelDataStore buffer);
 
         /**
@@ -69,6 +64,5 @@ namespace CSPlang
          * @return the created channel.
          */
         Any2AnyChannel createAny2Any(ChannelDataStore buffer);
-
     }
 }
