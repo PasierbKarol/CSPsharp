@@ -26,68 +26,60 @@
 //                                                                  //
 //////////////////////////////////////////////////////////////////////
 
-
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace CSPlang
 {
-
     /**
- * This extends {@link Guard} and {@link ChannelInput}
- * to enable a process to choose between many object input (and other) events.
- * <H2>Description</H2>
- * <TT>AltingChannelInput</TT> extends {@link Guard} and {@link ChannelInput}
- * to enable a process
- * to choose between many object input (and other) events.  The methods inherited from
- * <TT>Guard</TT> are of no concern to users of this package.
- * </P>
- * <H2>Example</H2>
- * <PRE>
- * import jcsp.lang.*;
- * <I></I>
- * public class AltingExample implements CSProcess {
- * <I></I>
- *   private final AltingChannelInput in0, in1;
- *   <I></I>
- *   public AltingExample (final AltingChannelInput in0,
- *                         final AltingChannelInput in1) {
- *     this.in0 = in0;
- *     this.in1 = in1;
- *   }
- * <I></I>
- *   public void run () {
- * <I></I>
- *     final Guard[] altChans = {in0, in1};
- *     final Alternative alt = new Alternative (altChans);
- * <I></I>
- *     while (true) {
- *       switch (alt.select ()) {
- *         case 0:
- *           System.out.println ("in0 read " + in0.read ());
- *         break;
- *         case 1:
- *           System.out.println ("in1 read " + in1.read ());
- *         break;
- *       }
- *     }
- * <I></I>
- *   }
- * <I></I>
- * }
- * </PRE>
- *
- * @see jcsp.lang.Guard
- * @see jcsp.lang.Alternative
- * @author P.D.Austin and P.H.Welch
- */
-
-
+     * This extends {@link Guard} and {@link ChannelInput}
+     * to enable a process to choose between many object input (and other) events.
+     * <H2>Description</H2>
+     * <TT>AltingChannelInput</TT> extends {@link Guard} and {@link ChannelInput}
+     * to enable a process
+     * to choose between many object input (and other) events.  The methods inherited from
+     * <TT>Guard</TT> are of no concern to users of this package.
+     * </P>
+     * <H2>Example</H2>
+     * <PRE>
+     * import jcsp.lang.*;
+     * <I></I>
+     * public class AltingExample implements CSProcess {
+     * <I></I>
+     *   private final AltingChannelInput in0, in1;
+     *   <I></I>
+     *   public AltingExample (final AltingChannelInput in0,
+     *                         final AltingChannelInput in1) {
+     *     this.in0 = in0;
+     *     this.in1 = in1;
+     *   }
+     * <I></I>
+     *   public void run () {
+     * <I></I>
+     *     final Guard[] altChans = {in0, in1};
+     *     final Alternative alt = new Alternative (altChans);
+     * <I></I>
+     *     while (true) {
+     *       switch (alt.select ()) {
+     *         case 0:
+     *           System.out.println ("in0 read " + in0.read ());
+     *         break;
+     *         case 1:
+     *           System.out.println ("in1 read " + in1.read ());
+     *         break;
+     *       }
+     *     }
+     * <I></I>
+     *   }
+     * <I></I>
+     * }
+     * </PRE>
+     *
+     * @see jcsp.lang.Guard
+     * @see jcsp.lang.Alternative
+     * @author P.D.Austin and P.H.Welch
+     */
     public abstract class AltingChannelInput : Guard, ChannelInput
     {
-        // nothing else to add ... except ...
-
         /**
          * Returns whether there is data pending on this channel.
          * <P>
@@ -98,11 +90,9 @@ namespace CSPlang
          */
         public abstract Boolean pending();
 
-
         public abstract void poison(int strength);
 
         public abstract object read();
-
 
         public abstract object startRead();
 

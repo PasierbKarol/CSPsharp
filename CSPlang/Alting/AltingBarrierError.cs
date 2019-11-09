@@ -26,45 +26,41 @@ using System;
 
 namespace CSPlang
 {
-
     /**
- * This is thrown for an illegal operation on an {@link AltingBarrier}.
- *
- * <H2>Description</H2>
- * Currently, there are the following causes:
- * <UL>
- *   <LI>
- *     different threads trying to operate on the same front-end;
- *   <LI>
- *     attempt to use as a {@link Guard} whilst resigned;
- *   <LI>
- *     attempt to {@link AltingBarrier#sync sync} whilst resigned;
- *   <LI>
- *     attempt to {@link AltingBarrier#resign resign} whilst resigned;
- *   <LI>
- *     attempt to {@link AltingBarrier#enroll enroll} whilst enrolled;
- *   <LI>
- *     attempt to {@link AltingBarrier#expand expand} whilst resigned;
- *   <LI>
- *     attempt to {@link AltingBarrier#contract contract} whilst resigned;
- *   <LI>
- *     attempt to {@link AltingBarrier#contract contract} with an array
- *     of front-ends not supplied by {@link AltingBarrier#expand expand};
- *   <LI>
- *     attempt to {@link AltingBarrier#mark mark} whilst resigned (caused
- *     by a process transfering a <i>front-end</i> in that state).
- * </UL>
- *
- * @author P.H.Welch
- */
-
-
+     * This is thrown for an illegal operation on an {@link AltingBarrier}.
+     *
+     * <H2>Description</H2>
+     * Currently, there are the following causes:
+     * <UL>
+     *   <LI>
+     *     different threads trying to operate on the same front-end;
+     *   <LI>
+     *     attempt to use as a {@link Guard} whilst resigned;
+     *   <LI>
+     *     attempt to {@link AltingBarrier#sync sync} whilst resigned;
+     *   <LI>
+     *     attempt to {@link AltingBarrier#resign resign} whilst resigned;
+     *   <LI>
+     *     attempt to {@link AltingBarrier#enroll enroll} whilst enrolled;
+     *   <LI>
+     *     attempt to {@link AltingBarrier#expand expand} whilst resigned;
+     *   <LI>
+     *     attempt to {@link AltingBarrier#contract contract} whilst resigned;
+     *   <LI>
+     *     attempt to {@link AltingBarrier#contract contract} with an array
+     *     of front-ends not supplied by {@link AltingBarrier#expand expand};
+     *   <LI>
+     *     attempt to {@link AltingBarrier#mark mark} whilst resigned (caused
+     *     by a process transfering a <i>front-end</i> in that state).
+     * </UL>
+     *
+     * @author P.H.Welch
+     */
     public class AltingBarrierError : Exception
     {
-        public AltingBarrierError (String s) : base(s)
+        public AltingBarrierError(String s) : base(s)
         {
 
         }
-
     }
 }

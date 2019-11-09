@@ -21,45 +21,41 @@ using System;
 
 namespace CSPlang.Alting
 {
-
     class AltingChannelOutputSymmetricImpl : AltingChannelOutput, MultiwaySynchronisation
     {
-
-        private readonly AltingBarrier ab;
-
+        private readonly AltingBarrier altingBarrier;
         private readonly ChannelOutput Out;
-
         private Boolean syncDone = false;
 
         public AltingChannelOutputSymmetricImpl(
-            AltingBarrier ab, ChannelOutput Out)
+            AltingBarrier altingBarrier, ChannelOutput Out)
         {
-            this.ab = ab;
+            this.altingBarrier = altingBarrier;
             this.Out = Out;
         }
 
-        public override Boolean enable(Alternative alt)
+        public override Boolean enable(Alternative alternative)
         {
-            syncDone = ab.enable(alt);
+            syncDone = altingBarrier.enable(alternative);
             return syncDone;
         }
 
         public override Boolean disable()
         {
-            syncDone = ab.disable();
+            syncDone = altingBarrier.disable();
             return syncDone;
         }
 
-        public void write(Object o)
+        public void write(Object data)
         {
-            if (!syncDone) ab.sync();
+            if (!syncDone) altingBarrier.sync();
             syncDone = false;
-            Out.write(o);
+            Out.write(data);
         }
 
         public override Boolean pending()
         {
-            syncDone = ab.poll(10);
+            syncDone = altingBarrier.poll(10);
             return syncDone;
         }
 
@@ -67,8 +63,5 @@ namespace CSPlang.Alting
         {
             Out.poison(strength);
         }
-
-
-
     }
 }

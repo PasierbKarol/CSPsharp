@@ -27,17 +27,12 @@
 //////////////////////////////////////////////////////////////////////
 
 using System;
-using System.Collections.Generic;
-using System.Text;
-
 namespace CSPlang.Alting
 {
     /**
- * This class does not need to be used by standard JCSP users. It is exposed so that the connection
- * mechanism can be extended for custom connections.
- *
- *
- */
+     * This class does not need to be used by standard JCSP users. It is exposed so that the connection
+     * mechanism can be extended for custom connections.
+     */
 
     public class AltingConnectionClientImpl : AltingConnectionClient
     {
@@ -78,11 +73,11 @@ namespace CSPlang.Alting
          *
          * @param data	the <code>Object</code> to send to the server.
          */
-        public void request(Object data)// throws IllegalStateException
+        public void request(Object data)// throws IllegalStateException //TODO is there a way to make it work like in Java?
         {
             try
             {
-                if (currentClientState == CLIENT_STATE_MADE_REQ)
+                if (currentClientState == CLIENT_STATE_MADE_REQ) //TOFO make the commented statement below work
                     //throw new IllegalStateException ("Cannot call request(Object) twice without calling reply().");
                     //this will Claim the use of the client
                     if (currentClientState == CLIENT_STATE_CLOSED)
@@ -101,7 +96,6 @@ namespace CSPlang.Alting
             }
             catch (InvalidOperationException)
             {
-
                 throw;
             }
         }
@@ -116,7 +110,7 @@ namespace CSPlang.Alting
         {
             try
             {
-                //moved it out from the if statement below and had to initialize it with empty object - KP
+                //moved it out from the if statement below and had to initialize it with empty object
                 ConnectionServerMessage serverReply = new ConnectionServerMessage();
 
                 if (currentClientState != CLIENT_STATE_MADE_REQ)
@@ -129,7 +123,6 @@ namespace CSPlang.Alting
                     {
                         throw new InvalidOperationException("Cannot call reply() on a ConnectionClient that is not waiting for a reply.");
                     }
-
                 }
 
                 //check whether the server closed the connection
@@ -145,7 +138,6 @@ namespace CSPlang.Alting
             }
             catch (InvalidOperationException)
             {
-
                 throw;
             }
         }
@@ -164,7 +156,6 @@ namespace CSPlang.Alting
             {
                 throw new InvalidOperationException("Can only call isOpen() just after a reply has been received from the server.");
             }
-
             return currentClientState == CLIENT_STATE_OPEN;
         }
 

@@ -26,28 +26,22 @@
 //                                                                  //
 //////////////////////////////////////////////////////////////////////
 
-
 using System;
 
 namespace CSPlang.Alting
 {
-
     /**
- * This class does not need to be used by standard JCSP users. It is exposed so that the connection
- * mechanism can be extended for custom connections.
- *
- *
- */
-
-
+     * This class does not need to be used by standard JCSP users. It is exposed so that the connection
+     * mechanism can be extended for custom connections.
+     */
     public class AltingConnectionServerImpl : AltingConnectionServer
     {
         /**
-     * Server state. The server is initially <tt>CLOSED</tt> the first request will take it to the
-     * <tt>RECEIVED</tt> state. A reply will take it back to <tt>OPEN</tt> or <tt>CLOSED</tt> depending
-     * on the mode of reply. From the <tt>OPEN</tt> or <tt>CLOSED</tt> state a further request can
-     * occur.
-     */
+         * Server state. The server is initially <tt>CLOSED</tt> the first request will take it to the
+         * <tt>RECEIVED</tt> state. A reply will take it back to <tt>OPEN</tt> or <tt>CLOSED</tt> depending
+         * on the mode of reply. From the <tt>OPEN</tt> or <tt>CLOSED</tt> state a further request can
+         * occur.
+         */
         protected internal static readonly int SERVER_STATE_CLOSED = 1;
 
         /**
@@ -76,7 +70,7 @@ namespace CSPlang.Alting
 
         private ChannelOutput toClient = null;
 
-        private ConnectionServerMessage msg = null;
+        private ConnectionServerMessage message = null;
 
         /**
          * Constructs a new server instance. This must be called by a subclass which is responsible for
@@ -105,21 +99,21 @@ namespace CSPlang.Alting
             {
                 throw new InvalidOperationException("Cannot call request() twice on ConnectionServer without replying to the client first.");
             }
-            ConnectionClientMessage msg = (ConnectionClientMessage)currentInputChannel.read();
+            ConnectionClientMessage message = (ConnectionClientMessage)currentInputChannel.read();
 
             if (currentServerState == SERVER_STATE_CLOSED)
             {
-                if (msg is ConnectionClientOpenMessage)
+                if (message is ConnectionClientOpenMessage)
                 {
                     //channel to use to reply to client
-                    toClient = ((ConnectionClientOpenMessage)msg).replyChannel;
+                    toClient = ((ConnectionClientOpenMessage)message).replyChannel;
                     setAltingChannel(furtherRequestIn);
                     currentInputChannel = furtherRequestIn;
 
                     //create a new msg for connection established
                     //don't know if client implementation will have finished with
                     //message after connection closed
-                    this.msg = new ConnectionServerMessage();
+                    this.message = new ConnectionServerMessage();
                 }
                 else
                 {
@@ -127,7 +121,7 @@ namespace CSPlang.Alting
                 }
             }
             currentServerState = SERVER_STATE_RECEIVED;
-            return msg.data;
+            return message.data;
         }
 
         /**
@@ -146,11 +140,9 @@ namespace CSPlang.Alting
             }
             catch (InvalidOperationException)
             {
-
-                throw;
+                throw; //TODO shouldn't that be written differently? What should actually happen?
             }
         }
-
 
         /**
          * Sends some data back to the client after a request
@@ -170,9 +162,9 @@ namespace CSPlang.Alting
                     throw new InvalidOperationException("Cannot call reply(Object, boolean) on a ConnectionServer that has not received an unacknowledge request.");
 
                 //set open to true before replying
-                msg.data = data;
-                msg.open = !close;
-                toClient.write(msg);
+                message.data = data;
+                message.open = !close;
+                toClient.write(message);
                 if (close)
                 {
                     currentServerState = SERVER_STATE_CLOSED;
@@ -185,7 +177,6 @@ namespace CSPlang.Alting
             }
             catch (InvalidOperationException)
             {
-
                 throw;
             }
         }
@@ -212,7 +203,6 @@ namespace CSPlang.Alting
             }
             catch (InvalidOperationException)
             {
-
                 throw;
             }
         }

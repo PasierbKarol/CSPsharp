@@ -27,34 +27,23 @@
 //////////////////////////////////////////////////////////////////////
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace CSPlang.Alting
 {
     /**
- * An interface to connection.  This is used by servers which wish to
- * {@link Alternative ALT} over a connection.  Note that you cannot have
- * more than one server serving an AltingConnectionServer.
- *
- * @see ConnectionServer
- * @see ConnectionClient
- * @see Connection
- *
- *
- */
-
-
+     * An interface to connection.  This is used by servers which wish to
+     * {@link Alternative ALT} over a connection.  Note that you cannot have
+     * more than one server serving an AltingConnectionServer.
+     *
+     * @see ConnectionServer
+     * @see ConnectionClient
+     * @see Connection
+     */
     public abstract class AltingConnectionServer : Guard, ConnectionServer
     {
-        /**
-    * The channel used to ALT over.
-    */
         private AltingChannelInput altingChannel;
 
         /**
-         * Constructor.
-         *
          * Note that this is only intended for use by JCSP, and should
          * not be called by user processes.  Users should use one of the
          * subclasses.

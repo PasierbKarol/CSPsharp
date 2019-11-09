@@ -21,71 +21,64 @@ using System;
 
 namespace CSPlang.Alting
 {
-    //{{{  javadoc
-
     /**
-   * This extends {@link Guard} and {@link ChannelOutput}
-   * to enable a process
-   * to choose between many integer output (and other) events.
-   * <p>
-   * A <i>writing-end</i>, obtained only from a {@link One2OneChannelSymmetric <i>symmetric</i>}
-   * channel by invoking its <tt>out()</tt> method, will implement this interface.
-   * <H2>Description</H2>
-   * <TT>AltingChannelOutput</TT> extends {@link Guard} and {@link ChannelOutput}
-   * to enable a process
-   * to choose between many integer output (and other) events.  The methods inherited from
-   * <TT>Guard</TT> are of no concern to users of this package.
-   * </P>
-   * <H2>Example</H2>
-   * <PRE>
-   * import jcsp.lang.*;
-   * 
-   * public class AltingOutputExample implements CSProcess {
-   * 
-   *   private final AltingChannelOutput out0, out1;
-   *   
-   *   public AltingOutputExample (final AltingChannelOutput out0,
-   *                               final AltingChannelOutput out1) {
-   *     this.out0 = out0;
-   *     this.out1 = out1;
-   *   }
-   * 
-   *   public void run () {
-   * 
-   *     final Guard[] altChans = {out0, out1};
-   *     final Alternative alt = new Alternative (altChans);
-   * 
-   *     while (true) {
-   *       switch (alt.select ()) {
-   *         case 0:
-   *           out0.write (new Integer (0));
-   *           System.out.println ("out0 written");
-   *         break;
-   *         case 1:
-   *           out1.write (new Integer (1));
-   *           System.out.println ("out1 written");
-   *         break;
-   *       }
-   *     }
-   * 
-   *   }
-   * 
-   * }
-   * </PRE>
-   *
-   * @see Guard
-   * @see Alternative
-   * @see One2OneChannelSymmetric
-   * @see jcsp.lang.AltingChannelOutputInt
-   * @author P.H. Welch
-   */
-    //}}}
-
+    * This extends {@link Guard} and {@link ChannelOutput}
+    * to enable a process
+    * to choose between many integer output (and other) events.
+    * <p>
+    * A <i>writing-end</i>, obtained only from a {@link One2OneChannelSymmetric <i>symmetric</i>}
+    * channel by invoking its <tt>out()</tt> method, will implement this interface.
+    * <H2>Description</H2>
+    * <TT>AltingChannelOutput</TT> extends {@link Guard} and {@link ChannelOutput}
+    * to enable a process
+    * to choose between many integer output (and other) events.  The methods inherited from
+    * <TT>Guard</TT> are of no concern to users of this package.
+    * </P>
+    * <H2>Example</H2>
+    * <PRE>
+    * import jcsp.lang.*;
+    * 
+    * public class AltingOutputExample implements CSProcess {
+    * 
+    *   private final AltingChannelOutput out0, out1;
+    *   
+    *   public AltingOutputExample (final AltingChannelOutput out0,
+    *                               final AltingChannelOutput out1) {
+    *     this.out0 = out0;
+    *     this.out1 = out1;
+    *   }
+    * 
+    *   public void run () {
+    * 
+    *     final Guard[] altChans = {out0, out1};
+    *     final Alternative alt = new Alternative (altChans);
+    * 
+    *     while (true) {
+    *       switch (alt.select ()) {
+    *         case 0:
+    *           out0.write (new Integer (0));
+    *           System.out.println ("out0 written");
+    *         break;
+    *         case 1:
+    *           out1.write (new Integer (1));
+    *           System.out.println ("out1 written");
+    *         break;
+    *       }
+    *     }
+    * 
+    *   }
+    * 
+    * }
+    * </PRE>
+    *
+    * @see Guard
+    * @see Alternative
+    * @see One2OneChannelSymmetric
+    * @see jcsp.lang.AltingChannelOutputInt
+    * @author P.H. Welch
+    */
     public abstract class AltingChannelOutput : Guard, ChannelOutput
     {
-
-        // nothing alse to add
-
         /**
          * Returns whether the receiver is committed to read from this channel.
          * <P>

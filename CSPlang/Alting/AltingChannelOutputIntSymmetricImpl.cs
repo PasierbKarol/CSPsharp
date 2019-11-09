@@ -1,5 +1,3 @@
-
-
 //////////////////////////////////////////////////////////////////////
 //                                                                  //
 //  JCSP ("CSP for Java") Libraries                                 //
@@ -20,48 +18,43 @@
 //////////////////////////////////////////////////////////////////////
 
 using System;
-using CSPlang;
-
 namespace CSPlang.Alting
 {
     class AltingChannelOutputIntSymmetricImpl : AltingChannelOutputInt, MultiwaySynchronisation
     {
-
-        private readonly AltingBarrier ab;
-
+        private readonly AltingBarrier altingBarrier;
         private readonly ChannelOutputInt Out;
-
         private Boolean syncDone = false;
 
         public AltingChannelOutputIntSymmetricImpl(
-                AltingBarrier ab, ChannelOutputInt Out)
+                AltingBarrier altingBarrier, ChannelOutputInt Out)
         {
-            this.ab = ab;
+            this.altingBarrier = altingBarrier;
             this.Out = Out;
         }
 
-        public override Boolean enable(Alternative alt)
+        public override Boolean enable(Alternative alternative)
         {
-            syncDone = ab.enable(alt);
+            syncDone = altingBarrier.enable(alternative);
             return syncDone;
         }
 
         public override Boolean disable()
         {
-            syncDone = ab.disable();
+            syncDone = altingBarrier.disable();
             return syncDone;
         }
 
-        public void write(int i)
+        public void write(int data)
         {
-            if (!syncDone) ab.sync();
+            if (!syncDone) altingBarrier.sync();
             syncDone = false;
-            Out.write(i);
+            Out.write(data);
         }
 
         public override Boolean pending()
         {
-            syncDone = ab.poll(10);
+            syncDone = altingBarrier.poll(10);
             return syncDone;
         }
 
@@ -69,8 +62,5 @@ namespace CSPlang.Alting
         {
             Out.poison(strength);
         }
-
-
-
     }
 }

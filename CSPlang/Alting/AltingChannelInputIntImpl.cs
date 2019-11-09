@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace CSPlang.Alting
 {
@@ -14,7 +12,6 @@ namespace CSPlang.Alting
             channel = _channel;
             immunity = _immunity;
         }
-
 
         public override Boolean pending()
         {

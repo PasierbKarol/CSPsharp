@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Text;
 
 namespace CSPlang
 {
     public class AltingChannelInputImpl : AltingChannelInput
     {
-
         private ChannelInternals channel;
         private int immunity;
 
@@ -16,7 +12,6 @@ namespace CSPlang
             channel = _channel;
             immunity = _immunity;
         }
-
 
         public override Boolean pending()
         {
@@ -40,8 +35,6 @@ namespace CSPlang
 
         public override Object read()
         {
-            //Debug.WriteLine("Reading channel ", "Karol");
-
             return channel.read();
         }
 
@@ -57,6 +50,5 @@ namespace CSPlang
                 channel.readerPoison(strength);
             }
         }
-
     }
 }

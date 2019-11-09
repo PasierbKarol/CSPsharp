@@ -26,41 +26,29 @@
 //                                                                  //
 //////////////////////////////////////////////////////////////////////
 
-
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace CSPlang.Alting
 {
     /**
- * <p>
- * This class is sub-classed by JCSP.NET classes
- * to provide <code>ConnectionClient</code> objects which can
- * have their <code>receive()</code> method alted over.
- * </p>
- * <p>
- * Although JCSP users could sub-class this class, under most
- * circumstances, there is no need. <code>AltingConnectionClient</code>
- * objects can be constructed using one of the Connection factory
- * mechanisms. See <code>{@link Connection}</code> and
- * <code>{@link StandardConnectionFactory}</code>.
- * </p>
- *
- *
- */
-
-    public abstract class AltingConnectionClient: Guard, ConnectionClient
-    {
-        /**
-     * The channel used to ALT over.
+     * <p>
+     * This class is sub-classed by JCSP.NET classes
+     * to provide <code>ConnectionClient</code> objects which can
+     * have their <code>receive()</code> method alted over.
+     * </p>
+     * <p>
+     * Although JCSP users could sub-class this class, under most
+     * circumstances, there is no need. <code>AltingConnectionClient</code>
+     * objects can be constructed using one of the Connection factory
+     * mechanisms. See <code>{@link Connection}</code> and
+     * <code>{@link StandardConnectionFactory}</code>.
+     * </p>
      */
+    public abstract class AltingConnectionClient : Guard, ConnectionClient
+    {
         private AltingChannelInput altingChannel;
 
         /**
-         * <p>
-         * Constructor.
-         * </p>
          * <p>
          * Note that this is only intended for use by JCSP, and should
          * not be called by user processes.  Users should use one of the

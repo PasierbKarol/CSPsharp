@@ -23,12 +23,9 @@
 *************************************************************************/
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace CSPlang
 {
-
     public class AltingBarrierBase
     {
     /**
@@ -58,17 +55,17 @@ namespace CSPlang
          * @return the new front-ends.
          * 
          */
-        public AltingBarrier[] expand(int n)
+        public AltingBarrier[] expand(int index)
         {
-            AltingBarrier[] ab = new AltingBarrier[n];
-            for (int i = 0; i < n; i++)
+            AltingBarrier[] altingBarrier = new AltingBarrier[index];
+            for (int i = 0; i < index; i++)
             {
                 frontEnds = new AltingBarrier(this, frontEnds);
-                ab[i] = frontEnds;
+                altingBarrier[i] = frontEnds;
             }
-            enrolled += n;
-            countdown += n;
-            return ab;
+            enrolled += index;
+            countdown += index;
+            return altingBarrier;
         }
 
         /*
@@ -103,25 +100,24 @@ namespace CSPlang
          *   This array must be unaltered from one previously delivered by
          *   an {@link #expand expand}.
          */
-        internal void contract(AltingBarrier[] ab)
+        internal void contract(AltingBarrier[] altingBarriers)
         {
-
             // assume: (ab != null) && (ab.Length > 0)
-            AltingBarrier first = ab[0];
+            AltingBarrier first = altingBarriers[0];
 
             // counts the number of front-ends whose (hopefully terminated) processes
             // were still enrolled.
             int discard = 0;
 
-            AltingBarrier fa = null;
-            AltingBarrier fb = frontEnds;
-            while ((fb != null) && (fb != first))
+            AltingBarrier previousFrontBarrier = null;
+            AltingBarrier nextFrontBarrier = frontEnds;
+            while ((nextFrontBarrier != null) && (nextFrontBarrier != first))
             {
-                fa = fb;
-                fb = fb.next;
+                previousFrontBarrier = nextFrontBarrier;
+                nextFrontBarrier = nextFrontBarrier.next;
             }
 
-            if (fb == null)
+            if (nextFrontBarrier == null)
             {
                 throw new AltingBarrierError(
                   "\n*** Could not find first front-end in AltingBarrier contract."
@@ -134,52 +130,52 @@ namespace CSPlang
             // of the code does not depend on values of "ab", subsequent to their
             // anullment.
 
-            ab[0].baseClass = null;
-            ab[0] = null;
+            altingBarriers[0].baseClass = null;
+            altingBarriers[0] = null;
 
             // deduce: (fb == ab[0]) && (fb != null)
             // deduce: (fa == null) || (fa.next == fb)
             // deduce: (fa == null) <==> (frontEnds == ab[0])
             // deduce: (fa != null) <==> (fa.next == ab[0])
 
-            for (int i = 1; i < ab.Length; i++)
+            for (int i = 1; i < altingBarriers.Length; i++)
             {
                 // invariant: (fb == ab[i-1]) && (fb != null)
-                if (fb.enrolled)
+                if (nextFrontBarrier.enrolled)
                     discard++;
-                fb = fb.next;
-                if (fb == null)
+                nextFrontBarrier = nextFrontBarrier.next;
+                if (nextFrontBarrier == null)
                 {
                     throw new AltingBarrierError(
                       "\n*** Could not find second (or later) front-end in AltingBarrier contract."
                     );
                 }
-                if (fb != ab[i])
+                if (nextFrontBarrier != altingBarriers[i])
                 {
                     throw new AltingBarrierError(
                       "\n*** Removal array in AltingBarrier contract not one delivered by expand."
                     );
                 }
                 // deduce: (fb == ab[i]) && (fb != null)
-                ab[i].baseClass = null;
-                ab[i] = null;
+                altingBarriers[i].baseClass = null;
+                altingBarriers[i] = null;
             }
 
             // deduce: (fb == ab[(ab.Length) - 1]) && (fb != null)
 
-            if (fb.enrolled)
+            if (nextFrontBarrier.enrolled)
                 discard++;
 
             // deduce: (fa == null) <==> (frontEnds == ab[0])   [NO CHANGE]
             // deduce: (fa != null) <==> (fa.next == ab[0])     [NO CHANGE]
 
-            if (fa == null)
+            if (previousFrontBarrier == null)
             {
-                frontEnds = fb.next;
+                frontEnds = nextFrontBarrier.next;
             }
             else
             {
-                fa.next = fb.next;
+                previousFrontBarrier.next = nextFrontBarrier.next;
             }
 
             enrolled -= discard;
@@ -191,11 +187,11 @@ namespace CSPlang
                 {
                     AltingBarrierCoordinate.startEnable();
                     AltingBarrierCoordinate.startDisable(enrolled);
-                    AltingBarrier fe = frontEnds;
-                    while (fe != null)
+                    AltingBarrier frontEndBarrier = frontEnds;
+                    while (frontEndBarrier != null)
                     {
-                        fe.schedule();
-                        fe = fe.next;
+                        frontEndBarrier.schedule();
+                        frontEndBarrier = frontEndBarrier.next;
                     }
                 }
             }
@@ -220,20 +216,18 @@ namespace CSPlang
          *   This array must be unaltered from one previously delivered by
          *   an {@link #expand expand}.
          */
-        internal void contract(AltingBarrier ab)
+        internal void contract(AltingBarrier altingBarrier)
         {
-
             // assume: (ab != null)
-
-            AltingBarrier fa = null;
-            AltingBarrier fb = frontEnds;
-            while ((fb != null) && (fb != ab))
+            AltingBarrier previousFrontBarrier = null;
+            AltingBarrier nextFrontBarrier = frontEnds;
+            while ((nextFrontBarrier != null) && (nextFrontBarrier != altingBarrier))
             {
-                fa = fb;
-                fb = fb.next;
+                previousFrontBarrier = nextFrontBarrier;
+                nextFrontBarrier = nextFrontBarrier.next;
             }
 
-            if (fb == null)
+            if (nextFrontBarrier == null)
             {
                 throw new AltingBarrierError(
                   "\n*** Could not find front-end in AltingBarrier contract."
@@ -245,18 +239,18 @@ namespace CSPlang
             // deduce: (fa == null) <==> (frontEnds == ab)
             // deduce: (fa != null) <==> (fa.next == ab)
 
-            if (fa == null)
+            if (previousFrontBarrier == null)
             {
-                frontEnds = fb.next;
+                frontEnds = nextFrontBarrier.next;
             }
             else
             {
-                fa.next = fb.next;
+                previousFrontBarrier.next = nextFrontBarrier.next;
             }
 
-            ab.baseClass = null;
+            altingBarrier.baseClass = null;
 
-            if (ab.enrolled)
+            if (altingBarrier.enrolled)
             {
                 enrolled--;
                 countdown--;
@@ -268,11 +262,11 @@ namespace CSPlang
                 {
                     AltingBarrierCoordinate.startEnable();
                     AltingBarrierCoordinate.startDisable(enrolled);
-                    AltingBarrier fe = frontEnds;
-                    while (fe != null)
+                    AltingBarrier frontEndBarrier = frontEnds;
+                    while (frontEndBarrier != null)
                     {
-                        fe.schedule();
-                        fe = fe.next;
+                        frontEndBarrier.schedule();
+                        frontEndBarrier = frontEndBarrier.next;
                     }
                 }
             }
@@ -301,11 +295,11 @@ namespace CSPlang
             {
                 countdown = enrolled;
                 AltingBarrierCoordinate.startDisable(enrolled);
-                AltingBarrier fe = frontEnds;
-                while (fe != null)
+                AltingBarrier frontEndBarrier = frontEnds;
+                while (frontEndBarrier != null)
                 {
-                    fe.schedule();
-                    fe = fe.next;
+                    frontEndBarrier.schedule();
+                    frontEndBarrier = frontEndBarrier.next;
                 }
                 return true;
             }
@@ -355,11 +349,11 @@ namespace CSPlang
                 {
                     AltingBarrierCoordinate.startEnable();
                     AltingBarrierCoordinate.startDisable(enrolled);
-                    AltingBarrier fe = frontEnds;
-                    while (fe != null)
+                    AltingBarrier frontEndBarrier = frontEnds;
+                    while (frontEndBarrier != null)
                     {
-                        fe.schedule();
-                        fe = fe.next;
+                        frontEndBarrier.schedule();
+                        frontEndBarrier = frontEndBarrier.next;
                     }
                 }
             }
@@ -376,6 +370,5 @@ namespace CSPlang
             enrolled++;
             countdown++;
         }
-
     }
 }
