@@ -27,159 +27,159 @@ using CSPnet2.NetNode;
 
 namespace CSPnet2.CNS
 {
-/**
- * <p>
- * This class is the Channel Name Server's main server process class.
- * </p>
- * <p>
- * This class should only be instantiated at Nodes wishing to run a server process. Although this class does not need to
- * be used by clients wishing to interact with a server, it does provide some convenient static methods for client code
- * to use. There are static versions of the methods provided in <code>CNSService</code> and there are also static
- * factory methods for constructing CNS registered channel objects.
- * </p>
- * <p>
- * <h3>Server Installation</h3>
- * </p>
- * <p>
- * Channel Name Servers may be run either on a dedicated Node or else on the same Node as one of the user Nodes. The
- * former approach is recommended for most situations but for smaller scale use, the latter approach may suffice.
- * </p>
- * <p>
- * The following example initialises a Node and installs a Channel Name Server. It then proceeds to install a CNS client
- * service and creates and resolves a channel. The example does not proceed to do anything else but could be used as the
- * framework for an application wishing to host its own Channel Name Server.
- * </p>
- * <p>
- * <code>
- * import jcsp.lang.*; <br>
- * import jcsp.net2.*; <br>
- * import jcsp.net2.cns.*; <br>
- * import jcsp.net2.tcpip.*; <br>
- * import java.io.IOException; <br>
- * public class CNSInSameJVM implements CSProcess { <br>
- * //main method for running example <br>
- * public static void main(String[] args) { <br>
- *  CNSInSameJVM proc = new CNSInSameJVM(); <br>
- *  proc.run(); <br>
- * } <br>
- * public void run() { <br>
- *  NodeKey key = null; <br>
- *  NodeID localNodeID = null; <br>
- *  try { <br>
- *      //Initialize a Node that does not have a CNS client <br>
- *      key = Node.getInstance().init(new TCPIPNodeAddress(7890)); <br>
- *      new ProcessManager(CNS.getInstance()).start(); <br>
- *      //Dedicated server code could stop here <br>
- *      //Initialise the CNS client <br>
- *      //use the local NodeID to connect to the CNS <br>
- *      localNodeID = Node.getInstance().getNodeID(); <br>
- *      CNS.init(localNodeID); <br>
- *      // creating Channel named &quot;in&quot; <br>
- *      NetChannelInput in = CNS.net2one(&quot;in&quot;); <br>
- *      //resolve the channel <br>
- *      NetChannelOutput out = CNS.one2net(&quot;in&quot;); <br>
- *      //could now use these channels for something!! <br>
- *      //but this is only a test so will terminate <br>
- *  } catch (NodeInitFailedException e) { <br>
- *      e.printStackTrace(); <br>
- *  } catch (IOException e) { <br>
- *      e.printStackTrace(); <br>
- *  } <br>
- *  Node.log.log(this, &quot;Done.&quot;); } } <br>
- * </code>
- * </p>
- * <p>
- * <h3>Channel Factory Methods</h3>
- * </p>
- * <p>
- * In order to construct a <code>ChannelInput</code> object which can be resolved by other users of a channel name
- * server, a client simply needs to to do this:
- * </p>
- * <code>
- * NetChannelInput in = CNS.net2one(&quot;Fred&quot;);
- * </code>
- * <p>
- * Another process using the same channel name server can create a <code>ChannelOutput</code> that will send objects
- * to this channel by do this:
- * </p>
- * <code>
- * NetChannelOutput out = CNS.one2net(&quot;Fred&quot;);
- * </code>
- * <p>
- * When these factory methods are called, various resources are used within the JCSP infrastructure. A channel name will
- * be registered and held in the channel name server. These resources are taken for the duration of the JCSP Node's
- * runtime.
- * </p>
- * <p>
- * This is an example "Hello World" program which contains two inner classes with main methods, each of which can be run
- * in separate JVMs.
- * </p>
- * 
- * <pre>
- * import jcsp.lang.*;
- * import jcsp.net2.*;
- * import jcsp.net2.cns.*;
- * 
- * public class TestCNS
- * {
- *     public static class Rx
- *     {
- *         public static void main(String[] args)
- *         {
- *             try
- *             {
- *                 Node.getInstance().init(new TCPIPNodeAddress(7890));
- *                 NetChannelInput in = CNS.net2one(&quot;rx.in&quot;);
- *                 System.out.println(in.read());
- *             }
- *             catch (Exception e)
- *             {
- *                 e.printStackTrace();
- *             }
- *         }
- *     }
- * 
- *     public static class Tx
- *     {
- *         public static void main(String[] args)
- *         {
- *             try
- *             {
- *                 Node.getInstance().init(new TCPIPNodeAddress(7890));
- *                 NetChannelOutput out = CNS.one2net(&quot;rx.in&quot;);
- *                 out.write(&quot;Hello World&quot;);
- *             }
- *             catch (Exception e)
- *             {
- *                 e.printStackTrace();
- *             }
- *         }
- *     }
- * }
- * </pre>
- * 
- * <p>
- * This code can be compiled and then the following run at two command prompts:
- * </p>
- * <p>
- * java TestCNS$Rx
- * </p>
- * <p>
- * java TestCNS$Tx
- * </p>
- * <p>
- * The programs will connect to a default channel name server. The Rx program will create a <code>NetChannelInput</code>
- * and wait for a message on the channel. Once it has received the message, it prints it, then terminates. The Tx
- * program creates a <code>NetChannelOutput</code> that will send to the Rx program's input channel. It sends a "Hello
- * World" message. Once this has been accepted by the Rx process, it terminates.
- * </p>
- * </p>
- * 
- * @see CNSService
- * @see Node
- * @author Quickstone Technologies Limited
- * @author Kevin Chalmers (updates for new architecture)
- */
+    /**
+     * <p>
+     * This class is the Channel Name Server's main server process class.
+     * </p>
+     * <p>
+     * This class should only be instantiated at Nodes wishing to run a server process. Although this class does not need to
+     * be used by clients wishing to interact with a server, it does provide some convenient static methods for client code
+     * to use. There are static versions of the methods provided in <code>CNSService</code> and there are also static
+     * factory methods for constructing CNS registered channel objects.
+     * </p>
+     * <p>
+     * <h3>Server Installation</h3>
+     * </p>
+     * <p>
+     * Channel Name Servers may be run either on a dedicated Node or else on the same Node as one of the user Nodes. The
+     * former approach is recommended for most situations but for smaller scale use, the latter approach may suffice.
+     * </p>
+     * <p>
+     * The following example initialises a Node and installs a Channel Name Server. It then proceeds to install a CNS client
+     * service and creates and resolves a channel. The example does not proceed to do anything else but could be used as the
+     * framework for an application wishing to host its own Channel Name Server.
+     * </p>
+     * <p>
+     * <code>
+     * import jcsp.lang.*; <br>
+     * import jcsp.net2.*; <br>
+     * import jcsp.net2.cns.*; <br>
+     * import jcsp.net2.tcpip.*; <br>
+     * import java.io.IOException; <br>
+     * public class CNSInSameJVM implements CSProcess { <br>
+     * //main method for running example <br>
+     * public static void main(String[] args) { <br>
+     *  CNSInSameJVM proc = new CNSInSameJVM(); <br>
+     *  proc.run(); <br>
+     * } <br>
+     * public void run() { <br>
+     *  NodeKey key = null; <br>
+     *  NodeID localNodeID = null; <br>
+     *  try { <br>
+     *      //Initialize a Node that does not have a CNS client <br>
+     *      key = Node.getInstance().init(new TCPIPNodeAddress(7890)); <br>
+     *      new ProcessManager(CNS.getInstance()).start(); <br>
+     *      //Dedicated server code could stop here <br>
+     *      //Initialise the CNS client <br>
+     *      //use the local NodeID to connect to the CNS <br>
+     *      localNodeID = Node.getInstance().getNodeID(); <br>
+     *      CNS.init(localNodeID); <br>
+     *      // creating Channel named &quot;in&quot; <br>
+     *      NetChannelInput in = CNS.net2one(&quot;in&quot;); <br>
+     *      //resolve the channel <br>
+     *      NetChannelOutput out = CNS.one2net(&quot;in&quot;); <br>
+     *      //could now use these channels for something!! <br>
+     *      //but this is only a test so will terminate <br>
+     *  } catch (NodeInitFailedException e) { <br>
+     *      e.printStackTrace(); <br>
+     *  } catch (IOException e) { <br>
+     *      e.printStackTrace(); <br>
+     *  } <br>
+     *  Node.log.log(this, &quot;Done.&quot;); } } <br>
+     * </code>
+     * </p>
+     * <p>
+     * <h3>Channel Factory Methods</h3>
+     * </p>
+     * <p>
+     * In order to construct a <code>ChannelInput</code> object which can be resolved by other users of a channel name
+     * server, a client simply needs to to do this:
+     * </p>
+     * <code>
+     * NetChannelInput in = CNS.net2one(&quot;Fred&quot;);
+     * </code>
+     * <p>
+     * Another process using the same channel name server can create a <code>ChannelOutput</code> that will send objects
+     * to this channel by do this:
+     * </p>
+     * <code>
+     * NetChannelOutput out = CNS.one2net(&quot;Fred&quot;);
+     * </code>
+     * <p>
+     * When these factory methods are called, various resources are used within the JCSP infrastructure. A channel name will
+     * be registered and held in the channel name server. These resources are taken for the duration of the JCSP Node's
+     * runtime.
+     * </p>
+     * <p>
+     * This is an example "Hello World" program which contains two inner classes with main methods, each of which can be run
+     * in separate JVMs.
+     * </p>
+     * 
+     * <pre>
+     * import jcsp.lang.*;
+     * import jcsp.net2.*;
+     * import jcsp.net2.cns.*;
+     * 
+     * public class TestCNS
+     * {
+     *     public static class Rx
+     *     {
+     *         public static void main(String[] args)
+     *         {
+     *             try
+     *             {
+     *                 Node.getInstance().init(new TCPIPNodeAddress(7890));
+     *                 NetChannelInput in = CNS.net2one(&quot;rx.in&quot;);
+     *                 System.out.println(in.read());
+     *             }
+     *             catch (Exception e)
+     *             {
+     *                 e.printStackTrace();
+     *             }
+     *         }
+     *     }
+     * 
+     *     public static class Tx
+     *     {
+     *         public static void main(String[] args)
+     *         {
+     *             try
+     *             {
+     *                 Node.getInstance().init(new TCPIPNodeAddress(7890));
+     *                 NetChannelOutput out = CNS.one2net(&quot;rx.in&quot;);
+     *                 out.write(&quot;Hello World&quot;);
+     *             }
+     *             catch (Exception e)
+     *             {
+     *                 e.printStackTrace();
+     *             }
+     *         }
+     *     }
+     * }
+     * </pre>
+     * 
+     * <p>
+     * This code can be compiled and then the following run at two command prompts:
+     * </p>
+     * <p>
+     * java TestCNS$Rx
+     * </p>
+     * <p>
+     * java TestCNS$Tx
+     * </p>
+     * <p>
+     * The programs will connect to a default channel name server. The Rx program will create a <code>NetChannelInput</code>
+     * and wait for a message on the channel. Once it has received the message, it prints it, then terminates. The Tx
+     * program creates a <code>NetChannelOutput</code> that will send to the Rx program's input channel. It sends a "Hello
+     * World" message. Once this has been accepted by the Rx process, it terminates.
+     * </p>
+     * </p>
+     * 
+     * @see CNSService
+     * @see Node
+     * @author Quickstone Technologies Limited
+     * @author Kevin Chalmers (updates for new architecture)
+     */
     public class CNS : IamCSProcess
     {
         /**
@@ -224,12 +224,8 @@ namespace CSPnet2.CNS
          */
         private readonly AltingChannelInput lostLink = Node.getInstance().getLinkLostEventChannel();
 
-        /**
-         * Private empty constructor
-         */
         private CNS()
         {
-            // Empty constructor
         }
 
         /**
@@ -251,7 +247,7 @@ namespace CSPnet2.CNS
          *             Thrown if something goes wrong in the underlying architecture
          */
         public static void initialise(NodeID cnsNode)
-            ////throws JCSPNetworkException
+        ////throws JCSPNetworkException
         {
             // First check that we are not already initialised
             if (CNS.initialised)
@@ -276,7 +272,7 @@ namespace CSPnet2.CNS
          *             Thrown if something goes wrong in the underlying architecture
          */
         public static void initialise(NodeAddress cnsNode)
-            ////throws JCSPNetworkException
+        ////throws JCSPNetworkException
         {
             // First check that we are not already initialised
             if (CNS.initialised)
@@ -304,19 +300,19 @@ namespace CSPnet2.CNS
             NetAltingChannelInput In = NetChannel.numberedNet2One(1, new CNSNetworkMessageFilter.FilterRX());
 
             // Now we wish to alternate upon this channel, and the link lost channel
-            Alternative alt = new Alternative(new Guard[] {this.lostLink, In});
+            Alternative alternative = new Alternative(new Guard[] { this.lostLink, In });
 
             // Loop forever
             while (true)
             {
                 // Select next available Guard. Give priority to link failure
-                switch (alt.priSelect())
+                switch (alternative.priSelect())
                 {
                     // We have lost the connection to a Node
                     case 0:
                     {
                         // Read in the NodeID of the lost Node
-                        NodeID lostNode = (NodeID) this.lostLink.read();
+                        NodeID lostNode = (NodeID)this.lostLink.read();
 
                         // Log loss of connection
                         Node.log.log(this.GetType(), "Lost Link to: " + lostNode.toString());
@@ -325,7 +321,7 @@ namespace CSPnet2.CNS
                         this.loggedClients.Remove(lostNode);
 
                         // Next get the ArrayList of any channels registered by that Node
-                        ArrayList registeredChans = (ArrayList) this.channelRegister[lostNode];
+                        ArrayList registeredChans = (ArrayList)this.channelRegister[lostNode];
 
                         // If this ArrayList is null, we have no registrations.
                         if (registeredChans != null)
@@ -338,7 +334,7 @@ namespace CSPnet2.CNS
                             // Now remove all the channels registered by that Node
                             for (IEnumerator enumerator = registeredChans.GetEnumerator(); enumerator.MoveNext();)
                             {
-                                String toRemove = (String) enumerator.Current;
+                                String toRemove = (String)enumerator.Current;
                                 this.registeredChannels.Remove(toRemove);
                                 Node.log.log(this.GetType(), toRemove + " deregistered");
                             }
@@ -350,7 +346,7 @@ namespace CSPnet2.CNS
                     case 1:
                     {
                         // Read in the message
-                        CNSMessage message = (CNSMessage) In.read();
+                        CNSMessage message = (CNSMessage)In.read();
 
                         // Now behave based on the type of the message
                         switch (message.type)
@@ -367,7 +363,7 @@ namespace CSPnet2.CNS
                                 {
                                     // Check if the Node is already logged on
                                     NetChannelOutput Out =
-                                        (NetChannelOutput) this.loggedClients[message.location1.getNodeID()];
+                                        (NetChannelOutput)this.loggedClients[message.location1.getNodeID()];
 
                                     // If out is null, no previous log on received
                                     if (Out != null)
@@ -384,7 +380,7 @@ namespace CSPnet2.CNS
                                         // Create the reply message
                                         CNSMessage reply = new CNSMessage();
                                         reply.type = CNSMessageProtocol.LOGON_REPLY_MESSAGE;
-                                        reply.success = false;
+                                        reply.wasPreviousMessageSuccessful = false;
 
                                         // Asynchronously write to Node. We don't want the CNS to block
                                         toNewRegister.asyncWrite(reply);
@@ -408,7 +404,7 @@ namespace CSPnet2.CNS
                                         // Create reply message
                                         CNSMessage reply = new CNSMessage();
                                         reply.type = CNSMessageProtocol.LOGON_REPLY_MESSAGE;
-                                        reply.success = true;
+                                        reply.wasPreviousMessageSuccessful = true;
 
                                         // Write reply to the logging on Node asynchronously
                                         toNewRegister.asyncWrite(reply);
@@ -433,7 +429,7 @@ namespace CSPnet2.CNS
                                 {
                                     // Get the reply channel from our logged clients map
                                     NetChannelOutput Out =
-                                        (NetChannelOutput) this.loggedClients[message.location1.getNodeID()];
+                                        (NetChannelOutput)this.loggedClients[message.location1.getNodeID()];
 
                                     // Check if the Node has logged on with us
                                     if (Out == null)
@@ -450,7 +446,7 @@ namespace CSPnet2.CNS
                                         // Create the reply message
                                         CNSMessage reply = new CNSMessage();
                                         reply.type = CNSMessageProtocol.REGISTER_REPLY;
-                                        reply.success = false;
+                                        reply.wasPreviousMessageSuccessful = false;
 
                                         // Write the reply asynchronously. Do not block the CNS
                                         Out.asyncWrite(reply);
@@ -470,7 +466,7 @@ namespace CSPnet2.CNS
                                         // Create reply message
                                         CNSMessage reply = new CNSMessage();
                                         reply.type = CNSMessageProtocol.REGISTER_REPLY;
-                                        reply.success = false;
+                                        reply.wasPreviousMessageSuccessful = false;
 
                                         // Write the reply asynchronously. Do not block the CNS
                                         Out.asyncWrite(reply);
@@ -483,7 +479,7 @@ namespace CSPnet2.CNS
                                         Node.log.log(this.GetType(), "Registration of " + message.name + "succeded");
 
                                         // Now check if any client end is waiting for this name
-                                        ArrayList pending = (ArrayList) this.waitingResolves[message.name];
+                                        ArrayList pending = (ArrayList)this.waitingResolves[message.name];
 
                                         if (pending != null)
                                         {
@@ -497,7 +493,7 @@ namespace CSPnet2.CNS
                                                 try
                                                 {
                                                     // Get the next waiting message
-                                                    CNSMessage msg = (CNSMessage) enumerator.Current;
+                                                    CNSMessage msg = (CNSMessage)enumerator.Current;
 
                                                     // Log resolve completion
                                                     Node.log.log(this.GetType(), "Queued resolve of " + message.name
@@ -514,7 +510,7 @@ namespace CSPnet2.CNS
                                                     reply = new CNSMessage();
                                                     reply.type = CNSMessageProtocol.RESOLVE_REPLY;
                                                     reply.location1 = message.location2;
-                                                    reply.success = true;
+                                                    reply.wasPreviousMessageSuccessful = true;
 
                                                     // Write the reply asynchronously to the waiting resolver
                                                     toPending.asyncWrite(reply);
@@ -542,7 +538,7 @@ namespace CSPnet2.CNS
 
                                         // Now we add the registered channel to the channels registered by this Node
                                         ArrayList registered =
-                                            (ArrayList) this.channelRegister[message.location1.getNodeID()];
+                                            (ArrayList)this.channelRegister[message.location1.getNodeID()];
 
                                         // If the ArrayList is null, we have no previous registrations
                                         if (registered == null)
@@ -563,7 +559,7 @@ namespace CSPnet2.CNS
                                         // Create the reply message
                                         reply = new CNSMessage();
                                         reply.type = CNSMessageProtocol.REGISTER_REPLY;
-                                        reply.success = true;
+                                        reply.wasPreviousMessageSuccessful = true;
 
                                         // Write it asynchronously to the registering Node
                                         Out.asyncWrite(reply);
@@ -588,7 +584,7 @@ namespace CSPnet2.CNS
                                 {
                                     // Check if the resolving Node is logged on
                                     NetChannelOutput Out =
-                                        (NetChannelOutput) this.loggedClients[message.location1.getNodeID()];
+                                        (NetChannelOutput)this.loggedClients[message.location1.getNodeID()];
 
                                     // If the channel is null, then the Node has yet to log on with us
                                     if (Out == null)
@@ -605,7 +601,7 @@ namespace CSPnet2.CNS
                                         // Create the reply message
                                         CNSMessage reply = new CNSMessage();
                                         reply.type = CNSMessageProtocol.RESOLVE_REPLY;
-                                        reply.success = false;
+                                        reply.wasPreviousMessageSuccessful = false;
 
                                         // Write message asynchronously to the Node
                                         Out.asyncWrite(reply);
@@ -617,7 +613,7 @@ namespace CSPnet2.CNS
                                     {
                                         // Node is logged on. Now we check if the name is already registered
                                         NetChannelLocation loc =
-                                            (NetChannelLocation) this.registeredChannels[message.name];
+                                            (NetChannelLocation)this.registeredChannels[message.name];
 
                                         // If the location is null, then the name has yet to be registered.
                                         if (loc == null)
@@ -629,7 +625,7 @@ namespace CSPnet2.CNS
                                                                          + message.location1.getNodeID().toString());
 
                                             // Check if any other resolvers are waiting for the channel
-                                            ArrayList pending = (ArrayList) this.waitingResolves[message.name];
+                                            ArrayList pending = (ArrayList)this.waitingResolves[message.name];
 
                                             // If the ArrayList is null, no one else is waiting
                                             if (pending == null)
@@ -661,7 +657,7 @@ namespace CSPnet2.CNS
                                             CNSMessage reply = new CNSMessage();
                                             reply.type = CNSMessageProtocol.RESOLVE_REPLY;
                                             reply.location1 = loc;
-                                            reply.success = true;
+                                            reply.wasPreviousMessageSuccessful = true;
 
                                             // Write the reply to the resolver asynchronously
                                             toPending.asyncWrite(reply);
@@ -698,7 +694,7 @@ namespace CSPnet2.CNS
          *             Thrown if the channel name is already registered
          */
         public static NetAltingChannelInput createNet2One(String name)
-            ////throws InvalidOperationException, ArgumentException 
+        ////throws InvalidOperationException, ArgumentException 
         {
             // Check if the CNS connection is initialised
             if (!CNS.initialised)
@@ -729,7 +725,7 @@ namespace CSPnet2.CNS
          *             Thrown if the channel name is already registered
          */
         public static NetSharedChannelInput createNet2Any(String name)
-            ////throws InvalidOperationException, ArgumentException 
+        ////throws InvalidOperationException, ArgumentException 
         {
             // Check if the CNS connection is initialised
             if (!CNS.initialised)
@@ -760,7 +756,7 @@ namespace CSPnet2.CNS
          *             Thrown if something goes wrong in the underlying architecture
          */
         public static NetChannelOutput createOne2Net(String name)
-            // //throws InvalidOperationException, JCSPNetworkException
+        // //throws InvalidOperationException, JCSPNetworkException
         {
             // Check if the CNS connection is initialised
             if (!CNS.initialised)
@@ -786,7 +782,7 @@ namespace CSPnet2.CNS
          *             Thrown if something goes wrong in the underlying architecture
          */
         public static NetSharedChannelOutput createAny2Net(String name)
-            ////throws JCSPNetworkException, InvalidOperationException
+        ////throws JCSPNetworkException, InvalidOperationException
         {
             // Check if the CNS connection is initialised
             if (!CNS.initialised)
@@ -811,7 +807,7 @@ namespace CSPnet2.CNS
          *             Thrown if the channel name is already registered
          */
         public static NetAltingChannelInput net2one(String name)
-            ////throws InvalidOperationException, ArgumentException 
+        ////throws InvalidOperationException, ArgumentException 
         {
             // Check if the CNS connection is initialised
             if (!CNS.initialised)
@@ -843,7 +839,7 @@ namespace CSPnet2.CNS
          *             Thrown if the channel name is already registered
          */
         public static NetAltingChannelInput net2one(String name, int immunityLevel)
-            // //throws ArgumentException , InvalidOperationException
+        // //throws ArgumentException , InvalidOperationException
         {
             // Check if the CNS connection is initialised
             if (!CNS.initialised)
@@ -875,7 +871,7 @@ namespace CSPnet2.CNS
          *             Thrown if the channel name is already registered
          */
         public static NetAltingChannelInput net2one(String name, NetworkMessageFilter.FilterRx filter)
-            // //throws ArgumentException , InvalidOperationException
+        // //throws ArgumentException , InvalidOperationException
         {
             // Check if the CNS connection is initialised
             if (!CNS.initialised)
@@ -910,7 +906,7 @@ namespace CSPnet2.CNS
          */
         public static NetAltingChannelInput net2one(String name, int immunityLevel,
                 NetworkMessageFilter.FilterRx filter)
-            ////throws ArgumentException , InvalidOperationException
+        ////throws ArgumentException , InvalidOperationException
         {
             // Check if the CNS connection is initialised
             if (!CNS.initialised)
@@ -940,7 +936,7 @@ namespace CSPnet2.CNS
          *             Thrown if the channel name is already registered
          */
         public static NetSharedChannelInput net2any(String name)
-            ////throws ArgumentException , InvalidOperationException
+        ////throws ArgumentException , InvalidOperationException
         {
             // Check if the CNS connection is initialised
             if (!CNS.initialised)
@@ -972,7 +968,7 @@ namespace CSPnet2.CNS
          *             Thrown if the channel name is already registered
          */
         public static NetSharedChannelInput net2any(String name, int immunityLevel)
-            ////throws ArgumentException , InvalidOperationException
+        ////throws ArgumentException , InvalidOperationException
         {
             // Check if the CNS connection is initialised
             if (!CNS.initialised)
@@ -1004,7 +1000,7 @@ namespace CSPnet2.CNS
          *             Thrown if the channel name is already registered
          */
         public static NetSharedChannelInput net2any(String name, NetworkMessageFilter.FilterRx filter)
-            // //throws ArgumentException , InvalidOperationException
+        // //throws ArgumentException , InvalidOperationException
         {
             // Check if the CNS connection is initialised
             if (!CNS.initialised)
@@ -1039,7 +1035,7 @@ namespace CSPnet2.CNS
          */
         public static NetSharedChannelInput net2any(String name, int immunityLevel,
                 NetworkMessageFilter.FilterRx filter)
-            ////throws ArgumentException , InvalidOperationException
+        ////throws ArgumentException , InvalidOperationException
         {
             // Check if the CNS connection is initialised
             if (!CNS.initialised)
@@ -1071,7 +1067,7 @@ namespace CSPnet2.CNS
          *             Thrown if the channel name is already registered
          */
         public static NetAltingChannelInput numberedNet2One(String name, int index)
-            ////throws InvalidOperationException, ArgumentException 
+        ////throws InvalidOperationException, ArgumentException 
         {
             // Check if the CNS connection is initialised
             if (!CNS.initialised)
@@ -1105,7 +1101,7 @@ namespace CSPnet2.CNS
          *             Thrown if the channel name is already registered
          */
         public static NetAltingChannelInput numberedNet2One(String name, int index, int immunityLevel)
-            ////throws InvalidOperationException, ArgumentException 
+        ////throws InvalidOperationException, ArgumentException 
         {
             // Check if the CNS connection is initialised
             if (!CNS.initialised)
@@ -1140,7 +1136,7 @@ namespace CSPnet2.CNS
          */
         public static NetAltingChannelInput numberedNet2One(String name, int index,
                 NetworkMessageFilter.FilterRx filter)
-            // //throws InvalidOperationException, ArgumentException 
+        // //throws InvalidOperationException, ArgumentException 
         {
             // Check if the CNS connection is initialised
             if (!CNS.initialised)
@@ -1177,7 +1173,7 @@ namespace CSPnet2.CNS
          */
         public static NetAltingChannelInput numberedNet2One(String name, int index, int immunityLevel,
                 NetworkMessageFilter.FilterRx filter)
-            ////throws InvalidOperationException, ArgumentException 
+        ////throws InvalidOperationException, ArgumentException 
         {
             // Check if the CNS connection is initialised
             if (!CNS.initialised)
@@ -1209,7 +1205,7 @@ namespace CSPnet2.CNS
          *             Thrown if the channel name is already registered
          */
         public static NetSharedChannelInput numberedNet2Any(String name, int index)
-            ////throws InvalidOperationException, ArgumentException 
+        ////throws InvalidOperationException, ArgumentException 
         {
             // Check if the CNS connection is initialised
             if (!CNS.initialised)
@@ -1243,7 +1239,7 @@ namespace CSPnet2.CNS
          *             Thrown if the channel name is already registered
          */
         public static NetSharedChannelInput numberedNet2Any(String name, int index, int immunityLevel)
-            // //throws InvalidOperationException, ArgumentException 
+        // //throws InvalidOperationException, ArgumentException 
         {
             // Check if the CNS connection is initialised
             if (!CNS.initialised)
@@ -1278,7 +1274,7 @@ namespace CSPnet2.CNS
          */
         public static NetSharedChannelInput numberedNet2Any(String name, int index,
                 NetworkMessageFilter.FilterRx filter)
-            // //throws InvalidOperationException, ArgumentException 
+        // //throws InvalidOperationException, ArgumentException 
         {
             // Check if the CNS connection is initialised
             if (!CNS.initialised)
@@ -1315,7 +1311,7 @@ namespace CSPnet2.CNS
          */
         public static NetSharedChannelInput numberedNet2Any(String name, int index, int immunityLevel,
                 NetworkMessageFilter.FilterRx filter)
-            // //throws InvalidOperationException, ArgumentException 
+        // //throws InvalidOperationException, ArgumentException 
         {
             // Check if the CNS connection is initialised
             if (!CNS.initialised)
@@ -1345,7 +1341,7 @@ namespace CSPnet2.CNS
          *             Thrown if something goes wrong in the underlying architecture
          */
         public static NetChannelOutput one2net(String name)
-            // //throws InvalidOperationException, JCSPNetworkException
+        // //throws InvalidOperationException, JCSPNetworkException
         {
             // Check if the CNS connection is initialised
             if (!CNS.initialised)
@@ -1372,7 +1368,7 @@ namespace CSPnet2.CNS
          *             Thrown if something goes wrong in the underlying architecture
          */
         public static NetChannelOutput one2net(String name, int immunityLevel)
-            //  //throws InvalidOperationException, JCSPNetworkException
+        //  //throws InvalidOperationException, JCSPNetworkException
         {
             // Check if the CNS connection is initialised
             if (!CNS.initialised)
@@ -1399,7 +1395,7 @@ namespace CSPnet2.CNS
          *             Thrown if something goes wrong in the underlying architecture
          */
         public static NetChannelOutput one2net(String name, NetworkMessageFilter.FilterTx filter)
-            //  //throws InvalidOperationException, JCSPNetworkException
+        //  //throws InvalidOperationException, JCSPNetworkException
         {
             // Check if the CNS connection is initialised
             if (!CNS.initialised)
@@ -1428,7 +1424,7 @@ namespace CSPnet2.CNS
          *             Thrown if something goes wrong in the underlying architecture
          */
         public static NetChannelOutput one2net(String name, int immunityLevel, NetworkMessageFilter.FilterTx filter)
-            //  //throws InvalidOperationException, JCSPNetworkException
+        //  //throws InvalidOperationException, JCSPNetworkException
         {
             // Check if the CNS connection is initialised
             if (!CNS.initialised)
@@ -1453,7 +1449,7 @@ namespace CSPnet2.CNS
          *             Thrown if something goes wrong in the underlying architecture
          */
         public static NetSharedChannelOutput any2net(String name)
-            //  //throws InvalidOperationException, JCSPNetworkException
+        //  //throws InvalidOperationException, JCSPNetworkException
         {
             // Check if the CNS connection is initialised
             if (!CNS.initialised)
@@ -1480,7 +1476,7 @@ namespace CSPnet2.CNS
          *             Thrown if something goes wrong in the underlying architecture
          */
         public static NetSharedChannelOutput any2net(String name, int immunityLevel)
-            //  //throws InvalidOperationException, JCSPNetworkException
+        //  //throws InvalidOperationException, JCSPNetworkException
         {
             // Check if the CNS connection is initialised
             if (!CNS.initialised)
@@ -1507,7 +1503,7 @@ namespace CSPnet2.CNS
          *             Thrown if something goes wrong in the underlying architecture
          */
         public static NetSharedChannelOutput any2net(String name, NetworkMessageFilter.FilterTx filter)
-            // //throws InvalidOperationException, JCSPNetworkException
+        // //throws InvalidOperationException, JCSPNetworkException
         {
             // Check if the CNS connection is initialised
             if (!CNS.initialised)
@@ -1537,7 +1533,7 @@ namespace CSPnet2.CNS
          */
         public static NetSharedChannelOutput any2net(String name, int immunityLevel,
                 NetworkMessageFilter.FilterTx filter)
-            //  //throws InvalidOperationException, JCSPNetworkException
+        //  //throws InvalidOperationException, JCSPNetworkException
         {
             // Check if the CNS connection is initialised
             if (!CNS.initialised)

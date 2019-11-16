@@ -22,12 +22,11 @@ using CSPnet2.NetChannels;
 
 namespace CSPnet2.CNS
 {
-
-/**
- * A message sent between a CNS and a CNSService. This is an internal structure to JCSP.
- * 
- * @author Kevin Chalmers
- */
+    /**
+     * A message sent between a CNS and a CNSService. This is an internal structure to JCSP.
+     * 
+     * @author Kevin Chalmers
+     */
     sealed class CNSMessage
     {
         /**
@@ -38,7 +37,7 @@ namespace CSPnet2.CNS
         /**
          * Whether the previous message was successful
          */
-        internal Boolean success = false;
+        internal Boolean wasPreviousMessageSuccessful = false;
 
         /**
          * Location parameter. Usually the location to register

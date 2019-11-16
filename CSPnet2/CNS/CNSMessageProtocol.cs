@@ -17,8 +17,6 @@
 //                                                                  //
 //////////////////////////////////////////////////////////////////////
 
-using System;
-
 namespace CSPnet2.CNS
 {
 
@@ -28,63 +26,59 @@ namespace CSPnet2.CNS
      * @author Kevin Chalmers
      */
     sealed class CNSMessageProtocol
-{
-    /**
-     * Empty, private constructor. We do not create instances of this class.
-     */
-    private CNSMessageProtocol()
     {
-        // Empty constructor
+        private CNSMessageProtocol()
+        {
+        }
+
+        /**
+         * A message sent from a CNSService to a CNS allowing logging on
+         */
+        internal /*static*/ const byte LOGON_MESSAGE = 1;
+
+        /**
+         * The reply from a Logon
+         */
+        internal /*static*/ const byte LOGON_REPLY_MESSAGE = 2;
+
+        /**
+         * Register a name with the CNS
+         */
+        internal /*static*/ const byte REGISTER_REQUEST = 3;
+
+        /**
+         * Resolve a location from the CNS
+         */
+        internal /*static*/ const byte RESOLVE_REQUEST = 4;
+
+        /**
+         * *** Not currently used ***
+         */
+        internal /*static*/ const byte LEASE_REQUEST = 5;
+
+        /**
+         * *** Not currently used ***
+         */
+        internal /*static*/ const byte DEREGISTER_REQUEST = 6;
+
+        /**
+         * A reply from a registration request
+         */
+        internal /*static*/ const byte REGISTER_REPLY = 7;
+
+        /**
+         * A reply from a resolve request
+         */
+        internal /*static*/ const byte RESOLVE_REPLY = 8;
+
+        /**
+         * *** Not currently used ***
+         */
+        internal /*static*/ const byte LEASE_REPLY = 9;
+
+        /**
+         * *** Not currently used ***
+         */
+        internal /*static*/ const byte DEREGISTER_REPLY = 10;
     }
-
-    /**
-     * A message sent from a CNSService to a CNS allowing logging on
-     */
-    internal /*static*/ const byte LOGON_MESSAGE = 1;
-
-    /**
-     * The reply from a Logon
-     */
-    internal /*static*/ const byte LOGON_REPLY_MESSAGE = 2;
-
-    /**
-     * Register a name with the CNS
-     */
-    internal /*static*/ const byte REGISTER_REQUEST = 3;
-
-    /**
-     * Resolve a location from the CNS
-     */
-    internal /*static*/ const byte RESOLVE_REQUEST = 4;
-
-    /**
-     * *** Not currently used ***
-     */
-    internal /*static*/ const byte LEASE_REQUEST = 5;
-
-    /**
-     * *** Not currently used ***
-     */
-    internal /*static*/ const byte DEREGISTER_REQUEST = 6;
-
-    /**
-     * A reply from a registration request
-     */
-    internal /*static*/ const byte REGISTER_REPLY = 7;
-
-    /**
-     * A reply from a resolve request
-     */
-    internal /*static*/ const byte RESOLVE_REPLY = 8;
-
-    /**
-     * *** Not currently used ***
-     */
-    internal /*static*/ const byte LEASE_REPLY = 9;
-
-    /**
-     * *** Not currently used ***
-     */
-    internal /*static*/ const byte DEREGISTER_REPLY = 10;
-}
 }
