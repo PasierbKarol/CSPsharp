@@ -21,157 +21,125 @@ using System;
 using System.IO;
 using CSPlang;
 using CSPnet2.Net2Link;
-using CSPnet2.CNS;
-using CSPnet2.BNS;
 
 namespace CSPnet2.NetNode
 {
-
-/**
- * @author Kevin Chalmers
- */
-public sealed class Node
-{
     /**
-     * 
+     * @author Kevin Chalmers
      */
-    private NodeID nodeID;
-
-    /**
-     * 
-     */
-    private Boolean initialized = false;
-
-    /**
-     * 
-     */
-    private NodeKey nk;
-
-    /**
-     * 
-     */
-    private static Node instance = new Node();
-
-    /**
-     * 
-     */
-    public static Logger log = new Logger();
-
-    /**
-     * 
-     */
-    public static Logger err = new Logger();
-
-    /**
-     * @return The singleton instance of the Node
-     */
-    public static Node getInstance()
+    public sealed class Node
     {
-        return instance;
-    }
+        private NodeID nodeID;
+        private Boolean initialized = false;
+        private NodeKey nodeKey;
+        private static Node instance = new Node();
+        public static Logger logger = new Logger();
+        public static Logger loggerError = new Logger();
 
-    /**
-     * @return The NodeID of this Node
-     */
-    public NodeID getNodeID()
-    {
-        return this.nodeID;
-    }
+        /**
+         * @return The singleton instance of the Node
+         */
+        public static Node getInstance()
+        {
+            return instance;
+        }
 
-    /**
-     * @param aNodeID
-     */
-    void setNodeID(NodeID aNodeID)
-    {
-        this.nodeID = aNodeID;
-    }
+        /**
+         * @return The NodeID of this Node
+         */
+        public NodeID getNodeID()
+        {
+            return this.nodeID;
+        }
 
-    /**
-     * 
-     */
-    private Node()
-    {
-        // Empty constructor
-    }
+        /**
+         * @param aNodeID
+         */
+        void setNodeID(NodeID aNodeID)
+        {
+            this.nodeID = aNodeID;
+        }
 
-    /**
-     * @param addr
-     * @return NodeKey for this Node
-     * @//throws JCSPNetworkException
-     */
-    public NodeKey init(NodeAddress addr)
+        private Node()
+        {
+        }
+
+        /**
+         * @param addr
+         * @return NodeKey for this Node
+         * @//throws JCSPNetworkException
+         */
+        public NodeKey init(NodeAddress addr)
         ////throws JCSPNetworkException
-    {
-        return this.init("", addr);
-    }
+        {
+            return this.init("", addr);
+        }
 
-    /**
-     * @param name
-     * @param addr
-     * @return NodeKey for this Node
-     * @//throws JCSPNetworkException
-     */
-    public NodeKey init(String name, NodeAddress addr)
+        /**
+         * @param name
+         * @param addr
+         * @return NodeKey for this Node
+         * @//throws JCSPNetworkException
+         */
+        public NodeKey init(String name, NodeAddress addr)
         ////throws JCSPNetworkException
-    {
-        Node.log.log(this.GetType(), "Node initialisation begun");
-        if (this.initialized)
-            throw new JCSPNetworkException("Node already initialised");
-        this.initialized = true;
-        LinkServer.start(addr);
-        this.nodeID = new NodeID(name, addr);
-        this.nk = new NodeKey();
-        NodeAddress.installProtocol(addr.getProtocol(), addr.getProtocolID());
-        Node.log.log(this.GetType(), "Node initialisation complete");
-        return this.nk;
-    }
+        {
+            Node.logger.log(this.GetType(), "Node initialisation begun");
+            if (this.initialized)
+                throw new JCSPNetworkException("Node already initialised");
+            this.initialized = true;
+            LinkServer.start(addr);
+            this.nodeID = new NodeID(name, addr);
+            this.nodeKey = new NodeKey();
+            NodeAddress.installProtocol(addr.getProtocol(), addr.getProtocolID());
+            Node.logger.log(this.GetType(), "Node initialisation complete");
+            return this.nodeKey;
+        }
 
-    /**
-     * @param factory
-     * @return NodeKey for this Node
-     * @//throws JCSPNetworkException
-     */
-    public NodeKey init(NodeFactory factory)
+        /**
+         * @param factory
+         * @return NodeKey for this Node
+         * @//throws JCSPNetworkException
+         */
+        public NodeKey init(NodeFactory factory)
         ////throws JCSPNetworkException
-    {
-        Node.log.log(this.GetType(), "Node initialisation begun");
-        if (this.initialized)
-            throw new JCSPNetworkException("Node already initialised");
-        NodeAddress localAddr = factory.initNode(this);
-        this.nodeID = new NodeID("", localAddr);
-        this.initialized = true;
-        this.nk = new NodeKey();
-        Link toServer = LinkFactory.getLink(factory.cnsAddress);
-        
-        CNS.CNS.initialise(toServer.remoteID);
-        BNS.BNS.initialise(toServer.remoteID);
-        return this.nk;
-    }
+        {
+            Node.logger.log(this.GetType(), "Node initialisation begun");
+            if (this.initialized)
+                throw new JCSPNetworkException("Node already initialised");
+            NodeAddress localAddr = factory.initNode(this);
+            this.nodeID = new NodeID("", localAddr);
+            this.initialized = true;
+            this.nodeKey = new NodeKey();
+            Link toServer = LinkFactory.getLink(factory.cnsAddress);
 
-    /**
-     * @return A channel to receive disconnect events on
-     */
-    public AltingChannelInput getLinkLostEventChannel()
-    {
-        return LinkManager.getInstance().getLinkLostEventChannel();
-    }
+            CNS.CNS.initialise(toServer.remoteID);
+            BNS.BNS.initialise(toServer.remoteID);
+            return this.nodeKey;
+        }
 
-    /**
-     * @param stream
-     */
-    public void setLog(StreamWriter stream)
-    {
-        log = new Logger(stream);
-    }
+        /**
+         * @return A channel to receive disconnect events on
+         */
+        public AltingChannelInput getLinkLostEventChannel()
+        {
+            return LinkManager.getInstance().getLinkLostEventChannel();
+        }
 
-    /**
-     * @param stream
-     */
-    public void setErr(StreamWriter stream)
-    {
-        err = new Logger(stream);
-    }
+        /**
+         * @param stream
+         */
+        public void setLog(StreamWriter stream)
+        {
+            logger = new Logger(stream);
+        }
 
-    
-}
+        /**
+         * @param stream
+         */
+        public void setErr(StreamWriter stream)
+        {
+            loggerError = new Logger(stream);
+        }
+    }
 }

@@ -19,7 +19,6 @@
 
 using System;
 using System.Diagnostics;
-using System.Runtime.InteropServices;
 using CSPlang;
 
 
@@ -43,39 +42,18 @@ namespace CSPnet2.NetNode
     [Serializable]
     public sealed class NodeID : IComparable<NodeID>
     {
-        /**
-         * The SUID of this class
-         */
         private static readonly long serialVersionUID = 1L;
 
         /**
          * Current time in milliseconds
          */
         private readonly long time;
-
-        /**
-         * Current amount of free memory to the JVM
-         */
-        private readonly long mem;
-
-        /**
-         * Hash code of a object
-         */
+        private readonly long freeJVMmemory; 
         private readonly int hashCode;
-
-        /**
-         * Name of the Node
-         */
-        private readonly String name;
-
-        /**
-         * Address of the Node
-         */
+        private readonly String nameNode;
         private readonly NodeAddress address;
 
         /**
-         * Constructor taking the name and the address of the Node
-         * 
          * @param nodeName
          *            Symbolic name of the Node
          * @param nodeAddress
@@ -86,10 +64,9 @@ namespace CSPnet2.NetNode
             this.time = CSTimer.CurrentTimeMillis();
             //this.mem = System.Runtime.GetRuntime().freeMemory();
             //this.mem = GC.GetTotalMemory(true);
-            this.mem = Process.GetCurrentProcess().PrivateMemorySize64;
-            //this.hashCode = new Object().hashCode();
+            this.freeJVMmemory = Process.GetCurrentProcess().PrivateMemorySize64;
             this.hashCode = new Object().GetHashCode();
-            this.name = nodeName;
+            this.nameNode = nodeName;
             this.address = nodeAddress;
         }
 
@@ -110,9 +87,9 @@ namespace CSPnet2.NetNode
         public NodeID(long long1, long long2, int int1, String nodeName, NodeAddress nodeAddress)
         {
             this.time = long1;
-            this.mem = long2;
+            this.freeJVMmemory = long2;
             this.hashCode = int1;
-            this.name = nodeName;
+            this.nameNode = nodeName;
             this.address = nodeAddress;
         }
 
@@ -155,7 +132,7 @@ namespace CSPnet2.NetNode
          */
         public String toString()
         {
-            return this.time + "-" + this.mem + "-" + this.hashCode + "-" + this.name + "-" + this.address.toString();
+            return this.time + "-" + this.freeJVMmemory + "-" + this.hashCode + "-" + this.nameNode + "-" + this.address.toString();
         }
 
         /**
@@ -198,10 +175,10 @@ namespace CSPnet2.NetNode
             int hashCode = Int32.Parse(pieces[2]);
             String name = pieces[3];
             // Parse the address
-            NodeAddress addr = NodeAddress.parse(pieces[4]);
+            NodeAddress nodeAddress = NodeAddress.parse(pieces[4]);
 
             // Return the NodeID
-            return new NodeID(time, mem, hashCode, name, addr);
+            return new NodeID(time, mem, hashCode, name, nodeAddress);
         }
 
         public int CompareTo(NodeID that)
@@ -218,9 +195,9 @@ namespace CSPnet2.NetNode
             else
             {
                 // Time part is equal
-                if (that.mem < this.mem)
+                if (that.freeJVMmemory < this.freeJVMmemory)
                     return 1;
-                else if (that.mem > this.mem)
+                else if (that.freeJVMmemory > this.freeJVMmemory)
                     return -1;
                 else
                 {
@@ -232,13 +209,12 @@ namespace CSPnet2.NetNode
                     else
                     {
                         // Hashcode part is equal
-                        if (!(that.name.Equals(this.name)))
-                            return this.name.CompareTo(that.name);
+                        if (!(that.nameNode.Equals(this.nameNode)))
+                            return this.nameNode.CompareTo(that.nameNode);
                         return this.address.CompareTo(that.address);
                     }
                 }
             }
-
             return 0;
         }
     }

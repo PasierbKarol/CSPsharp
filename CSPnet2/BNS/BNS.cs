@@ -168,7 +168,7 @@ namespace CSPnet2.BNS
                         NodeID lostNode = (NodeID)this.lostLink.read();
 
                         // Log loss of connection
-                        Node.log.log(this.GetType(), "Lost Link to: " + lostNode.toString());
+                        Node.logger.log(this.GetType(), "Lost Link to: " + lostNode.toString());
 
                         // Remove the logged client
                         this.loggedClients.Remove(lostNode);
@@ -189,7 +189,7 @@ namespace CSPnet2.BNS
                             {
                                 String toRemove = (String)enumerator.Current;
                                 this.registeredBarriers.Remove(toRemove);
-                                Node.log.log(this.GetType(), toRemove + " deregistered");
+                                Node.logger.log(this.GetType(), toRemove + " deregistered");
                             }
                         }
                         break;
@@ -207,7 +207,7 @@ namespace CSPnet2.BNS
                             case BNSMessageProtocol.LOGON_MESSAGE:
                             {
                                 // Log the logon attempt
-                                Node.log.log(this.GetType(), "Logon received from: "
+                                Node.logger.log(this.GetType(), "Logon received from: "
                                                               + message.serviceLocation.getNodeID().toString());
 
                                 // try-catch loop. We don't want the BNS to fail
@@ -221,7 +221,7 @@ namespace CSPnet2.BNS
                                     {
                                         // This Node is already logged on. Send fail message
                                         // Log failed attempt
-                                        Node.err.log(this.GetType(), message.serviceLocation.getNodeID().toString()
+                                        Node.loggerError.log(this.GetType(), message.serviceLocation.getNodeID().toString()
                                                                       + " already logged on.  Rejecting");
 
                                         // Create reply channel to the Node
@@ -242,7 +242,7 @@ namespace CSPnet2.BNS
                                     {
                                         // Node hasn't previously registered
                                         // Log registration
-                                        Node.log.log(this.GetType(), message.serviceLocation.getNodeID().toString()
+                                        Node.logger.log(this.GetType(), message.serviceLocation.getNodeID().toString()
                                                                       + " successfully logged on");
 
                                         // Create the reply channel
@@ -272,7 +272,7 @@ namespace CSPnet2.BNS
                             case BNSMessageProtocol.REGISTER_REQUEST:
                             {
                                 // Log registration attempt
-                                Node.log.log(this.GetType(), "Registeration for " + message.name + " received");
+                                Node.logger.log(this.GetType(), "Registeration for " + message.name + " received");
 
                                 // Catch any JCSPNetworkException
                                 try
@@ -284,7 +284,7 @@ namespace CSPnet2.BNS
                                     if (Out == null)
                                     {
                                         // The Node is not logged on. Send failure message
-                                        Node.err.log(this.GetType(), "Registration failed. "
+                                        Node.loggerError.log(this.GetType(), "Registration failed. "
                                                                       + message.serviceLocation.getNodeID()
                                                                       + " not logged on");
 
@@ -309,7 +309,7 @@ namespace CSPnet2.BNS
                                     {
                                         // The name is already registered. Inform the register
                                         // Log the failed registration
-                                        Node.err.log(this.GetType(), "Registration failed. " + message.name
+                                        Node.loggerError.log(this.GetType(), "Registration failed. " + message.name
                                                                       + " already registered");
 
                                         // Create reply message
@@ -325,7 +325,7 @@ namespace CSPnet2.BNS
                                         BNSMessage reply;
                                         // The name is not registered
                                         // Log successful registration
-                                        Node.log.log(this.GetType(), "Registration of " + message.name + " succeeded.");
+                                        Node.logger.log(this.GetType(), "Registration of " + message.name + " succeeded.");
 
                                         // First check if any client end is waiting for this name
                                         ArrayList pending = (ArrayList)this.waitingResolves[message.name];
@@ -344,7 +344,7 @@ namespace CSPnet2.BNS
                                                     BNSMessage msg = (BNSMessage)enumerator.Current;
 
                                                     // Log resolve completion
-                                                    Node.log.log(this.GetType(), "Queued resolve of " + message.name
+                                                    Node.logger.log(this.GetType(), "Queued resolve of " + message.name
                                                                                   + " by "
                                                                                   + msg.serviceLocation.getNodeID()
                                                                                   + " completed");
@@ -399,7 +399,7 @@ namespace CSPnet2.BNS
                                         registered.Add(message.name);
 
                                         // Log the successful registration
-                                        Node.log.log(this.GetType(), message.name + " registered to " + message.location);
+                                        Node.logger.log(this.GetType(), message.name + " registered to " + message.location);
 
                                         // Create the reply message
                                         reply = new BNSMessage();
@@ -421,7 +421,7 @@ namespace CSPnet2.BNS
                             case BNSMessageProtocol.RESOLVE_REQUEST:
                             {
                                 // Log resolve request
-                                Node.log.log(this.GetType(), "Resolve request for " + message.name + " received");
+                                Node.logger.log(this.GetType(), "Resolve request for " + message.name + " received");
 
                                 // Catch any JCSPNetworkException
                                 try
@@ -434,7 +434,7 @@ namespace CSPnet2.BNS
                                     {
                                         // Node is not logged on
                                         // Log failed resolution
-                                        Node.err.log(this.GetType(), "Resolve failed. "
+                                        Node.loggerError.log(this.GetType(), "Resolve failed. "
                                                                       + message.serviceLocation.getNodeID()
                                                                       + " not logged on");
 
@@ -463,7 +463,7 @@ namespace CSPnet2.BNS
                                         {
                                             // The name is not registered. We need to queue the resolve until it is
                                             // Log the queueing of the resolve
-                                            Node.log.log(this.GetType(), message.name
+                                            Node.logger.log(this.GetType(), message.name
                                                                           + " not registered. Queueing resolve by "
                                                                           + message.serviceLocation.getNodeID().toString());
 
@@ -485,7 +485,7 @@ namespace CSPnet2.BNS
                                         else
                                         {
                                             // The location is not null. Send it to the resolver
-                                            Node.log.log(this.GetType(), "Resolve request completed. " + message.name
+                                            Node.logger.log(this.GetType(), "Resolve request completed. " + message.name
                                                                           + " location being sent to "
                                                                           + message.serviceLocation.getNodeID());
 

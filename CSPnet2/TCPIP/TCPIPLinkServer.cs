@@ -220,7 +220,7 @@ namespace CSPnet2.TCPIP
         public override void run()
         {
             // Log start of Link Server
-            Node.log.log(this.GetType(), "TCPIP Link Server started on " + this.listeningAddress.getAddress());
+            Node.logger.log(this.GetType(), "TCPIP Link Server started on " + this.listeningAddress.getAddress());
             try
             {
                 // Now we loop until something goes wrong
@@ -233,7 +233,7 @@ namespace CSPnet2.TCPIP
                     //Debug.WriteLine("Accepted connection from {0}:{1}.", remoteEndPoint.Address, remoteEndPoint.Port);
 
                     // Log
-                    Node.log.log(this.GetType(), "Received new incoming connection");
+                    Node.logger.log(this.GetType(), "Received new incoming connection");
                     // Set TcpNoDelay
                     incoming.NoDelay = true;
 
@@ -251,7 +251,7 @@ namespace CSPnet2.TCPIP
                         BinaryWriter outStream = new BinaryWriter(networkStream);
 
                         // Now Log that we have received a connection
-                        Node.log.log(this.GetType(), "Received connection from: " + remoteID.toString());
+                        Node.logger.log(this.GetType(), "Received connection from: " + remoteID.toString());
 
                         // Check if already connected
                         if (requestLink(remoteID) == null)
@@ -276,7 +276,7 @@ namespace CSPnet2.TCPIP
                             // We already have a connection to the incoming Node
 
                             // Log failed connection
-                            Node.log.log(this.GetType(), "Connection to " + remoteID
+                            Node.logger.log(this.GetType(), "Connection to " + remoteID
                                                                           + " already exists.  Informing remote Node.");
 
                             // Write EXISTS to the remote Node
@@ -303,7 +303,7 @@ namespace CSPnet2.TCPIP
             {
                 // We can't really recover from this. This may happen if the network connection was lost.
                 // Log and fail
-                Node.err.log(this.GetType(), "TCPIPLinkServer failed.  " + ioe.Message);
+                Node.loggerError.log(this.GetType(), "TCPIPLinkServer failed.  " + ioe.Message);
             }
         }
     }

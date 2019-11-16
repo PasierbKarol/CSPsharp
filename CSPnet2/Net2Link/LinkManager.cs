@@ -84,7 +84,7 @@ namespace CSPnet2.Net2Link
             if (removed != null)
             {
                 // Log the Link Lost
-                Node.log.log(this.GetType(), "Link lost to: " + removedNodeID);
+                Node.logger.log(this.GetType(), "Link lost to: " + removedNodeID);
 
                 // Now inform any process listening on a Link Lost channel
                 for (IEnumerator enumerator = eventChans.GetEnumerator(); enumerator.MoveNext();)
@@ -103,7 +103,7 @@ namespace CSPnet2.Net2Link
         internal Boolean registerLink(Link link)
         {
             // Log the registration attempt
-            Node.log.log(this.GetType(), "Trying to register Link to: " + link.remoteID);
+            Node.logger.log(this.GetType(), "Trying to register Link to: " + link.remoteID);
 
             // Retrieve the NodeID for the Link
             NodeID remoteID = link.remoteID;
@@ -112,13 +112,13 @@ namespace CSPnet2.Net2Link
             if (links.ContainsKey(remoteID))
             {
                 // Connection to the Node already exists. Log.
-                Node.err.log(this.GetType(), "Failed to register Link to " + link.remoteID
+                Node.loggerError.log(this.GetType(), "Failed to register Link to " + link.remoteID
                                               + ". Connection to Node already exists");
                 return false;
             }
 
             // Link registration successful. Log.
-            Node.log.log(this.GetType(), "Link established to: " + link.remoteID);
+            Node.logger.log(this.GetType(), "Link established to: " + link.remoteID);
 
             // Add the Link to the links table
             links.Add(link.remoteID, link);

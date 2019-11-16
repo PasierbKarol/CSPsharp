@@ -17,8 +17,6 @@
 //                                                                  //
 //////////////////////////////////////////////////////////////////////
 
-using System;
-
 namespace CSPnet2.NetNode
 {
     /**
@@ -44,8 +42,6 @@ namespace CSPnet2.NetNode
         internal NodeAddress cnsAddress;
 
         /**
-         * Initialises a Node
-         * 
          * @param node
          *            The Node to initialise
          * @return A new NodeAddress for the Node

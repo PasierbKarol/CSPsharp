@@ -177,12 +177,12 @@ namespace CSPnet2.TCPIP
                 this.connected = false;
                 
                 // Log Node connection
-                Node.log.log(this.GetType(), "Link created to " + address.toString());
+                Node.logger.log(this.GetType(), "Link created to " + address.toString());
             }
             catch (IOException ioe)
             {
                 // Something went wrong during connection. Log and throw exception
-                Node.err.log(this.GetType(), "Failed to create Link to " + address.toString());
+                Node.loggerError.log(this.GetType(), "Failed to create Link to " + address.toString());
                 throw new JCSPNetworkException("Failed to create TCPIPLink to: " + address.getAddress());
             }
         }
@@ -225,13 +225,13 @@ namespace CSPnet2.TCPIP
                 // Set connected to true
                 this.connected = true;
                 // Log Link creation and Link connection
-                Node.log.log(this.GetType(), "Link created to " + nodeID.toString());
-                Node.log.log(this.GetType(), "Link to " + nodeID.toString() + " connected");
+                Node.logger.log(this.GetType(), "Link created to " + nodeID.toString());
+                Node.logger.log(this.GetType(), "Link to " + nodeID.toString() + " connected");
             }
             catch (IOException ioe)
             {
                 // Something went wrong during the creation. Log and throw exception
-                Node.err.log(this.GetType(), "Failed to create Link to " + nodeID.toString());
+                Node.loggerError.log(this.GetType(), "Failed to create Link to " + nodeID.toString());
                 throw new JCSPNetworkException("Failed to create TCPIPLink to: " +
                                                nodeID.getNodeAddress().getAddress());
             }
@@ -268,7 +268,7 @@ namespace CSPnet2.TCPIP
                 if (response.Equals("OK", StringComparison.OrdinalIgnoreCase))
                 {
                     // The connection is to be kept. Log, and set toReturn to true
-                    Node.log.log(this.GetType(), "Link to " + this.remoteAddress.toString() + " connected");
+                    Node.logger.log(this.GetType(), "Link to " + this.remoteAddress.toString() + " connected");
                     toReturn = true;
                 }
 
@@ -289,13 +289,13 @@ namespace CSPnet2.TCPIP
                 }
 
                 // We do not have a tcpip? Should never really happen however. Log and throw Exception
-                Node.err.log(this.GetType(), "Tried to connect a TCPIPLink to a non TCPIP connection");
+                Node.loggerError.log(this.GetType(), "Tried to connect a TCPIPLink to a non TCPIP connection");
                 throw new JCSPNetworkException("Tried to connect a TCPIPLink to a non TCPIP connection");
             }
             catch (IOException ioe)
             {
                 // Something went wrong during the connection process. Log and throw exception.
-                Node.err.log(this.GetType(), "Failed to connect TCPIPLink to: " + this.remoteAddress.getAddress());
+                Node.loggerError.log(this.GetType(), "Failed to connect TCPIPLink to: " + this.remoteAddress.getAddress());
                 throw new JCSPNetworkException("Failed to connect TCPIPLink to: " + this.remoteAddress.getAddress());
             }
         }

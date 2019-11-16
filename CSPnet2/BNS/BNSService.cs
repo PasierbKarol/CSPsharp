@@ -60,10 +60,10 @@ namespace CSPnet2.BNS
             // Check if we logged on OK
             if (logonReply.wasPreviousMessageSuccessful == false)
             {
-                Node.err.log(this.GetType(), "Failed to logon to BNS");
+                Node.loggerError.log(this.GetType(), "Failed to logon to BNS");
                 throw new JCSPNetworkException("Failed to logon to BNS");
             }
-            Node.log.log(this.GetType(), "Logged into BNS");
+            Node.logger.log(this.GetType(), "Logged into BNS");
         }
 
         /**

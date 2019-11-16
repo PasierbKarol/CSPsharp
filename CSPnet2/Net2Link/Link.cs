@@ -332,7 +332,7 @@ namespace CSPnet2.Net2Link
                     // Something went wrong during connection. Stop Link
                     Console.WriteLine(jne.Message);
                     jne.StackTrace();
-                    Node.err.log(this.GetType(), "Failed to connect Link to " + this.remoteID);
+                    Node.loggerError.log(this.GetType(), "Failed to connect Link to " + this.remoteID);
                     return;
                 }
             }

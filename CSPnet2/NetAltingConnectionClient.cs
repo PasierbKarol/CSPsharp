@@ -179,7 +179,7 @@ namespace CSPnet2
                             {
                                 this.data.state = ConnectionDataState.BROKEN;
                                 ConnectionManager.getInstance().removeConnection(this.data);
-                                Node.err.log(this.GetType(), "Connection " + this.data.vconnn
+                                Node.loggerError.log(this.GetType(), "Connection " + this.data.vconnn
                                                               + " received unexpected message");
                                 throw new JCSPNetworkException("NetAltingConnectionClient received unexpected message");
                             }
@@ -215,7 +215,7 @@ namespace CSPnet2
                         ConnectionManager.getInstance().removeConnection(this.data);
                         throw new JCSPNetworkException("Link to server Node lost.  Send cannot complete");
                     }
-                    Node.err.log(this.GetType(), "Connection " + this.data.vconnn + " reports unexpected message");
+                    Node.loggerError.log(this.GetType(), "Connection " + this.data.vconnn + " reports unexpected message");
                     throw new JCSPNetworkException("NetAltingConnecionClient received an unexpected message");
                 }
             }
@@ -293,7 +293,7 @@ namespace CSPnet2
             }
             else
             {
-                Node.err.log(this.GetType(), "Connection " + this.data.vconnn + " reports unexpected message.");
+                Node.loggerError.log(this.GetType(), "Connection " + this.data.vconnn + " reports unexpected message.");
                 throw new JCSPNetworkException("NetAltingConnectionClient received an unexpected message");
             }
         }

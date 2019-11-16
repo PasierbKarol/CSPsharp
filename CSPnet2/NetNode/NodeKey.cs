@@ -17,8 +17,6 @@
 //                                                                  //
 //////////////////////////////////////////////////////////////////////
 
-using System;
-
 namespace CSPnet2.NetNode
 {
     /**
@@ -28,12 +26,8 @@ namespace CSPnet2.NetNode
      */
     public sealed class NodeKey
     {
-        /**
-         * Creates a NodeKey
-         */
         internal NodeKey()
         {
-            // Empty constructor
         }
     }
 }

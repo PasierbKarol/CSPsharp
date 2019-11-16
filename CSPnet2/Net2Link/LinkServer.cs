@@ -38,13 +38,13 @@ namespace CSPnet2.Net2Link
         public static /*final*/ void start(NodeAddress address) //TODO how to throw exception here?
         //throws ArgumentException , JCSPNetworkException
         {
-            Node.log.log(typeof(LinkServer), "Attempting to start Link Server on " + address);
+            Node.logger.log(typeof(LinkServer), "Attempting to start Link Server on " + address);
             LinkServer linkServer = address.createLinkServer();
             //ProcessManager linkServProc = new ProcessManager(linkServer);
             //linkServProc.SetPriority(Link.LINK_PRIORITY);
             //linkServProc.start();
             new ProcessManager(linkServer).start();
-            Node.log.log(typeof(LinkServer), "Link Server started on " + address);
+            Node.logger.log(typeof(LinkServer), "Link Server started on " + address);
         }
 
         /**

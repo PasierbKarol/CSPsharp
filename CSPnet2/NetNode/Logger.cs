@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Text;
 using CSPlang;
 
 namespace CSPnet2.NetNode
@@ -11,14 +9,8 @@ namespace CSPnet2.NetNode
      */
     public /*static*/ class Logger
     {
-        /**
-         * 
-         */
         private readonly StreamWriter logger;
 
-        /**
-         * 
-         */
         internal Logger()
         {
             this.logger = null;
@@ -38,7 +30,6 @@ namespace CSPnet2.NetNode
          */
         public /*synchronized*/ void log(Type clazz, String message) //changed Java Class to Object
         {
-            //Console.WriteLine(message);
             if (this.logger == null)
                 return;
             DateTime date = new DateTime(CSTimer.CurrentTimeMillis());

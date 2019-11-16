@@ -86,20 +86,20 @@ namespace CSPnet2.Net2Link
                 throw new ArgumentException("Attempted to connect to the local Node");
 
             // Log start of Link creation
-            Node.log.log(typeof(LinkFactory), "Trying to get link to " + nodeID.toString());
+            Node.logger.log(typeof(LinkFactory), "Trying to get link to " + nodeID.toString());
 
             // First check if Link to NodeID exists. Request the Link from the Link Manager
             Link toReturn = LinkManager.getInstance().requestLink(nodeID);
             if (toReturn != null)
             {
                 // A Link already exists to given NodeID. Log and return existing Link
-                Node.log.log(typeof(LinkFactory), "Link to " + nodeID.toString()
+                Node.logger.log(typeof(LinkFactory), "Link to " + nodeID.toString()
                                                 + " already exists.  Returning existing Link");
                 return toReturn;
             }
 
             // An existing Link does not exist within the Link Manager. Log, and then create Link via the address
-            Node.log.log(typeof(LinkFactory), "Link does not exist to " + nodeID.toString() + ".  Creating new Link");
+            Node.logger.log(typeof(LinkFactory), "Link does not exist to " + nodeID.toString() + ".  Creating new Link");
             toReturn = nodeID.getNodeAddress().createLink();
 
             // Now attempt to connect the Link. If connect fails, then the opposite node already has a connection to us.
@@ -111,7 +111,7 @@ namespace CSPnet2.Net2Link
                 NodeID remoteID = toReturn.getRemoteNodeID();
 
                 // Log failed connect
-                Node.log.log(typeof(LinkFactory), "Failed to connect to " + remoteID.toString());
+                Node.logger.log(typeof(LinkFactory), "Failed to connect to " + remoteID.toString());
 
                 // Set the Link to return to null
                 toReturn = null;
@@ -127,7 +127,7 @@ namespace CSPnet2.Net2Link
                         Thread.Sleep(100);
 
                         // Log start of attempt
-                        Node.log.log(typeof(LinkFactory), "Attempting to retrieve Link to " + remoteID.toString());
+                        Node.logger.log(typeof(LinkFactory), "Attempting to retrieve Link to " + remoteID.toString());
 
                         // Retrieve Link from LinkManager
                         toReturn = LinkManager.getInstance().requestLink(remoteID);
@@ -166,7 +166,7 @@ namespace CSPnet2.Net2Link
         ////throws JCSPNetworkException
         {
             // Log start of creation
-            Node.log.log(typeof(LinkFactory), "Trying to get link to " + addr.toString());
+            Node.logger.log(typeof(LinkFactory), "Trying to get link to " + addr.toString());
 
             // Create Link from address
             Link toReturn = addr.createLink();
@@ -181,7 +181,7 @@ namespace CSPnet2.Net2Link
                 NodeID remoteID = toReturn.getRemoteNodeID();
 
                 // Log failed connect
-                Node.log.log(typeof(LinkFactory), "Failed to connect to " + remoteID.toString());
+                Node.logger.log(typeof(LinkFactory), "Failed to connect to " + remoteID.toString());
                 Console.WriteLine("Failed to connect to " + remoteID.toString());
                 // Set the Link to return to null
                 toReturn = null;
@@ -197,7 +197,7 @@ namespace CSPnet2.Net2Link
                         Thread.Sleep(100);
 
                         // Log start of attempt
-                        Node.log.log(typeof(LinkFactory), "Attempting to retrieve Link to " + remoteID.toString());
+                        Node.logger.log(typeof(LinkFactory), "Attempting to retrieve Link to " + remoteID.toString());
 
                         // Retrieve Link from LinkManager
                         toReturn = LinkManager.getInstance().requestLink(remoteID);

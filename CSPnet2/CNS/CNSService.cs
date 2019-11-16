@@ -61,10 +61,10 @@ namespace CSPnet2.CNS
             // Check if we logged on OK
             if (logonReply.wasPreviousMessageSuccessful == false)
             {
-                Node.err.log(this.GetType(), "Failed to logon to CNS");
+                Node.loggerError.log(this.GetType(), "Failed to logon to CNS");
                 throw new JCSPNetworkException("Failed to Logon to CNS");
             }
-            Node.log.log(this.GetType(), "Logged into CNS");
+            Node.logger.log(this.GetType(), "Logged into CNS");
         }
 
         /**

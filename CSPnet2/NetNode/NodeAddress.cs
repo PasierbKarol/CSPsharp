@@ -19,20 +19,18 @@
 
 using System;
 using System.Collections;
-using CSPlang;
 using CSPnet2.Net2Link;
-using CSPnet2.TCPIP;
 
 namespace CSPnet2.NetNode
 {
-/**
- * This abstract class defines encapsulates the address of a Node within a JCSP networked system. Specific protocols
- * must provide concrete implementations of this class to allow Node initialisation and connection. One concrete example
- * is provided in the jcsp.net2.tcpip package.
- * 
- * @see Node
- * @author Kevin Chalmers (updated from Quickstone Technologies)
- */
+    /**
+     * This abstract class defines encapsulates the address of a Node within a JCSP networked system. Specific protocols
+     * must provide concrete implementations of this class to allow Node initialisation and connection. One concrete example
+     * is provided in the jcsp.net2.tcpip package.
+     * 
+     * @see Node
+     * @author Kevin Chalmers (updated from Quickstone Technologies)
+     */
 
     [Serializable]
     public abstract class NodeAddress : IComparable<NodeAddress>
@@ -41,20 +39,10 @@ namespace CSPnet2.NetNode
          * String representing the protocol in used
          */
         protected String protocol;
-
-        /**
-         * String representation of the address
-         */
         protected String address;
-
-        /**
-         * The table of installed protocols on this Node
-         */
         private static Hashtable installedProtocols = new Hashtable();
 
         /**
-         * Gets the string representing the protocol
-         * 
          * @return The String representation of the protocol part of the NodeAddress
          */
         public String getProtocol()
@@ -63,8 +51,6 @@ namespace CSPnet2.NetNode
         }
 
         /**
-         * Gets a string representing the address
-         * 
          * @return The String representation of the address part of the NodeAddress
          */
         public String getAddress()
@@ -103,7 +89,7 @@ namespace CSPnet2.NetNode
         {
             if (!(obj is NodeAddress))
                 return false;
-            NodeAddress other = (NodeAddress) obj;
+            NodeAddress other = (NodeAddress)obj;
             return (this.protocol.Equals(other.protocol) && this.address.Equals(other.address));
         }
 
@@ -168,7 +154,7 @@ namespace CSPnet2.NetNode
 
 
         public static NodeAddress parse(String str)
-            //throws ArgumentException 
+        //throws ArgumentException 
         {
             int index = str.IndexOf("\\");
             ProtocolID protocol = (ProtocolID)NodeAddress.installedProtocols[str.Substring(0, index)];

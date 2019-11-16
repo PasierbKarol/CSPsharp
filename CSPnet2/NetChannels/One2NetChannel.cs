@@ -351,7 +351,7 @@ namespace CSPnet2.NetChannels
                     // exception.
                     else
                     {
-                        Node.err.log(this.GetType(), "Channel " + this.data.virtualChannelNumber + " reports unexpected message.");
+                        Node.loggerError.log(this.GetType(), "Channel " + this.data.virtualChannelNumber + " reports unexpected message.");
                         throw new JCSPNetworkException("NetChannelOutput received an unexpected exception");
                     }
                 }
@@ -465,7 +465,7 @@ namespace CSPnet2.NetChannels
             // This shouldn't happen. Throw exception.
             else
             {
-                Node.err.log(this.GetType(), "Channel " + this.data.virtualChannelNumber + " reports unexpected message.");
+                Node.loggerError.log(this.GetType(), "Channel " + this.data.virtualChannelNumber + " reports unexpected message.");
                 throw new JCSPNetworkException("NetChannelOutput received an unexpected exception");
             }
         }
@@ -549,7 +549,7 @@ namespace CSPnet2.NetChannels
                     // exception.
                     else
                     {
-                        Node.err.log(this.GetType(), "Channel " + this.data.virtualChannelNumber + " reports unexpected message.");
+                        Node.loggerError.log(this.GetType(), "Channel " + this.data.virtualChannelNumber + " reports unexpected message.");
                         throw new JCSPNetworkException("NetChannelOutput received an unexpected exception");
                     }
                 }
