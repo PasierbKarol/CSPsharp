@@ -17,8 +17,6 @@
 //                                                                  //
 //////////////////////////////////////////////////////////////////////
 
-using System;
-
 namespace CSPnet2.BNS
 {
     /**
@@ -26,14 +24,10 @@ namespace CSPnet2.BNS
      * 
      * @author Kevin Chalmers
      */
-    sealed class BNSMessageProtocol
+    sealed class BNSMessageProtocol //TODO shouldn't this be changed to Enum?
     {
-        /**
-         * Empty, private constructor. We do not create instances of this class
-         */
         private BNSMessageProtocol()
         {
-            // Empty constructor
         }
 
         /**

@@ -23,24 +23,18 @@ using CSPnet2.NetChannels;
 
 namespace CSPnet2.BNS
 {
-
-
-/**
- * A message sent between a BNS and a BNSService. This is an internal structure to JCSP
- * 
- * @author Kevin Chalmers
- */
+    /**
+     * A message sent between a BNS and a BNSService. This is an internal structure to JCSP
+     * 
+     * @author Kevin Chalmers
+     */
     sealed class BNSMessage
     {
         /**
          * The message type. See BNSMessageProtocol
          */
         internal byte type = 0;
-
-        /**
-         * Whether the previous message was successful
-         */
-        internal Boolean success = false;
+        internal Boolean wasPreviousMessageSuccessful = false;
 
         /**
          * The location that the BNS must reply to
