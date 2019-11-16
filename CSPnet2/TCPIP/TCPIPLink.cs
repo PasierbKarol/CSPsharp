@@ -18,7 +18,6 @@
 //////////////////////////////////////////////////////////////////////
 
 using System;
-using System.Diagnostics;
 using System.IO;
 using System.Net;
 using System.Net.Sockets;
@@ -27,37 +26,37 @@ using CSPnet2.NetNode;
 
 namespace CSPnet2.TCPIP
 {
-/**
- * A concrete implementation of a Link that operates over a TCP/IP based socket connection. For information on Link, see
- * the relative documentation.
- * <p>
- * It is perfectly possible for a user to create a TCPIPLink without going through the standard LinkFactory approach,
- * although this is not recommended. For example:
- * </p>
- * <p>
- * <code>
- * TCPIPLink link = new TCPIPLink(address);<br>
- * link.connect();
- * link.registerLink();<br>
- * new ProcessManager(link).start();<br>
- * </code>
- * </p>
- * <p>
- * Can be achieved using the LinkFactory:
- * </p>
- * <p>
- * <code>
- * link = LinkFactory.getLink(address);
- * </code>
- * </p>
- * <p>
- * The LinkFactory will create and start the Link automatically if required.
- * </p>
- * 
- * @see Link
- * @see TCPIPNodeAddress
- * @author Kevin Chalmers
- */
+    /**
+     * A concrete implementation of a Link that operates over a TCP/IP based socket connection. For information on Link, see
+     * the relative documentation.
+     * <p>
+     * It is perfectly possible for a user to create a TCPIPLink without going through the standard LinkFactory approach,
+     * although this is not recommended. For example:
+     * </p>
+     * <p>
+     * <code>
+     * TCPIPLink link = new TCPIPLink(address);<br>
+     * link.connect();
+     * link.registerLink();<br>
+     * new ProcessManager(link).start();<br>
+     * </code>
+     * </p>
+     * <p>
+     * Can be achieved using the LinkFactory:
+     * </p>
+     * <p>
+     * <code>
+     * link = LinkFactory.getLink(address);
+     * </code>
+     * </p>
+     * <p>
+     * The LinkFactory will create and start the Link automatically if required.
+     * </p>
+     * 
+     * @see Link
+     * @see TCPIPNodeAddress
+     * @author Kevin Chalmers
+     */
     public sealed class TCPIPLink : Link
     {
         /**
@@ -90,7 +89,7 @@ namespace CSPnet2.TCPIP
          *             Thrown if something goes wrong during the creation process
          */
         public TCPIPLink(TCPIPNodeAddress address)
-            //throws JCSPNetworkException
+        //throws JCSPNetworkException
         {
             try
             {
@@ -120,21 +119,21 @@ namespace CSPnet2.TCPIP
                             byte first = localIPAddresses[i].GetAddressBytes()[0];
 
                             // Now check the value
-                            if (first == (byte) 127 && current < 1)
+                            if (first == (byte)127 && current < 1)
                             {
                                 // We have a Loopback address
                                 current = 1;
                                 // Set the address to use
                                 ipAddresstoUse = localIPAddresses[i];
                             }
-                            else if (first == (byte) 169 && current < 2)
+                            else if (first == (byte)169 && current < 2)
                             {
                                 // We have a link local address
                                 current = 2;
                                 // Set the address to use
                                 ipAddresstoUse = localIPAddresses[i];
                             }
-                            else if (first == (byte) 192 && current < 3)
+                            else if (first == (byte)192 && current < 3)
                             {
                                 // We have a local address
                                 current = 3;
@@ -162,7 +161,7 @@ namespace CSPnet2.TCPIP
                 IPAddress remoteAddress = IPAddress.Parse(address.GetIpAddressAsString());
                 this.socket = new Socket(remoteAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
                 EndPoint remoteEndPoint = new IPEndPoint(remoteAddress, address.getPort());
-                                
+
                 // Set TcpNoDelay. Off should improve performance for smaller packet sizes, which JCSP should have in general
                 this.socket.NoDelay = !TCPIPLink.NAGLE;
                 this.socket.Connect(remoteEndPoint);
@@ -172,10 +171,10 @@ namespace CSPnet2.TCPIP
 
                 // Set the remote address
                 this.remoteAddress = address;
-                
+
                 // We are not connected, so set connected to false.
                 this.connected = false;
-                
+
                 // Log Node connection
                 Node.logger.log(this.GetType(), "Link created to " + address.toString());
             }
@@ -198,14 +197,12 @@ namespace CSPnet2.TCPIP
          *             Thrown if there is a problem during the connection
          */
         internal TCPIPLink(Socket socket, NodeID nodeID)
-            //throws JCSPNetworkException
+        //throws JCSPNetworkException
         {
             try
             {
-                // Set the socket property
                 this.socket = socket;
                 // Set TcpNoDelay
-                //socket.setTcpNoDelay(!TCPIPLink.NAGLE);
                 socket.NoDelay = !TCPIPLink.NAGLE;
                 // Set the input and output streams for the Link
                 //this.rxStream = new BinaryReader(new BufferedInputStream(socket.getInputStream(), TCPIPLink.BUFFER_SIZE));
@@ -218,11 +215,8 @@ namespace CSPnet2.TCPIP
                 this.txStream = new BinaryWriter(new NetworkStream(this.socket));
 
 
-                // Set the NodeID
                 this.remoteID = nodeID;
-                // Set the remote address
-                this.remoteAddress = (TCPIPNodeAddress) this.remoteID.getNodeAddress();
-                // Set connected to true
+                this.remoteAddress = (TCPIPNodeAddress)this.remoteID.getNodeAddress();
                 this.connected = true;
                 // Log Link creation and Link connection
                 Node.logger.log(this.GetType(), "Link created to " + nodeID.toString());
@@ -245,9 +239,8 @@ namespace CSPnet2.TCPIP
          *             Thrown if something goes wrong during the connection
          */
         public override Boolean connect()
-            //throws JCSPNetworkException
+        //throws JCSPNetworkException
         {
-            // First check if we are connected.
             if (this.connected)
                 return true;
 
@@ -280,7 +273,7 @@ namespace CSPnet2.TCPIP
                 {
                     // Set address and NodeID. If we are not connected then this NodeID can be used to
                     // get the actual Link from the LinkManager
-                    this.remoteAddress = (TCPIPNodeAddress) otherID.getNodeAddress();
+                    this.remoteAddress = (TCPIPNodeAddress)otherID.getNodeAddress();
                     this.remoteID = otherID;
 
                     // Set connected to toReturn
@@ -307,16 +300,12 @@ namespace CSPnet2.TCPIP
          * @//throws JCSPNetworkException
          *             Thrown if anything goes wrong during the creation process.
          */
-        protected override Boolean createResources()
-            //throws JCSPNetworkException
+        protected override Boolean createResources() //TODO what's the point of that?
+        //throws JCSPNetworkException
         {
-            // Just return true
             return true;
         }
 
-        /**
-         * Destroys any resources used by the Link
-         */
         public override void destroyResources()
         {
             try
@@ -327,12 +316,9 @@ namespace CSPnet2.TCPIP
                     // Check that the socket is still in existence
                     if (this.socket != null)
                     {
-                        // Close the streams
                         this.txStream.Close();
                         this.rxStream.Close();
-                        // Close the socket
                         this.socket.Close();
-                        // Set the socket to null
                         this.socket = null;
                         // Remove the Link from the LinkManager
                         this.lostLink();

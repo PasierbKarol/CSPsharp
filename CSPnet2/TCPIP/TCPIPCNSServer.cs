@@ -18,24 +18,18 @@
 //////////////////////////////////////////////////////////////////////
 
 using System;
-using System.Diagnostics;
 using System.Net;
-using System.Net.Sockets;
 using CSPlang;
 using CSPnet2.NetNode;
 
 namespace CSPnet2.TCPIP
 {
-//    import java.net.Inet4Address;
-//import java.net.InetAddress;
-
-
-/**
- * This is the original (now deprecated) server program for use by
- * 
- * @author Kevin Chalmers (updated from Quickstone Technologies)
- * @deprecated Use TCPIPNodeFactory instead
- */
+    /**
+     * This is the original (now deprecated) server program for use by
+     * 
+     * @author Kevin Chalmers (updated from Quickstone Technologies)
+     * @deprecated Use TCPIPNodeFactory instead
+     */
     public sealed class TCPIPCNSServer
     {
         /**
@@ -43,7 +37,7 @@ namespace CSPnet2.TCPIP
          * @//throws Exception
          */
         public static void main(String[] args)
-            //throws Exception
+        //throws Exception
         {
             // Get the local IP addresses
             //InetAddress[] local = InetAddress.getAllByName(InetAddress.getLocalHost().getHostName());
@@ -69,21 +63,21 @@ namespace CSPnet2.TCPIP
 
 
                     // Now check the value
-                    if (first == (byte) 127 && current < 1)
+                    if (first == (byte)127 && current < 1)
                     {
                         // We have a Loopback address
                         current = 1;
                         // Set the address to use
                         ipAddresstoUse = localIPAddresses[i];
                     }
-                    else if (first == (byte) 169 && current < 2)
+                    else if (first == (byte)169 && current < 2)
                     {
                         // We have a link local address
                         current = 2;
                         // Set the address to use
                         ipAddresstoUse = localIPAddresses[i];
                     }
-                    else if (first == (byte) 192 && current < 3)
+                    else if (first == (byte)192 && current < 3)
                     {
                         // We have a local address
                         current = 3;
@@ -105,7 +99,7 @@ namespace CSPnet2.TCPIP
             // Initialise the Node
             Node.getInstance().init(localAddr);
             // Start CNS and BNS
-            IamCSProcess[] processes = {CNS.CNS.getInstance(), BNS.BNS.getInstance()};
+            IamCSProcess[] processes = { CNS.CNS.getInstance(), BNS.BNS.getInstance() };
             new CSPParallel(processes).run();
         }
     }

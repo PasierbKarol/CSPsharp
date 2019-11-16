@@ -18,7 +18,6 @@
 //////////////////////////////////////////////////////////////////////
 
 using System;
-using System.Diagnostics;
 using System.IO;
 using System.Net;
 using System.Net.Sockets;
@@ -27,14 +26,14 @@ using CSPnet2.NetNode;
 
 namespace CSPnet2.TCPIP
 {
-/**
- * Used to initialise a Node. This is kept for backward compatibility. See Node for more information.
- * 
- * @see Node
- * @see NodeFactory
- * @deprecated This method of Node initialisation should no longer be used. See Node for more information
- * @author Kevin Chalmers
- */
+    /**
+     * Used to initialise a Node. This is kept for backward compatibility. See Node for more information.
+     * 
+     * @see Node
+     * @see NodeFactory
+     * @deprecated This method of Node initialisation should no longer be used. See Node for more information
+     * @author Kevin Chalmers
+     */
     public sealed class TCPIPNodeFactory : NodeFactory
     {
         /**
@@ -69,7 +68,7 @@ namespace CSPnet2.TCPIP
          *             Thrown if something goes wrong during the Node initialisation process
          */
         internal override NodeAddress initNode(Node node)
-            //throws JCSPNetworkException
+        //throws JCSPNetworkException
         {
             // First install TCPIPProtocolID
             NodeAddress.installProtocol("tcpip", TCPIPProtocolID.getInstance());
@@ -80,7 +79,7 @@ namespace CSPnet2.TCPIP
                 IPAddress[] localIPAddresses = GetLocalIPAddress.GetAllAddresses();
                 //InetAddress toUse = InetAddress.getLocalHost();
                 IPAddress ipAddresstoUse = GetLocalIPAddress.GetOnlyLocalIPAddress();
-                
+
 
                 // We basically have four types of addresses to worry about. Loopback (127), link local (169),
                 // local (192) and (possibly) global. Grade each 1, 2, 3, 4 and use highest scoring address. In all
@@ -100,21 +99,21 @@ namespace CSPnet2.TCPIP
 
 
                         // Now check the value
-                        if (first == (byte) 127 && current < 1)
+                        if (first == (byte)127 && current < 1)
                         {
                             // We have a Loopback address
                             current = 1;
                             // Set the address to use
                             ipAddresstoUse = localIPAddresses[i];
                         }
-                        else if (first == (byte) 169 && current < 2)
+                        else if (first == (byte)169 && current < 2)
                         {
                             // We have a link local address
                             current = 2;
                             // Set the address to use
                             ipAddresstoUse = localIPAddresses[i];
                         }
-                        else if (first == (byte) 192 && current < 3)
+                        else if (first == (byte)192 && current < 3)
                         {
                             // We have a local address
                             current = 3;
@@ -132,14 +131,10 @@ namespace CSPnet2.TCPIP
                 }
 
                 // Create a new ServerSocket listening on this address
-                //TcpClient serv = new TcpClient(0, 10, ipAddresstoUse);
-                //TcpListener serv = new TcpListener(0, 10, toUse);
                 Socket serv = new Socket(ipAddresstoUse.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
-                //ServerSocket serv = new ServerSocket(0, 10, toUse);
                 IPEndPoint inetAddress = new IPEndPoint(ipAddresstoUse, 10);
 
                 // Create the local address
-                //TCPIPNodeAddress localAddr = new TCPIPNodeAddress(toUse.getHostAddress(), serv.getLocalPort());
                 TCPIPNodeAddress localAddr = new TCPIPNodeAddress(ipAddresstoUse.ToString(), inetAddress.Port);
 
                 // Create and start the LinkServer

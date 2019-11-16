@@ -23,58 +23,47 @@ using CSPnet2.NetNode;
 
 namespace CSPnet2.TCPIP
 {
-
-/**
- * Concrete implementation of a ProtocolID used to parse a string representation of a TCPIPNodeAddress into a
- * TCPIPNodeAddress object.
- * 
- * @author Kevin Chalmers
- */
-public sealed class TCPIPProtocolID : ProtocolID
-{
     /**
-     * Singleton instance of this class
-     */
-    private static TCPIPProtocolID instance = new TCPIPProtocolID();
-
-    /**
-     * Gets the singleton instance of this class
+     * Concrete implementation of a ProtocolID used to parse a string representation of a TCPIPNodeAddress into a
+     * TCPIPNodeAddress object.
      * 
-     * @return A new singleton instance of this class
+     * @author Kevin Chalmers
      */
-    public static TCPIPProtocolID getInstance()
+    public sealed class TCPIPProtocolID : ProtocolID
     {
-        return instance;
-    }
+        private static TCPIPProtocolID instance = new TCPIPProtocolID();
 
-    /**
-     * Default private constructor
-     */
-    private TCPIPProtocolID()
-    {
-        // Empty constructor
-    }
+        /**
+         * @return A new singleton instance of this class
+         */
+        public static TCPIPProtocolID getInstance()
+        {
+            return instance;
+        }
 
-    /**
-     * Parses a string to recreate a TCPIPNodeAddress object
-     * 
-     * @param addressString
-     *            String representing the address
-     * @return A new TCPIPNodeAddress object
-     * @//throws ArgumentException 
-     *             Thrown if the address is not in a correct form
-     */
-    internal override NodeAddress parse(String addressString)
-       // //throws ArgumentException 
-    {
-        // Split address into IP and port
-        int index = addressString.IndexOf(@"\\\\");
-        String temp = addressString.Substring(index + 2);
-        index = temp.IndexOf(":");
-        String address = temp.Substring(0, index);
-        int port = Int32.Parse(temp.Substring(index + 1));
-        return new TCPIPNodeAddress(address, port);
-    }
+        private TCPIPProtocolID()
+        {
+        }
 
-}
+        /**
+         * Parses a string to recreate a TCPIPNodeAddress object
+         * 
+         * @param addressString
+         *            String representing the address
+         * @return A new TCPIPNodeAddress object
+         * @//throws ArgumentException 
+         *             Thrown if the address is not in a correct form
+         */
+        internal override NodeAddress parse(String addressString)
+        // //throws ArgumentException 
+        {
+            // Split address into IP and port
+            int index = addressString.IndexOf(@"\\\\");
+            String temp = addressString.Substring(index + 2);
+            index = temp.IndexOf(":");
+            String address = temp.Substring(0, index);
+            int port = Int32.Parse(temp.Substring(index + 1));
+            return new TCPIPNodeAddress(address, port);
+        }
+    }
 }

@@ -18,46 +18,41 @@
 //////////////////////////////////////////////////////////////////////
 
 using System;
-using System.Diagnostics;
 using System.IO;
 using System.Net;
 using System.Net.Sockets;
-using System.Text;
-using System.Threading;
 using CSPlang;
 using CSPnet2.Net2Link;
 using CSPnet2.NetNode;
 
 namespace CSPnet2.TCPIP
 {
-/**
- * Concrete implementation of a LinkServer that listens on a TCP/IP based ServerSocket. For information on LinkServer,
- * see the relevant documentation.
- * <p>
- * It is possible for an advanced user to create this object themselves, although it is not recommended. For example:
- * </p>
- * <p>
- * <code>
- * TCPIPLinkServer serv = new TCPIPLinkServer(address);<br>
- * new ProcessManager(serv).start();
- * </code>
- * </p>
- * <p>
- * This is done automatically during Node initialisation. However, if the machine used has multiple interfaces, this can
- * be used to listen on another interface also.
- * </p>
- * 
- * @see LinkServer
- * @author Kevin Chalmers
- */
+    /**
+     * Concrete implementation of a LinkServer that listens on a TCP/IP based ServerSocket. For information on LinkServer,
+     * see the relevant documentation.
+     * <p>
+     * It is possible for an advanced user to create this object themselves, although it is not recommended. For example:
+     * </p>
+     * <p>
+     * <code>
+     * TCPIPLinkServer serv = new TCPIPLinkServer(address);<br>
+     * new ProcessManager(serv).start();
+     * </code>
+     * </p>
+     * <p>
+     * This is done automatically during Node initialisation. However, if the machine used has multiple interfaces, this can
+     * be used to listen on another interface also.
+     * </p>
+     * 
+     * @see LinkServer
+     * @author Kevin Chalmers
+     */
     public sealed class TCPIPLinkServer : LinkServer
     {
         /**
          * The ServerSocket that this class wraps around. The process listens on this connection
          */
-        //private readonly ServerSocket serv;
-        private readonly Socket serv;
-        //private readonly TcpListener serv;
+        private readonly Socket server;
 
         /**
          * The NodeAddress that this LinkServer is listening on. This should be the same as the Node's address.
@@ -76,10 +71,10 @@ namespace CSPnet2.TCPIP
             // We need to set the NodeAddress. Create from ServerSocket address and port
             //TODO double check if thee code below provides the proper values - Karol Pasierb
             //this.listeningAddress = new TCPIPNodeAddress(serverSocket.getInetAddress().getHostAddress(), serverSocket.getLocalPort());
-            IPEndPoint a = (IPEndPoint) serverSocket.LocalEndPoint;
+            IPEndPoint endPoint = (IPEndPoint)serverSocket.LocalEndPoint;
 
-            this.listeningAddress = new TCPIPNodeAddress(a.Address.ToString(), a.Port);
-            this.serv = serverSocket;
+            this.listeningAddress = new TCPIPNodeAddress(endPoint.Address.ToString(), endPoint.Port);
+            this.server = serverSocket;
         }
 
         /**
@@ -91,7 +86,7 @@ namespace CSPnet2.TCPIP
          *             Thrown if something goes wrong during the creation of the ServerSocket
          */
         public TCPIPLinkServer(TCPIPNodeAddress address)
-            //throws JCSPNetworkException
+        //throws JCSPNetworkException
         {
             try
             {
@@ -124,21 +119,21 @@ namespace CSPnet2.TCPIP
                             byte first = localIPAddresses[i].GetAddressBytes()[0];
 
                             // Now check the value
-                            if (first == (byte) 127 && current < 1)
+                            if (first == (byte)127 && current < 1)
                             {
                                 // We have a Loopback address
                                 current = 1;
                                 // Set the address to use
                                 localIPAddresstoUse = localIPAddresses[i];
                             }
-                            else if (first == (byte) 169 && current < 2)
+                            else if (first == (byte)169 && current < 2)
                             {
                                 // We have a link local address
                                 current = 2;
                                 // Set the address to use
                                 localIPAddresstoUse = localIPAddresses[i];
                             }
-                            else if (first == (byte) 192 && current < 3)
+                            else if (first == (byte)192 && current < 3)
                             {
                                 // We have a local address
                                 current = 3;
@@ -176,9 +171,9 @@ namespace CSPnet2.TCPIP
                     // Create the server socket with a random port
                     //this.serv = new ServerSocket(0, 0, socketAddress);
                     //this.serv = new TcpListener(localIPAddresstoUse.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
-                    this.serv = new Socket(socketEndPoint.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
-                    this.serv.Bind(socketEndPoint);
-                    this.serv.Listen(0);
+                    this.server = new Socket(socketEndPoint.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
+                    this.server.Bind(socketEndPoint);
+                    this.server.Listen(0);
 
 
                     // Assign the port to the address
@@ -198,11 +193,11 @@ namespace CSPnet2.TCPIP
                         address.getPort());
 
                     // Now create the ServerSocket
-                    this.serv = new Socket(inetAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
+                    this.server = new Socket(inetAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
 
                     //Bind server to the ip address - Karol Pasierb
-                    this.serv.Bind(inetAddress);
-                    this.serv.Listen(10); //backlog 10 for the queue  - Karol Pasierb
+                    this.server.Bind(inetAddress);
+                    this.server.Listen(10); //backlog 10 for the queue  - Karol Pasierb
 
                     // Set listeningAddress
                     this.listeningAddress = address;
@@ -214,9 +209,6 @@ namespace CSPnet2.TCPIP
             }
         }
 
-        /**
-         * The run method for the TCPIPLinkServer process
-         */
         public override void run()
         {
             // Log start of Link Server
@@ -227,12 +219,7 @@ namespace CSPnet2.TCPIP
                 while (true)
                 {
                     // Receive incoming connection
-                    Socket incoming = this.serv.Accept();
-
-                    //IPEndPoint remoteEndPoint = (IPEndPoint) incoming.RemoteEndPoint;
-                    //Debug.WriteLine("Accepted connection from {0}:{1}.", remoteEndPoint.Address, remoteEndPoint.Port);
-
-                    // Log
+                    Socket incoming = this.server.Accept();
                     Node.logger.log(this.GetType(), "Received new incoming connection");
                     // Set TcpNoDelay
                     incoming.NoDelay = true;
@@ -274,7 +261,6 @@ namespace CSPnet2.TCPIP
                         else
                         {
                             // We already have a connection to the incoming Node
-
                             // Log failed connection
                             Node.logger.log(this.GetType(), "Connection to " + remoteID
                                                                           + " already exists.  Informing remote Node.");
@@ -286,8 +272,6 @@ namespace CSPnet2.TCPIP
                             // Send out NodeID. We do this so the opposite Node can find its own connection
                             outStream.Write(Node.getInstance().getNodeID().toString());
                             outStream.Flush();
-
-                            // Close socket
                             incoming.Close();
                         }
                     }

@@ -18,34 +18,22 @@
 //////////////////////////////////////////////////////////////////////
 
 using System;
-using System.Net;
 using CSPnet2.Net2Link;
 using CSPnet2.NetNode;
 
 namespace CSPnet2.TCPIP
 {
-/**
- * A concrete implementation of a NodeAddress that is designed for TCP/IP connections.
- * 
- * @see NodeAddress
- * @author Kevin Chalmers
- */
+    /**
+     * A concrete implementation of a NodeAddress that is designed for TCP/IP connections.
+     * 
+     * @see NodeAddress
+     * @author Kevin Chalmers
+     */
     public sealed class TCPIPNodeAddress : NodeAddress
     {
-        /**
-         * The SUID for this class
-         */
         private static readonly long serialVersionUID = 1L;
 
-        /**
-         * The IP address part of the address
-         */
-        private String ip;
-        //private IPAddress ipAddress;
-
-        /**
-         * The port part of the address
-         */
+        private String ipAddress;
         private int port;
 
         /**
@@ -58,17 +46,17 @@ namespace CSPnet2.TCPIP
          */
 
 
-/*        public TCPIPNodeAddress(String ipAddress, EndPoint portNumber)
-        {
-            this.ip = ipAddress;
-            this.port = Int32.Parse(portNumber.AddressFamily.ToString());
-            this.protocol = "tcpip";
-            this.address = ipAddress + ":" + portNumber;
-        }*/
+        /*        public TCPIPNodeAddress(String ipAddress, EndPoint portNumber)
+                {
+                    this.ip = ipAddress;
+                    this.port = Int32.Parse(portNumber.AddressFamily.ToString());
+                    this.protocol = "tcpip";
+                    this.address = ipAddress + ":" + portNumber;
+                }*/
 
         public TCPIPNodeAddress(String ipAddress, int portNumber)
         {
-            this.ip = ipAddress;
+            this.ipAddress = ipAddress;
             this.port = portNumber;
             this.protocol = "tcpip";
             this.address = ipAddress + ":" + portNumber;
@@ -83,7 +71,7 @@ namespace CSPnet2.TCPIP
         public TCPIPNodeAddress(int portNumber)
         {
             this.port = portNumber;
-            this.ip = "";
+            this.ipAddress = "";
             this.protocol = "tcpip";
         }
 
@@ -93,7 +81,7 @@ namespace CSPnet2.TCPIP
         public TCPIPNodeAddress()
         {
             this.port = 0;
-            this.ip = "";
+            this.ipAddress = "";
             this.protocol = "tcpip";
         }
 
@@ -125,13 +113,13 @@ namespace CSPnet2.TCPIP
          */
         public /*final*/ String GetIpAddressAsString()
         {
-            return this.ip;
+            return this.ipAddress;
         }
 
-/*        public /*final#1# IPAddress GetIpAddress()
-        {
-            return this.ipAddress;
-        }*/
+        /*        public /*final#1# IPAddress GetIpAddress()
+                {
+                    return this.ipAddress;
+                }*/
 
         /**
          * Sets the IP address part of the NodeAddress. Used internally in JCSP
@@ -141,13 +129,13 @@ namespace CSPnet2.TCPIP
          */
         internal void setIpAddress(String ipAddr)
         {
-            this.ip = ipAddr;
+            this.ipAddress = ipAddr;
         }
 
-/*        internal void setIpAddress(IPAddress ipAddr)
-        {
-            this.ipAddress = ipAddr;
-        }*/
+        /*        internal void setIpAddress(IPAddress ipAddr)
+                {
+                    this.ipAddress = ipAddr;
+                }*/
 
         /**
          * Sets the address String. Used internally within JCSP
@@ -168,7 +156,7 @@ namespace CSPnet2.TCPIP
          *             Thrown if something goes wrong during the creation of the Link
          */
         internal override Link createLink()
-            //throws JCSPNetworkException
+        //throws JCSPNetworkException
         {
             return new TCPIPLink(this);
         }
@@ -181,7 +169,7 @@ namespace CSPnet2.TCPIP
          *             Thrown if something goes wrong during the creation of the LinkServer
          */
         internal override LinkServer createLinkServer()
-            //throws JCSPNetworkException
+        //throws JCSPNetworkException
         {
             return new TCPIPLinkServer(this);
         }
