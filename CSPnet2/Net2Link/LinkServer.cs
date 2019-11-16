@@ -35,8 +35,8 @@ namespace CSPnet2.Net2Link
          * @//throws ArgumentException 
          * @//throws JCSPNetworkException
          */
-        public static /*final*/ void start(NodeAddress address)
-            //throws ArgumentException , JCSPNetworkException
+        public static /*final*/ void start(NodeAddress address) //TODO how to throw exception here?
+        //throws ArgumentException , JCSPNetworkException
         {
             Node.log.log(typeof(LinkServer), "Attempting to start Link Server on " + address);
             LinkServer linkServer = address.createLinkServer();

@@ -24,7 +24,6 @@ using CSPnet2.NetNode;
 
 namespace CSPnet2.Net2Link
 {
-
     /**
      * This class is used to create a new Link from a given NodeID or NodeAddress.
      * <p>
@@ -64,167 +63,162 @@ namespace CSPnet2.Net2Link
      * @author Kevin Chalmers (updated from Quickstone Technologies)
      */
     public sealed class LinkFactory
-{
-
-    /**
-     * Default private constructor. Not used.
-     */
-    private LinkFactory()
     {
-        // Empty constructor
-    }
+        private LinkFactory()
+        {
+        }
 
-    /**
-     * Creates a new Link or gets an existing one from the the given NodeID.
-     * 
-     * @param nodeID
-     *            NodeID of the Node to connect to.
-     * @return A Link connected to the remote Node of given NodeID
-     * @//throws JCSPNetworkException
-     *             Thrown if there is a problem connecting to the Node
-     * @//throws ArgumentException 
-     *             Thrown if an attempt is made to connect to the local Node
-     */
-    public static Link getLink(NodeID nodeID)
+        /**
+         * Creates a new Link or gets an existing one from the the given NodeID.
+         * 
+         * @param nodeID
+         *            NodeID of the Node to connect to.
+         * @return A Link connected to the remote Node of given NodeID
+         * @//throws JCSPNetworkException
+         *             Thrown if there is a problem connecting to the Node
+         * @//throws ArgumentException 
+         *             Thrown if an attempt is made to connect to the local Node
+         */
+        public static Link getLink(NodeID nodeID)
         ////throws JCSPNetworkException, ArgumentException 
-    {
-        if (nodeID.equals(Node.getInstance().getNodeID()))
-            throw new ArgumentException("Attempted to connect to the local Node");
-
-        // Log start of Link creation
-        Node.log.log(typeof(LinkFactory), "Trying to get link to " + nodeID.toString());
-
-        // First check if Link to NodeID exists. Request the Link from the Link Manager
-        Link toReturn = LinkManager.getInstance().requestLink(nodeID);
-        if (toReturn != null)
         {
-            // A Link already exists to given NodeID. Log and return existing Link
-            Node.log.log(typeof(LinkFactory), "Link to " + nodeID.toString()
-                                            + " already exists.  Returning existing Link");
-            return toReturn;
-        }
+            if (nodeID.equals(Node.getInstance().getNodeID()))
+                throw new ArgumentException("Attempted to connect to the local Node");
 
-        // An existing Link does not exist within the Link Manager. Log, and then create Link via the address
-        Node.log.log(typeof(LinkFactory), "Link does not exist to " + nodeID.toString() + ".  Creating new Link");
-        toReturn = nodeID.getNodeAddress().createLink();
+            // Log start of Link creation
+            Node.log.log(typeof(LinkFactory), "Trying to get link to " + nodeID.toString());
 
-        // Now attempt to connect the Link. If connect fails, then the opposite node already has a connection to us.
-        // This may occur during connection if the opposite end registered its Link prior to us doing so. In such
-        // a circumstance, the Link should eventually appear in the LinkManager.
-        if (!toReturn.connect())
-        {
-            // Connect failed. Get NodeID of remote Node (this will have been set during the connect operation)
-            NodeID remoteID = toReturn.getRemoteNodeID();
-
-            // Log failed connect
-            Node.log.log(typeof(LinkFactory), "Failed to connect to " + remoteID.toString());
-
-            // Set the Link to return to null
-            toReturn = null;
-
-            // Loop until the Link is connected. This is a possible weakness. Although it is believed that the
-            // opposite end will eventually connect, we may have a problem if this continually loops. For information,
-            // log every attempt.
-            while (toReturn == null)
+            // First check if Link to NodeID exists. Request the Link from the Link Manager
+            Link toReturn = LinkManager.getInstance().requestLink(nodeID);
+            if (toReturn != null)
             {
-                try
-                {
-                    // Go to sleep for a bit, and give the Link a chance to register
-                    Thread.Sleep(100);
-
-                    // Log start of attempt
-                    Node.log.log(typeof(LinkFactory), "Attempting to retrieve Link to " + remoteID.toString());
-
-                    // Retrieve Link from LinkManager
-                    toReturn = LinkManager.getInstance().requestLink(remoteID);
-                }
-                catch (ThreadInterruptedException ie)
-                {
-                    // Ignore. Should never really happen
-                }
+                // A Link already exists to given NodeID. Log and return existing Link
+                Node.log.log(typeof(LinkFactory), "Link to " + nodeID.toString()
+                                                + " already exists.  Returning existing Link");
+                return toReturn;
             }
-            // Return the Link retrieved from the LinkManager
+
+            // An existing Link does not exist within the Link Manager. Log, and then create Link via the address
+            Node.log.log(typeof(LinkFactory), "Link does not exist to " + nodeID.toString() + ".  Creating new Link");
+            toReturn = nodeID.getNodeAddress().createLink();
+
+            // Now attempt to connect the Link. If connect fails, then the opposite node already has a connection to us.
+            // This may occur during connection if the opposite end registered its Link prior to us doing so. In such
+            // a circumstance, the Link should eventually appear in the LinkManager.
+            if (!toReturn.connect())
+            {
+                // Connect failed. Get NodeID of remote Node (this will have been set during the connect operation)
+                NodeID remoteID = toReturn.getRemoteNodeID();
+
+                // Log failed connect
+                Node.log.log(typeof(LinkFactory), "Failed to connect to " + remoteID.toString());
+
+                // Set the Link to return to null
+                toReturn = null;
+
+                // Loop until the Link is connected. This is a possible weakness. Although it is believed that the
+                // opposite end will eventually connect, we may have a problem if this continually loops. For information,
+                // log every attempt.
+                while (toReturn == null)
+                {
+                    try
+                    {
+                        // Go to sleep for a bit, and give the Link a chance to register
+                        Thread.Sleep(100);
+
+                        // Log start of attempt
+                        Node.log.log(typeof(LinkFactory), "Attempting to retrieve Link to " + remoteID.toString());
+
+                        // Retrieve Link from LinkManager
+                        toReturn = LinkManager.getInstance().requestLink(remoteID);
+                    }
+                    catch (ThreadInterruptedException ie)
+                    {
+                        // Ignore. Should never really happen
+                    }
+                }
+                // Return the Link retrieved from the LinkManager
+                return toReturn;
+            }
+
+            // Connection succeeded. Register Link with the LinkManager
+            toReturn.registerLink();
+
+            // Now start the Link
+            ProcessManager proc = new ProcessManager(toReturn);
+            proc.setPriority(toReturn.priority);
+            proc.start();
+
+            // Return the Link
             return toReturn;
         }
 
-        // Connection succeeded. Register Link with the LinkManager
-        toReturn.registerLink();
-
-        // Now start the Link
-        ProcessManager proc = new ProcessManager(toReturn);
-        proc.setPriority(toReturn.priority);
-        proc.start();
-
-        // Return the Link
-        return toReturn;
-    }
-
-    /**
-     * Creates a new Link, or retrieves an existing one, from a NodeAddress
-     * 
-     * @param addr
-     *            The NodeAddress of the Node to connect to
-     * @return A new Link connected to the node at the given NodeAddress
-     * @//throws JCSPNetworkException
-     *             Thrown if anything goes wrong during the connection
-     */
-    public static Link getLink(NodeAddress addr)
+        /**
+         * Creates a new Link, or retrieves an existing one, from a NodeAddress
+         * 
+         * @param addr
+         *            The NodeAddress of the Node to connect to
+         * @return A new Link connected to the node at the given NodeAddress
+         * @//throws JCSPNetworkException
+         *             Thrown if anything goes wrong during the connection
+         */
+        public static Link getLink(NodeAddress addr)
         ////throws JCSPNetworkException
-    {
-        // Log start of creation
-        Node.log.log(typeof(LinkFactory), "Trying to get link to " + addr.toString());
-
-        // Create Link from address
-        Link toReturn = addr.createLink();
-        Console.WriteLine("Finished creating link NodeID " + toReturn.remoteID);
-
-        // Now attempt to connect the Link. If connect fails, then the opposite node already has a connection to us.
-        // This may occur during connection if the opposite end registered its Link prior to us doing so. In such
-        // a circumstance, the Link should eventually appear in the LinkManager.
-        if (!toReturn.connect())
         {
-            // Connect failed. Get NodeID of remote Node (this will have been set during the connect operation)
-            NodeID remoteID = toReturn.getRemoteNodeID();
+            // Log start of creation
+            Node.log.log(typeof(LinkFactory), "Trying to get link to " + addr.toString());
 
-            // Log failed connect
-            Node.log.log(typeof(LinkFactory), "Failed to connect to " + remoteID.toString());
-                Console.WriteLine("Failed to connect to " + remoteID.toString());
-            // Set the Link to return to null
-            toReturn = null;
+            // Create Link from address
+            Link toReturn = addr.createLink();
+            Console.WriteLine("Finished creating link NodeID " + toReturn.remoteID);
 
-            // Loop until the Link is connected. This is a possible weakness. Although it is believed that the
-            // opposite end will eventually connect, we may have a problem if this continually loops. For information,
-            // log every attempt.
-            while (toReturn == null)
+            // Now attempt to connect the Link. If connect fails, then the opposite node already has a connection to us.
+            // This may occur during connection if the opposite end registered its Link prior to us doing so. In such
+            // a circumstance, the Link should eventually appear in the LinkManager.
+            if (!toReturn.connect())
             {
-                try
-                {
-                    // Go to sleep for a bit, and give the Link a chance to register
-                    Thread.Sleep(100);
+                // Connect failed. Get NodeID of remote Node (this will have been set during the connect operation)
+                NodeID remoteID = toReturn.getRemoteNodeID();
 
-                    // Log start of attempt
-                    Node.log.log(typeof(LinkFactory), "Attempting to retrieve Link to " + remoteID.toString());
+                // Log failed connect
+                Node.log.log(typeof(LinkFactory), "Failed to connect to " + remoteID.toString());
+                Console.WriteLine("Failed to connect to " + remoteID.toString());
+                // Set the Link to return to null
+                toReturn = null;
 
-                    // Retrieve Link from LinkManager
-                    toReturn = LinkManager.getInstance().requestLink(remoteID);
-                }
-                catch (ThreadInterruptedException ie)
+                // Loop until the Link is connected. This is a possible weakness. Although it is believed that the
+                // opposite end will eventually connect, we may have a problem if this continually loops. For information,
+                // log every attempt.
+                while (toReturn == null)
                 {
-                    // Ignore. Should never really happen
+                    try
+                    {
+                        // Go to sleep for a bit, and give the Link a chance to register
+                        Thread.Sleep(100);
+
+                        // Log start of attempt
+                        Node.log.log(typeof(LinkFactory), "Attempting to retrieve Link to " + remoteID.toString());
+
+                        // Retrieve Link from LinkManager
+                        toReturn = LinkManager.getInstance().requestLink(remoteID);
+                    }
+                    catch (ThreadInterruptedException ie)
+                    {
+                        // Ignore. Should never really happen
+                    }
                 }
+                // Return the Link retrieved from the LinkManager
+                return toReturn;
             }
-            // Return the Link retrieved from the LinkManager
+
+            // Connection succeeded. Register Link with the LinkManager
+            toReturn.registerLink();
+
+            // Now start the Link
+            new ProcessManager(toReturn).start();
+
+            // Return the Link
             return toReturn;
         }
-
-        // Connection succeeded. Register Link with the LinkManager
-        toReturn.registerLink();
-
-        // Now start the Link
-        new ProcessManager(toReturn).start();
-
-        // Return the Link
-        return toReturn;
     }
-}
 }

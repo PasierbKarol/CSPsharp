@@ -21,7 +21,6 @@ using System;
 using System.Collections;
 using System.Diagnostics;
 using System.IO;
-using System.Threading.Tasks;
 using CSPlang;
 using CSPlang.Any2;
 using CSPnet2.Barriers;
@@ -173,7 +172,7 @@ namespace CSPnet2.Net2Link
                     // Really we could send just the same LINK_LOST message to all channels. Aliasing should not be a
                     // concern
                     // as the channel will effectively be broken after this
-                    ChannelOutput toChannel = ((ChannelData) enumerator.Current).toChannel;
+                    ChannelOutput toChannel = ((ChannelData)enumerator.Current).toChannel;
                     NetworkMessage message = new NetworkMessage();
                     message.type = NetworkProtocol.LINK_LOST;
                     toChannel.write(message);
@@ -186,7 +185,7 @@ namespace CSPnet2.Net2Link
                 // Now do the same for the barriers, sending LINK_LOST to each.
                 for (IEnumerator enumerator = this.connectedBarriers.Values.GetEnumerator(); enumerator.MoveNext();)
                 {
-                    ChannelOutput toBar = ((BarrierData) enumerator.Current).toBarrier;
+                    ChannelOutput toBar = ((BarrierData)enumerator.Current).toBarrier;
                     NetworkMessage message = new NetworkMessage();
                     message.type = NetworkProtocol.LINK_LOST;
                     toBar.write(message);
@@ -345,7 +344,7 @@ namespace CSPnet2.Net2Link
             ProcessManager rxProc = new ProcessManager(rxLoop);
             txProc.setPriority(this.priority);
             rxProc.setPriority(this.priority);
-            IamCSProcess[] processes = {txProc, rxProc};
+            IamCSProcess[] processes = { txProc, rxProc };
             new CSPParallel(processes).run();
 
             // At this point the Link has gone down. Should we be accepting messages? This should have really been
@@ -354,7 +353,7 @@ namespace CSPnet2.Net2Link
             {
                 NetworkMessage linkLost = new NetworkMessage();
                 linkLost.type = NetworkProtocol.LINK_LOST;
-                NetworkMessage msg = (NetworkMessage) this.txChannel.In().read();
+                NetworkMessage msg = (NetworkMessage)this.txChannel.In().read();
                 switch (msg.type)
                 {
                     // We only respond to certain message types.
@@ -400,7 +399,6 @@ namespace CSPnet2.Net2Link
              * @param stream
              *            The output stream connected to the remote node
              */
-            //internal TxLoop(ChannelInput In, DataOutputStream stream)
             internal TxLoop(ChannelInput In, BinaryWriter stream)
             {
                 this.input = In;
@@ -414,23 +412,22 @@ namespace CSPnet2.Net2Link
             {
                 try
                 {
-                    // Loop forever.
                     while (true)
                     {
                         // Read in next message
-                        NetworkMessage msg = (NetworkMessage) this.input.read();
+                        NetworkMessage message = (NetworkMessage)this.input.read();
 
                         // Write message to the stream.
-                        this.outputStream.Write(msg.type);
-                        this.outputStream.Write(msg.attr1);
-                        this.outputStream.Write(msg.attr2);
+                        this.outputStream.Write(message.type);
+                        this.outputStream.Write(message.attr1);
+                        this.outputStream.Write(message.attr2);
 
                         // Check if message has data element
-                        if (msg.type == NetworkProtocol.SEND || msg.type == NetworkProtocol.ARRIVED
-                                                             || msg.type == NetworkProtocol.ASYNC_SEND)
+                        if (message.type == NetworkProtocol.SEND || message.type == NetworkProtocol.ARRIVED
+                                                             || message.type == NetworkProtocol.ASYNC_SEND)
                         {
                             // Write data element
-                            this.outputStream.Write(msg.jsonData);
+                            this.outputStream.Write(message.jsonData);
                         }
 
                         // Flush the stream.
@@ -498,7 +495,7 @@ namespace CSPnet2.Net2Link
                 {
                     // Declare the reference for the possible channel and barrier we are may operate on
                     ChannelData data = null;
-                    BarrierData bar = null;
+                    BarrierData barier = null;
 
                     // Loop forever (or until something goes wrong)
                     while (true)
@@ -506,18 +503,18 @@ namespace CSPnet2.Net2Link
                         // Read in the next message from the stream
                         //var a = this.inputStream.BaseStream.ReadByte();
                         int type = this.inputStream.ReadInt32();
-                        
+
                         int attr1 = this.inputStream.ReadInt32();
                         int attr2 = this.inputStream.ReadInt32();
 
                         // Reconstruct the message object
-                        NetworkMessage msg = new NetworkMessage();
-                        msg.type = type;
-                        msg.attr1 = attr1;
-                        msg.attr2 = attr2;
+                        NetworkMessage message = new NetworkMessage();
+                        message.type = type;
+                        message.attr1 = attr1;
+                        message.attr2 = attr2;
 
                         // Now operate on the message
-                        switch (msg.type)
+                        switch (message.type)
                         {
                             // ------------------------------------------------------------------------
                             // *** SEND & ASYNC_SEND ***
@@ -528,13 +525,13 @@ namespace CSPnet2.Net2Link
                             case NetworkProtocol.ASYNC_SEND:
 
                                 // First also read the data portion of the message
-                               msg.jsonData = this.inputStream.ReadString();
+                                message.jsonData = this.inputStream.ReadString();
 
                                 // Attach the channel to allow the acknowledge message to be sent later.
-                                msg.toLink = this.toTxProcess;
+                                message.toLink = this.toTxProcess;
 
                                 // Get the channel we are dealing with.
-                                data = ChannelManager.getInstance().getChannel(msg.attr1);
+                                data = ChannelManager.getInstance().getChannel(message.attr1);
 
                                 // Now check if the channel does exist. If the previous operation returned null, we can
                                 // determine that
@@ -553,18 +550,18 @@ namespace CSPnet2.Net2Link
                                         {
                                             // Channel is OK for input, so pass on the message
                                             case ChannelDataState.OK_INPUT:
-                                                data.toChannel.write(msg);
+                                                data.toChannel.write(message);
                                                 break;
 
                                             // Channel is currently migrating. Still pass on the message. When the Channel
                                             // arrives, the REQUEST still needs to occur before this channel is passed on.
                                             case ChannelDataState.MOVING:
-                                                data.toChannel.write(msg);
+                                                data.toChannel.write(message);
                                                 break;
 
                                             // Channel has moved. Still pass on the message.
                                             case ChannelDataState.MOVED:
-                                                data.toChannel.write(msg);
+                                                data.toChannel.write(message);
                                                 break;
 
                                             // Channel has been poisoned. Spread the poison to the sender.
@@ -573,12 +570,12 @@ namespace CSPnet2.Net2Link
                                                 NetworkMessage poison = new NetworkMessage();
                                                 poison.type = NetworkProtocol.POISON;
                                                 // Destination is the source of the incoming message
-                                                poison.attr1 = msg.attr2;
+                                                poison.attr1 = message.attr2;
                                                 // Send the poison level
                                                 poison.attr2 = data.poisonLevel;
                                                 // Then write the message to the TX process so it can send it to the remote
                                                 // Link
-                                                msg.toLink.write(poison);
+                                                message.toLink.write(poison);
                                                 break;
 
                                             // In all other cases we reject the message. The sender is informed and can act
@@ -588,11 +585,11 @@ namespace CSPnet2.Net2Link
                                                 NetworkMessage reject = new NetworkMessage();
                                                 reject.type = NetworkProtocol.REJECT_CHANNEL;
                                                 // Destination is source of incoming message
-                                                reject.attr1 = msg.attr2;
+                                                reject.attr1 = message.attr2;
                                                 // Attribute 2 unnecessary
                                                 reject.attr2 = -1;
                                                 // Write reject to the TX process so it can send it to the remote Link
-                                                msg.toLink.write(reject);
+                                                message.toLink.write(reject);
                                                 break;
                                         }
                                     }
@@ -602,11 +599,10 @@ namespace CSPnet2.Net2Link
                                     // Channel does not exist. Reject the message so the sender can act accordingly.
                                     NetworkMessage reject = new NetworkMessage();
                                     reject.type = NetworkProtocol.REJECT_CHANNEL;
-                                    reject.attr1 = msg.attr2;
+                                    reject.attr1 = message.attr2;
                                     reject.attr2 = -1;
-                                    msg.toLink.write(reject);
-                                    Debug.WriteLine("Message was rejected");
-
+                                    message.toLink.write(reject);
+                                    Console.WriteLine("Message was rejected");
                                 }
 
                                 break;
@@ -618,7 +614,7 @@ namespace CSPnet2.Net2Link
                             case NetworkProtocol.ACK:
 
                                 // Retrieve the channel
-                                data = ChannelManager.getInstance().getChannel(msg.attr1);
+                                data = ChannelManager.getInstance().getChannel(message.attr1);
 
                                 // Check if the channel exists. The previous operation will set data to null if no channel
                                 // of that index has been created.
@@ -635,7 +631,7 @@ namespace CSPnet2.Net2Link
                                         {
                                             // Channel is OK_OUTPUT, acknowledge channel.
                                             case ChannelDataState.OK_OUTPUT:
-                                                data.toChannel.write(msg);
+                                                data.toChannel.write(message);
                                                 break;
 
                                             // Channel is not an output, or is destroyed, poisoned, etc. In this case we
@@ -648,10 +644,6 @@ namespace CSPnet2.Net2Link
                                         }
                                     }
                                 }
-                                else
-                                {
-                                    // Otherwise Channel doesn't exist. Ignore message
-                                }
 
                                 break;
 
@@ -662,28 +654,28 @@ namespace CSPnet2.Net2Link
                             case NetworkProtocol.ENROLL:
 
                                 // Retrieve the barrier
-                                bar = BarrierManager.getInstance().getBarrier(msg.attr1);
+                                barier = BarrierManager.getInstance().getBarrier(message.attr1);
 
                                 // Now check that the barrier exists. The previous operation would have set bar to null if
                                 // no channel
                                 // of that index exists
-                                if (bar != null)
+                                if (barier != null)
                                 {
                                     // Barrier exists. We need to lock the state while we interact to avoid conflicts
 
                                     // Acquire lock on barrier data state
-                                    lock (bar)
+                                    lock (barier)
                                     {
                                         // Now behave according to the state of the barrier
-                                        switch (bar.currentBarrierState)
+                                        switch (barier.currentBarrierState)
                                         {
                                             // Barrier is in OK state, and is a server. Enroll with barrier.
                                             case BarrierDataState.OK_SERVER:
                                                 // Forward the enrolment
-                                                bar.toBarrier.write(msg);
+                                                barier.toBarrier.write(message);
 
                                                 // Add the barrier to the incomingEnrolledBarriers
-                                                this.incomingEnrolledBarriers.Add(bar);
+                                                this.incomingEnrolledBarriers.Add(barier);
                                                 break;
 
                                             // Barrier is other state. Reject the enroll and let the enrolling process
@@ -693,7 +685,7 @@ namespace CSPnet2.Net2Link
                                                 NetworkMessage reject = new NetworkMessage();
                                                 reject.type = NetworkProtocol.REJECT_BARRIER;
                                                 // Destination of reject is source of incoming message
-                                                reject.attr1 = msg.attr2;
+                                                reject.attr1 = message.attr2;
                                                 // Attribute 2 is not used
                                                 reject.attr2 = -1;
                                                 // Send message to the TX process of the Link
@@ -707,10 +699,10 @@ namespace CSPnet2.Net2Link
                                     // Barrier does not exist. Reject message and let enrolling process handle it.
                                     NetworkMessage reject = new NetworkMessage();
                                     reject.type = NetworkProtocol.REJECT_BARRIER;
-                                    reject.attr1 = msg.attr2;
+                                    reject.attr1 = message.attr2;
                                     reject.attr2 = -1;
                                     this.toTxProcess.write(reject);
-                                    Debug.WriteLine("Message was rejected");
+                                    Console.WriteLine("Message was rejected");
 
                                 }
 
@@ -723,22 +715,22 @@ namespace CSPnet2.Net2Link
                             case NetworkProtocol.RESIGN:
 
                                 // Retrieve the barrier.
-                                bar = BarrierManager.getInstance().getBarrier(msg.attr1);
+                                barier = BarrierManager.getInstance().getBarrier(message.attr1);
 
                                 // Check if the Barrier exists. The previous operation returns null if no barrier of the
                                 // given
                                 // index exists.
-                                if (bar != null)
+                                if (barier != null)
                                 {
                                     // The Barrier exists. We now acquire a lock on the Barrier to avoid it changing while
                                     // we
                                     // operate on it.
 
                                     // Acquire lock on the barrier data state
-                                    lock (bar)
+                                    lock (barier)
                                     {
                                         // Now behave based on the state of the barrier
-                                        switch (bar.currentBarrierState)
+                                        switch (barier.currentBarrierState)
                                         {
                                             // Barrier is in OK_SERVER state. Attempt resign from barrier.
                                             case BarrierDataState.OK_SERVER:
@@ -754,11 +746,11 @@ namespace CSPnet2.Net2Link
                                                 //    // pointless. Simply continue.
                                                 //}
                                                 //else
-                                                if (!this.incomingEnrolledBarriers.Contains(bar))
+                                                if (!this.incomingEnrolledBarriers.Contains(barier))
                                                 {
-                                               
+
                                                     // Forward the resignation to the barrier
-                                                    bar.toBarrier.write(msg);
+                                                    barier.toBarrier.write(message);
                                                 }
 
                                                 break;
@@ -782,26 +774,26 @@ namespace CSPnet2.Net2Link
                             case NetworkProtocol.SYNC:
 
                                 // Retrieve the barrier
-                                bar = BarrierManager.getInstance().getBarrier(msg.attr1);
+                                barier = BarrierManager.getInstance().getBarrier(message.attr1);
 
                                 // Check that the barrier exists. The previous operation returns null if no barrier of the
                                 // given
                                 // index exists.
-                                if (bar != null)
+                                if (barier != null)
                                 {
                                     // The barrier exists. We need to operate on it based on its state. Therefore we need to
                                     // ensure
                                     // that the state doesn't change as we do so, and must acquire a lock on the barrier
 
                                     // Acquire lock on barrier state
-                                    lock (bar)
+                                    lock (barier)
                                     {
                                         // Attach the output channel to the txLink so when barrier is ready it can inform
                                         // the networked barriers connected to it.
-                                        msg.toLink = this.toTxProcess;
+                                        message.toLink = this.toTxProcess;
 
                                         // Now we must behave based on the state of the barrier
-                                        switch (bar.currentBarrierState)
+                                        switch (barier.currentBarrierState)
                                         {
                                             // Barrier is in OK_SERVER state. Pass SYNC onto the barrier.
                                             case BarrierDataState.OK_SERVER:
@@ -810,7 +802,7 @@ namespace CSPnet2.Net2Link
                                                 // the ArrayList structure will have to be re-thought to something faster.
 
                                                 // Forward the SYNC
-                                                bar.toBarrier.write(msg);
+                                                barier.toBarrier.write(message);
 
                                                 break;
 
@@ -820,7 +812,7 @@ namespace CSPnet2.Net2Link
                                                 NetworkMessage reject = new NetworkMessage();
                                                 reject.type = NetworkProtocol.REJECT_BARRIER;
                                                 // Destination is source of previous message
-                                                reject.attr1 = msg.attr2;
+                                                reject.attr1 = message.attr2;
                                                 // Attribute 2 is not required
                                                 reject.attr2 = -1;
                                                 // Write reject message to the TX process
@@ -834,10 +826,10 @@ namespace CSPnet2.Net2Link
                                     // Barrier doesn't exist. Reject the message.
                                     NetworkMessage reject = new NetworkMessage();
                                     reject.type = NetworkProtocol.REJECT_BARRIER;
-                                    reject.attr1 = msg.attr2;
+                                    reject.attr1 = message.attr2;
                                     reject.attr2 = -1;
                                     this.toTxProcess.write(reject);
-                                    Debug.WriteLine("Message was rejected");
+                                    Console.WriteLine("Message was rejected");
                                 }
 
                                 break;
@@ -849,20 +841,20 @@ namespace CSPnet2.Net2Link
                             case NetworkProtocol.RELEASE:
 
                                 // Retrieve the barrier.
-                                bar = BarrierManager.getInstance().getBarrier(msg.attr1);
+                                barier = BarrierManager.getInstance().getBarrier(message.attr1);
 
                                 // Check and see if the barrier exists. The previous operation returns null if no barrier of
                                 // the given index exists
-                                if (bar != null)
+                                if (barier != null)
                                 {
                                     // We now operate on the barrier based on its state. We therefore need to acquire a lock
                                     // on the barrier to ensure the state doesn't change as we do so.
 
                                     // Acquire lock on barrier state
-                                    lock (bar)
+                                    lock (barier)
                                     {
                                         // Now behave based on the state of the barrier
-                                        switch (bar.currentBarrierState)
+                                        switch (barier.currentBarrierState)
                                         {
                                             // Barrier is in OK_CLIENT state. Release the waiting processes.
                                             case BarrierDataState.OK_CLIENT:
@@ -872,7 +864,7 @@ namespace CSPnet2.Net2Link
                                                 // passed into this process.
 
                                                 // Forward on the message
-                                                bar.toBarrier.write(msg);
+                                                barier.toBarrier.write(message);
 
                                                 break;
 
@@ -896,7 +888,7 @@ namespace CSPnet2.Net2Link
                             case NetworkProtocol.REJECT_CHANNEL:
 
                                 // Retrieve the channel
-                                data = ChannelManager.getInstance().getChannel(msg.attr1);
+                                data = ChannelManager.getInstance().getChannel(message.attr1);
 
                                 // Now check that the channel exists. The previous operation returns null if no channel
                                 // of the given index exists
@@ -913,7 +905,7 @@ namespace CSPnet2.Net2Link
                                         {
                                             // Channel is in OK_OUTPUT state. Reject the message sent by it.
                                             case ChannelDataState.OK_OUTPUT:
-                                                data.toChannel.write(msg);
+                                                data.toChannel.write(message);
                                                 break;
 
                                             // Channel is in other state. We can ignore the message. The rejector is
@@ -935,24 +927,24 @@ namespace CSPnet2.Net2Link
                             case NetworkProtocol.REJECT_BARRIER:
 
                                 // Retrieve the barrier
-                                bar = BarrierManager.getInstance().getBarrier(msg.attr1);
+                                barier = BarrierManager.getInstance().getBarrier(message.attr1);
 
                                 // Now check if the barrier exists. The previous operation returns null if no barrier
                                 // exists at the given index.
-                                if (bar != null)
+                                if (barier != null)
                                 {
                                     // Barrier exists. We now operate on it based on its state. We must ensure that the
                                     // state doesn't change during this time and must lock the barrier state
 
                                     // Acquire lock on barrier state
-                                    lock (bar)
+                                    lock (barier)
                                     {
                                         // Not behave based on the state of the barrier
-                                        switch (bar.currentBarrierState)
+                                        switch (barier.currentBarrierState)
                                         {
                                             // Barrier is in OK_CLIENT state. Reject the message sent by it.
                                             case BarrierDataState.OK_CLIENT:
-                                                bar.toBarrier.write(msg);
+                                                barier.toBarrier.write(message);
                                                 break;
 
                                             // Barrier is in other state. We can ignore the message. The rejector is broken
@@ -987,7 +979,7 @@ namespace CSPnet2.Net2Link
                             case NetworkProtocol.POISON:
 
                                 // Retrieve the channel
-                                data = ChannelManager.getInstance().getChannel(msg.attr1);
+                                data = ChannelManager.getInstance().getChannel(message.attr1);
 
                                 // Now check that the channel exists. The previous operation returns
                                 // null if no channel of the given index exists
@@ -1006,11 +998,11 @@ namespace CSPnet2.Net2Link
                                             case ChannelDataState.OK_INPUT:
                                             case ChannelDataState.OK_OUTPUT:
                                                 // We now must check the channels immunity level
-                                                if (msg.attr2 > data.immunityLevel)
+                                                if (message.attr2 > data.immunityLevel)
                                                 {
                                                     // The poison message is strong enough to poison the channel.
                                                     // Forward on the message
-                                                    data.toChannel.write(msg);
+                                                    data.toChannel.write(message);
                                                 }
 
                                                 break;
@@ -1025,8 +1017,8 @@ namespace CSPnet2.Net2Link
 
                                             // Channel is already poisoned. Check level and forward if necessary.
                                             case ChannelDataState.POISONED:
-                                                if (data.poisonLevel < msg.attr2)
-                                                    data.toChannel.write(msg);
+                                                if (data.poisonLevel < message.attr2)
+                                                    data.toChannel.write(message);
                                                 break;
 
                                             // Channel is in another state. Ignore message. Poisoner is trying to poison a
@@ -1055,10 +1047,10 @@ namespace CSPnet2.Net2Link
                     IEnumerator iter = this.incomingEnrolledBarriers.GetEnumerator();
                     for (; iter.MoveNext();)
                     {
-                        BarrierData bar = (BarrierData) iter.Current;
+                        BarrierData barrier = (BarrierData)iter.Current;
                         NetworkMessage message = new NetworkMessage();
                         message.type = NetworkProtocol.LINK_LOST;
-                        bar.toBarrier.write(message);
+                        barrier.toBarrier.write(message);
                     }
 
                     this.incomingEnrolledBarriers.Clear();
