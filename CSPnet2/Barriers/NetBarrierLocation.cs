@@ -22,64 +22,54 @@ using CSPnet2.NetNode;
 
 namespace CSPnet2.Barriers
 {
-/**
- * This class is a data structure representing the location of a NetBarrier in a network. The NetBarrierLocation
- * consists of the NodeID of the Node on which the NetBarrier resides, and its Virtual Barrier Number, which is the
- * number uniquely identifying the NetBarrier on said node.
- * <p>
- * To acquire the NetBarrierLocation of a NetBarrier, use the getLocation method:
- * </p>
- * <p>
- * <code>
- * NetBarrierLocation location = (NetBarrierLocation)bar.getLocation();
- * </code>
- * </p>
- * <p>
- * The location returned depends on whether the NetBarrier is a client or a server end. A server end of a NetBarrier
- * will return its own location. A client end of a NetBarrier will return the location of the server end it is connected
- * to. This is because we consider the NetBarrier to be a single, virtual construct, with only one location. That
- * location is where the server end of the NetBarrier is located.
- * </p>
- * 
- * @see NetBarrier
- * @see NetLocation
- * @author Kevin Chalmers
- */
+    /**
+     * This class is a data structure representing the location of a NetBarrier in a network. The NetBarrierLocation
+     * consists of the NodeID of the Node on which the NetBarrier resides, and its Virtual Barrier Number, which is the
+     * number uniquely identifying the NetBarrier on said node.
+     * <p>
+     * To acquire the NetBarrierLocation of a NetBarrier, use the getLocation method:
+     * </p>
+     * <p>
+     * <code>
+     * NetBarrierLocation location = (NetBarrierLocation)bar.getLocation();
+     * </code>
+     * </p>
+     * <p>
+     * The location returned depends on whether the NetBarrier is a client or a server end. A server end of a NetBarrier
+     * will return its own location. A client end of a NetBarrier will return the location of the server end it is connected
+     * to. This is because we consider the NetBarrier to be a single, virtual construct, with only one location. That
+     * location is where the server end of the NetBarrier is located.
+     * </p>
+     * 
+     * @see NetBarrier
+     * @see NetLocation
+     * @author Kevin Chalmers
+     */
     [Serializable]
     public sealed class NetBarrierLocation : NetLocation
     {
-        /**
-         * The SUID of this object. Required for Serialization.
-         */
         private static readonly long serialVersionUID = 1L;
-
-        /**
-         * The NodeID portion of the location structure
-         */
         private readonly NodeID nodeID;
+        private static readonly string beginningOfTheAddress = "nbl://";
 
         /**
          * The index portion of the location structure
          */
-        private readonly int vbn;
+        private readonly int vbn; //TODO consider different name
 
         /**
-         * Constructor to create a new NetBarrierLocation
-         * 
          * @param aNodeID
          *            The NodeID portion of the NetBarrierLocation
          * @param aVBN
          *            The index part of the NetBarrierLocation
          */
-        public NetBarrierLocation(NodeID aNodeID, int aVBN)
+        public NetBarrierLocation(NodeID nodeID, int vbn)
         {
-            this.nodeID = aNodeID;
-            this.vbn = aVBN;
+            this.nodeID = nodeID;
+            this.vbn = vbn;
         }
 
         /**
-         * Gets the NodeID part of the location
-         * 
          * @return The NodeID part of the NetBarrierLocation
          */
         public override NodeID getNodeID()
@@ -88,9 +78,7 @@ namespace CSPnet2.Barriers
         }
 
         /**
-         * Gets the NodeAddress part of the location
-         * 
-         * @return The NodeAddress part of the NetBarrierLocation
+=         * @return The NodeAddress part of the NetBarrierLocation
          */
         public override NodeAddress getNodeAddress()
         {
@@ -115,7 +103,7 @@ namespace CSPnet2.Barriers
          */
         public String toString()
         {
-            return "nbl://" + this.nodeID.toString() + "/" + this.vbn;
+            return NetBarrierLocation.beginningOfTheAddress + this.nodeID.toString() + "/" + this.vbn;
         }
 
         /**
@@ -127,13 +115,13 @@ namespace CSPnet2.Barriers
          * @//throws ArgumentException 
          *             Thrown if a non NetBarrierLocation is attempted to be parsed
          */
-        public static NetBarrierLocation parse(String str)
-            ////throws ArgumentException
+        public static NetBarrierLocation parse(String str) //throws ArgumentException
+        //TODO check how to throw this error here
         {
             if (str.Equals("null", StringComparison.OrdinalIgnoreCase))
                 return null;
             // Check that the string starts with nbl://
-            if (str.StartsWith("nbl://"))
+            if (str.StartsWith(beginningOfTheAddress))
             {
                 // Take the off the starting part of the string
                 String toParse = str.Substring(6);
@@ -144,7 +132,7 @@ namespace CSPnet2.Barriers
                 // Parse the VBN portion
                 int vcn = Int32.Parse(toParse.Substring(index + 1));
                 // Return a new NetBarrierLocation created from the two parts
-                return new NetBarrierLocation(nodeID, vcn);
+                return new NetBarrierLocation(nodeID, vcn); //TODO shouldn't this be in try-catch? Is it possible not to be able to create this object?
             }
 
             // We don't have a NetBarrierLocation

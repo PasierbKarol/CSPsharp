@@ -675,7 +675,7 @@ namespace CSPnet2.Net2Link
                                     lock (bar)
                                     {
                                         // Now behave according to the state of the barrier
-                                        switch (bar.state)
+                                        switch (bar.currentBarrierState)
                                         {
                                             // Barrier is in OK state, and is a server. Enroll with barrier.
                                             case BarrierDataState.OK_SERVER:
@@ -738,7 +738,7 @@ namespace CSPnet2.Net2Link
                                     lock (bar)
                                     {
                                         // Now behave based on the state of the barrier
-                                        switch (bar.state)
+                                        switch (bar.currentBarrierState)
                                         {
                                             // Barrier is in OK_SERVER state. Attempt resign from barrier.
                                             case BarrierDataState.OK_SERVER:
@@ -801,7 +801,7 @@ namespace CSPnet2.Net2Link
                                         msg.toLink = this.toTxProcess;
 
                                         // Now we must behave based on the state of the barrier
-                                        switch (bar.state)
+                                        switch (bar.currentBarrierState)
                                         {
                                             // Barrier is in OK_SERVER state. Pass SYNC onto the barrier.
                                             case BarrierDataState.OK_SERVER:
@@ -862,7 +862,7 @@ namespace CSPnet2.Net2Link
                                     lock (bar)
                                     {
                                         // Now behave based on the state of the barrier
-                                        switch (bar.state)
+                                        switch (bar.currentBarrierState)
                                         {
                                             // Barrier is in OK_CLIENT state. Release the waiting processes.
                                             case BarrierDataState.OK_CLIENT:
@@ -948,7 +948,7 @@ namespace CSPnet2.Net2Link
                                     lock (bar)
                                     {
                                         // Not behave based on the state of the barrier
-                                        switch (bar.state)
+                                        switch (bar.currentBarrierState)
                                         {
                                             // Barrier is in OK_CLIENT state. Reject the message sent by it.
                                             case BarrierDataState.OK_CLIENT:

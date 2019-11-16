@@ -17,35 +17,30 @@
 //                                                                  //
 //////////////////////////////////////////////////////////////////////
 
-using System;
 using CSPlang;
 
 namespace CSPnet2.Barriers
 {
-/**
- * Contains the data that relates to a networked Barrier. This is an external data structure within JCSP networking, and
- * is held by both the NetBarrier and the BarrierManager. For information on the operation of the NetBarrier, see the
- * relevant documentation.
- * 
- * @see NetBarrier
- * @author Kevin Chalmers
- */
-sealed class BarrierData
-{
     /**
-     * The virtual Barrier number that uniquely identifies the Barrier within the Node
+     * Contains the data that relates to a networked Barrier. This is an external data structure within JCSP networking, and
+     * is held by both the NetBarrier and the BarrierManager. For information on the operation of the NetBarrier, see the
+     * relevant documentation.
+     * 
+     * @see NetBarrier
+     * @author Kevin Chalmers
      */
-    internal int vbn = -1;
+    sealed class BarrierData
+    {
+        /**
+         * The virtual Barrier number that uniquely identifies the Barrier within the Node
+         */
+        internal int vbn = -1;
 
-    /**
-     * The current state of the Barrier
-     */
-    internal byte state = BarrierDataState.INACTIVE;
+        internal byte currentBarrierState = BarrierDataState.INACTIVE;
 
-    /**
-     * The connection to the Barrier for connecting to the NetBarrier object from the Link
-     */
-    internal ChannelOutput toBarrier = null;
-
-}
+        /**
+         * The connection to the Barrier for connecting to the NetBarrier object from the Link
+         */
+        internal ChannelOutput toBarrier = null;
+    }
 }

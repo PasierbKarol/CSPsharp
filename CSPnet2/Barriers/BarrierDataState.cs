@@ -17,23 +17,15 @@
 //                                                                  //
 //////////////////////////////////////////////////////////////////////
 
-using System;
-
 namespace CSPnet2.Barriers
 {
     /**
-     * Describes the possible states that a networked Barrier might be in.
-     * 
      * @author Kevin Chalmers
      */
     sealed class BarrierDataState
     {
-        /**
-         * Empty private constructor. This is simply a protocol.
-         */
         private BarrierDataState()
         {
-            // Empty constructor
         }
 
         /**
