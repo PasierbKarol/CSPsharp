@@ -17,9 +17,7 @@
 //                                                                  //
 //////////////////////////////////////////////////////////////////////
 
-using System;
 using CSPlang;
-using CSPnet2;
 
 namespace CSPnet2.NetConnection
 {

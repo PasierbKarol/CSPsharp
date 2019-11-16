@@ -23,69 +23,67 @@ using System.Collections;
 namespace CSPnet2.NetConnection
 {
 
-sealed class ConnectionManager
-{
-    private static int index = 50;
-
-    private readonly Hashtable connections = new Hashtable();
-
-    private static ConnectionManager instance = new ConnectionManager();
-
-    private ConnectionManager()
+    sealed class ConnectionManager
     {
+        private static int index = 50;
 
-    }
+        private readonly Hashtable connections = new Hashtable();
 
-    internal static ConnectionManager getInstance()
-    {
-        return instance;
-    }
+        private static ConnectionManager instance = new ConnectionManager();
 
-    /*synchronized*/ internal void create(ConnectionData data)
-    {
-        int objIndex = index;
-        while (this.connections[objIndex] != null)
+        private ConnectionManager()
         {
-            //objIndex = new Integer(++index);
-            ++index;
+
         }
 
-        data.vconnn = index;
-
-        this.connections.Add(objIndex, data);
-
-        index++;
-    }
-
-    /*synchronized*/ internal void create(int idx, ConnectionData data)
-        ////throws ArgumentException 
-    {
-        int objIndex = idx;
-        if (this.connections[objIndex] != null)
+        internal static ConnectionManager getInstance()
         {
-            throw new ArgumentException("Connection of given number already exists");
+            return instance;
         }
 
-        data.vconnn = idx;
-
-        this.connections.Add(objIndex, data);
-
-        if (idx == ConnectionManager.index)
+        /*synchronized*/
+        internal void create(ConnectionData data)
         {
+            int objIndex = index;
+            while (this.connections[objIndex] != null)
+            {
+                ++index;
+            }
+            data.vconnn = index;
+            this.connections.Add(objIndex, data);
             index++;
         }
-    }
 
-    internal ConnectionData getConnection(int idx)
-    {
-        int objIndex = idx;
-        return (ConnectionData)this.connections[objIndex];
-    }
+        /*synchronized*/
+        internal void create(int idx, ConnectionData data)
+        ////throws ArgumentException 
+        {
+            int objIndex = idx;
+            if (this.connections[objIndex] != null)
+            {
+                throw new ArgumentException("Connection of given number already exists");
+            }
 
-    internal void removeConnection(ConnectionData data)
-    {
-        int objIndex =data.vconnn;
-        this.connections.Remove(objIndex);
+            data.vconnn = idx;
+
+            this.connections.Add(objIndex, data);
+
+            if (idx == ConnectionManager.index)
+            {
+                index++;
+            }
+        }
+
+        internal ConnectionData getConnection(int idx)
+        {
+            int objIndex = idx;
+            return (ConnectionData)this.connections[objIndex];
+        }
+
+        internal void removeConnection(ConnectionData data)
+        {
+            int objIndex = data.vconnn;
+            this.connections.Remove(objIndex);
+        }
     }
-}
 }
