@@ -22,24 +22,21 @@ using CSPlang;
 
 namespace CSPnet2.NetChannels
 {
-/**
- * A class that is used to keep track of the state of a network channel. For a description of networked channels, see
- * the relevant documentation.
- * 
- * @see jcsp.net2.NetChannelInput
- * @see jcsp.net2.NetChannelOutput
- * @author Kevin Chalmers
- */
+    /**
+     * A class that is used to keep track of the state of a network channel. For a description of networked channels, see
+     * the relevant documentation.
+     * 
+     * @see jcsp.net2.NetChannelInput
+     * @see jcsp.net2.NetChannelOutput
+     * @author Kevin Chalmers
+     */
     public sealed class ChannelData
     {
         /**
          * The virtual channel number. A unique number on the Node for identifying a channel.
          */
-        internal int vcn = -1;
+        internal int virtualChannelNumber = -1;
 
-        /**
-         * The current state of the channel.
-         */
         internal byte state = ChannelDataState.INACTIVE;
 
         /**

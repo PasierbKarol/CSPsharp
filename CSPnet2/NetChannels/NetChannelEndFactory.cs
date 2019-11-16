@@ -31,8 +31,6 @@ namespace CSPnet2.NetChannels
     public interface NetChannelEndFactory
     {
         /**
-         * Creates a new NetAltingChannelInput
-         * 
          * @return A new NetAltingChannelInput
          */
         /*public*/

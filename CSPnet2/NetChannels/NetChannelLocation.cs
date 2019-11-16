@@ -50,15 +50,9 @@ namespace CSPnet2.NetChannels
     [Serializable]
     public sealed class NetChannelLocation : NetLocation
     {
-        /**
-         * The SUID representing this class
-         */
         private static readonly long serialVersionUID = 1L;
-
-        /**
-         * The NodeID portion of the location
-         */
         private readonly NodeID nodeID;
+        private static readonly string beginningOfTheAddress = "ncl://";
 
         /**
          * The vcn portion of the location
@@ -66,8 +60,6 @@ namespace CSPnet2.NetChannels
         private readonly int vcn;
 
         /**
-         * Creates a new NetChannelLocation
-         * 
          * @param aNodeID
          *            The NodeID part of the location
          * @param aVCN
@@ -80,8 +72,6 @@ namespace CSPnet2.NetChannels
         }
 
         /**
-         * Gets the NodeID part of the location
-         * 
          * @return The NodeID part of the NetChannelLocation
          */
         public override NodeID getNodeID()
@@ -90,8 +80,6 @@ namespace CSPnet2.NetChannels
         }
 
         /**
-         * Gets the NodeAddress part of the location
-         * 
          * @return The NodeAddress part of the NetChannelLocation
          */
         public override NodeAddress getNodeAddress()
@@ -100,8 +88,6 @@ namespace CSPnet2.NetChannels
         }
 
         /**
-         * Gets the vcn part of the location
-         * 
          * @return The VCN part of the NetChannelLocation
          */
         public int getVCN()
@@ -117,7 +103,7 @@ namespace CSPnet2.NetChannels
 
         public override String ToString()
         {
-            return "ncl://" + this.nodeID.toString() + "/" + this.vcn;
+            return beginningOfTheAddress + this.nodeID.toString() + "/" + this.vcn;
         }
 
         /**
@@ -135,7 +121,7 @@ namespace CSPnet2.NetChannels
             {
                 if (str.Equals("null", StringComparison.OrdinalIgnoreCase))
                     return null;
-                if (str.StartsWith("ncl://"))
+                if (str.StartsWith(beginningOfTheAddress))
                 {
                     String toParse = str.Substring(6);
                     int index = toParse.IndexOf("/");

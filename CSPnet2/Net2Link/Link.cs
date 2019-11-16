@@ -226,7 +226,7 @@ namespace CSPnet2.Net2Link
                 // Otherwise the Link can take the channel. Add the channel to the table of registered channels.
                 else
                 {
-                    int objIndex = data.vcn;
+                    int objIndex = data.virtualChannelNumber;
                     this.connectedOutputs.Add(objIndex, data);
                 }
             }
@@ -248,7 +248,7 @@ namespace CSPnet2.Net2Link
                 if (this.connectedOutputs != null)
                 {
                     // Remove the channel from the registered channels Hashtable
-                    int objIndex = data.vcn;
+                    int objIndex = data.virtualChannelNumber;
                     this.connectedOutputs.Remove(objIndex);
                 }
             }

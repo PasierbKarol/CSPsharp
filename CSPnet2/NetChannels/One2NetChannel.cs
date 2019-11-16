@@ -26,18 +26,17 @@ using CSPutil;
 
 namespace CSPnet2.NetChannels
 {
-
-/**
- * An outputting end of a networked channel (TX). This is a concrete implementation created internally by JCSP. For
- * information on how to use networked channels, and how to create them, see the relevant documentation.
- * 
- * @see NetChannelOutput
- * @see NetChannel
- * @author Kevin Chalmers (Updated from Quickstone Technologies)
- */
+    /**
+     * An outputting end of a networked channel (TX). This is a concrete implementation created internally by JCSP. For
+     * information on how to use networked channels, and how to create them, see the relevant documentation.
+     * 
+     * @see NetChannelOutput
+     * @see NetChannel
+     * @author Kevin Chalmers (Updated from Quickstone Technologies)
+     */
     public sealed class One2NetChannel : NetChannelOutput
     {
-        NetworkMessage msg;
+        NetworkMessage message;
 
         /**
          * The channel connecting to the Link that connects to the networked input end of this channel.
@@ -99,9 +98,11 @@ namespace CSPnet2.NetChannels
          * @//throws JCSPNetworkException
          *             Thrown if the connection to the remote Node fails
          */
-        internal static One2NetChannel create(NetChannelLocation loc, int immunity,
-                NetworkMessageFilter.FilterTx filter)
-            ////throws JCSPNetworkException
+        internal static One2NetChannel create(
+            NetChannelLocation loc, 
+            int immunity,
+            NetworkMessageFilter.FilterTx filter) //TODO should that throw an exception?
+        ////throws JCSPNetworkException
         {
             // Create the channel data structure
             ChannelData data = new ChannelData();
@@ -162,15 +163,21 @@ namespace CSPnet2.NetChannels
          * @param filter
          *            Filter used to encode outgoing messages
          */
-        private One2NetChannel(AltingChannelInput ackChannel, ChannelOutput toLink, Link link, ChannelData chanData,
-            NetChannelLocation loc, int immunity, NetworkMessageFilter.FilterTx filter)
+        private One2NetChannel(
+            AltingChannelInput ackChannel, 
+            ChannelOutput toLink, 
+            Link link, 
+            ChannelData chanData,
+            NetChannelLocation loc, 
+            int immunity, 
+            NetworkMessageFilter.FilterTx filter)
         {
             // Set all the object properties for the channel
             this.toLinkTx = toLink;
             this.theAckChannel = ackChannel;
             this.data = chanData;
             this.remoteLocation = loc;
-            this.localLocation = new NetChannelLocation(Node.getInstance().getNodeID(), chanData.vcn);
+            this.localLocation = new NetChannelLocation(Node.getInstance().getNodeID(), chanData.virtualChannelNumber);
             this.data.immunityLevel = immunity;
             this.messageFilter = filter;
 
@@ -230,10 +237,10 @@ namespace CSPnet2.NetChannels
                     }
 
                     // Now we need to send the poison. Create the poison message
-                    msg = new NetworkMessage();
-                    msg.type = NetworkProtocol.POISON;
-                    msg.attr1 = this.remoteLocation.getVCN();
-                    msg.attr2 = strength;
+                    message = new NetworkMessage();
+                    message.type = NetworkProtocol.POISON;
+                    message.attr1 = this.remoteLocation.getVCN();
+                    message.attr2 = strength;
 
                     // Now we must send the poison. Check if we are locally connected
                     if (this.isLocal)
@@ -244,12 +251,12 @@ namespace CSPnet2.NetChannels
                             // We only need to forward the message if the opposite channel is in OK_INPUT
                             if (this.localChannel.state == ChannelDataState.OK_INPUT)
                                 // Write the message
-                                this.toLinkTx.write(msg);
+                                this.toLinkTx.write(message);
                         }
                     }
 
                     // We are not locally connected. Just forward the poison
-                    this.toLinkTx.write(msg);
+                    this.toLinkTx.write(message);
                 }
 
                 // Poison is not above our immunity level. Do nothing.
@@ -287,7 +294,7 @@ namespace CSPnet2.NetChannels
          *             Thrown if the channel has been poisoned
          */
         public void write(Object _object)
-            //throws JCSPNetworkException, PoisonException
+        //throws JCSPNetworkException, PoisonException
         {
             // First we do a state check, and throw an exception if necessary
             if (this.data.state == ChannelDataState.DESTROYED)
@@ -304,14 +311,13 @@ namespace CSPnet2.NetChannels
 
             if (this.theAckChannel.pending())
             {
-                msg = (NetworkMessage) this.theAckChannel.read();
-                //Console.WriteLine("Read message from the Acknowledge channel ");
+                message = (NetworkMessage)this.theAckChannel.read();
 
                 // Lock onto our state object as we may be changing our state
                 lock (this.data)
                 {
                     // A previous ASYNC_SEND was rejected. Break channel.
-                    if (msg.type == NetworkProtocol.REJECT_CHANNEL)
+                    if (message.type == NetworkProtocol.REJECT_CHANNEL)
                     {
                         this.data.state = ChannelDataState.BROKEN;
 
@@ -322,7 +328,7 @@ namespace CSPnet2.NetChannels
                     }
 
                     // The link to the input end has gone down. Break the channel
-                    else if (msg.type == NetworkProtocol.LINK_LOST)
+                    else if (message.type == NetworkProtocol.LINK_LOST)
                     {
                         this.data.state = ChannelDataState.BROKEN;
 
@@ -334,28 +340,28 @@ namespace CSPnet2.NetChannels
 
                     // A previous ASYNC_SEND resulted in us being poisoned. Poison the channel. There is nothing else that
                     // can be done, as the input end has effectively gone.
-                    else if (msg.type == NetworkProtocol.POISON)
+                    else if (message.type == NetworkProtocol.POISON)
                     {
                         this.data.state = ChannelDataState.POISONED;
-                        this.data.poisonLevel = msg.attr2;
-                        throw new NetworkPoisonException(msg.attr2);
+                        this.data.poisonLevel = message.attr2;
+                        throw new NetworkPoisonException(message.attr2);
                     }
 
                     // This shouldn't really happen, but possibly someone ACK'd us when they were not meant to. Throw
                     // exception.
                     else
                     {
-                        Node.err.log(this.GetType(), "Channel " + this.data.vcn + " reports unexpected message.");
+                        Node.err.log(this.GetType(), "Channel " + this.data.virtualChannelNumber + " reports unexpected message.");
                         throw new JCSPNetworkException("NetChannelOutput received an unexpected exception");
                     }
                 }
             }
 
             // Create a new SEND message.
-            msg = new NetworkMessage();
-            msg.type = NetworkProtocol.SEND;
-            msg.attr1 = this.remoteLocation.getVCN();
-            msg.attr2 = this.data.vcn;
+            message = new NetworkMessage();
+            message.type = NetworkProtocol.SEND;
+            message.attr1 = this.remoteLocation.getVCN();
+            message.attr2 = this.data.virtualChannelNumber;
 
             try
             {
@@ -363,12 +369,12 @@ namespace CSPnet2.NetChannels
                 // an object into a byte array via object serialization, but implementation specific methods can be
                 // developed.
                 // See NetworkMessageFilter and ObjectNetworkMessageFilter.
-                msg.jsonData = this.messageFilter.filterTXtoJSON(_object);
+                message.jsonData = this.messageFilter.filterTXtoJSON(_object);
 
                 // Now we must determine how to send the message. If it is to a remote Node, simply write to the Link.
                 if (!this.isLocal)
                 {
-                    this.toLinkTx.write(msg);
+                    this.toLinkTx.write(message);
                 }
 
                 // If the input end is actually on this Node, then we attached our ackChannel to the message so the input
@@ -383,8 +389,8 @@ namespace CSPnet2.NetChannels
                         {
                             case ChannelDataState.OK_INPUT:
                                 // We have an input end. Send message
-                                msg.toLink = this.data.toChannel;
-                                this.toLinkTx.write(msg);
+                                message.toLink = this.data.toChannel;
+                                this.toLinkTx.write(message);
                                 break;
 
                             case ChannelDataState.POISONED:
@@ -416,7 +422,7 @@ namespace CSPnet2.NetChannels
             }
 
             // Now we wait for a reply on our ackChannel
-            NetworkMessage reply = (NetworkMessage) this.theAckChannel.read();
+            NetworkMessage reply = (NetworkMessage)this.theAckChannel.read();
             //Console.WriteLine("Read acknowledge message from the network " );
 
             // The SEND was rejected. Break channel.
@@ -446,8 +452,8 @@ namespace CSPnet2.NetChannels
             else if (reply.type == NetworkProtocol.POISON)
             {
                 this.data.state = ChannelDataState.POISONED;
-                this.data.poisonLevel = msg.attr2;
-                throw new NetworkPoisonException(msg.attr2);
+                this.data.poisonLevel = message.attr2;
+                throw new NetworkPoisonException(message.attr2);
             }
 
             // We received an ACK. Return.
@@ -459,7 +465,7 @@ namespace CSPnet2.NetChannels
             // This shouldn't happen. Throw exception.
             else
             {
-                Node.err.log(this.GetType(), "Channel " + this.data.vcn + " reports unexpected message.");
+                Node.err.log(this.GetType(), "Channel " + this.data.virtualChannelNumber + " reports unexpected message.");
                 throw new JCSPNetworkException("NetChannelOutput received an unexpected exception");
             }
         }
@@ -475,7 +481,7 @@ namespace CSPnet2.NetChannels
          *             Thrown if the channel is poisoned
          */
         public void asyncWrite(Object _object)
-            //throws JCSPNetworkException, PoisonException
+        //throws JCSPNetworkException, PoisonException
         {
             // First we do a state check, and throw an exception if necessary
             if (this.data.state == ChannelDataState.DESTROYED)
@@ -491,13 +497,13 @@ namespace CSPnet2.NetChannels
             // then were rejected, poisoned, or if the link went down.
             if (this.theAckChannel.pending())
             {
-                msg = (NetworkMessage) this.theAckChannel.read();
+                message = (NetworkMessage)this.theAckChannel.read();
 
                 // Lock onto our state object as we may be changing our state
                 lock (this.data)
                 {
                     // A previous ASYNC_SEND was rejected. Break channel.
-                    if (msg.type == NetworkProtocol.REJECT_CHANNEL)
+                    if (message.type == NetworkProtocol.REJECT_CHANNEL)
                     {
                         this.data.state = ChannelDataState.BROKEN;
 
@@ -514,7 +520,7 @@ namespace CSPnet2.NetChannels
                     }
 
                     // The link to the input end has gone down. Break the channel
-                    else if (msg.type == NetworkProtocol.LINK_LOST)
+                    else if (message.type == NetworkProtocol.LINK_LOST)
                     {
                         this.data.state = ChannelDataState.BROKEN;
 
@@ -532,28 +538,28 @@ namespace CSPnet2.NetChannels
 
                     // A previous ASYNC_SEND resulted in us being poisoned. Poison the channel. There is nothing else that
                     // can be done, as the input end has effectively gone.
-                    else if (msg.type == NetworkProtocol.POISON)
+                    else if (message.type == NetworkProtocol.POISON)
                     {
                         this.data.state = ChannelDataState.POISONED;
-                        this.data.poisonLevel = msg.attr2;
-                        throw new NetworkPoisonException(msg.attr2);
+                        this.data.poisonLevel = message.attr2;
+                        throw new NetworkPoisonException(message.attr2);
                     }
 
                     // This shouldn't really happen, but possibly someone ACK'd us when they were not meant to. Throw
                     // exception.
                     else
                     {
-                        Node.err.log(this.GetType(), "Channel " + this.data.vcn + " reports unexpected message.");
+                        Node.err.log(this.GetType(), "Channel " + this.data.virtualChannelNumber + " reports unexpected message.");
                         throw new JCSPNetworkException("NetChannelOutput received an unexpected exception");
                     }
                 }
             }
 
             // Create a new SEND message.
-            msg = new NetworkMessage();
-            msg.type = NetworkProtocol.ASYNC_SEND;
-            msg.attr1 = this.remoteLocation.getVCN();
-            msg.attr2 = this.data.vcn;
+            message = new NetworkMessage();
+            message.type = NetworkProtocol.ASYNC_SEND;
+            message.attr1 = this.remoteLocation.getVCN();
+            message.attr2 = this.data.virtualChannelNumber;
 
             try
             {
@@ -561,12 +567,12 @@ namespace CSPnet2.NetChannels
                 // an object into a byte array via object serialization, but implementation specific methods can be
                 // developed.
                 // See NetworkMessageFilter and ObjectNetworkMessageFilter.
-                msg.jsonData = this.messageFilter.filterTXtoJSON(_object);
+                message.jsonData = this.messageFilter.filterTXtoJSON(_object);
 
                 // Now we must determine how to send the message. If it is to a remote Node, simply write to the Link.
                 if (!this.isLocal)
                 {
-                    this.toLinkTx.write(msg);
+                    this.toLinkTx.write(message);
                 }
 
                 // If the input end is actually on this Node, then we attached our ackChannel to the message so the input
@@ -581,8 +587,8 @@ namespace CSPnet2.NetChannels
                         {
                             case ChannelDataState.OK_INPUT:
                                 // We have an input end. Send message
-                                msg.toLink = this.data.toChannel;
-                                this.toLinkTx.write(msg);
+                                message.toLink = this.data.toChannel;
+                                this.toLinkTx.write(message);
                                 break;
 
                             case ChannelDataState.POISONED:
@@ -612,7 +618,6 @@ namespace CSPnet2.NetChannels
             {
                 throw new JCSPNetworkException("Error when trying to convert the message for sending");
             }
-
             // We are asynchronous, so we simply return.
         }
 
@@ -621,7 +626,8 @@ namespace CSPnet2.NetChannels
          * 
          * @return ChannelData for this channel
          */
-        /*final*/ ChannelData getChannelData()
+        /*final*/
+        ChannelData getChannelData()
         {
             return this.data;
         }

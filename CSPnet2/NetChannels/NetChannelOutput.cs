@@ -52,7 +52,8 @@ namespace CSPnet2.NetChannels
         /// <summary>what this does</summary>
         /// <exception cref="JCSPNetworkException">some scenario</exception>
         /// <exception cref="NetworkPoisonException">some scenario</exception>
-        /*public*/ void asyncWrite(Object obj);
+        /*public*/
+        void asyncWrite(Object obj);
 
 
         /**

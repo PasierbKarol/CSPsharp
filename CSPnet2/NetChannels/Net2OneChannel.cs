@@ -18,7 +18,6 @@
 //////////////////////////////////////////////////////////////////////
 
 using System;
-using System.Diagnostics;
 using System.IO;
 using CSPlang;
 using CSPlang.Any2;
@@ -27,26 +26,19 @@ using CSPnet2.NetNode;
 
 namespace CSPnet2.NetChannels
 {
-/**
- * A concrete implementation of a NetAltingChannelInput. This is a hidden class created by the architecture. To create
- * an instance of this object, use the NetChannel factory, or the CNS.
- * 
- * @see NetChannelInput
- * @see NetAltingChannelInput
- * @see NetChannel
- * @author Kevin Chalmers (updated from Quickstone Technologies)
- */
+    /**
+     * A concrete implementation of a NetAltingChannelInput. This is a hidden class created by the architecture. To create
+     * an instance of this object, use the NetChannel factory, or the CNS.
+     * 
+     * @see NetChannelInput
+     * @see NetAltingChannelInput
+     * @see NetChannel
+     * @author Kevin Chalmers (updated from Quickstone Technologies)
+     */
     public sealed class Net2OneChannel : NetAltingChannelInput
     {
-        /**
-         * The input channel coming into the networked channel input object from Links or locally connected net channel
-         * outputs.
-         */
         public readonly AltingChannelInput In;
 
-        /**
-         * The ChannelData structure representing this channel.
-         */
         private readonly ChannelData data;
 
         /**
@@ -76,7 +68,6 @@ namespace CSPnet2.NetChannels
          */
         public static Net2OneChannel create(int poisonImmunity, NetworkMessageFilter.FilterRx filter)
         {
-            // Create a new ChannelData object
             ChannelData data = new ChannelData();
 
             // Create a new infinitely buffered any2one channel connecting the Links to the channel object
@@ -85,13 +76,10 @@ namespace CSPnet2.NetChannels
             // Add the output end to the ChannelData object
             data.toChannel = chan.Out();
 
-            // Set the immunity level
             data.immunityLevel = poisonImmunity;
 
             // Initialise the ChannelData object with the ChannelManager
             ChannelManager.getInstance().create(data);
-
-            // Return a new Net2OneChannel
             return new Net2OneChannel(chan.In(), data, filter);
         }
 
@@ -110,9 +98,8 @@ namespace CSPnet2.NetChannels
          *             Thrown if the index given is already allocated within the ChannelManager
          */
         internal static Net2OneChannel create(int index, int poisonImmunity, NetworkMessageFilter.FilterRx filter)
-            ////throws ArgumentException 
+        ////throws ArgumentException 
         {
-            // Create a new ChannelData object
             ChannelData data = new ChannelData();
 
             // Create a new infinitely buffered any2one channel connecting the Links to the channel object
@@ -121,13 +108,10 @@ namespace CSPnet2.NetChannels
             // Add the output end to the ChannelData object
             data.toChannel = chan.Out();
 
-            // Set the immunity level
             data.immunityLevel = poisonImmunity;
 
             // Initialise the ChannelData object with the ChannelManager. Use the index given
             ChannelManager.getInstance().create(index, data);
-
-            // Return a new Net2OneChannel
             return new Net2OneChannel(chan.In(), data, filter);
         }
 
@@ -153,7 +137,7 @@ namespace CSPnet2.NetChannels
             this.In = input;
             this.data = chanData;
             this.data.state = ChannelDataState.OK_INPUT;
-            this.location = new NetChannelLocation(Node.getInstance().getNodeID(), this.data.vcn);
+            this.location = new NetChannelLocation(Node.getInstance().getNodeID(), this.data.virtualChannelNumber);
             this.messageFilter = filter;
         }
 
@@ -168,7 +152,7 @@ namespace CSPnet2.NetChannels
          *             Thrown if the channel has been poisoned
          */
         public void endRead()
-            //throws InvalidOperationException, JCSPNetworkException, NetworkPoisonException
+        //throws InvalidOperationException, JCSPNetworkException, NetworkPoisonException
         {
             // First check the state of the channel. These are sanity checks. Really, if the channel is in an extended
             // read state then it should not be destroyed or poisoned
@@ -215,7 +199,7 @@ namespace CSPnet2.NetChannels
          *             Thrown if the channel has poisoned
          */
         public Boolean pending()
-            //throws JCSPNetworkException, NetworkPoisonException
+        //throws JCSPNetworkException, NetworkPoisonException
         {
             // First check the state of the channel.
             if (this.data.state == ChannelDataState.DESTROYED)
@@ -274,7 +258,7 @@ namespace CSPnet2.NetChannels
                     while (this.In.pending())
                     {
                         // We have an incoming message. Read the message.
-                        NetworkMessage pending = (NetworkMessage) this.In.read();
+                        NetworkMessage pending = (NetworkMessage)this.In.read();
 
                         switch (pending.type)
                         {
@@ -331,7 +315,7 @@ namespace CSPnet2.NetChannels
          *             Thrown if the channel is in an extended read state
          */
         public override Object read()
-            //throws JCSPNetworkException, NetworkPoisonException, InvalidOperationException
+        //throws JCSPNetworkException, NetworkPoisonException, InvalidOperationException
         {
             // First check our state
             if (this.data.state == ChannelDataState.DESTROYED)
@@ -352,13 +336,12 @@ namespace CSPnet2.NetChannels
             while (true)
             {
                 // Read in the next message
-                NetworkMessage msg = (NetworkMessage) this.In.read();
-                //Debug.WriteLine("Read message from the net to OneChannel  Type " + msg.type);
+                NetworkMessage message = (NetworkMessage)this.In.read();
 
                 // Now we need to decode the message and act accordingly
                 try
                 {
-                    switch (msg.type)
+                    switch (message.type)
                     {
                         // We can either receive a SEND, ASYNC_SEND, or POISON message
                         case NetworkProtocol.SEND:
@@ -366,18 +349,18 @@ namespace CSPnet2.NetChannels
                             // We have received a SEND
                             // Convert the message into the object again. This may throw an IOException
                             //Object toReturn = this.messageFilter.filterRX(msg.data);
-                            object toReturn = this.messageFilter.filterRXfromJSON(msg.jsonData);
+                            object toReturn = this.messageFilter.filterRXfromJSON(message.jsonData);
 
                             // We have a SEND, we need to acknowledge.
                             // Create an ACK message
                             NetworkMessage ack = new NetworkMessage();
                             ack.type = NetworkProtocol.ACK;
                             // Destination is source of the previous message
-                            ack.attr1 = msg.attr2;
+                            ack.attr1 = message.attr2;
                             // Attribute 2 is unused
                             ack.attr2 = -1;
                             // Write ACK to the channel attached to the message
-                            msg.toLink.write(ack);
+                            message.toLink.write(ack);
                             // Return read object
                             return toReturn;
                         }
@@ -385,13 +368,13 @@ namespace CSPnet2.NetChannels
                         {
                             // We have received an ASYNC_SEND
                             // Convert the message into the object again. This may throw an IOException
-                            Object toReturn = this.messageFilter.filterRXfromJSON(msg.jsonData);
+                            Object toReturn = this.messageFilter.filterRXfromJSON(message.jsonData);
                             // Return read object
                             return toReturn;
                         }
                         case NetworkProtocol.POISON:
                             // First we change our poison level. Poison level is Attribute 2 of the message
-                            this.data.poisonLevel = msg.attr2;
+                            this.data.poisonLevel = message.attr2;
 
                             // The Link checked our immunity level, so this poison message must be greater than our immunity
 
@@ -406,7 +389,7 @@ namespace CSPnet2.NetChannels
                             while (this.In.pending())
                             {
                                 // We have an incoming message. Read the message.
-                                NetworkMessage pending = (NetworkMessage) this.In.read();
+                                NetworkMessage pending = (NetworkMessage)this.In.read();
 
                                 switch (pending.type)
                                 {
@@ -468,7 +451,7 @@ namespace CSPnet2.NetChannels
          *             Thrown if the channel is poisoned.
          */
         public Object startRead()
-            //throws JCSPNetworkException, InvalidOperationException, NetworkPoisonException
+        //throws JCSPNetworkException, InvalidOperationException, NetworkPoisonException
         {
             // First check our state
             if (this.data.state == ChannelDataState.DESTROYED)
@@ -489,12 +472,12 @@ namespace CSPnet2.NetChannels
             while (true)
             {
                 // Read in the next message
-                NetworkMessage msg = (NetworkMessage) this.In.read();
+                NetworkMessage message = (NetworkMessage)this.In.read();
 
                 // Now we need to decode the message and act accordingly
                 try
                 {
-                    switch (msg.type)
+                    switch (message.type)
                     {
                         // We can either receive a SEND, ASYNC_SEND, or POISON message
                         case NetworkProtocol.SEND:
@@ -502,17 +485,17 @@ namespace CSPnet2.NetChannels
                         {
                             // We have received a SEND or ASYNC_SEND
                             // Convert the message into the object again. This may throw an IOException
-                            Object toReturn = this.messageFilter.filterRXfromJSON(msg.jsonData);
+                            Object toReturn = this.messageFilter.filterRXfromJSON(message.jsonData);
 
                             // Now set the lastRead to the incoming message so we can acknowledge during the endRead
                             // operation
-                            this.lastRead = msg;
+                            this.lastRead = message;
 
                             return toReturn;
                         }
                         case NetworkProtocol.POISON:
                             // First we change our poison level. Poison level is Attribute 2 of the message
-                            this.data.poisonLevel = msg.attr2;
+                            this.data.poisonLevel = message.attr2;
 
                             // The Link checked our immunity level, so this poison message must be greater than our immunity
 
@@ -527,7 +510,7 @@ namespace CSPnet2.NetChannels
                             while (this.In.pending())
                             {
                                 // We have an incoming message. Read the message.
-                                NetworkMessage pending = (NetworkMessage) this.In.read();
+                                NetworkMessage pending = (NetworkMessage)this.In.read();
 
                                 switch (pending.type)
                                 {
@@ -618,21 +601,21 @@ namespace CSPnet2.NetChannels
             while (this.In.pending())
             {
                 // We have a pending message. Deal with it.
-                NetworkMessage msg = (NetworkMessage) this.In.read();
+                NetworkMessage message = (NetworkMessage)this.In.read();
 
                 // Check that it is not a poison
-                if (msg.type != NetworkProtocol.POISON)
+                if (message.type != NetworkProtocol.POISON)
                 {
                     // The message is not a poison message, and therefore must be a send or some type. Reject the message
                     // Create REJECT_CHANNEL message
                     NetworkMessage reject = new NetworkMessage();
                     reject.type = NetworkProtocol.REJECT_CHANNEL;
                     // Destination is the source of the incoming message
-                    reject.attr1 = msg.attr2;
+                    reject.attr1 = message.attr2;
                     // Attribute 2 is not used
                     reject.attr2 = -1;
                     // Write reject to the channel attached to the incoming message
-                    msg.toLink.write(reject);
+                    message.toLink.write(reject);
                 }
             }
         }

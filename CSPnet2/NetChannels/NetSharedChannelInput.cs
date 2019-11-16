@@ -30,7 +30,7 @@ namespace CSPnet2.NetChannels
      * @see NetChannel
      * @author Kevin Chalmers (updated from Quickstone Technologies)
      */
-    public interface NetSharedChannelInput : SharedChannelInput, NetChannelInput
+    public interface NetSharedChannelInput : SharedChannelInput, NetChannelInput //TODO is this really needed?
     {
     }
 }

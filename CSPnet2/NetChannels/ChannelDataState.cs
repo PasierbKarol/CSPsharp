@@ -17,11 +17,8 @@
 //                                                                  //
 //////////////////////////////////////////////////////////////////////
 
-using System;
-
 namespace CSPnet2.NetChannels
 {
-
     /**
      * Represents the state of the networked channel. For information on networked channels, see the relevant documentation.
      * 
@@ -30,54 +27,50 @@ namespace CSPnet2.NetChannels
      * @author Kevin Chalmers
      */
     sealed class ChannelDataState
-{
-    /**
-     * Private default constructor.
-     */
-    private ChannelDataState()
     {
-        // Empty constructor
+        private ChannelDataState()
+        {
+        }
+
+        /**
+         * Signifies that the channel has not been activated yet.
+         */
+        internal /*static*/ const byte INACTIVE = 0;
+
+        /**
+         * Signifies that the channel has been started and is a input end.
+         */
+        internal /*static*/ const byte OK_INPUT = 1;
+
+        /**
+         * Signified that the channel has been started and is a output end.
+         */
+        internal /*static*/ const byte OK_OUTPUT = 2;
+
+        /**
+         * Signifies that the channel has been destroyed.
+         */
+        internal /*static*/ const byte DESTROYED = 3;
+
+        /**
+         * Signifies that the channel is broken. This is from the original JCSP model, and may be unnecessary as Destroyed
+         * and Poisoned may cover this.
+         */
+        internal /*static*/ const byte BROKEN = 4;
+
+        /**
+         * Signifies that the channel has recently moved and has yet to be reestablished at a new location.
+         */
+        internal /*static*/ const byte MOVING = 5;
+
+        /**
+         * Signifies that the channel has moved to a new location and that this new location is available.
+         */
+        internal /*static*/ const byte MOVED = 6;
+
+        /**
+         * Signifies that the channel has been poisoned.
+         */
+        internal /*static*/ const byte POISONED = 7;
     }
-
-    /**
-     * Signifies that the channel has not been activated yet.
-     */
-    internal /*static*/ const byte INACTIVE = 0;
-
-    /**
-     * Signifies that the channel has been started and is a input end.
-     */
-    internal /*static*/ const byte OK_INPUT = 1;
-
-    /**
-     * Signified that the channel has been started and is a output end.
-     */
-    internal /*static*/ const byte OK_OUTPUT = 2;
-
-    /**
-     * Signifies that the channel has been destroyed.
-     */
-    internal /*static*/ const byte DESTROYED = 3;
-
-    /**
-     * Signifies that the channel is broken. This is from the original JCSP model, and may be unnecessary as Destroyed
-     * and Poisoned may cover this.
-     */
-    internal /*static*/ const byte BROKEN = 4;
-
-    /**
-     * Signifies that the channel has recently moved and has yet to be reestablished at a new location.
-     */
-    internal /*static*/ const byte MOVING = 5;
-
-    /**
-     * Signifies that the channel has moved to a new location and that this new location is available.
-     */
-    internal /*static*/ const byte MOVED = 6;
-
-    /**
-     * Signifies that the channel has been poisoned.
-     */
-    internal /*static*/ const byte POISONED = 7;
-}
 }
