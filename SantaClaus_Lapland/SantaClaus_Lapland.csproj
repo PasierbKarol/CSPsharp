@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="CSPlang">
+      <HintPath>..\..\CSPsharp\CSPlang\bin\Debug\netcoreapp2.0\CSPlang.dll</HintPath>
+    </Reference>
+    <Reference Include="CSPutil">
+      <HintPath>..\..\CSPsharp\CSPlang\bin\Debug\netcoreapp2.0\CSPutil.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>
