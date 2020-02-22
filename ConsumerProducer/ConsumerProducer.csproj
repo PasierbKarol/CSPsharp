@@ -9,10 +9,7 @@
 
   <ItemGroup>
     <Reference Include="CSPlang">
-      <HintPath>..\..\CSPsharp\CSPlang\bin\Debug\netcoreapp2.0\CSPlang.dll</HintPath>
-    </Reference>
-    <Reference Include="CSPutil">
-      <HintPath>..\..\CSPsharp\CSPlang\bin\Debug\netcoreapp2.0\CSPutil.dll</HintPath>
+      <HintPath>..\CSPlang\bin\Debug\netcoreapp2.0\CSPlang.dll</HintPath>
     </Reference>
   </ItemGroup>
 
