@@ -26,3 +26,6 @@ It could be a good idea to look at the [*CSPforJava*](https://github.com/CSPforJ
 
 # Want to know more?
 There is a paper (currently in development) describing the conversion proces, that also explain some mechanics. It's also worthwile to read original paper by Tony Hoare and papers about other attempts to create CSP.NET from [Kevin Chalmers](https://www.researchgate.net/publication/221004333_CSP_for_NET_Based_on_JCSP) and [Alex Lehmberg](https://www.semanticscholar.org/paper/An-Introduction-to-CSP.NET-Lehmberg-Olsen/d58a0bf030ec79a8ff93dbd63dd22136f8559354).
+
+## Additional Information
+A blog for the initial stage of the project can be found here https://cspdotnet.000webhostapp.com/
